@@ -1,0 +1,91 @@
+POCKET AI — INSTALLATION AND FIRST USE
+
+1. Install PocketAI.apk on Android 6.0 (API 23) or newer. Allow installation
+   from the file manager/browser you use when Android asks. No account is needed.
+
+2. Open the app. Urdu and Punjabi are included for text. Select the third
+   language and Punjabi script. Create a 6–12 digit administrator PIN and save
+   the displayed recovery code somewhere safe outside the phone.
+   Setup then displays device compatibility and offers microphone/speaker tests.
+   Confirm the speaker check only if you actually hear its tone.
+
+3. Open Training Mode, unlock it, enter a fact or a question/answer, and choose
+   Review & save. Confirm the content. Return to User Mode and ask about it.
+   Saved knowledge works offline immediately, without a language model.
+
+4. Resources contains language/audio settings, device diagnostics, local model
+   imports, backups and administrator recovery. Back up important knowledge
+   before uninstalling or clearing app data.
+
+OPTIONAL LOCAL MODELS AND SPEECH
+
+The APK bundles native runtimes but no model weights or speech voices.
+Download model files separately, transfer them to the phone, then use
+Resources > Local models to import and select them. Imports need administrator
+authorization. USB storage can be used when Android exposes it in the picker.
+
+For voice input, start with the official multilingual Whisper tiny model:
+https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-tiny.bin
+
+Do not select an English-only '.en' model for Urdu or Punjabi. Tap the microphone,
+speak, tap it again, review the transcript, then send the question or confirm
+the training content. Recordings are temporary and bounded to 60 seconds.
+
+For generated answers, one candidate verified on the development host is the
+official Qwen2.5-0.5B-Instruct Q4_K_M GGUF (approximately 491 MB):
+https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct-GGUF/resolve/9217f5db79a29953eb74d5343926648285ec7e67/qwen2.5-0.5b-instruct-q4_k_m.gguf
+
+This does not guarantee that it fits or performs well on a 2 GB phone. Check
+diagnostics first. Detailed file checksums, licensing notes and limits are in
+the project's documentation/MODELS.md. No model was included in the APK or ZIP.
+
+Local generation and Whisper recognition require a 64-bit ARM or x86 device
+in this build. On 32-bit ARM phones, text knowledge and installed offline TTS
+remain available. Urdu/Punjabi voice accuracy must be checked on your phone.
+
+For spoken output, install a compatible OFFLINE voice through Android's
+text-to-speech settings and test it in Resources > Voice & audio. A speech
+recognition model does not provide a TTS voice. Text remains usable if no
+compatible voice is installed.
+
+The optional appliance session uses visible microphone notification controls,
+six-second voice turns and a 30-minute limit. It requires compatible models,
+an installed offline voice and a visible user start. Wake words and automatic
+boot startup are not included. Screen-off reliability needs device testing.
+
+FILES
+
+PocketAI.apk                 Signed installable app.
+PocketAI-debug.apk           Separate developer/debug installation.
+PocketAI-source.zip          Complete Android Studio source snapshot and guides.
+SHA256SUMS.txt               Download integrity checksums.
+
+Private signing keys and signing-backup archives are not published. A future
+update must use the same signing identity to preserve an existing installation;
+retain your original key privately. The source README explains how to build
+and generate a separate local signing identity.
+
+BACKUP AND PRIVACY
+
+Portable JSON backups contain knowledge, categories and recent conversations.
+They are not encrypted. They do not include PIN credentials, models, settings,
+or the full correction/training audit trail. Restore replaces the current
+knowledge collection after confirmation. Save backups privately.
+
+The app requests no Internet permission. Knowledge is stored in private local
+SQLite files; database encryption is not included. Android system services and
+document providers have their own permissions. The app does not retrain model
+parameters when you teach it a fact.
+
+VERIFICATION
+
+Debug and signed release builds succeeded; 44 JVM/Robolectric tests passed;
+   one additional Compose dialog-idling test was explicitly skipped;
+Android lint has no errors. The exact native adapter passed actual GGUF text
+generation, Whisper transcription, recovery and sequential-loading tests on
+the host. A real Qwen instruct-model test answered from supplied saved evidence.
+
+The physical 2 GB/16 GB target phone was not connected. Its microphone, installed
+voices, Urdu/Punjabi quality, memory, speed, thermal behavior, USB hardware and
+screen-off operation still require acceptance testing. Full status and test
+instructions are in documentation/VERIFICATION.md inside the source project.

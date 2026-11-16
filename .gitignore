@@ -47,3 +47,8 @@ signing/
 *.tgz
 # The checked-in Gradle wrapper is required to build this project.
 !gradle/wrapper/gradle-wrapper.jar
+
+# Audited public distribution files for the initial build.
+!downloads/initial/PocketAI.apk
+!downloads/initial/PocketAI-debug.apk
+!downloads/initial/PocketAI-source.zip

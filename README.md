@@ -6,7 +6,7 @@ The APK contains the app and native runtimes, but **no AI model weights or speec
 
 ## Start here
 
-1. Download `PocketAI.apk` from this repository's [initial prerelease](https://github.com/Arhamkhan1564/DR-ai-/releases/tag/v1.0.0-initial), then install it on Android 6.0/API 23 or later.
+1. Download [PocketAI.apk](downloads/initial/PocketAI.apk?raw=true), then install it on Android 6.0/API 23 or later.
 2. Complete setup, choose the third language and Punjabi script, and create an administrator PIN. Save the displayed recovery code.
 3. Open Training Mode, enter a fact or question/answer, review it, and save.
 4. Return to User Mode and ask about the saved information.
@@ -49,7 +49,7 @@ Then build and run the JVM suite:
 
 On Windows use `gradlew.bat`. The debug APK is `app/build/outputs/apk/debug/app-debug.apk`. Its application ID is `com.pocketai.debug`; release uses `com.pocketai`, so the two installations keep separate data.
 
-Signing keys and signing-backup archives are intentionally excluded from the repository and published release assets. To preserve an existing APK's signing identity, use the original key that you retained privately. To create a separate local signing identity:
+Signing keys and signing-backup archives are intentionally excluded from the repository and published downloads. To preserve an existing APK's signing identity, use the original key that you retained privately. To create a separate local signing identity:
 
 ```sh
 python3 scripts/create-local-signing.py
@@ -78,6 +78,14 @@ Pocket AI requests no Internet permission and makes no model downloads or cloud 
 
 ## Download files and verification
 
-The `v1.0.0-initial` GitHub prerelease contains the signed APK, debug APK, source snapshot, first-use guide and SHA-256 checksums. APKs are release assets rather than files in Git history. The complete source is also available directly in this repository. Model weights and private signing keys are excluded from both source distributions.
+The [initial prerelease](https://github.com/Arhamkhan1564/DR-ai-/releases/tag/v1.0.0-initial) describes this build. Its download files are stored in [downloads/initial](downloads/initial):
+
+- [Signed APK](downloads/initial/PocketAI.apk?raw=true)
+- [Debug APK](downloads/initial/PocketAI-debug.apk?raw=true)
+- [Source ZIP](downloads/initial/PocketAI-source.zip?raw=true), matching source commit `d4b1504`
+- [First-use guide](downloads/initial/PocketAI-Start-Here.txt)
+- [SHA-256 checksums](downloads/initial/SHA256SUMS.txt)
+
+The complete current source is also available directly in this repository. Model weights and private signing keys are excluded from the published files.
 
 The recorded final build had 45 JVM/Robolectric test cases: **44 passed, one explicitly skipped, zero failures**. The skipped case documents a Robolectric/Compose dialog-idling limitation; the complete final Android device UI flow was not established. See [verification](documentation/VERIFICATION.md) and [the build report](documentation/BUILD-REPORT.json) for the exact limits.
