@@ -1,0 +1,16 @@
+file=qwen2.5-0.5b-instruct-q4_k_m.gguf
+sizeBytes=491400032
+kind=LLM
+format=GGUF v3
+architecture=qwen2
+metadata={gguf.version=3, tensor_count=291, general.architecture=qwen2, general.name=qwen2.5-0.5b-instruct, qwen2.context_length=32768, general.file_type=15, general.quantization_version=2, parameter_count=630167424}
+headerParseMs=603
+validated=true
+file=ggml-tiny.bin
+sizeBytes=77691713
+kind=WHISPER
+format=Whisper GGML
+architecture=whisper
+metadata={variant=tiny, multilingual=true, audio_context=1500, file_type=1}
+headerParseMs=14
+validated=true

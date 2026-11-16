@@ -1,0 +1,143 @@
+{
+  "build_command": "./gradlew --no-daemon assembleDebug testDebugUnitTest assembleRelease assembleDebugAndroidTest lintDebug lintVitalRelease",
+  "result": "BUILD SUCCESSFUL",
+  "min_sdk": 23,
+  "target_sdk": 35,
+  "test_results": {
+    "tests": 45,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 1,
+    "passed": 44
+  },
+  "test_suites": [
+    {
+      "name": "com.pocketai.models.ModelManagerTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.pocketai.voice.VoiceSignalTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.pocketai.assistant.AssistantServiceTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.pocketai.appliance.ApplianceSessionTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.pocketai.data.SearchTextTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.pocketai.assistant.LanguageToolsTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.pocketai.models.ModelValidatorTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.pocketai.data.PocketDatabaseTest",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.pocketai.security.AuthManagerTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.pocketai.ui.PocketComposeFlowTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 1
+    }
+  ],
+  "lint": {
+    "errors": 0,
+    "warnings": 15
+  },
+  "artifacts": {
+    "release": {
+      "path": "PocketAI.apk",
+      "bytes": 26239522,
+      "sha256": "ab029bae997872c2521e3b9f15ebaa44e3f2ce6759ebb8a74eb071ea00fa4bf4"
+    },
+    "debug": {
+      "path": "PocketAI-debug.apk",
+      "bytes": 49335349,
+      "sha256": "695a3413a3aa55ebf63707a1b6536ac8e2826b90363b3b5f5a69decda2fe7e72"
+    },
+    "instrumentation": {
+      "path": "app-debug-androidTest.apk",
+      "bytes": 1057027,
+      "sha256": "6f47f1ec5a9e3e81140daec71367beff03ce966579c138f1c280a385c940a615"
+    }
+  },
+  "release_permissions": [
+    "android.permission.RECORD_AUDIO",
+    "android.permission.MODIFY_AUDIO_SETTINGS",
+    "android.permission.FOREGROUND_SERVICE",
+    "android.permission.FOREGROUND_SERVICE_MICROPHONE",
+    "android.permission.POST_NOTIFICATIONS",
+    "android.permission.WAKE_LOCK",
+    "com.pocketai.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+  ],
+  "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86_64"
+  ],
+  "native_license_notices_bundled": true,
+  "apk_signature_verified": [
+    "v1",
+    "v2"
+  ],
+  "zip_alignment": "16KiB page /4byte alignment verified",
+  "privacy": {
+    "allowBackup": false,
+    "fullBackupContent": false,
+    "explicit_cloud_and_device_transfer_exclusions": true,
+    "internet_permission": false
+  },
+  "hardware_validation": "Physical target phone absent. Earlier candidate APKs installed and app rendered on API28. A preceding candidate with the final native core was installed during a single 10Hz software-emulator trial, but UI instrumentation did not complete: SurfaceFlinger/zygote failure and ADB timeout. The latest changes are training-voice progress/guard UI only. Complete phone UI/ASR/TTS/performance acceptance remains unverified.",
+  "model_import_validation": "PASS: compiled app parser accepted official Qwen Q4_K_M GGUF (491400032bytes) and multilingual Whisper tiny (77691713bytes); weights not bundled.",
+  "artifact_distribution": {
+    "type": "GitHub Release",
+    "tag": "v1.0.0-initial",
+    "release_asset": "PocketAI.apk",
+    "debug_asset": "PocketAI-debug.apk",
+    "private_signing_material_published": false,
+    "model_weights_published": false
+  },
+  "publication_note": "Captured final build results; host identifiers removed from exported test XML only. APK bytes are unchanged. App code was not edited for publication."
+}

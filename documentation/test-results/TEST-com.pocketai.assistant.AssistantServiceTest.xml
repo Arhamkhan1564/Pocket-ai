@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuite name="com.pocketai.assistant.AssistantServiceTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-11-13T15:44:08" time="8.884">
+  <properties />
+  <testcase name="languageCommandsOnlySelectTheThreeConfiguredLanguages" classname="com.pocketai.assistant.AssistantServiceTest" time="5.249" />
+  <testcase name="repeatFindsMostRecentAssistantInChronologicalHistory" classname="com.pocketai.assistant.AssistantServiceTest" time="0.442" />
+  <testcase name="ordinaryConversationNeverBecomesVerifiedKnowledge" classname="com.pocketai.assistant.AssistantServiceTest" time="0.703" />
+  <testcase name="unknownQuestionUsesConfiguredUrduAndDoesNotInventFacts" classname="com.pocketai.assistant.AssistantServiceTest" time="0.601" />
+  <testcase name="unknownPunjabiResponseUsesChosenGurmukhiScript" classname="com.pocketai.assistant.AssistantServiceTest" time="0.633" />
+  <testcase name="speedCommandChangesTheRealSettingAndHonorsTheMinimum" classname="com.pocketai.assistant.AssistantServiceTest" time="0.726" />
+  <testcase name="noModelReturnsExactSavedEvidenceWithItsSource" classname="com.pocketai.assistant.AssistantServiceTest" time="0.517" />
+  <system-out />
+  <system-err />
+</testsuite>

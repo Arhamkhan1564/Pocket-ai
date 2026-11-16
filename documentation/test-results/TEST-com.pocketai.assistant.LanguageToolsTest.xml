@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuite name="com.pocketai.assistant.LanguageToolsTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-11-13T15:44:17" time="0.01">
+  <properties />
+  <testcase name="identifiesScriptsWhileKeepingAmbiguousManualLanguage" classname="com.pocketai.assistant.LanguageToolsTest" time="0.006" />
+  <testcase name="alwaysConfiguresUrduPunjabiAndOneChosenLanguage" classname="com.pocketai.assistant.LanguageToolsTest" time="0.002" />
+  <testcase name="separatesPunjabiVoiceLocalesAndSupportsRtl" classname="com.pocketai.assistant.LanguageToolsTest" time="0.0" />
+  <system-out />
+  <system-err />
+</testsuite>

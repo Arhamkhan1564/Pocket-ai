@@ -1,0 +1,43 @@
+PUBLICATION NOTE: work/validation and work/toolchains references below identify historical development-session evidence. Those temporary logs are not repository paths or additional public downloads. Test outcomes and limitations are retained verbatim.
+
+Pocket AI Compose UI verification attempt
+
+Test source:
+app/src/test/java/com/pocketai/ui/PocketComposeFlowTest.kt
+
+The test uses the real MainActivity, real AuthManager PIN verification, SQLite,
+AssistantService and retrieval. Its intended assertions are protected teaching,
+Q/A save, source-labelled answer and persisted conversation after Activity
+recreation. No application business logic or data was replaced with mocks.
+
+Observed attempts:
+1. Robolectric SDK 28, native graphics, paused looper, performTextInput:
+   initial User Mode assertion and Training Mode click succeeded. Fetching the
+   administrator PIN field after the dialog opened failed with Compose's
+   AppNotIdleException after 60 seconds.
+2. SDK 34 with the same native graphics/looper configuration:
+   the same dialog-idling failure occurred after 60 seconds.
+3. SDK 34 with direct SemanticsActions.SetText, avoiding requested IME focus:
+   the same failure occurred while fetching the PIN node, before SetText ran.
+
+The final stack is fetchSemanticsNode -> getRoots -> waitForIdle ->
+RobolectricIdlingStrategy.runUntilIdle. Thus this attempt did not establish a
+PIN verification failure or prove an application keyboard defect. Obtaining a
+semantics tree through the normal test API invokes that same idle wait.
+
+The new JVM UI test is explicitly @Ignore with the reason in its source. The
+existing core tests were not weakened, and androidTest/PocketFlowTest remains
+enabled for execution on a stable Android runtime. The completed full suite
+discovered 45 tests: 44 passed, 1 skipped, 0 failures or errors. These counts are
+confirmed by BUILD-REPORT.json and the retained test-result XML files. The
+skipped UI test is not counted as passed.
+
+Evidence:
+work/toolchains/compose-flow-test.log
+work/toolchains/compose-flow-api34-test.log
+work/toolchains/compose-flow-semantics-test.log
+work/validation/compose-flow-api34-failure.xml
+work/validation/compose-flow-semantics-failure.xml
+
+No application source was changed by this verification task. The Android
+emulator and physical-phone acceptance work remain separate.

@@ -1,0 +1,81 @@
+PUBLICATION NOTE: work/validation and work/toolchains references below identify historical development-session evidence. Those temporary logs are not repository paths or additional public downloads. Test outcomes and limitations are retained verbatim.
+
+Pocket AI final Android runtime evidence
+
+Earlier build candidate used in the runtime attempt:
+  Debug APK bytes: 49335349
+  Debug SHA-256: 42e88c65af05b42beb49ed308cb60cd6ae9b5d563b452584beb8c833da1df133
+  Test APK bytes: 1057027
+  Test SHA-256: 6f47f1ec5a9e3e81140daec71367beff03ce966579c138f1c280a385c940a615
+  Snapshot/provenance: work/validation/runtime-final-initial/provenance.json
+  Root build agent confirmed all requested build tasks and lint succeeded.
+  Completed JVM/Robolectric report: 45 tests total, 44 passed, 1 skipped.
+
+Candidate provenance:
+  The debug checksum above identifies an earlier candidate, before the final
+  training-voice progress and busy-state UI changes. BUILD-REPORT.json is the
+  authority for the current delivered APK checksums. This runtime attempt does
+  not establish completed UI instrumentation for the current delivered APK.
+
+Confirmed runtime environment limitation:
+  A read-only check outside the command sandbox confirmed /dev/kvm is absent
+  on the actual executor. Testing uses software TCG, Android9/API28 x86_64,
+  2GB RAM, one vCPU, 320x568 at160dpi, host SwiftShader.
+  SELinux stayed enforcing. No global Android security settings were changed.
+
+Concrete prior framework crash captured:
+  system_server1714: FATAL EXCEPTION IN SYSTEM PROCESS: FinalizerWatchdogDaemon
+  java.util.concurrent.TimeoutException:
+    android.view.SurfaceControl.finalize() timed out after10seconds
+      at android.view.SurfaceControl.nativeRelease(Native Method)
+  com.android.phone and SystemUI then reported DeadSystemException.
+  Evidence: work/validation/emulator-diagnosis-live.txt, crash-buffer section.
+  Kernel evidence also shows SurfaceFlinger RT throttling, zygote SIGKILL,
+  repeated RCU stalls, and a starved RCU thread during failed recovery.
+  This establishes Android display/framework failure; no PocketAI native crash
+  was established by this evidence.
+
+One controlled configuration trial:
+  Preserved warm userdata and changed documented AVD hw.lcd.vsync60->10Hz.
+  Boot log explicitly confirmed qemu.vsync=10; SELinux enforcing=1.
+  Boot completed in127.8seconds; package/activity/input/SurfaceFlinger services
+  were found, and the guest remained stable while idle for over11minutes.
+  No additional guest-restart loop was performed.
+
+Earlier-candidate UI attempt:
+  Both candidate APKs installed successfully.
+  Main Activity launch was issued; am start timed out after12.408seconds.
+  Screenshot remained gray, so it is not a valid final app preview.
+  PocketFlowTest started with uiTimeoutMs=120000, but produced no final result.
+  ADB transport timed out after300seconds.
+  Kernel log again recorded SurfaceFlinger RT throttling at1007.950980seconds,
+  zygote SIGKILL at1254.962365seconds, and secondary zygote SIGKILL at1268.989163.
+  A bounded crash-buffer follow-up also timed out; no further tests were run.
+  Trial outcome: reducing refresh rate did not make app/window operations stable.
+
+Final instrumentation status: BLOCKED / INCONCLUSIVE, not passed.
+  No teaching/retrieval/restart pass against this candidate was established.
+  No final native Android fixture assertions ran.
+  No keyboard-visible screenshot was obtained, so the suggested inset issue
+  could not be visually assessed and does not justify a speculative change.
+
+Evidence files:
+  work/validation/android-flow-final.log
+  work/validation/android-final-frames.log (one unchanged gray frame)
+  work/validation/emulator-final-crash.txt
+  work/toolchains/emulator-api28-vsync10.log
+  work/validation/emulator-vsync10-readiness.txt
+
+Independent functional validation remains valid:
+  Persistent knowledge/auth/backup/retrieval/model/voice-signal unit tests passed.
+  The exact production C++ JNI adapter passed host GGUF generation and Whisper
+  transcription, initialization-order, invalid-input recovery and unloading tests.
+  A real official Qwen2.5-0.5B-Instruct GGUF answered cedar-47 from supplied saved
+  context through its actual chat template. Model provenance/checksums and output
+  are recorded in the source project's tests/native/RESULTS.txt.
+  Test weights are not bundled into either APK or the source deliverables.
+
+Still requires a compatible accelerated emulator or physical Android device:
+  Complete UI acceptance flow, built-in microphone/speaker checks, actual offline
+  Urdu/Punjabi ASR/TTS quality, target2GB memory/latency/thermal benchmarking,
+  USB audio behavior and long-running appliance reliability.

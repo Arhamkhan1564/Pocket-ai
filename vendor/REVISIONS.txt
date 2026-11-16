@@ -1,0 +1,16 @@
+Pocket AI native dependencies (CPU only, no downloads at application runtime)
+
+llama.cpp https://github.com/ggml-org/llama.cpp
+revision ae93877c8f3bf9f39f0ee4ffb3ef1697c416a7c3
+license MIT (see llama.cpp/LICENSE)
+
+whisper.cpp https://github.com/ggml-org/whisper.cpp
+revision 5922450fbce1ed9d1648babd0d5ac4520055b436
+license MIT (see whisper.cpp/LICENSE)
+
+Whisper uses the single GGML implementation supplied by pinned llama.cpp.
+No AI or speech model weights are bundled. Import licensed compatible weights
+through Models. Header validation is not a guarantee of compatibility or quality.
+
+arm64-v8a, x86_64: CPU GGUF generation and Whisper ggml transcription.
+armeabi-v7a: lightweight JNI compatibility stub; native model inference unavailable.

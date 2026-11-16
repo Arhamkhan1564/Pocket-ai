@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuite name="com.pocketai.data.PocketDatabaseTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-11-13T15:44:17" time="3.856">
+  <properties />
+  <testcase name="backupRestoresKnowledgeAndConversationWithoutReplacingCredentials" classname="com.pocketai.data.PocketDatabaseTest" time="0.733" />
+  <testcase name="duplicatesAndPotentialQaConflictsAreDetected" classname="com.pocketai.data.PocketDatabaseTest" time="0.395" />
+  <testcase name="retrievalCanFindWordsBeyondTheBeginningOfLongNotes" classname="com.pocketai.data.PocketDatabaseTest" time="0.388" />
+  <testcase name="paginationAndDocumentImportRemainBoundedAndSourceLinked" classname="com.pocketai.data.PocketDatabaseTest" time="0.633" />
+  <testcase name="verifiedKnowledgeRequiresAnActiveAdministratorSession" classname="com.pocketai.data.PocketDatabaseTest" time="0.494" />
+  <testcase name="knowledgeSurvivesReopenAndCorrectionsUpdateRetrieval" classname="com.pocketai.data.PocketDatabaseTest" time="0.388" />
+  <testcase name="unicodeSearchPreservesOriginalUrduAndPunjabiScripts" classname="com.pocketai.data.PocketDatabaseTest" time="0.426" />
+  <testcase name="invalidRestoreDoesNotDestroyExistingKnowledge" classname="com.pocketai.data.PocketDatabaseTest" time="0.396" />
+  <system-out />
+  <system-err />
+</testsuite>

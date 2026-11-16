@@ -1,0 +1,53 @@
+Native host validation, 2026-11-13
+
+Environment: Linux x86_64, GCC 14.2.0, CMake 3.31.6, OpenJDK 21.
+The exact app JNI translation unit was compiled into libpocketai.so.
+CPU-only, shared GGML, conservative instruction baseline; no cloud inference.
+
+PASS Whisper speech recognition before any llama.cpp initialization.
+PASS GGUF generation: actual 48-token greedy inference from stories260K.gguf.
+PASS missing-model recovery: actionable IllegalStateException, process survives.
+PASS Whisper tiny transcription of upstream samples/jfk.wav:
+  And so my fellow Americans ask not what your country can do for you
+  ask what you can do for your country.
+PASS invalid-audio recovery: too-short audio rejected, process survives.
+PASS sequential model load/unload: speech, generation, failed load, speech, failed speech.
+
+Test-input SHA-256:
+stories260K.gguf
+  270cba1bd5109f42d03350f60406024560464db173c0e387d91f0426d3bd256d
+ggml-tiny.bin
+  be07e048e1e599ad46341c8d2a135645097a538221678b7acdd1b1919c6e1b21
+jfk.wav
+  59dfb9a4acb36fe2a2affc14bacbee2920ff435cb13cc314a08c13f66ba7860e
+
+Test weights are not shipped with the app/source deliverables. stories260K is
+a runtime smoke fixture, not a capable assistant model.
+
+This host run does not establish Android hardware performance, 2 GB operation,
+Urdu/Punjabi recognition accuracy, script output, microphone capture, installed
+offline TTS voice availability, thermal behavior, or dedicated-session reliability.
+See overall delivery validation report for Android build and emulator results.
+
+Additional real instruction-model RAG validation
+
+PASS: Official Qwen2.5-0.5B-Instruct-GGUF, qwen2.5-0.5b-instruct-q4_k_m.gguf,
+through the exact same JNI library and its model-provided ChatML template.
+Supplied saved context: The owner's workshop access phrase is cedar-47.
+Question: What is the owner's workshop access phrase?
+Actual answer: The owner's workshop access phrase is cedar-47.
+Host elapsed: 31.528 seconds, context1024, max128 output tokens, threads4.
+
+Official repository:
+  https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct-GGUF
+Pinned revision: 9217f5db79a29953eb74d5343926648285ec7e67
+License: Apache License 2.0, official repository LICENSE verified.
+File size: 491400032 bytes
+SHA-256:
+  74a4da8c9fdbcd15bd1f6d01d621410d31c6fc00986f5eb687824e7b93d7a9db
+Matches official Hugging Face X-Linked-ETag.
+
+The model omitted requested inline [1] citations. The application therefore
+continues displaying retrieved source records separately. This test does not
+establish Urdu/Punjabi quality or target-phone RAM/performance. These weights
+remain unbundled validation inputs, not application or source-project assets.

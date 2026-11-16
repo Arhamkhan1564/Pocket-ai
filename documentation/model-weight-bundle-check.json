@@ -1,0 +1,26 @@
+[
+  {
+    "variant": "debug",
+    "apk": "execution-workspace/PocketAI/app/build/outputs/apk/debug/app-debug.apk",
+    "external_model_weight_entries": [],
+    "non_model_binary_resources": [
+      {
+        "path": "DebugProbesKt.bin",
+        "bytes": 1728
+      }
+    ],
+    "note": "DebugProbesKt.bin is the Kotlin coroutines debug instrumentation resource, not an AI model."
+  },
+  {
+    "variant": "release",
+    "apk": "execution-workspace/PocketAI/app/build/outputs/apk/release/app-release.apk",
+    "external_model_weight_entries": [],
+    "non_model_binary_resources": [
+      {
+        "path": "DebugProbesKt.bin",
+        "bytes": 1728
+      }
+    ],
+    "note": "DebugProbesKt.bin is the Kotlin coroutines debug instrumentation resource, not an AI model."
+  }
+]
