@@ -1,0 +1,86 @@
+Pocket AI 1.1 - offline document assistant
+
+INSTALL OR UPDATE
+Open PocketAI.apk on an Android 6.0 or later phone. This build includes native
+runtimes for ARM64, ARMv7 with NEON, and x86_64. It uses the same release signing
+identity as the initial Pocket AI APK, so an ordinary update preserves app data.
+The debug APK is a separate developer installation.
+
+The itel A25 Pro was not connected for testing. RAM, available storage, processor
+features, Android version and offline voices affect what can run on a phone.
+
+ADD YOUR ENGLISH REFERENCE
+1. Open Training Mode and unlock with your administrator PIN.
+2. Tap Import document. Select UTF-8 TXT, Word DOCX, or a text-based PDF.
+3. Review the extracted text and filename. Leave source language as English
+   when the document is English; this is independent of your answer language.
+4. Save and index the document, then return to User Mode.
+5. Choose English, Urdu or Punjabi and ask about the saved document.
+
+Imports are limited to 8 MiB, one million extracted characters, 1,000 chunks,
+and 100 PDF pages. Convert legacy DOC to DOCX first. Scanned PDFs need OCR
+outside this app. Password-protected PDFs are rejected. Review tables because
+extraction may change their reading order. Citations identify filenames/chunks;
+PDF page counts in the preview do not provide page-level answer citations.
+Adding a document creates a retrieval index; it does not retrain model weights.
+
+TRANSLATED ANSWERS
+A language model is separate from speech recognition. Matching original text
+can be retrieved without a language model. Generated or translated answers
+require a compatible multilingual GGUF and enough free RAM. Selecting Urdu or
+Punjabi alone does not install translation. The app says when translation is
+unavailable and preserves the original evidence.
+
+Resources > Local models & voice setup includes a browser download link for
+this English demo candidate, followed by an Import language model button.
+IMPORTANT: this candidate FAILED our Urdu/Punjabi answer/translation checks and
+is not recommended for those translations. A more capable model needs separate
+validation and may require more memory than the 2 GB target phone provides:
+https://huggingface.co/unsloth/Qwen3-0.6B-GGUF/resolve/50968a4468ef4233ed78cd7c3de230dd1d61a56b/Qwen3-0.6B-Q4_K_M.gguf
+Size: 396705472 bytes (about 379 MiB).
+SHA-256: ac2d97712095a558e31573f62f466a3f9d93990898b0ec79d7c974c1780d524a
+License: Apache 2.0; inspect the model provider's terms and documentation.
+Download in your browser, return to Pocket AI, unlock administration, then
+import/select the actual GGUF file. Close other apps if the memory guard stops
+loading. This is a general model; Urdu/Punjabi quality and phone performance
+must be checked. It is not a medically validated model.
+
+VOICE INPUT
+The APK includes multilingual Whisper tiny q5_1 (30.7 MiB), copied and verified
+into private storage automatically when runtime compatibility checks succeed.
+No speech-model download is needed for this default. Allow setup to finish,
+tap the microphone, grant permission, speak a short phrase and tap again.
+Review the transcription, then tap Send. The model is checked before recording.
+To restore a removed default, use Resources > Local models & voice setup >
+Restore included speech model. English-only .en models cannot recognize Urdu
+or Punjabi. Test each intended language on the phone; a successful English
+transcription does not establish Urdu/Punjabi recognition quality.
+
+SPOKEN ANSWERS
+Whisper recognizes input; it does not supply spoken output. Install compatible
+Android offline text-to-speech voices and use Resources > Voice & audio to test
+them. If no compatible voice exists, text answers remain available. Recordings
+are temporary and are discarded after transcription or cancellation.
+
+MEDICINE REFERENCES
+Import a reliable, current reference and ask what the document says. Citations
+show the retrieved source; Pocket AI does not clinically verify imported claims.
+Medical answers preserve original passages. Any generated translation is marked
+as a selected excerpt and must be checked against the original, especially drug
+names, numbers, units and warnings. The assistant does not invent missing doses.
+Personal symptom/treatment questions request relevant context and point to a
+clinician or pharmacist; the app does not diagnose or prescribe automatically.
+Limited emergency checks do not cover every medical emergency. Seek urgent
+professional help when symptoms are severe; do not wait for the app.
+
+DATA AND BUILD FILES
+Keep your PIN and recovery code private. Export knowledge before uninstalling
+or clearing storage. Models are separate from portable knowledge backups.
+The app requests no Internet permission; optional links open an external
+browser. Documents and chats remain local in an unencrypted private database.
+The source ZIP includes build instructions and a checksum-pinned speech-model
+fetch script. Model weights and private signing keys/passwords are excluded
+from the source. Language models and Android voice packs are not in the APK.
+
+PUBLIC REPOSITORY
+https://github.com/Arhamkhan1564/Pocket-ai
