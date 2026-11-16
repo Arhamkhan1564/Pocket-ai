@@ -1,86 +1,81 @@
-# Pocket AI 1.1 · offline document assistant
+# Pocket AI 1.2 · offline Android RAG
 
-An offline Android knowledge assistant with two primary modes: **User Mode** for questions and **Training Mode** for administrator-approved knowledge. The application uses Kotlin, Jetpack Compose Material 3, SQLite, local llama.cpp generation and local whisper.cpp transcription.
+Import English **TXT, DOCX or text PDF** files, index them on the device, and ask about them in **English, Urdu or Punjabi**. Pocket AI retrieves saved passages, preserves the originals, and links answers to their sources. Teaching and importing create a local retrieval index; they do not retrain the model weights.
 
-Import English TXT, Word DOCX or text-based PDF documents, review the extracted text and save a local retrieval index. Ask questions in **English, Urdu or Punjabi**; these choices remain available alongside the optional language. Document language is separate from answer language, and original text is preserved. Saved passages cite their filename/source. A capable multilingual local GGUF is required for generated or translated answers; without it, the app returns matching original text and reports that translation is unavailable.
+The full APK contains its baseline AI resources. First setup copies and checks them locally. No account, API key, cloud service or in-app model download is needed, and the app declares no Internet permission.
 
-**Translation limitation:** the small Qwen3 model tested for this build failed Urdu/Punjabi answer and translation checks. Reliable translation on the 2 GB target phone is not established; the app keeps the original evidence when checks fail. See [actual model results](documentation/MODEL-VALIDATION.txt).
-
-The APK includes the **multilingual Whisper tiny q5_1 speech model** (30.7 MiB), prepared automatically when runtime compatibility checks succeed. No language model/LLM or Android TTS voice data is bundled. Text teaching, retrieval, editing, search and backup work without a GGUF. Offline speech output depends on installed Android voices.
-
-Repository: [Arhamkhan1564/Pocket-ai](https://github.com/Arhamkhan1564/Pocket-ai). Download [the APK](downloads/rag-v1.1/PocketAI.apk?raw=true), [the source ZIP](downloads/rag-v1.1/PocketAI-source.zip?raw=true), or all files in [`downloads/rag-v1.1/`](https://github.com/Arhamkhan1564/Pocket-ai/tree/main/downloads/rag-v1.1) and the [`v1.1.0-rag` prerelease](https://github.com/Arhamkhan1564/Pocket-ai/releases/tag/v1.1.0-rag). The [1.1 build report](documentation/RAG-BUILD-REPORT.json) records 94 passing tests and one skipped test. Physical-phone and reliable medical translation acceptance remain outstanding; initial-release reports are historical.
+Download the [full offline APK](https://media.githubusercontent.com/media/Arhamkhan1564/Pocket-ai/main/downloads/offline-v1.2/PocketAI.apk), [source ZIP](downloads/offline-v1.2/PocketAI-source.zip?raw=true), and [installation guide](downloads/offline-v1.2/READ-ME.txt). The APK is stored with Git LFS; use **Download raw file** on GitHub when downloading from the file page. The [download folder](https://github.com/Arhamkhan1564/Pocket-ai/tree/main/downloads/offline-v1.2) contains checksums and build details. Earlier 1.0/1.1 downloads and reports describe historical builds.
 
 ## Start here
 
-1. Install `PocketAI.apk` on Android 6.0/API 23 or later.
-2. Complete setup, choose any extra language and Punjabi script, and create an administrator PIN. Save the displayed recovery code.
-3. Open Training Mode → Import document. Pick TXT, DOCX or a text PDF, check the preview/source language (English by default), then Save & index document.
-4. Return to User Mode and choose English, Urdu or Punjabi. Ask about the document; use a compatible local language model for generated/translated answers.
-5. In Resources → Local models, check included speech setup and optionally import a GGUF. The browser link offers a pinned Qwen3 0.6B English demo. It failed Urdu/Punjabi checks and is not recommended for those translations.
+1. Install the full APK on a supported Android 6.0/API 23 or newer device. Allow several GB of free storage for installation, local resources and documents.
+2. Complete setup, choose Punjabi Shahmukhi or Gurmukhi, set an administrator PIN, and save the recovery code. Let Offline tools finish local preparation.
+3. Open Training Mode → Import document. Choose an English file, review its extracted text and save it. Let local indexing finish.
+4. Return to User Mode and choose English, Urdu or Punjabi. Ask about the saved reference. Open a citation to inspect the original passage or request its translation.
+5. Use **Fast cited passages** by default. Optional English explanations use a small, slower local generator and fall back to saved evidence when checks fail.
 
-Read [Installation and everyday use](documentation/INSTALLATION.md), [Models and language compatibility](documentation/MODELS.md), and [Backup and recovery](documentation/BACKUP-RECOVERY.md).
+Read [Installation](documentation/INSTALLATION.md), [Models](documentation/MODELS.md), and [Backup and recovery](documentation/BACKUP-RECOVERY.md).
 
-## Compatibility and current limits
+## Included offline resources
 
-- The interface, SQLite knowledge assistant and compatible Android offline TTS support `arm64-v8a`, `armeabi-v7a` and `x86_64`.
-- Local GGUF/Whisper libraries are included for ARM64, ARMv7 with NEON, and x86_64. Runtime CPU and memory checks determine which models can be used. Unsupported CPUs keep text knowledge retrieval and compatible offline TTS usable.
-- Urdu and Punjabi text, Shahmukhi/Gurmukhi metadata and RTL display are implemented. Urdu/Punjabi recognition quality, model answer quality and installed voice availability require testing on the actual phone. A recognized language code is not evidence of usable recognition or pronunciation.
-- The identified itel A25 Pro/2 GB target phone was not attached to the development environment. Its actual ABI/CPU features, available memory, performance and audio behavior need on-device checks. Android 6+/supported ABI coverage does not guarantee that every phone can run every model.
-- Optional foreground appliance sessions require a visible user start. Wake-word detection, automatic boot startup, external LEDs and a remote administration dashboard are not shipped.
-- Legacy binary `.doc` files must be converted to `.docx`. Scanned/image PDFs need OCR outside this app; password-protected PDFs are rejected. Imported documents are bounded to 8 MiB and one million extracted characters.
-- Medicine documents are reference material, not verified clinical training. The assistant supports sourced explanations and asks for context when a question describes personal symptoms; it does not automatically diagnose, prescribe, or validate a treatment. General models have not been medically validated.
+| Role | Included resource | Behavior |
+| --- | --- | --- |
+| Multilingual retrieval | E5-small int8 ONNX | English/Urdu/Punjabi questions retrieve saved English passages; cosine scores and source checks limit weak matches. |
+| Translation | IndicTrans2 dist-200M int8 ONNX | English references → Urdu or Gurmukhi Punjabi. Identifiers are protected and restored; quantities, units and prohibitions are checked. |
+| Shahmukhi display | Original local Punjabi script converter | Converts the Punjabi translation to Shahmukhi, with a visible conversion label. Spelling and dialect coverage are limited. |
+| Optional English synthesis | SmolLM2-360M Q4_K_M | Conditional source-based explanations; fast excerpts remain the default. |
+| Voice input | Multilingual Whisper tiny Q5_1 | Included speech recognition model; recording begins after local readiness checks. |
 
-See the [implementation and verification checklist](documentation/VERIFICATION.md) for the distinction between implemented code, device-dependent acceptance checks and deferred scope.
+The 13 pinned model files total **715,732,683 bytes (682.6 MiB)** before app code and packaging. Heavy inference runs one stage at a time to limit peak memory. Read [actual model validation](documentation/OFFLINE-MODEL-VALIDATION.md), [model notices](app/src/main/assets/OFFLINE_MODEL_NOTICES.txt) and the [pinned manifest](app/src/main/assets/offline-model-manifest.json).
 
-## Build the Android Studio project
+## Compatibility and limits
 
-Use Android Studio with a full JDK 17 or 21, Android SDK Platform 35, Build Tools 35.0.0, NDK `27.2.12479018`, CMake `3.22.1`, and the included Gradle 8.9 wrapper. Dependencies and toolchains require internet access during the initial development build; the installed app does not request Internet permission.
+- **Android 6.0/API 23+**, ARM64, ARMv7 **with NEON**, and x86_64. The 64-bit native libraries support 16 KiB page alignment. ARMv7 retains the stock 4 KiB Android C++ runtime for 32-bit devices. Older Android releases, unsupported processors and every possible device are not covered.
+- Free memory matters more than advertised RAM. Search and translation check available memory; close other apps when prompted. A 2 GB phone may be slow or unable to run a stage under memory pressure. The itel A25 Pro was not connected for testing.
+- Actual host inference found the correct reference for 10/10 known multilingual fixture queries and rejected one unrelated query by threshold. Canonical Kotlin translation matched eight prototype outputs. These small synthetic checks do not establish broad accuracy, phone performance or clinical reliability.
+- English is the included document translation source. Other saved languages retain their originals; the included pack does not provide arbitrary reverse translation. Punjabi Shahmukhi is a separate script conversion, not a direct trained target.
+- Offline speech output uses Android's installed offline TTS voices. Voice availability, Urdu/Punjabi recognition and pronunciation, microphone behavior, and actual phone latency still need device testing.
+- TXT, DOCX and text PDFs are supported. Convert legacy `.doc` files to DOCX. Scanned PDFs require OCR outside this app; password-protected PDFs are rejected. Imports are bounded to 8 MiB and one million extracted characters.
+- Medicine documents are reference material. The app can explain sourced information and request context for personal symptom questions; it cannot establish a diagnosis or choose a safe medicine for an individual. It has not been clinically validated. Machine translation can be wrong even when preservation checks pass; inspect the original and consult a qualified clinician for treatment decisions.
+- Foreground appliance sessions require a visible user start. Wake-word detection, automatic boot startup, external LEDs and a remote administration dashboard are not included.
 
-Open this directory as a project, set the SDK location in Android Studio, install the SDK/NDK/CMake versions in SDK Manager, then run the speech-model fetch command below before Gradle sync. Or use the command line after installing Android command-line tools:
+See [verification scope](documentation/VERIFICATION.md) and the [1.2 build report](documentation/OFFLINE-BUILD-REPORT.json).
+
+## Build from source
+
+Use JDK 17 or 21, Android SDK Platform 35, Build Tools 35.0.0, NDK `27.2.12479018`, CMake `3.22.1`, and the Gradle 8.9 wrapper. Initial development setup downloads pinned dependencies and model assets; the installed app works offline.
+
+Set `sdk.dir` in your private `local.properties`, install those SDK components, then prepare the external resources before Gradle sync:
 
 ```sh
-sdkmanager "platform-tools" "platforms;android-35" "build-tools;35.0.0" "ndk;27.2.12479018" "cmake;3.22.1"
-sdkmanager --licenses
+python3 scripts/fetch-offline-models.py
+python3 scripts/prepare-onnxruntime-android.py --ndk /absolute/path/to/Android/Sdk/ndk/27.2.12479018
+./gradlew testDebugUnitTest lintDebug assembleDebug
 ```
 
-Create `local.properties` at the project root with your own absolute SDK location:
+Weights are kept in `../model-assets`; the prepared Android ONNX dependency is kept in `../runtime-assets`. Neither belongs in the source ZIP. The scripts verify pinned checksums, and Gradle refuses an incomplete resource pack. See [development instructions](documentation/DEVELOPMENT.md) and [API-23 ONNX Runtime preparation](documentation/ONNXRUNTIME-ANDROID.md).
 
-```properties
-sdk.dir=/absolute/path/to/Android/Sdk
-```
-
-Project source files and source archives exclude standalone model weights; the distributed APK includes its speech asset. Fetch and verify the included speech asset before building the same APK configuration (see the exact fetch command in [DEVELOPMENT.md](documentation/DEVELOPMENT.md)). Then build and run the JVM suite:
-
-```sh
-python3 scripts/fetch-bundled-speech.py
-./gradlew testDebugUnitTest assembleDebug
-```
-
-On Windows use `gradlew.bat`. The debug APK is `app/build/outputs/apk/debug/app-debug.apk`. Its application ID is `com.pocketai.debug`; release uses `com.pocketai`, so the two installations keep separate data.
-
-Public source/downloads exclude signing keys and signing-backup archives. To preserve an existing APK's update identity, use the same privately retained signing key and local signing configuration. Otherwise create a new local identity:
+The debug APK uses `com.pocketai.debug`, separately from release `com.pocketai`. To build your own release identity:
 
 ```sh
 python3 scripts/create-local-signing.py
 ./gradlew assembleRelease
 ```
 
-The release APK is `app/build/outputs/apk/release/app-release.apk`. The signing helper refuses to overwrite existing `signing.properties`. Keep `signing/`, `signing.properties` and any private backup of them outside public distributions. A newly generated key cannot update an APK signed with a different key. Back up app data before uninstalling anything. The supplied release is signed with a local self-signed key; it has not been published to an app store.
+Keep `signing/`, `signing.properties` and signing backups private. Updates require the same signing key as the installed app; a newly generated key cannot update someone else's signed installation. The supplied release is signed with the retained release key and is not an app-store publication.
 
 ## Project layout
 
-| Directory | Responsibility |
+| Directory under `app/src/main/java/com/pocketai` | Responsibility |
 | --- | --- |
-| `app/src/main/java/com/pocketai/ui` | Compose navigation, setup, conversation, training and resource tools |
-| `data`, `security` | SQLite, retrieval indexes, history, backup and administrator authorization |
-| `assistant`, `engine` | Language helpers, retrieval orchestration, prompt construction and replaceable inference interface |
-| `voice`, `hardware`, `models` | Bounded recording, offline TTS, live audio routes, diagnostics and model imports |
-| `app/src/main/cpp` | JNI bridge and CPU runtime integration |
-| `vendor` | Pinned llama.cpp/whisper.cpp source and their licenses |
-| `app/src/test`, `app/src/androidTest` | JVM tests and optional real-model device tests |
+| `ui` | Setup, conversations, source library, training and resource controls |
+| `data`, `security` | SQLite documents, versioned embeddings, history, backup and PIN authorization |
+| `rag`, `retrieval`, `translation` | Offline orchestration, E5 semantic search, NMT and script conversion |
+| `assistant`, `engine` | Source grounding, response checks, serialized native inference and tokenizers |
+| `voice`, `hardware`, `models` | Recording, Android offline TTS, diagnostics, bundled pack preparation and model imports |
 
-Read [Architecture and development](documentation/DEVELOPMENT.md) for document extraction, retrieval, security, native integration and test commands. Native dependency revisions are recorded in `vendor/REVISIONS.txt`.
+Native code is in `app/src/main/cpp`; pinned llama.cpp, whisper.cpp and inference-only SentencePiece sources are in `vendor`. Revisions and licenses accompany the source.
 
 ## Privacy
 
-Pocket AI requests no Internet permission and makes no in-app model downloads or cloud inference calls. Optional model links open your external browser. Included speech is copied from the APK into private storage with checksum verification. Knowledge and conversations are stored in SQLite inside Android's private app sandbox; they are **not database-encrypted**. PINs and recovery codes are salted and hashed. Exported knowledge backups are plaintext and should be kept privately. Signing credentials are excluded from public source/downloads. Android's system services and document providers operate under their own permissions. Microphone recording is explicit and temporary; voice setup is checked before a conversation recording starts.
+Pocket AI has no Internet permission and makes no cloud inference or translation calls. Baseline files are copied from the APK into private storage with integrity checks. Knowledge, embeddings and conversations live in Android's private app sandbox; the database is **not encrypted**. Exported backups are plaintext and should be kept privately. PINs and recovery codes are salted and hashed. Recording is explicit and temporary. Android system services, document providers and optional external browser links operate under their own permissions.

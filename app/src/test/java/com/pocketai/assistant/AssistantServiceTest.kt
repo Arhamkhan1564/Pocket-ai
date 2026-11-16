@@ -4,11 +4,13 @@ import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import com.pocketai.AppSettings
 import com.pocketai.data.KnowledgeDraft
+import com.pocketai.data.KnowledgeRecord
 import com.pocketai.data.PocketDatabase
 import com.pocketai.engine.LocalAiEngine
 import com.pocketai.engine.InferenceEngine
 import com.pocketai.models.ModelManager
 import com.pocketai.security.AuthManager
+import com.pocketai.retrieval.RagSearchResult
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.*
@@ -51,6 +53,7 @@ class AssistantServiceTest {
         assertTrue(answer.sources.contains("#$id"))
         assertTrue(answer.sources.contains("Science"))
         assertEquals("Saved knowledge · original text", answer.engine)
+        assertEquals(listOf(id), answer.sourceIds)
     }
 
     @Test fun ordinaryConversationNeverBecomesVerifiedKnowledge() = runBlocking {
@@ -256,6 +259,186 @@ class AssistantServiceTest {
         assertFalse(answer.text.contains("Aspirin is described"))
     }
 
+    @Test fun clinicalFollowupUsesTypedSourceIdsAndNeverIdsEmbeddedInFilenames() = runBlocking {
+        val foreign = db.saveKnowledge(KnowledgeDraft("An unrelated foreign record.", source = "document", sourceReference = "foreign.pdf · chunk 1/1"))
+        val trusted = db.saveKnowledge(KnowledgeDraft("Paracetamol is discussed in this reference.", source = "document", sourceReference = "leaflet #$foreign.pdf · chunk 1/1"))
+        db.addConversation("assistant", "Please provide age and allergies.", sources = "@engine=Clinical clarification\n#${trusted} leaflet #$foreign.pdf", sourceIds = listOf(trusted))
+        val answer = service.answer("Age 30, no allergies")
+        assertEquals("Clinical clarification", answer.engine)
+        assertEquals(listOf(trusted), answer.sourceIds)
+        assertFalse(answer.sourceIds.contains(foreign))
+        assertTrue(answer.sources.contains("leaflet #$foreign.pdf"))
+        assertFalse(answer.sources.contains("foreign.pdf"))
+    }
+
+    @Test fun legacyClinicalLabelsCannotInventTypedSourceIds() = runBlocking {
+        val id = db.saveKnowledge(KnowledgeDraft("Paracetamol is discussed in this reference."))
+        db.addConversation("assistant", "Please provide age.", sources = "@engine=Clinical clarification\n#$id")
+        val answer = service.answer("Age 30")
+        assertEquals("Clinical clarification", answer.engine)
+        assertTrue(answer.sourceIds.isEmpty())
+        assertEquals("", answer.sources)
+    }
+
+    @Test fun repeatCarriesStoredTypedReferencesWithoutParsingDisplayText() = runBlocking {
+        val id = db.saveKnowledge(KnowledgeDraft("A saved reference."))
+        db.addConversation("assistant", "Previous answer", sources = "source filename #999.pdf", sourceIds = listOf(id))
+        val answer = service.answer("repeat")
+        assertEquals(listOf(id), answer.sourceIds)
+        assertEquals("Previous answer", answer.text)
+        assertEquals("source filename #999.pdf", answer.sources)
+    }
+
+    @Test fun offlineBaselineUsesSemanticEvidenceAndTranslationWithoutAGgufModel() = runBlocking {
+        settings.responseLanguage = "ur"
+        val source = "The workshop is in the north hall."
+        val id = db.saveKnowledge(KnowledgeDraft(source, source = "document", sourceReference = "manual.pdf · chunk 1/1"))
+        val backend = FakeRag(listOf(db.getKnowledge(id)!!)).apply { translated = "ورکشاپ شمالی ہال میں ہے۔" }
+        val fake = withOffline(backend)
+        val answer = service.answer("ورکشاپ کہاں ہے؟")
+        assertEquals(0, fake.generations)
+        assertEquals(0, fake.translations)
+        assertEquals(1, backend.translations)
+        assertTrue(answer.text.contains(backend.translated))
+        assertTrue(answer.text.contains(source))
+        assertTrue(answer.sources.contains("manual.pdf · chunk 1/1"))
+        assertEquals(listOf(id), answer.sourceIds)
+    }
+
+    @Test fun semanticReadinessPreventsWeakLlmQueryRewrite() = runBlocking {
+        settings.responseLanguage = "ur"
+        val id = db.saveKnowledge(KnowledgeDraft("The workshop is in the north hall."))
+        val backend = FakeRag(listOf(db.getKnowledge(id)!!)).apply {
+            translated = "ورکشاپ شمالی ہال میں ہے۔"
+            generator = File(context.cacheDir, "unused-fake-generator.gguf")
+        }
+        val fake = withOffline(backend)
+        service.answer("ورکشاپ کہاں ہے؟")
+        assertEquals(0, fake.rewrites)
+        assertEquals(0, fake.generations)
+    }
+
+    @Test fun changedDoseInOfflineMedicalTranslationShowsOnlyIntactOriginal() = runBlocking {
+        settings.responseLanguage = "ur"
+        settings.ragAnswerStyle = "synthesis"
+        val source = "Paracetamol tablet contains 5 mg of medicine."
+        val id = db.saveKnowledge(KnowledgeDraft(source, source = "document", sourceReference = "leaflet.pdf · chunk 1/1"))
+        val backend = FakeRag(listOf(db.getKnowledge(id)!!)).apply {
+            translated = "گولی میں 50 mg دوا ہوتی ہے۔"
+            generator = File(context.cacheDir, "unused-fake-generator.gguf")
+        }
+        val fake = withOffline(backend)
+        val answer = service.answer("What does the paracetamol leaflet say?")
+        assertEquals(0, fake.generations)
+        assertEquals("Translation unavailable · original text", answer.engine)
+        assertTrue(answer.text.contains(source))
+        assertFalse(answer.text.contains("50 mg"))
+        assertEquals(listOf(id), answer.sourceIds)
+    }
+
+    @Test fun quotedLeafletDirectionsCanTranslateButPersonalDrugChoiceStillGetsIntake() = runBlocking {
+        settings.responseLanguage = "ur"
+        val source = "Take 5 mg daily. Do not use during pregnancy."
+        val id = db.saveKnowledge(KnowledgeDraft(source, source = "document", sourceReference = "paracetamol-leaflet.pdf · chunk 1/1"))
+        val backend = FakeRag(listOf(db.getKnowledge(id)!!)).apply { translated = "روزانہ 5 mg لیں۔ حمل کے دوران استعمال نہ کریں۔" }
+        val fake = withOffline(backend)
+        val reference = service.answer("What does the paracetamol leaflet say?")
+        assertEquals("Medical reference · offline excerpt translation", reference.engine)
+        assertTrue(reference.text.contains(backend.translated))
+        assertTrue(reference.text.contains(source))
+        val personal = service.answer("Which medicine should I take for fever?")
+        assertEquals("Clinical clarification", personal.engine)
+        assertFalse(personal.text.contains("5 mg"))
+        assertEquals(1, backend.translations)
+        assertEquals(0, fake.generations)
+    }
+
+    @Test fun offlineSelectedExcerptsMustBeExactSpansOfTheirTrustedRecord() = runBlocking {
+        settings.responseLanguage = "ur"
+        val source = "The workshop is in the north hall."
+        val id = db.saveKnowledge(KnowledgeDraft(source))
+        val backend = FakeRag(listOf(db.getKnowledge(id)!!), mapOf(id to "Invented content from somewhere else.")).apply { translated = "ورکشاپ شمالی ہال میں ہے۔" }
+        withOffline(backend)
+        service.answer("workshop")
+        assertEquals(listOf(source), backend.translatedSources)
+    }
+
+    @Test fun missingRequestedFieldSkipsOptionalSynthesisRatherThanGuessingFromOtherNumbers() = runBlocking {
+        settings.ragAnswerStyle = "synthesis"
+        val source = "The workshop reference number is 250."
+        val id = db.saveKnowledge(KnowledgeDraft(source))
+        val backend = FakeRag(listOf(db.getKnowledge(id)!!)).apply { generator = File(context.cacheDir, "unused-fake-generator.gguf") }
+        val fake = withOffline(backend).apply { generated = "The warranty duration is 250 years. [1]" }
+        val answer = service.answer("What is the workshop warranty duration?")
+        assertEquals(0, fake.generations)
+        assertTrue(answer.text.contains(source))
+        assertFalse(answer.text.contains("250 years"))
+        assertEquals("Saved references · cited excerpts", answer.engine)
+    }
+
+    @Test fun nonLatinOptionalSynthesisUsesEnglishSourceSummaryThenDedicatedTranslation() = runBlocking {
+        settings.ragAnswerStyle = "synthesis"
+        settings.responseLanguage = "ur"
+        val id = db.saveKnowledge(KnowledgeDraft("The workshop reference number is 250."))
+        val backend = FakeRag(listOf(db.getKnowledge(id)!!)).apply {
+            generator = File(context.cacheDir, "unused-fake-generator.gguf")
+            translated = "ورکشاپ کا حوالہ نمبر 250 ہے۔ [1]"
+        }
+        val fake = withOffline(backend).apply { generated = "The workshop reference number is 250. [1]" }
+        val answer = service.answer("ورکشاپ کا حوالہ نمبر کیا ہے؟")
+        assertEquals("en", fake.generatedLanguage)
+        assertTrue(fake.generatedQuestion.startsWith("Summarize only"))
+        assertEquals(0, fake.translations)
+        assertEquals(0, fake.rewrites)
+        assertTrue(answer.text.contains(backend.translated))
+        assertTrue(answer.text.contains("Original English explanation"))
+        assertEquals(listOf(id), answer.sourceIds)
+    }
+
+    @Test fun offlinePipelineWithoutSourcesDoesNotCallEitherGeneratorOrTranslator() = runBlocking {
+        settings.responseLanguage = "ur"
+        val backend = FakeRag(emptyList())
+        val fake = withOffline(backend)
+        val answer = service.answer("What is an unknown reference?")
+        assertEquals("No matching knowledge", answer.engine)
+        assertEquals(0, fake.generations)
+        assertEquals(0, backend.translations)
+        assertTrue(answer.sourceIds.isEmpty())
+    }
+
+    @Test fun unavailableSemanticSearchDoesNotClaimSavedKnowledgeIsAbsent() = runBlocking {
+        val backend = FakeRag(emptyList()).apply { notice = "More free memory is needed for offline search." }
+        val fake = withOffline(backend)
+        val answer = service.answer("What is the workshop code?")
+        assertEquals("Offline search unavailable", answer.engine)
+        assertTrue(answer.text.contains("could not determine whether the saved references contain the answer"))
+        assertTrue(answer.text.contains("More free memory"))
+        assertNotEquals(LanguageTools.unknown("en"), answer.text)
+        assertTrue(answer.sourceIds.isEmpty())
+        assertEquals(0, fake.generations)
+        assertEquals(0, backend.translations)
+    }
+
+    private fun withOffline(backend: FakeRag): FakeEngine = FakeEngine().also {
+        service = AssistantService.withBackend(db, ModelManager(context), it, settings, backend)
+    }
+
+    private class FakeRag(private val records: List<KnowledgeRecord>, private val excerpts: Map<Long, String> = emptyMap()) : AssistantService.RagBackend {
+        override val searchReady = true
+        var translations = 0
+        var translated = ""
+        var generator: File? = null
+        var notice: String? = null
+        val translatedSources = mutableListOf<String>()
+        override suspend fun retrieve(question: String, language: String, limit: Int) = RagSearchResult(records.take(limit), excerpts, semantic = true, notice = notice)
+        override suspend fun translateText(source: String, targetLanguage: String, script: String): AssistantService.TranslatedEvidence {
+            translations++
+            translatedSources += source
+            return AssistantService.TranslatedEvidence(translated, source)
+        }
+        override fun defaultGeneratorFile() = generator
+    }
+
     private fun withModel(): FakeEngine {
         val id = "00000000-0000-0000-0000-000000000001"
         val directory = File(context.filesDir, "models").apply { mkdirs() }
@@ -275,8 +458,10 @@ class AssistantServiceTest {
         var translated = ""
         var rewritten = "unknown isolated query"
         var contexts = emptyList<String>()
+        var generatedLanguage = ""
+        var generatedQuestion = ""
         override suspend fun generate(modelFile: File, question: String, context: List<String>, languageTag: String, history: List<Pair<String, String>>, contextSize: Int): String {
-            generations++; contexts = context; return generated
+            generations++; contexts = context; generatedLanguage = languageTag; generatedQuestion = question; return generated
         }
         override suspend fun rewriteQueryToEnglish(modelFile: File, question: String, contextSize: Int): String { rewrites++; return rewritten }
         override suspend fun translateEvidence(modelFile: File, source: String, languageTag: String, contextSize: Int): String { translations++; return translated }

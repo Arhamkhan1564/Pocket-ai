@@ -1,94 +1,76 @@
-# Verification
+# Verification · 1.2 offline RAG
 
-## Current document RAG update · 1.1.0
+## Evidence for this version
 
-The [current build report](RAG-BUILD-REPORT.json) records **95 discovered tests: 94 passed, one explicitly skipped, zero failures/errors**. The six Gradle build/check tasks succeeded. Android lint reported zero errors and 18 warnings. Both APK signatures, the original release signing identity, 16 KiB alignment, the included speech asset checksum, PDF classes and license notices were verified. Full ARMv7 NEON, ARM64 and x86_64 runtimes are packaged.
+Use these version-specific records together:
 
-New component coverage includes TXT/DOCX/PDF extraction and malformed-document rejection, source-linked chunking and retrieval, installation integrity/concurrency, source-only answers, treatment clarification, urgent-message rules and translation/rewrite guards. The existing Compose dialog-idling test is still skipped; it is not counted as passed. [Per-suite XML](rag-test-results/) records the actual run with host identifiers removed.
+- [OFFLINE-BUILD-REPORT.json](OFFLINE-BUILD-REPORT.json): actual completed build/check commands, test counts, skipped cases, APK details and package verification.
+- [OFFLINE-MODEL-VALIDATION.md](OFFLINE-MODEL-VALIDATION.md): actual model/processor outcomes, including unsuccessful cases and their limits.
+- [Detailed model reports](offline-v1.2-model-results/) and [test-result XML](offline-v1.2-test-results/).
 
-**Language-model acceptance failed for Urdu/Punjabi.** The tested small Qwen3 candidate passed a synthetic English RAG fixture, but corrupted an identifier in Urdu, gave incomplete Punjabi answers, failed all three translation cases and dropped a named drug during query rewriting. See [actual model results](MODEL-VALIDATION.txt). It is labeled an English experiment, not a validated multilingual/clinical translator. The app preserves original evidence when translation checks fail; passing those checks cannot prove medical accuracy.
+A model file being present, a successful build, a mocked unit test and a real native inference are different evidence. A compiled or skipped instrumentation test is not a successful Android UI run. The older 45/44/1 and 95/94/1 test totals belong to earlier releases; they must not be reused as 1.2 results. The current build report is authoritative for the new count.
 
-The bundled Whisper tiny q5_1 passed real host-native English transcription/recovery checks. These results do not validate Urdu/Punjabi ASR, Android microphone/TTS routes or translation quality. The itel A25 Pro was not attached; physical-device execution, available RAM, latency, thermals and complete UI acceptance remain unverified. A single APK cannot establish usable AI performance on every phone.
+The intended distribution is one APK containing the **13 pinned baseline resource files totaling 715,732,683 bytes (682.6 MiB)**. This is the resource payload, not an APK-size or RAM measurement. The manifest fixes each file's identity and license. Gradle rejects a missing, changed or extra external asset. APK verification must establish that the packaged files match those identities; source declarations alone cannot establish that.
 
-## Historical initial release · 1.0.0
+## What changed in 1.2
 
-The records below describe the initial release only. Its old limits concerning bundled speech, document formats and ARMv7 inference have been superseded by the 1.1 implementation above. The original [BUILD-REPORT.json](BUILD-REPORT.json) and [test-results](test-results/) remain historical evidence.
+| Area | Implemented behavior | Evidence still required on the target phone |
+| --- | --- | --- |
+| Included resources | Local copy/check of E5, IndicTrans2, optional English GGUF and Whisper from the APK; no app network path | Installation/preparation storage, interruption recovery and adequate free RAM |
+| Retrieval | English, Urdu and both Punjabi scripts can query multilingual E5; lexical fallback, coverage and abstention guards remain | Representative corpus relevance, unsupported questions and latency |
+| Translation | Dedicated English-to-Urdu/Gurmukhi NMT; Shahmukhi is separately labelled Punjabi script conversion | Fluent-speaker review of meaning, dialect, names, quantities and warnings |
+| Answer behavior | Default cited excerpts; optional English synthesis with source checks and fallback | End-to-end interactions, useful abstention and misleading-source cases |
+| Sources | Typed citation IDs open saved passages and linked document passages; originals remain visible | UI behavior, long text/RTL and changed/deleted sources |
+| Documents | Bounded TXT/DOCX/selectable PDF preview, indexing, catalog and administrator deletion | Real provider/files, extraction order and small-screen operation |
+| Persistence | Schema 1→2 migration; format 2 backup with catalog/mappings/typed IDs, accepting format 1 | Update/restart and restore on a second installation |
+| Derived state | Bounded 384-dimensional vectors; stale-write protection and invalidation; revision-bound translation cache | Larger corpus growth, cancellation and low-storage conditions |
+| Runtime | CPU libraries for ARMv7 NEON, ARM64 and x86_64; prepared API-23/16-KiB ONNX JNI wrapper | Actual API/CPU/font compatibility and sustained memory/thermal behavior |
+| Voice | Included multilingual Whisper tiny Q5_1 and installed offline Android TTS selection | Actual microphone, each requested language and speaker/media route |
 
-This document distinguishes implemented behavior from completed acceptance testing. The actual target Android phone was not attached. A build, unit test, emulator test or English model test does not establish 2 GB target-device acceptance or Urdu/Punjabi voice quality.
+## Model evidence and interpretation
 
-## Build and test record
+Development-host E5 probes retrieved the intended English passage for a small synthetic set of English, Urdu, Gurmukhi and Shahmukhi questions. This is a limited relevance demonstration. Similarities and margins from that set do not certify broad retrieval accuracy or medical suitability. Missing requested fields or unsupported questions must still lead to abstention rather than a plausible unrelated answer.
 
-The build command `./gradlew --no-daemon assembleDebug testDebugUnitTest assembleRelease assembleDebugAndroidTest lintDebug` completed successfully. The JVM/Robolectric suite discovered 45 tests: 44 passed, one Compose dialog-idling test was explicitly skipped, and there were zero failures or errors. The skipped test is documented below and is not counted as passed. These cover persistent knowledge, authorization/recovery/expiry, transactional backup validation, multilingual retrieval and scripts, conversation isolation, model imports/storage safety and voice signal handling.
+The dedicated translator is **IndicTrans2 distilled 200M int8**, not a relabelled Urdu output or a claim that the small English GGUF learned Urdu/Punjabi. Native SentencePiece, the pinned dictionary mapping, Indic text processing and autoregressive tensor/cache behavior need parity checks as well as actual translation probes. Quantities and literal identifiers use strict restoration/preservation checks. A passing synthetic sentence does not establish reliable translation of every medicine leaflet.
 
-Debug and release APK signing was verified (v1/v2); ZIP/native alignment checks passed for 16 KiB pages. The release contains arm64-v8a, armeabi-v7a and x86_64 native libraries and MIT runtime notices. Its manifest has no Internet permission. Android lint has zero errors; remaining warnings concern pinned dependency upgrades, synchronous security-preference commits, a legacy launcher attribute and a redundant version check. A final explicit Android 12+ data-extraction exclusion was added to block cloud/device transfers as well as legacy automatic backups.
+`PunjabiShahmukhi` is an original Unicode/alphabet implementation with a small whole-word spelling glossary, applied after actual Punjabi Gurmukhi translation. Component checks cover the accepted fixture, Latin/code/digit/punctuation preservation, common nasal/gemination/conjunct behavior and explicit unsupported-sign errors. It does not resolve every loanword spelling, tone or dialect. It has not received fluent-speaker clinical review.
 
-The exact native JNI adapter passed real GGUF generation, Whisper tiny transcription, missing-model/invalid-audio recovery, and both ASR-first and generation-first sequential loading on a Linux x86_64 host. An official Qwen2.5-0.5B-Instruct Q4_K_M test also returned the supplied saved access phrase correctly using its actual ChatML template. See `tests/native/RESULTS.txt` for outputs, checksums and limits. These were host tests, not phone benchmarks.
+SmolLM2 360M is an **optional English-focused synthesizer**. Earlier host examples copied a literal and summarized two facts, but a missing-fact test did not abstain correctly. That failure remains a reason for default excerpts and source/coverage checks; it must not be counted as a successful no-answer test. A generated explanation is not proof that the cited source entails every sentence.
 
-Android instrumentation test APK compilation succeeded. Emulator UI/JNI execution has not yet been verified: the available emulator has no hardware acceleration; its first API 30 boot encountered repeated system-server readiness problems. A lighter API 28 fallback installed both APKs and rendered the actual app interface. It exposed small-screen layout/status-bar issues and a PIN-verification monitor that could block UI session checks; these were fixed. Two concurrent regression tests verify immediate session reads/locking and revocation of pending PIN/recovery operations. The initial UI flow hit a 30-second timeout during PIN verification before that fix; a warm retry stalled in emulator transport. System UI ANRs, Binder stalls and SurfaceFlinger throttling prevented a completed instrumentation pass. A preceding initial-build candidate with the same native core was also installed on a 10 Hz API 28 trial. The final delivered build adds training-voice progress feedback and busy-state guards; complete Android UI execution of that final build remains unverified. That guest stayed healthy while idle, then SurfaceFlinger throttling and zygote termination returned during the UI flow; its ADB transport timed out without a final instrumentation result. No emulator test is counted as passed without its execution result. No physical target phone was connected.
+Whisper host transcription checks demonstrate a narrow recognition path. They do not establish Urdu/Punjabi accuracy, script output, Android microphone routing or offline TTS quality. Recognition, text translation and spoken output are separate capabilities.
 
-## Initial-build additions
+## Target-device status
 
-First-time setup now displays actual device compatibility readings and offers a bounded two-second microphone signal check, a speaker tone requiring human confirmation, and separate offline-voice checks. Training voice capture uses its selected language; saved Punjabi records use their own script for speech. Plain-text document imports now show a preview and require explicit confirmation before any knowledge is saved.
+The physical itel A25 Pro/2 GB target phone was **not attached**. There is no completed acceptance claim for its Android version, ABI, available RAM, microphone/speaker, USB hardware, installed voices, speed, thermals or screen-off operation. Android 6/API 23 and three packaged ABIs do not make every model usable on every phone. Runtime guards are estimates and cannot guarantee that Android will never terminate an app under memory pressure.
 
-The compiled model header validator also passed the official 491,400,032-byte Qwen Q4_K_M GGUF and 77,691,713-byte multilingual Whisper tiny files. These external test weights are not bundled in the APK or source archive.
+Earlier software-emulator attempts rendered candidate UI but encountered framework/SurfaceFlinger/ADB failures and did not finish the full teaching/retrieval/restart instrumentation flow. Those records remain historical below. They do not prove either a passing current UI flow or a current application defect. A stable physical/accelerated Android runtime is still needed for complete UI/native acceptance.
 
-The additional Robolectric UI test was tried on SDK 28/34, including accessibility SetText, and could not get idle after the administrator dialog opened. It is explicitly annotated with `@Ignore`; the on-device `PocketFlowTest` remains enabled. This records a test-runtime limitation, not a passing UI result.
+No source or generated medicine response has been clinically validated. Imported references are owner-approved data, not a curated prescribing database. Numeric, negation, literal and citation checks are incomplete safeguards; passing them cannot prove semantic equivalence or safe individual treatment.
 
-Useful commands:
+## Reproduce and record checks
+
+Prepare pinned model resources and the ONNX wrapper as described in [DEVELOPMENT.md](DEVELOPMENT.md), then run:
 
 ```sh
-./gradlew testDebugUnitTest
-./gradlew lintDebug assembleDebug assembleRelease
+./gradlew testDebugUnitTest lintDebug lintVitalRelease assembleDebug assembleRelease assembleDebugAndroidTest
 ./gradlew connectedDebugAndroidTest
 ```
 
-`PocketFlowTest` exercises protected teaching, retrieval and restart through the actual Compose interface on a disposable debug installation. `NativeRuntimeTest` requires separately injected model/audio fixtures and skips when those fixtures are absent. See [DEVELOPMENT.md](DEVELOPMENT.md).
+Record the actual exit/results, not merely the command. Verify release identity, all required ABI libraries, ELF/ZIP alignment, model-resource checksums, licenses and the merged manifest's lack of Internet permission. Keep skipped tests explicit. Model fixtures must execute real runtimes to establish inference; unit tests that substitute a backend establish orchestration only.
 
-## Implemented in source
+For a target phone, complete this acceptance sequence with networking disabled:
 
-| Specification area | Implemented behavior | Remaining acceptance work |
-| --- | --- | --- |
-| Android foundation | Native Kotlin/Compose project, Material 3 dark theme, setup, navigation, API 23 minimum, ABI checks | Install/start on intended old phone; accessibility and small-screen review |
-| Two primary modes | Default User Mode; PIN-protected Training Mode; ordinary chat does not save verified knowledge | Verify lifecycle/expiry on actual Android build |
-| Persistent knowledge | SQLite CRUD, source metadata, categories, correction/training history, paginated browsing, indexed lexical search | Reboot persistence; large collection/resource measurements |
-| Teaching | Fact and Q/A entry, review/confirmation, duplicates/conflicts, correction/deletion, source-linked plain TXT chunks | Representative user teaching and import data |
-| Authorization | Salted PBKDF2 PIN/recovery, backoff, expiring session, guarded permanent mutators | Device behavior, recovery usability, session lifecycle |
-| User conversation | Typed questions, recent context, source labels, saved-original fallback, repeat/slower/language commands | Real user language phrases and multilingual UX |
-| Multilingual text | Urdu, Punjabi scripts, selectable third language, original preservation, normalization, RTL-aware content | Fonts/layout on old phone; spelling/script search corpus |
-| Local generated answers | Pinned llama.cpp JNI, imported GGUF, retrieved context, bounded prompts, memory guard, cleanup/cancellation | Meaningful target model; Urdu/Punjabi quality; device latency/memory |
-| Offline ASR | Pinned Whisper JNI, bounded AudioRecord, silence handling, explicit language, temporary PCM | Built-in mic, noise, Urdu/Punjabi/third-language accuracy and latency |
-| Offline TTS | Installed voices filtered for offline availability, per-language checks, speed/volume/repeat/stop | Actual installed voices, pronunciation, media route and speaker |
-| Model management | SAF/USB-provider import, storage bounds, header checks, metadata/checksum, progress, selection/removal | Full tensor validation using chosen real files; target compatibility |
-| Audio devices | Live enumeration, default built-in recording preference, dynamic microphone selection | Actual USB/external microphone and speaker routing |
-| Diagnostics | API/device/ABI/CPU/RAM/storage/battery/thermal/audio/USB reports | Verify readings and capabilities on target phone |
-| Portable backup | Admin-gated bounded JSON export, validated transactional replacement restore | SAF behavior on target providers, restore to second phone |
-| Appliance session | Explicitly started microphone foreground session, notification stop, bounded windows/wake lock/duration | Screen-off behavior, interruption recovery, 30-minute reliability |
-| Privacy | No Internet permission, no accounts/cloud inference, private local data, automatic Android backup disabled | Device-level privacy review; external provider/service behavior |
-| Resource limits | Sequential/lazy inference, bounded recordings/contexts, pagination, low-memory checks, native cleanup | Peak RSS/heap, thermal throttling, sustained low-memory conditions |
+1. Inspect Android/API/ABI/CPU, free RAM/storage and battery/thermal status. Install and prepare included resources locally; pause/retry setup and confirm that originals remain readable if a component cannot load.
+2. Create/recover administrator access. Import a short English TXT, DOCX and selectable PDF; check preview, source language, ordering and confirmation. Reject malformed, encrypted, legacy DOC and image-only inputs with clear messages.
+3. Let the index finish. Ask known and missing-fact questions in English, Urdu, Gurmukhi and Shahmukhi; compare sources and abstentions. Open each source chip and full saved document. Edit/delete a source and ensure stale vectors/translations cannot be served as current evidence.
+4. Compare translated passages with the English original, including names, identifiers, quantities, units and prohibitions. Ask for clarification when needed; do not interpret a general source as personalized prescribing.
+5. Restart the app/phone. Export/restore format 2, try an old format 1 backup and reject invalid mappings. Check catalog, original content and trusted citation IDs; observe local reindexing after restore.
+6. Test microphone/recognition and installed offline TTS separately for every intended language/script. Check permission denial and text fallback, cancellation and actual media routing.
+7. Compare default excerpts with optional synthesis. Measure first/repeated latency, peak process/native memory, storage growth and thermal behavior. Test larger collections and low-memory/low-storage recovery.
+8. Start/stop the optional foreground appliance session visibly; check notification stop, interruption, duration limits and resource release. Test external USB equipment only when attached.
 
-## Deferred or deliberately limited
+## Historical releases
 
-- No bundled model weights or guaranteed Urdu/Punjabi speech voice.
-- No full inference on 32-bit ARM in this build; saved-knowledge text/TTS fallback remains available.
-- No automatic model download, dedicated translation/transliteration engine or semantic embedding index.
-- No universal automatic language identification; Arabic-script Urdu/Punjabi remains manually selectable.
-- No fine-tuning/model-parameter retraining; learning means persistent indexed knowledge.
-- No wake word, automatic boot startup, permanent unattended listening, LED hardware integration or remote/local web administration dashboard.
-- No PDF/DOCX/OCR ingestion; supported document import is bounded plain UTF-8 text.
-- No encrypted SQLite database or encrypted portable/signing backup.
-- No unlimited/streaming full-database portable backup; audit history/settings/models/credentials are excluded from JSON backup.
-- No prior-release schema migration acceptance result; this is the first schema version.
-- No app-store publication or production device certification.
+The [1.1 RAG build report](RAG-BUILD-REPORT.json), [1.1 XML](rag-test-results/) and [Qwen model findings](MODEL-VALIDATION.txt) describe the previous release. Its 95 discovered/94 passed/one skipped test count is historical. Its small Qwen candidate failed Urdu/Punjabi generation/translation checks; that is not a result for the new dedicated IndicTrans2 pipeline. Version 1.1 bundled recognition but required a separate language model and had no E5 index.
 
-## Target-phone acceptance procedure
-
-1. Record phone model, Android/API/ABI, available RAM/storage and battery/thermal readings before loading models.
-2. With internet disabled, set up the app, create/recover credentials, save a fact/Q&A, inspect/edit/correct it, search, delete a separate test record and check audit events.
-3. Restart the app and phone. Confirm default User Mode, retained knowledge and protected mutations.
-4. Import a UTF-8 Urdu document and Punjabi content in each needed script. Check original text, RTL, pagination and a known lexical question.
-5. Export a backup, test malformed-file rejection, then restore a known valid backup after confirming replacement. Check record counts and questions.
-6. Import the chosen GGUF/Whisper files, record checksums, run generated answers and compare saved sources. Try missing/corrupt/oversized files and an insufficient-memory case.
-7. Test the built-in microphone/speaker in each language separately. Record ASR errors and latency; listen to TTS pronunciation and verify text-only fallback when a voice is unavailable.
-8. Repeat interactions while measuring app/native peak memory, response latency, storage growth and thermal behavior. A successful isolated request is not a sustained-use result.
-9. Start and stop an appliance session visibly. Check the notification, screen-off behavior, interruptions, duration limit and resource release. Test USB audio/storage only if actual hardware is attached.
-10. Document failures and the smallest usable profile before relying on the motherboard without a display.
+The [initial build report](BUILD-REPORT.json), [initial XML](test-results/), [Android runtime attempt](android-final-status.txt) and [Compose test status](compose-ui-test-status.txt) describe 1.0-era work. Its 45 discovered/44 passed/one skipped count, missing bundled weights, 32-bit inference stub and TXT-only limits have been superseded. Native host results in `tests/native/RESULTS.txt` likewise identify their original fixture/runtime context; they are not a phone benchmark for every current component.

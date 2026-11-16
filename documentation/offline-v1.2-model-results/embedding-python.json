@@ -1,0 +1,255 @@
+{
+  "model": "Xenova/multilingual-e5-small",
+  "revision": "761b726dd34fb83930e26aab4e9ac3899aa1fa78",
+  "weights_sha256": "f80102d3f2a1229f387d3c81909990d8945513e347b0eab049f7de3c6f98c193",
+  "tokenizer_offset_parity": "PASS across fixture pieces",
+  "load_seconds": 0.6540947979992779,
+  "index_seconds": 0.0368070099993929,
+  "dimension": 384,
+  "peak_rss_kib": 385044,
+  "results": [
+    {
+      "language": "en",
+      "query": "How should insulin be stored?",
+      "expected": "insulin-storage",
+      "found": "insulin-storage",
+      "match": true,
+      "seconds": 0.0034486169988667825,
+      "scores": [
+        {
+          "id": "insulin-storage",
+          "score": 0.8856006860733032
+        },
+        {
+          "id": "ibuprofen-warning",
+          "score": 0.807012677192688
+        },
+        {
+          "id": "paracetamol-reference",
+          "score": 0.7967698574066162
+        }
+      ]
+    },
+    {
+      "language": "ur",
+      "query": "انسولین کو کیسے محفوظ رکھنا چاہئے؟",
+      "expected": "insulin-storage",
+      "found": "insulin-storage",
+      "match": true,
+      "seconds": 0.004138676000366104,
+      "scores": [
+        {
+          "id": "insulin-storage",
+          "score": 0.8271050453186035
+        },
+        {
+          "id": "ibuprofen-warning",
+          "score": 0.781495988368988
+        },
+        {
+          "id": "paracetamol-reference",
+          "score": 0.7796123623847961
+        }
+      ]
+    },
+    {
+      "language": "pa-Guru",
+      "query": "ਇਨਸੁਲਿਨ ਨੂੰ ਕਿਵੇਂ ਸੰਭਾਲ ਕੇ ਰੱਖਣਾ ਚਾਹੀਦਾ ਹੈ?",
+      "expected": "insulin-storage",
+      "found": "insulin-storage",
+      "match": true,
+      "seconds": 0.003613831999246031,
+      "scores": [
+        {
+          "id": "insulin-storage",
+          "score": 0.8326879739761353
+        },
+        {
+          "id": "ibuprofen-warning",
+          "score": 0.8150926828384399
+        },
+        {
+          "id": "paracetamol-reference",
+          "score": 0.8048315644264221
+        }
+      ]
+    },
+    {
+      "language": "pa-Arab",
+      "query": "انسولین نوں کیویں سنبھال کے رکھنا چاہیدا اے؟",
+      "expected": "insulin-storage",
+      "found": "insulin-storage",
+      "match": true,
+      "seconds": 0.003831838001133292,
+      "scores": [
+        {
+          "id": "insulin-storage",
+          "score": 0.8410320281982422
+        },
+        {
+          "id": "ibuprofen-warning",
+          "score": 0.8105098009109497
+        },
+        {
+          "id": "paracetamol-reference",
+          "score": 0.8056363463401794
+        }
+      ]
+    },
+    {
+      "language": "en",
+      "query": "What does the reference say about paracetamol?",
+      "expected": "paracetamol-reference",
+      "found": "paracetamol-reference",
+      "match": true,
+      "seconds": 0.0042732660003821366,
+      "scores": [
+        {
+          "id": "paracetamol-reference",
+          "score": 0.8836747407913208
+        },
+        {
+          "id": "ibuprofen-warning",
+          "score": 0.8095805048942566
+        },
+        {
+          "id": "insulin-storage",
+          "score": 0.798712968826294
+        }
+      ]
+    },
+    {
+      "language": "ur",
+      "query": "پیراسیٹامول کے بارے میں دستاویز میں کیا لکھا ہے؟",
+      "expected": "paracetamol-reference",
+      "found": "paracetamol-reference",
+      "match": true,
+      "seconds": 0.004050141000334406,
+      "scores": [
+        {
+          "id": "paracetamol-reference",
+          "score": 0.8281324505805969
+        },
+        {
+          "id": "ibuprofen-warning",
+          "score": 0.7814817428588867
+        },
+        {
+          "id": "insulin-storage",
+          "score": 0.7477397322654724
+        }
+      ]
+    },
+    {
+      "language": "pa-Guru",
+      "query": "ਪੈਰਾਸੀਟਾਮੋਲ ਬਾਰੇ ਦਸਤਾਵੇਜ਼ ਕੀ ਕਹਿੰਦਾ ਹੈ?",
+      "expected": "paracetamol-reference",
+      "found": "paracetamol-reference",
+      "match": true,
+      "seconds": 0.004539007999483147,
+      "scores": [
+        {
+          "id": "paracetamol-reference",
+          "score": 0.8620859384536743
+        },
+        {
+          "id": "ibuprofen-warning",
+          "score": 0.8292269706726074
+        },
+        {
+          "id": "insulin-storage",
+          "score": 0.8041888475418091
+        }
+      ]
+    },
+    {
+      "language": "pa-Arab",
+      "query": "پیراسیٹامول بارے دستاویز کیہ کہندی اے؟",
+      "expected": "paracetamol-reference",
+      "found": "paracetamol-reference",
+      "match": true,
+      "seconds": 0.0035965440001746174,
+      "scores": [
+        {
+          "id": "paracetamol-reference",
+          "score": 0.8234513401985168
+        },
+        {
+          "id": "ibuprofen-warning",
+          "score": 0.7730979919433594
+        },
+        {
+          "id": "insulin-storage",
+          "score": 0.7361879348754883
+        }
+      ]
+    },
+    {
+      "language": "ur",
+      "query": "ورکشاپ کا کوڈ کیا ہے؟",
+      "expected": "workshop-code",
+      "found": "workshop-code",
+      "match": true,
+      "seconds": 0.0029069619995425455,
+      "scores": [
+        {
+          "id": "workshop-code",
+          "score": 0.8229660391807556
+        },
+        {
+          "id": "ibuprofen-warning",
+          "score": 0.7677634954452515
+        },
+        {
+          "id": "insulin-storage",
+          "score": 0.7669623494148254
+        }
+      ]
+    },
+    {
+      "language": "pa-Guru",
+      "query": "ਵਰਕਸ਼ਾਪ ਦਾ ਕੋਡ ਕੀ ਹੈ?",
+      "expected": "workshop-code",
+      "found": "workshop-code",
+      "match": true,
+      "seconds": 0.00311325599977863,
+      "scores": [
+        {
+          "id": "workshop-code",
+          "score": 0.8373807668685913
+        },
+        {
+          "id": "paracetamol-reference",
+          "score": 0.781705915927887
+        },
+        {
+          "id": "ibuprofen-warning",
+          "score": 0.7793797254562378
+        }
+      ]
+    },
+    {
+      "language": "en",
+      "query": "How do I book a flight? ",
+      "expected": null,
+      "found": "filter-maintenance",
+      "match": true,
+      "seconds": 0.0026582619993860135,
+      "scores": [
+        {
+          "id": "filter-maintenance",
+          "score": 0.8004520535469055
+        },
+        {
+          "id": "ibuprofen-warning",
+          "score": 0.7978899478912354
+        },
+        {
+          "id": "insulin-storage",
+          "score": 0.7968140840530396
+        }
+      ]
+    }
+  ],
+  "limits": "Synthetic Linux CPU retrieval fixtures only. No proof of clinical accuracy, representative corpus quality, or target-phone latency/memory."
+}

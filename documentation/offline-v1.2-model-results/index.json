@@ -1,0 +1,175 @@
+{
+  "collection": "Pocket AI v1.2 offline model host evidence",
+  "machine_scope": "Linux x86_64 development host; Android cross-compilation is identified separately",
+  "application_build_status": "Separate from these host reports; consult final BUILD-REPORT.json for APK identity/checks.",
+  "reports": [
+    {
+      "file": "embedding-python.json",
+      "source_report": "offline-embedding-v12/probe-results.json",
+      "bytes": 6822,
+      "sha256": "d693d19b690007338b65777da577d4c1f5dc24e9a1760c2a3865b28a93800657",
+      "copied_verbatim": true
+    },
+    {
+      "file": "embedding-kotlin.json",
+      "source_report": "offline-embedding-v12/kotlin-parity/results.json",
+      "bytes": 4078,
+      "sha256": "06cc94ad8886608e4a4ea8706724d9396d65f9e25a058aac1a8d2f80102da27c",
+      "copied_verbatim": true
+    },
+    {
+      "file": "translation-python.json",
+      "source_report": "offline-translation-v12/indictrans2/greedy-results.json",
+      "bytes": 13217,
+      "sha256": "85f36a9b5b5e71888e8a819299eb30bc64669b9f176541db4c4867d33947b417",
+      "copied_verbatim": true
+    },
+    {
+      "file": "translation-python-summary.txt",
+      "source_report": "offline-translation-v12/indictrans2/RESULTS.txt",
+      "bytes": 5803,
+      "sha256": "3d5e15526d1c69e9853f44298445ef0eede35c954291e886ba3b5b23f2b4eb84",
+      "copied_verbatim": true
+    },
+    {
+      "file": "literal-protection-python.json",
+      "source_report": "offline-translation-v12/indictrans2/literal-results.json",
+      "bytes": 8127,
+      "sha256": "20c3528650aa20e88bca1f17215ab6c4f9c3d941006b37b2ca8a59039f070f94",
+      "copied_verbatim": true
+    },
+    {
+      "file": "literal-protection-summary.txt",
+      "source_report": "offline-translation-v12/indictrans2/literal-trial-report.txt",
+      "bytes": 1680,
+      "sha256": "fa4d3962f2ff2e9998b4e4aa9cca7009fd99b135b6b805fedf3f1a9a65b59b8a",
+      "copied_verbatim": true
+    },
+    {
+      "file": "translation-kotlin-kernel.json",
+      "source_report": "offline-translation-v12/indictrans2/kotlin-parity/report.json",
+      "bytes": 926,
+      "sha256": "de4b50b00263375973220c6558ac099971bdde4c3e340ae4a6f7dc39e3a9fa1b",
+      "copied_verbatim": true
+    },
+    {
+      "file": "translation-kotlin-composed.json",
+      "source_report": "offline-translation-v12/indictrans2/tokenizer-kotlin-parity/pipeline-report.json",
+      "bytes": 1044,
+      "sha256": "6e7075df2f4376b080e0ba6d155e90c8a0ad680d0c05ad68e5bd80f0ac655ff2",
+      "copied_verbatim": true
+    },
+    {
+      "file": "sentencepiece-native.json",
+      "source_report": "offline-translation-v12/sentencepiece-native-probe/RESULTS.json",
+      "bytes": 3023,
+      "sha256": "8a69f2a3bc2ff64b45cda6664c5b96606daa3e14e6b42aaf4666af47de0a8cfc",
+      "copied_verbatim": true
+    },
+    {
+      "file": "text-processor-official-parity.json",
+      "source_report": "offline-translation-v12/indictrans2/processor-verify/RESULTS.json",
+      "bytes": 1743,
+      "sha256": "847f2396929d2b19e774c25f026e83f5b834e95d9e253e01b0406e883cb4ed80",
+      "copied_verbatim": true
+    },
+    {
+      "file": "english-generation.json",
+      "source_report": "offline-english-rag-v12/smoke-report.json",
+      "bytes": 2427,
+      "sha256": "505a0a031e63af9e398442b0b3326221d86b29c9d0169c3a6123d5666f7203d1",
+      "copied_verbatim": true
+    },
+    {
+      "file": "english-generation-summary.txt",
+      "source_report": "offline-english-rag-v12/RESULTS.txt",
+      "bytes": 2621,
+      "sha256": "69722be70e4516cca61daf3875c48cad062f998024ad4425e58f3eb2e4f9fc61",
+      "copied_verbatim": true
+    },
+    {
+      "file": "asset-fetch-checks.json",
+      "source_report": "offline-model-fetch-validation.json",
+      "bytes": 440,
+      "sha256": "aac9759981cab2484a9a7929639d74772bf09b165a2f41ce03b6dc08e66cf102",
+      "copied_verbatim": true
+    },
+    {
+      "file": "embedding-kotlin.txt",
+      "source_report": "offline-embedding-v12/kotlin-parity/run.log",
+      "bytes": 1827,
+      "sha256": "8522c2ed237a871e8cf446e6e6db501d563699b5e08454434abb062515c4cc68",
+      "copied_verbatim": false,
+      "change": "Removed Java bootstrap environment line only; test-output lines unchanged."
+    },
+    {
+      "file": "translation-kotlin-kernel.txt",
+      "source_report": "offline-translation-v12/indictrans2/kotlin-parity/run.log",
+      "bytes": 615,
+      "sha256": "c84e77c0a92e24e0f04dff3e92b68c5ec2810241ad997b6a9cc7bfb2c18b6510",
+      "copied_verbatim": false,
+      "change": "Removed Java bootstrap environment line only; test-output lines unchanged."
+    },
+    {
+      "file": "translation-kotlin-composed.txt",
+      "source_report": "offline-translation-v12/indictrans2/tokenizer-kotlin-parity/pipeline.log",
+      "bytes": 1818,
+      "sha256": "9ef57fa70ef69602a1224ee4407760a349007f07889be9538e4d406a1302ddd9",
+      "copied_verbatim": false,
+      "change": "Removed Java bootstrap environment line only; test-output lines unchanged."
+    },
+    {
+      "file": "sentencepiece-native.txt",
+      "source_report": "offline-translation-v12/sentencepiece-native-probe/host-parity.log",
+      "bytes": 3456,
+      "sha256": "cd9d36a4aa3817a2238d74510d9e85688f6cbaa988cb6675d0d4d15ea8931401",
+      "copied_verbatim": false,
+      "change": "Removed Java bootstrap environment line only; test-output lines unchanged."
+    },
+    {
+      "file": "translation-wrapper.json",
+      "source_report": "offline-translation-v12/indictrans2/wrapper-parity/results.json",
+      "bytes": 7013,
+      "sha256": "9bae43f440e8fbc91138030d8e14925fb37c1c1d916d8c776b81f6c4c8006f63",
+      "copied_verbatim": true
+    },
+    {
+      "file": "translation-wrapper-extraction.json",
+      "source_report": "offline-translation-v12/indictrans2/wrapper-parity/source-extraction.json",
+      "bytes": 590,
+      "sha256": "e425cc8dab2cf8a05524f61b23d68935bc51f9ac1d8104a7567a3ebefaf571ce",
+      "copied_verbatim": true
+    },
+    {
+      "file": "translation-wrapper.txt",
+      "source_report": "offline-translation-v12/indictrans2/wrapper-parity/run.log",
+      "bytes": 3035,
+      "sha256": "1f31d50f18c3154abd34f188e5159aadc61120c41e6d48f0a9ed028dce38d108",
+      "copied_verbatim": false,
+      "change": "Removed Java bootstrap environment line only; test-output lines unchanged."
+    },
+    {
+      "file": "sentencepiece-inference-build-graph.json",
+      "source_report": "offline-translation-v12/sentencepiece-native-probe/inference-only-build-graph.json",
+      "bytes": 556,
+      "sha256": "a2eebc903147a11dcd867a22d9acf81a1dc3ec43aea1c03ae80254f8cf60e1b4",
+      "copied_verbatim": true
+    }
+  ],
+  "context": [
+    "Reports are snapshots at their recorded source hashes, not a claim that every later source edit was rerun.",
+    "The older raw SentencePiece probe used local validation inputs; its historical not-bundled note does not define the v1.2 APK contents. Current bundle membership is app/src/main/assets/offline-model-manifest.json.",
+    "No weights, tokenizer binaries, caches, compiled classes, JARs or shared libraries are included in this evidence directory.",
+    "No physical-phone, representative-corpus, fluent-speaker or clinical acceptance is established by host fixture parity."
+  ],
+  "current_source_fingerprint_check": {
+    "canonical_kotlin_and_fixture_files_checked": 11,
+    "canonical_kotlin_and_fixture_mismatches": [],
+    "tokenizer_jni_source_match": [
+      "app/src/main/cpp/tokenizer_jni.cpp"
+    ],
+    "native_cmake_matches_probe": false,
+    "note": "Read-only check when this collection was prepared; subsequent edits are outside this snapshot.",
+    "native_cmake_matches_later_inference_build_graph": true
+  }
+}

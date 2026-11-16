@@ -1,0 +1,185 @@
+{
+  "schemaVersion": 1,
+  "bundleVersion": "1.2.0",
+  "totalSizeBytes": 715732683,
+  "packs": [
+    {
+      "id": "search",
+      "role": "semantic_search",
+      "name": "Multilingual saved-document search",
+      "directions": [
+        {
+          "source": "en",
+          "target": "en"
+        },
+        {
+          "source": "ur",
+          "target": "en"
+        },
+        {
+          "source": "pa-Guru",
+          "target": "en"
+        },
+        {
+          "source": "pa-Arab",
+          "target": "en"
+        }
+      ],
+      "license": "MIT",
+      "licenseAsset": "licenses/MULTILINGUAL_E5_MIT.txt",
+      "sourceRepository": "Xenova/multilingual-e5-small",
+      "sourceRevision": "761b726dd34fb83930e26aab4e9ac3899aa1fa78",
+      "notes": [
+        "Embeds queries and saved passages; this resource does not translate text.",
+        "Ten English/Urdu/Punjabi script retrieval fixtures passed on the development host; target-phone acceptance remains separate."
+      ],
+      "files": [
+        {
+          "assetPath": "offline/search/model.onnx",
+          "sizeBytes": 118308185,
+          "sha256": "f80102d3f2a1229f387d3c81909990d8945513e347b0eab049f7de3c6f98c193",
+          "url": "https://huggingface.co/Xenova/multilingual-e5-small/resolve/761b726dd34fb83930e26aab4e9ac3899aa1fa78/onnx/model_quantized.onnx"
+        },
+        {
+          "assetPath": "offline/search/tokenizer.spm",
+          "sizeBytes": 5069051,
+          "sha256": "cfc8146abe2a0488e9e2a0c56de7952f7c11ab059eca145a0a727afce0db2865",
+          "url": "https://huggingface.co/Xenova/multilingual-e5-small/resolve/761b726dd34fb83930e26aab4e9ac3899aa1fa78/sentencepiece.bpe.model"
+        }
+      ],
+      "totalSizeBytes": 123377236
+    },
+    {
+      "id": "translation",
+      "role": "translation",
+      "name": "English to Urdu and Punjabi translation",
+      "directions": [
+        {
+          "source": "en",
+          "target": "ur"
+        },
+        {
+          "source": "en",
+          "target": "pa-Guru"
+        }
+      ],
+      "license": "MIT",
+      "licenseAsset": "licenses/INDICTRANS2_MIT.txt",
+      "sourceRepository": "hari31416/indictrans2-en-indic-dist-200M-ONNX-int8",
+      "sourceRevision": "1eaa43a3fb76f382f1b22c76e56f6ab4926ad68b",
+      "notes": [
+        "English-to-Urdu and English-to-Gurmukhi Punjabi only; this model has no direct Shahmukhi target.",
+        "Punjabi Shahmukhi requires a separately labelled script-conversion step.",
+        "Source identifiers and numeric values require preservation checks; synthetic fixtures are not a medical-quality certification."
+      ],
+      "files": [
+        {
+          "assetPath": "offline/translation/indictrans-v1/encoder_model.onnx",
+          "sizeBytes": 831399,
+          "sha256": "87c3d6c6fbc48d9d7081927f3bd59915d5443a06cb63460e0d3705bae74de5a9",
+          "url": "https://huggingface.co/hari31416/indictrans2-en-indic-dist-200M-ONNX-int8/resolve/1eaa43a3fb76f382f1b22c76e56f6ab4926ad68b/encoder_model.onnx"
+        },
+        {
+          "assetPath": "offline/translation/indictrans-v1/encoder_model.onnx.data",
+          "sizeBytes": 73791488,
+          "sha256": "71a4d119514411a3cb3f9d76d2d88d5c4eac7c8e907397d62d5b29e2468a0c16",
+          "url": "https://huggingface.co/hari31416/indictrans2-en-indic-dist-200M-ONNX-int8/resolve/1eaa43a3fb76f382f1b22c76e56f6ab4926ad68b/encoder_model.onnx.data"
+        },
+        {
+          "assetPath": "offline/translation/indictrans-v1/decoder_model.onnx",
+          "sizeBytes": 2037502,
+          "sha256": "58c0fafb7ba0f343acba8643a386fab08143d49ef24472cefaecc87080f44e75",
+          "url": "https://huggingface.co/hari31416/indictrans2-en-indic-dist-200M-ONNX-int8/resolve/1eaa43a3fb76f382f1b22c76e56f6ab4926ad68b/decoder_model.onnx"
+        },
+        {
+          "assetPath": "offline/translation/indictrans-v1/decoder_with_past_model.onnx",
+          "sizeBytes": 1850479,
+          "sha256": "a2e9a87ff7563f5fc87fe8102188be37fb66771cf30970e649ca67be7f895497",
+          "url": "https://huggingface.co/hari31416/indictrans2-en-indic-dist-200M-ONNX-int8/resolve/1eaa43a3fb76f382f1b22c76e56f6ab4926ad68b/decoder_with_past_model.onnx"
+        },
+        {
+          "assetPath": "offline/translation/indictrans-v1/decoder_shared.onnx.data",
+          "sizeBytes": 203048944,
+          "sha256": "902314746ac629ae2ff584709c03eecdb0b3f7be4fb70ce0ff1bfbe66f14e574",
+          "url": "https://huggingface.co/hari31416/indictrans2-en-indic-dist-200M-ONNX-int8/resolve/1eaa43a3fb76f382f1b22c76e56f6ab4926ad68b/decoder_shared.onnx.data"
+        },
+        {
+          "assetPath": "offline/translation/indictrans-v1/model.SRC",
+          "sizeBytes": 759425,
+          "sha256": "3cedc5cbcc740369b76201942a0f096fec7287fee039b55bdb956f301235b914",
+          "url": "https://huggingface.co/hari31416/indictrans2-en-indic-dist-200M-ONNX-int8/resolve/1eaa43a3fb76f382f1b22c76e56f6ab4926ad68b/model.SRC"
+        },
+        {
+          "assetPath": "offline/translation/indictrans-v1/model.TGT",
+          "sizeBytes": 3256903,
+          "sha256": "ac9257c8e76b8b607705b959cc3d075656ea33032f7a974e467b8941df6e98d4",
+          "url": "https://huggingface.co/hari31416/indictrans2-en-indic-dist-200M-ONNX-int8/resolve/1eaa43a3fb76f382f1b22c76e56f6ab4926ad68b/model.TGT"
+        },
+        {
+          "assetPath": "offline/translation/indictrans-v1/dict.SRC.json",
+          "sizeBytes": 645314,
+          "sha256": "c6f65113581422c8777991d3770123c63447fe63dc5f3e8f4187eeff7553a689",
+          "url": "https://huggingface.co/hari31416/indictrans2-en-indic-dist-200M-ONNX-int8/resolve/1eaa43a3fb76f382f1b22c76e56f6ab4926ad68b/dict.SRC.json"
+        },
+        {
+          "assetPath": "offline/translation/indictrans-v1/dict.TGT.json",
+          "sizeBytes": 3390440,
+          "sha256": "f7817850c9e4b99c59fad57d0611c7720f1921f215e6f247cf25d52eff7f1146",
+          "url": "https://huggingface.co/hari31416/indictrans2-en-indic-dist-200M-ONNX-int8/resolve/1eaa43a3fb76f382f1b22c76e56f6ab4926ad68b/dict.TGT.json"
+        }
+      ],
+      "totalSizeBytes": 289611894
+    },
+    {
+      "id": "english",
+      "role": "english_generation",
+      "name": "Small local English answer model",
+      "directions": [
+        {
+          "source": "en",
+          "target": "en"
+        }
+      ],
+      "license": "Apache-2.0",
+      "licenseAsset": "licenses/Apache-2.0.txt",
+      "sourceRepository": "bartowski/SmolLM2-360M-Instruct-GGUF",
+      "sourceRevision": "7be6f65f1db715fe5dc5a4634c0d459b4eed42ec",
+      "notes": [
+        "English-focused generation; no Urdu or Punjabi generation capability is claimed.",
+        "The host prototype passed literal copying and a two-fact summary but failed a missing-fact abstention test. Generation must be conditional with saved-source or unknown-answer fallback."
+      ],
+      "files": [
+        {
+          "assetPath": "offline/english/model.gguf",
+          "sizeBytes": 270590880,
+          "sha256": "2fa3f013dcdd7b99f9b237717fa0b12d75bbb89984cc1274be1471a465bac9c2",
+          "url": "https://huggingface.co/bartowski/SmolLM2-360M-Instruct-GGUF/resolve/7be6f65f1db715fe5dc5a4634c0d459b4eed42ec/SmolLM2-360M-Instruct-Q4_K_M.gguf"
+        }
+      ],
+      "totalSizeBytes": 270590880
+    },
+    {
+      "id": "speech",
+      "role": "speech_recognition",
+      "name": "Included multilingual voice input",
+      "directions": [],
+      "license": "MIT",
+      "licenseAsset": "licenses/WHISPER_MODEL_LICENSE.txt",
+      "sourceRepository": "ggerganov/whisper.cpp",
+      "sourceRevision": "5359861c739e955e79d9a303bcbc70fb988958b1",
+      "notes": [
+        "Whisper tiny multilingual Q5_1 recognizer; language availability and accuracy depend on the runtime and device.",
+        "This resource adds no text-to-speech voice, translation pack, or language-model generation."
+      ],
+      "files": [
+        {
+          "assetPath": "models/ggml-tiny-q5_1.bin",
+          "sizeBytes": 32152673,
+          "sha256": "818710568da3ca15689e31a743197b520007872ff9576237bda97bd1b469c3d7",
+          "url": "https://huggingface.co/ggerganov/whisper.cpp/resolve/5359861c739e955e79d9a303bcbc70fb988958b1/ggml-tiny-q5_1.bin"
+        }
+      ],
+      "totalSizeBytes": 32152673
+    }
+  ]
+}

@@ -1,8 +1,10 @@
 Pocket AI — third-party software notices
 
-The application bundles CPU inference code from the following projects and a
-quantized multilingual Whisper tiny speech model. No language model or TTS
-voice is bundled.
+The application bundles CPU inference code, multilingual search, dedicated
+English-to-Urdu/Punjabi translation, a small English language model, and a
+quantized multilingual Whisper tiny speech model. Exact model provenance,
+licenses and limitations are in OFFLINE_MODEL_NOTICES.txt and the pinned
+offline-model-manifest.json. Android TTS voice data is not bundled.
 
 Pocket AI native dependencies (CPU only, no downloads at application runtime)
 
@@ -17,8 +19,9 @@ license MIT (see whisper.cpp/LICENSE)
 Whisper uses the single GGML implementation supplied by pinned llama.cpp.
 The included Whisper model's license and pinned provenance are in
 licenses/WHISPER_MODEL_LICENSE.txt and BUNDLED_SPEECH_MODEL_NOTICE.txt.
-Import a compatible licensed GGUF language model through Models for generated
-or translated answers. Header validation does not guarantee model quality.
+Baseline search, translation and optional English generation use included
+resources. Advanced users can import another compatible licensed GGUF;
+header validation does not guarantee its quality or translation capability.
 
 arm64-v8a, armeabi-v7a (NEON), x86_64: CPU GGUF generation and Whisper
 ggml transcription. Actual model memory use and speed depend on the device.
@@ -78,3 +81,23 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+
+SentencePiece v0.2.1 https://github.com/google/sentencepiece
+revision 31646a467d2051eb904e0b45de3a73e91fe1c1e3
+Inference-only sentencepiece-static links the SentencePiece processor and its
+bundled protobuf-lite, darts_clone, and Abseil subset. Apache-2.0 with bundled
+BSD-3-Clause code; full notices are in licenses/SENTENCEPIECE_LICENSES.txt.
+The app uses raw SentencePiece IDs/pieces; each model has its own vocabulary
+mapping. No SentencePiece trainers or command-line tools are linked.
+
+IndicTransToolkit 1.1.1 English/Urdu/Punjabi processing
+https://github.com/VarunGumma/IndicTransToolkit
+Copyright (c) Varun Gumma. MIT; licenses/INDICTRANS_TOOLKIT_MIT.txt.
+Moses-compatible English tokenizer/normalizer adapted from sacremoses 0.2.0
+https://github.com/alvations/sacremoses
+Copyright (c) 2020 alvations. MIT; licenses/SACREMOSES_MIT.txt.
+Gurmukhi script conversion and punctuation detokenization adapted from
+Indic NLP Library, Copyright (c) 2013-present Anoop Kunchukuttan. MIT;
+licenses/INDICNLP_MIT.txt. Urdu output remains Arabic; Punjabi rendering
+converts the model's unified Devanagari output to Gurmukhi.

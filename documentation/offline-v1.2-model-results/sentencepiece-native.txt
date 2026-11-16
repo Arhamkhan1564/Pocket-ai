@@ -1,0 +1,56 @@
+PASS model info: marian_source [32000, 0, 1, 2, -1]
+PASS Python parity: marian_source/0 IDs/pieces/normalize/decode
+PASS Python parity: marian_source/1 IDs/pieces/normalize/decode
+PASS Python parity: marian_source/2 IDs/pieces/normalize/decode
+PASS Python parity: marian_source/3 IDs/pieces/normalize/decode
+PASS Python parity: marian_source/4 IDs/pieces/normalize/decode
+PASS Python parity: marian_source/5 IDs/pieces/normalize/decode
+PASS Python parity: marian_source/6 IDs/pieces/normalize/decode
+PASS Python parity: marian_source/7 IDs/pieces/normalize/decode
+PASS model info: marian_target [32000, 0, 1, 2, -1]
+PASS Python parity: marian_target/0 IDs/pieces/normalize/decode
+PASS Python parity: marian_target/1 IDs/pieces/normalize/decode
+PASS Python parity: marian_target/2 IDs/pieces/normalize/decode
+PASS Python parity: marian_target/3 IDs/pieces/normalize/decode
+PASS Python parity: marian_target/4 IDs/pieces/normalize/decode
+PASS Python parity: marian_target/5 IDs/pieces/normalize/decode
+PASS Python parity: marian_target/6 IDs/pieces/normalize/decode
+PASS model info: e5_raw [250000, 0, 1, 2, -1]
+PASS Python parity: e5_raw/0 IDs/pieces/normalize/decode
+PASS Python parity: e5_raw/1 IDs/pieces/normalize/decode
+PASS Python parity: e5_raw/2 IDs/pieces/normalize/decode
+PASS Python parity: e5_raw/3 IDs/pieces/normalize/decode
+PASS Python parity: e5_raw/4 IDs/pieces/normalize/decode
+PASS Python parity: e5_raw/5 IDs/pieces/normalize/decode
+PASS Python parity: e5_raw/6 IDs/pieces/normalize/decode
+PASS Python parity: e5_raw/7 IDs/pieces/normalize/decode
+PASS Python parity: e5_raw/8 IDs/pieces/normalize/decode
+PASS guard: maximum four live handles -> IllegalStateException
+PASS guard: closed handle metadata -> IllegalStateException
+PASS guard: closed handle encode -> IllegalStateException
+PASS guard: invalid numeric handle -> IllegalStateException
+PASS guard: null path -> IllegalArgumentException
+PASS guard: NUL in local path -> IllegalArgumentException
+PASS guard: missing model path -> IllegalArgumentException
+PASS guard: null UTF-8 input -> IllegalArgumentException
+PASS guard: input above64KiB -> IllegalArgumentException
+PASS guard: invalid UTF-8 case0 -> IllegalArgumentException
+PASS guard: invalid UTF-8 case1 -> IllegalArgumentException
+PASS guard: invalid UTF-8 case2 -> IllegalArgumentException
+PASS guard: invalid UTF-8 case3 -> IllegalArgumentException
+PASS guard: invalid UTF-8 case4 -> IllegalArgumentException
+PASS guard: invalid UTF-8 case5 -> IllegalArgumentException
+PASS guard: invalid UTF-8 path -> IllegalArgumentException
+PASS guard: negative raw ID -> IllegalArgumentException
+PASS guard: raw ID at vocabulary limit -> IllegalArgumentException
+PASS guard: ID array above16Ktokens -> IllegalArgumentException
+PASS guard: piece array above16Ktokens -> IllegalArgumentException
+PASS guard: null ID array -> IllegalArgumentException
+PASS guard: null piece array -> IllegalArgumentException
+PASS guard: null individual piece -> IllegalArgumentException
+PASS guard: invalid UTF-8 piece -> IllegalArgumentException
+PASS guard: encoder above16Ktokens within64KiB -> IllegalArgumentException
+PASS guard: pieces/output above1MiB -> IllegalArgumentException
+PASS guard: model above16MiB -> IllegalArgumentException
+PASS guard: malformed model protobuf -> IllegalStateException
+PASS SUMMARY: 24 real source/target/E5 raw-SPM fixture cases; 157 assertions; lifecycle/bounds/UTF-8 guards; no Android runtime execution claimed.

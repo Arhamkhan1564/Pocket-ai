@@ -1,126 +1,100 @@
-# Architecture and development · 1.1 RAG update
+# Architecture and development · 1.2 offline RAG
 
-Canonical repository: https://github.com/Arhamkhan1564/Pocket-ai. The update targets `downloads/rag-v1.1/` and prerelease `v1.1.0-rag`. Existing original-build reports and native host results are historical evidence; do not reuse their pass counts for changed 1.1 code without a fresh run.
+Pocket AI performs document extraction, indexing, retrieval, reference translation, optional English synthesis and speech recognition on the phone. The application declares no Internet permission. Preparing included resources means copying and checking files already in the APK; it is not a runtime download or model training.
 
-## Build environment
+## Reproduce the build
 
-The project uses Android Gradle Plugin 8.7.3, Kotlin/Compose compiler plugin 2.0.21, Gradle 8.9, Compose BOM 2024.12.01 and Material 3. Use a full JDK 17 or 21, compile/target SDK 35, Build Tools 35.0.0, NDK `27.2.12479018`, and CMake `3.22.1`. Minimum SDK is 23.
+Use JDK 17 or 21, Gradle 8.9 through the included wrapper, Android SDK/Build Tools 35, NDK `27.2.12479018`, and CMake `3.22.1`. The project uses AGP 8.7.3, Kotlin/Compose compiler 2.0.21, Compose Material 3 and minimum API 23. Python 3 standard-library scripts prepare build inputs; no Python process runs inside the Android app.
 
-Follow the project README for SDK installation, `local.properties`, debug/release builds and the private signing identity. No Python package or Node build is needed. Python 3 is used by the speech-asset fetcher and optional local signing helper. Native source is included under `vendor`; a normal build does not need a Git clone of those dependencies.
-
-The source archive/repository excludes model weights. Before building the APK with included recognition, fetch the pinned MIT-licensed Whisper tiny q5_1 asset:
+Public source excludes model weights, generated runtime archives, build caches, local SDK paths and signing credentials. Before Gradle sync, prepare both external inputs:
 
 ```sh
-python3 scripts/fetch-bundled-speech.py
-python3 scripts/fetch-bundled-speech.py --check-only
+python3 scripts/fetch-offline-models.py
+python3 scripts/fetch-offline-models.py --check-only
+python3 scripts/prepare-onnxruntime-android.py --ndk /absolute/path/to/Android/Sdk/ndk/27.2.12479018
+python3 scripts/prepare-onnxruntime-android.py --check-only
 ./gradlew testDebugUnitTest assembleDebug
 ```
 
-The default asset directory is `../model-assets` relative to the project; weights stay outside the source checkout. Both the fetcher and Gradle honor `POCKETAI_MODEL_ASSETS_DIR`. A custom path can be explicit:
+The complete baseline has **13 pinned files totaling 715,732,683 bytes (682.6 MiB)**. The source manifest, `app/src/main/assets/offline-model-manifest.json`, records each URL, revision, size, checksum and license. The default external directory is `../model-assets`; Gradle and the fetcher accept `POCKETAI_MODEL_ASSETS_DIR`. A custom location can also be explicit:
 
 ```sh
-python3 scripts/fetch-bundled-speech.py --assets-dir /absolute/path/to/model-assets
+python3 scripts/fetch-offline-models.py --assets-dir /absolute/path/to/model-assets
 ./gradlew -PpocketAiModelAssetsDir=/absolute/path/to/model-assets assembleDebug
 ```
 
-The asset is `models/ggml-tiny-q5_1.bin`, 32,152,673 bytes, SHA-256 `818710568da3ca15689e31a743197b520007872ff9576237bda97bd1b469c3d7`. The fetcher and Gradle check its pinned size/checksum. This development-time download does not add network access to the APK. No LLM is fetched or bundled by this script. Model provenance/license files remain in source under `app/src/main/assets/licenses/`.
+`--source-cache /path` reuses matching local files. `--offline` prohibits the fetcher from making network requests, and `--check-only` verifies without downloading or copying. Preparing only selected `--packs` is useful during development, but the distribution Gradle configuration requires the complete baseline and rejects missing, altered or unlisted files. The old speech-only fetch helper is insufficient for a 1.2 build.
 
-Development builds require Maven/Gradle/Android downloads until caches are populated. Runtime model imports are local and the manifest has no `INTERNET` permission. Preserve the environment's normal proxy/CA trust if building behind a managed proxy; do not disable TLS verification.
+The ONNX preparation helper rebuilds the unchanged official 1.20.0 JNI wrapper at API 23 with 16 KiB ELF load alignment. It retains the official CPU kernels/Java classes, verifies JNI exports and produces an AAR plus checksum/provenance sidecar outside source. Default outputs are:
 
-## Main data flow
-
-1. Compose accepts typed input. Microphone preflight checks native ABI support, the selected speech file/header and language compatibility before permission/recording; `SpeechController` then records bounded 16 kHz mono PCM and transcribes with local Whisper. An English-only selected speech file is allowed for English and rejected before recording for Urdu/Punjabi.
-2. Language/script helpers preserve originals and derive search-normalized text. Arabic-script detection is explicitly ambiguous.
-3. In Training Mode, `AuthManager` checks an expiring administrator session. Text/QA entry or `DocumentTextExtractor` output is previewed and confirmed, then validated, chunked and indexed in a SQLite transaction. Document source language defaults to English independently of the answer language; originals and filename/passage references are retained.
-4. In User Mode, `AssistantService` retrieves bounded relevant records using normalized lexical search, with a capable local model able to help convert a cross-language question into English search terms. Conversation text never automatically enters permanent verified knowledge.
-5. With a selected GGUF and retrieved support, `LocalAiEngine` constructs a prompt containing numbered saved context, bounded recent conversation and the requested language. Source text is supplied as evidence rather than trusted operating instructions. Strict RAG abstains when no supporting source is retrieved, even if a model is selected.
-6. Without a compatible model, the assistant returns matching saved originals or an explicit no-matching-knowledge message. A requested translation is marked unavailable rather than pretending original English text has been translated. Model selection does not establish multilingual quality or medical validity.
-7. Output optionally passes to a verified installed offline Android TTS voice. Text survives missing-model or missing-voice conditions.
-
-## Database
-
-`PocketDatabase` is a versioned `SQLiteOpenHelper`; no Room dependency is required. Its schema includes knowledge, FTS indexes, categories, corrections, conversations, documents/chunks and training events. User/settings and model registry metadata live separately in small preferences/JSON stores.
-
-Knowledge has IDs, original content, optional question, language, script, category, source/reference, timestamps, verification and optional confidence. Normalization affects indexes rather than original content. Search/browsing is bounded and paginated; retrieved contexts are small. FTS is a lexical index, not a semantic embedding system. SQLite portability uses the implemented FTS features rather than assuming every old phone ships FTS5.
-
-Mutating verified knowledge, category management, document import and portable backup/restore require the same active `AuthManager` instance. Conversation append/clear belongs to ordinary User Mode. All expensive I/O, PBKDF2 work, database operations and inference are dispatched away from the UI thread by callers.
-
-Portable JSON backup is deliberately bounded; it does materialize the bounded export rather than provide an unbounded streaming database copy. Schema migration scaffolding exists, but migration from a prior shipped Pocket AI version has not been exercised because this is the first schema release.
-
-## Document extraction and retrieval
-
-`DocumentTextExtractor` accepts UTF-8 TXT, DOCX and text-based PDF through a caller-owned stream. PDF extraction uses PDFBox Android 2.0.27.0. DOCX reads bounded ZIP/XML text and footnotes; it does not run macros, links, fields or embedded files. Temporary extraction files use app cache and are deleted in `finally` paths. Extraction runs on `Dispatchers.IO`.
-
-Input files are capped at 8 MiB, extracted text at one million characters and PDFs at 100 pages. DOCX also limits ZIP entries/expanded sizes/compression ratio/XML complexity. Legacy OLE/binary DOC returns a conversion message. Scanned PDFs need external OCR; encrypted PDFs and empty/unreadable extraction are rejected. The UI shows filename/format/page summary, warnings, source-language controls and a bounded preview before `db.importText` changes the database.
-
-`DocumentChunker` keeps passages sentence-aware with overlap, while `importText` stores filename and chunk references and indexes the original text. Citations are filename/chunk references; PDF page count is a preview summary and does not establish page-accurate citation. Imports require administrator authorization and use one transaction. Retrieval is lexical, not an embedding model. Model-assisted rewriting is an additional opportunity for cross-language matching, not a guarantee that every differently phrased question will retrieve correctly. Extraction/chunk preview runs through `runInterruptible(Dispatchers.IO)` so cancellation can interrupt parser work; database transactions retain their existing authorization/rollback behavior.
-
-Medicine references remain unverified source documents. The assistant separates general source explanations from personal symptom questions, asks relevant clarifying context, and does not automatically diagnose or prescribe. Clinical source selection, translation/quantity checking and real-world suitability need independent review; there is no bundled drug database or validated clinical inference engine.
-
-## Administrator security
-
-`AuthManager` uses random salts, PBKDF2-HMAC-SHA256 on API 26+, PBKDF2-HMAC-SHA1 on older supported Android, 120,000 iterations and constant-time key comparison. PINs are 6–12 digits. Recovery is a separate random code with its own salt/hash. Failed attempts back off; sessions expire after ten minutes of inactivity.
-
-The UI locks authorization on backgrounding. Explicit Storage Access Framework picker flows temporarily preserve the current expiring session via `ExternalActivityFlow`; they do not create new authorization. Data-layer mutators recheck authorization. Saved conversations and knowledge use the Android private sandbox, not SQLCipher/database encryption. Android automatic backup is disabled. There is no remote administration or account recovery.
-
-## Local inference and memory
-
-`InferenceEngine` separates the assistant/database from `LocalAiEngine`. `NativeBridge` wraps JNI; a coroutine mutex in `NativeExecution` serializes llama.cpp and Whisper use. Native ownership frees model/context resources after each request, trading reload latency for low idle memory.
-
-The CPU build includes full inference for arm64-v8a, armeabi-v7a with NEON, and x86_64. The native ARMv7 build was compiled successfully; actual ARMv7 phone performance remains unbenchmarked. Runtime CPU-feature and memory checks decide availability; this does not guarantee support for all phones or models. CPU-host instruction assumptions and optional GPU/network backends are disabled. Native page alignment targets Android's 16 KiB page compatibility while retaining 4 KiB compatibility.
-
-Model importing copies through SAF into private storage with bounded buffers, checks storage reserves, validates bounded headers, computes SHA-256 and finalizes files atomically. Metadata checks are preliminary. Actual tensor loading and representative model outputs must be tested; they can fail even when an import succeeds. No model is chosen on the assumption that 2 GB total RAM is enough.
-
-`BundledSpeechModel.ensureInstalled` verifies and atomically installs the included speech asset when native compatibility checks succeed. It exposes progress/readiness through StateFlow, preserves a valid user selection and remembers intentional removal. The explicit restore action can recreate the private copy from the APK. No runtime download is involved. Generation/translation still needs a separate GGUF and adequate available memory; Settings labels the pinned Qwen3 link as an English experiment and explicitly reports its failed Urdu/Punjabi checks; see MODEL-VALIDATION.txt. The identified 2 GB itel A25 Pro has not been benchmarked; inspect its actual ABI/CPU features in diagnostics before assuming model compatibility.
-
-## Voice and appliance lifecycle
-
-`SpeechController` owns bounded AudioRecord capture, basic silence trimming, local Whisper calls and offline Android TTS selection. Tap-to-talk samples remain temporary and are discarded. A live `AudioDeviceManager` discovers device IDs and supports microphone selection; output follows Android media routing. USB hardware is optional.
-
-Optional appliance sessions are started from the visible app with microphone permission and run as a microphone foreground service with a persistent notification. The session uses about six-second input windows, sequential answering/speech, a bounded wake lock and a maximum duration of 30 minutes. Stop/cancel releases active resources. Android version/vendor restrictions can still interrupt it. Wake-word recognition, unattended boot launch and indefinite background microphone operation are deferred.
-
-## Tests
-
-Run JVM/Robolectric tests:
-
-```sh
-./gradlew testDebugUnitTest
+```text
+../runtime-assets/onnxruntime-android-1.20.0-pocketai16k.aar
+../runtime-assets/onnxruntime-android-1.20.0-pocketai16k.json
 ```
 
-Reports appear under `app/build/reports/tests/testDebugUnitTest/`. Coverage includes SQLite CRUD/transactions/backup, authorization, normalization and scripts, assistant retrieval, model-header/registry behavior and voice signal processing. The RAG update adds document parsing/chunking, included-model installation and cross-language/reference behavior tests. Their presence is not a passed result; record the actual new run separately. Run lint/build validation when preparing an artifact:
+Use `--assets-dir`/`POCKETAI_ORT_ASSETS_DIR` for preparation output, then point Gradle at the resulting AAR using `POCKETAI_ORT_ANDROID_AAR` or `-PpocketAiOrtAndroidAar=/absolute/path/to/file.aar`. Keep its sidecar beside it. The pinned preparation inputs are in `scripts/onnxruntime-android-inputs.json`; [ONNX Runtime preparation](ONNXRUNTIME-ANDROID.md) explains the API/alignment choice. Substituting an arbitrary stock or newer AAR can break API 23 or alignment requirements.
+
+Initial development preparation and dependency resolution require network access unless all verified inputs and dependencies are already cached. Installed-app operation uses local files. Release assembly also requires the privately retained signing identity; follow the README or use `scripts/create-local-signing.py` for a separate identity. A different key cannot update the supplied release.
+
+## Included components
+
+| Role | Included implementation | What it does not establish |
+| --- | --- | --- |
+| Search | Quantized multilingual E5-small ONNX plus SentencePiece tokenizer | Translation, guaranteed relevance or factual verification |
+| Translation | IndicTrans2 distilled 200M int8 English-to-Indic encoder/decoders and tokenizer/dictionaries | Reverse translation, every language, or clinical accuracy |
+| Shahmukhi display | Original `PunjabiShahmukhi` converter after actual Punjabi Gurmukhi translation | Direct Urdu-to-Punjabi translation or fluent-speaker validation |
+| Optional synthesis | SmolLM2 360M Instruct Q4_K_M through llama.cpp | Reliable abstention or Urdu/Punjabi generation |
+| Recognition | Multilingual Whisper tiny Q5_1 through whisper.cpp | Spoken-output voices or measured phone-language accuracy |
+
+Android offline TTS voices remain a separately installed system resource. All three packaged ABIs—ARM64, ARMv7 with NEON and x86_64—are subject to CPU, free-memory and Android restrictions. The identified 2 GB itel phone was not attached. Packaging an ABI is not a successful phone benchmark.
+
+## Reference workflow
+
+1. Compose accepts text or bounded microphone input. Voice preflight checks native compatibility and the selected/prepared speech resource before recording. Whisper turns temporary PCM into reviewable text.
+2. The owner unlocks Training Mode. `DocumentTextExtractor` reads TXT/DOCX/selectable-text PDF; the UI previews its output before any knowledge write. Source language defaults to English independently of answer language.
+3. `DocumentChunker` splits paragraphs using sentence/word boundaries and bounded overlap. `PocketDatabase.importText` saves originals, document metadata and filename/chunk references transactionally. Repeated imports are deduplicated; saving text does not change model parameters.
+4. `OfflineRagServices` prepares local packs and indexes small batches through E5. `SemanticRetriever` combines bounded semantic matches with lexical fallback and coverage checks. It abstains when it has no supporting passages. A cosine score is not proof that a source answers a question.
+5. Default answers show cited source excerpts. Urdu/Punjabi answers translate English excerpts using IndicTrans2; Shahmukhi adds an explicitly labelled Punjabi script-conversion step. Original English evidence stays available. Unsupported directions or failed checks retain originals with a clear status.
+6. The optional, slower English-explanation mode uses the included English GGUF only after retrieval and coverage checks. Medical reference paths retain excerpt behavior. Unsupported synthesis falls back to excerpts or an unknown answer.
+7. Trusted source IDs, separate from display/model text, let the user open a complete saved passage and its document. Optional speech output uses an available installed offline voice.
+
+## Extraction and database
+
+Extraction accepts UTF-8 TXT, DOCX and text-based PDF, capped at 8 MiB input, one million extracted characters and 100 PDF pages. PDFBox Android performs text extraction without OCR. DOCX processing bounds ZIP entries, expanded bytes, compression ratio and XML complexity, rejects declarations/entities, and does not execute fields or macros. Legacy binary DOC must be converted; encrypted or image-only PDFs return an explicit message. Temporary extraction copies are deleted. The UI uses `runInterruptible(Dispatchers.IO)` for extraction/chunk preview.
+
+Schema **2** uses SQLite knowledge/FTS, categories, correction/training history, conversations, document catalog/mappings and a derived `knowledge_vectors` table. Migration from schema 1 retains knowledge and history, adds typed `source_ids` and rebuilds missing document metadata. Source IDs are not extracted from filenames, display labels or model-generated citation text. Legacy history can have no typed IDs.
+
+Catalog/read APIs are available in User Mode; deleting a document requires administrator authorization and a transaction. It removes that document's unshared imported passages and indexes while preserving unrelated manual facts. Citations to removed sources show a missing-source state. The reader displays the current saved original and update information, not the original PDF binary or exact PDF-page coordinates.
+
+Derived E5 vectors are 384 finite, L2-normalized floats per window, keyed by source ID, model SHA and part. Store operations check the expected source content and timestamp inside a transaction; edits/delete/restore invalidate derived results. Search streams one vector at a time and retains at most 20 distinct source hits. It does not load the full vector table into RAM. Indexing uses small batches and can pause/resume; lexical lookup remains available while indexing is incomplete.
+
+Portable backup **format 2** preserves source records, document catalog/mappings, categories and bounded conversations/typed IDs. Format 1 remains readable, with safe catalog reconstruction. Vectors, translation caches, model files, credentials/settings and full audit/correction history are excluded. See [Backup and recovery](BACKUP-RECOVERY.md).
+
+## Translation and resource ownership
+
+`NativeExecution` serializes heavyweight search, NMT, generation and recognition. E5 sessions/tokenizers are request/batch scoped. Its current available-memory guard is 384 MiB; this estimate cannot prevent every Android low-memory termination.
+
+`OnnxTranslationKernel` executes the quantized IndicTrans2 graphs with one heavyweight session open at a time. Native tensor ownership keeps encoder/cross-attention results alive only while required; per-token caches are not copied into Java arrays. The source codec uses the pinned SentencePiece/dictionary mapping and Indic text processor, with request-local entity state. Translation is sentence-bounded, requires completed EOS output and has token/length limits. Its current available-memory guard is 448 MiB, not measured peak Android use.
+
+Numeric sentinels protect literal identifiers/citation labels before translation. Restoration requires the exact sentinel occurrence; quantity/unit, warning/negation and target-script checks follow. These checks are incomplete semantic safeguards, not proof that a medical translation is accurate. Unsupported Gurmukhi marks fail script conversion explicitly instead of disappearing.
+
+Translation cache entries are local and bounded (up to 200 entries/32 MiB). Their keys include source text, target/script, pack fingerprint and knowledge revision. Source changes invalidate cached results; cache failure must not discard a valid source. Cached translations never become verified knowledge or model updates.
+
+`OfflineModelAssets` copies APK files to private storage, checks sizes/checksums and atomically records readiness. Readiness metadata avoids re-copying unchanged valid resources. Setup can be paused/retried without a network connection. APK copies plus private prepared copies, source data, vectors and runtime work buffers need substantial free storage beyond the 682.6 MiB model payload. Resource preparation does not prove that inference fits in available RAM.
+
+## Security, voice and lifecycle
+
+Administrator PINs use salted PBKDF2 with 120,000 iterations and constant-time comparison; API 26+ uses SHA-256 and older supported Android uses SHA-1. Recovery is a separately hashed random code. Failed attempts back off. Atomic session state lets UI reads/locking avoid waiting on crypto and prevents a pending PIN/recovery operation from overriding a newer lock. Sessions expire after inactivity. Explicit document-picker flows preserve only the existing expiring session.
+
+Knowledge, prepared resources and caches live in the private Android sandbox; the database and portable JSON are not encrypted. Android automatic backup/device transfer is disabled. Microphone audio is explicit and temporary. Optional appliance sessions require a visible start, microphone permission and foreground notification; they use bounded turns and a 30-minute limit. Wake words, automatic boot startup and indefinite unattended recording are not included. Device/Android restrictions may interrupt a session.
+
+## Validation and distribution
 
 ```sh
-./gradlew lintDebug assembleDebug assembleRelease
-```
-
-Release assembly needs the local signing configuration described in the README. Record actual successful commands and results in [VERIFICATION.md](VERIFICATION.md); source presence alone does not establish a passed test.
-
-### Optional real-model instrumentation
-
-`NativeRuntimeTest` runs on a natively supported device/emulator with the debug APK and adequate memory. It deliberately skips if the three external fixtures are absent. A skipped test is not a native inference pass.
-
-Provide these files in the debug app's private `cache/native-fixtures/` directory:
-
-- `stories260K.gguf`: tiny test-only language model from [ggml-org models](https://huggingface.co/ggml-org/models/resolve/main/tinyllamas/stories260K.gguf).
-- `ggml-tiny.bin`: official multilingual Whisper tiny model linked in [MODELS.md](MODELS.md).
-- `jfk.wav`: the upstream whisper.cpp English sample, `vendor/whisper.cpp/samples/jfk.wav`.
-
-For example, after installing the debug APK and staging fixtures on the development computer:
-
-```sh
-adb shell mkdir -p /data/local/tmp/pocketai-fixtures
-adb push stories260K.gguf /data/local/tmp/pocketai-fixtures/
-adb push ggml-tiny.bin /data/local/tmp/pocketai-fixtures/
-adb push vendor/whisper.cpp/samples/jfk.wav /data/local/tmp/pocketai-fixtures/
-adb shell run-as com.pocketai.debug mkdir -p cache/native-fixtures
-adb shell run-as com.pocketai.debug cp /data/local/tmp/pocketai-fixtures/stories260K.gguf cache/native-fixtures/
-adb shell run-as com.pocketai.debug cp /data/local/tmp/pocketai-fixtures/ggml-tiny.bin cache/native-fixtures/
-adb shell run-as com.pocketai.debug cp /data/local/tmp/pocketai-fixtures/jfk.wav cache/native-fixtures/
+./gradlew testDebugUnitTest lintDebug lintVitalRelease assembleDebug assembleRelease assembleDebugAndroidTest
 ./gradlew connectedDebugAndroidTest
 ```
 
-The debug app must already exist before using `run-as`; `./gradlew installDebug` installs it. Some runners reinstall/clear target data before tests, so verify fixture presence or stage it after installation for a targeted instrumentation invocation. English sample recognition and toy text generation only validate the runtime path. They do not validate a real microphone, meaningful multilingual answers or performance on the 2 GB target phone.
+Use [Verification](VERIFICATION.md) and `OFFLINE-BUILD-REPORT.json` for the actual completed 1.2 run. Unit tests, host model probes, native packaging checks and complete Android/phone execution are separate evidence. A compiled or skipped instrumentation test is not a UI/native execution pass. Native instrumentation fixtures and staging commands are documented in `tests/native/README.md` and the test sources; run only on a disposable debug installation with adequate memory.
 
-## Dependencies and distribution
-
-Retain the upstream MIT licenses, included speech-model license/provenance and `vendor/REVISIONS.txt` when distributing source or APKs. PDFBox Android and other Gradle dependencies retain their respective licenses. The bundled Whisper weight is included in APKs but excluded from source archives/repository history; the fetch script reconstructs its verified build input. Optional GGUF weights are acquired separately under their own terms. Signing keys and backup archives are excluded from public source/downloads. Keep any privately retained signing identity private; a newly generated identity cannot update an APK signed with another key.
+Keep the included model manifest/provenance, component licenses/notices, native revisions and ONNX preparation input manifest with distributions. Source excludes binary weights, generated runtime AARs, credentials and signing backups; the helpers reconstruct pinned build inputs. The baseline APK includes its licensed resources. Do not replace defaults with cloud requests or claim that importing/indexing a document retrains an AI model.

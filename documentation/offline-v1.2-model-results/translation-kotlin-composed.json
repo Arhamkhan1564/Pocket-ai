@@ -1,0 +1,19 @@
+{
+  "result": "PASS",
+  "fixtures": 8,
+  "stages": [
+    "canonical Kotlin IndicTextProcessor",
+    "canonical NativeTokenizer\u2192real JNI SentencePiece0.2.1",
+    "canonical IndicTokenizer source/targetdict mapping",
+    "canonical OnnxTranslationKernel ORT1.20.0 CPU"
+  ],
+  "elapsed_seconds": 9.593752384185791,
+  "exit_code": 0,
+  "source_sha256": {
+    "engine/NativeTokenizer.kt": "c2a20fda7fc09e6decc28f7c5d2d074cc1c999fa60c4c88a26c53aa3927b6884",
+    "translation/IndicTokenizer.kt": "2932b4f5bf65705352e64f3edb1bce55004d133e2a5dea0eb5d5a8745454086d",
+    "translation/IndicTextProcessor.kt": "5780db517be0ddfeab7a3e487a7bd81e1b2ac2934ef720e5b2dafeb0485fe332",
+    "translation/OnnxTranslationKernel.kt": "d6861cdd269fe7457dd5e6825033169588fc77cf6b5592399f306854ab5b1a3d"
+  },
+  "limitations": "Host x86_64 composed-model parity only; no physical Android performance or clinical quality validation. Unprotected cedar47 fixture deliberately matches transliterated model output; literal-protection wrapper must preserve identifiers."
+}

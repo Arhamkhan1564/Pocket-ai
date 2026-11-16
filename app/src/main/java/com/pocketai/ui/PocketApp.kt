@@ -36,9 +36,12 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
@@ -56,6 +59,8 @@ import com.pocketai.models.InstalledModel
 import com.pocketai.models.ModelKind
 import com.pocketai.models.ModelManager
 import com.pocketai.models.ModelValidator
+import com.pocketai.rag.OfflineRagServices
+import com.pocketai.rag.OfflineTranslation
 import com.pocketai.security.AuthManager
 import com.pocketai.voice.SpeechController
 import kotlinx.coroutines.*
@@ -69,9 +74,10 @@ fun PocketApp() = PocketTheme {
     val auth = remember { AuthManager(context) }
     val db = remember { PocketDatabase(context, auth) }
     val models = remember { ModelManager(context) }
+    val offlineRag = remember { OfflineRagServices(context, db, settings, models) }
     val engine = remember { LocalAiEngine(context) }
     val speech = remember { SpeechController(context) }
-    val assistant = remember { AssistantService(db, models, engine, settings) }
+    val assistant = remember { AssistantService(db, models, engine, settings, offlineRag = offlineRag) }
     val scope = rememberCoroutineScope()
     val snackbar = remember { SnackbarHostState() }
     var page by remember { mutableStateOf("chat") }
@@ -93,12 +99,25 @@ fun PocketApp() = PocketTheme {
     var confirmClear by remember { mutableStateOf(false) }
     var speechSetupIssue by remember { mutableStateOf<String?>(null) }
     var readySpeechModel by remember { mutableStateOf<InstalledModel?>(null) }
-    var localModelName by remember { mutableStateOf<String?>(null) }
-    var localModelStatus by remember { mutableStateOf("Checking local AI setup…") }
+    var sourceToRead by remember { mutableStateOf<Long?>(null) }
+    var documentToRead by remember { mutableStateOf<DocumentSummary?>(null) }
+    var librarySection by remember { mutableStateOf("documents") }
     val voice by speech.state.collectAsState()
+    val offlineState by offlineRag.state.collectAsState()
+    val semanticIndex by offlineRag.indexState.collectAsState()
     val bundledSpeech by BundledSpeechModel.state.collectAsState()
     val appliance by ApplianceSession.state.collectAsState()
     val message: (String) -> Unit = { text -> scope.launch { snackbar.showSnackbar(text.take(600)) }; Unit }
+    val localModelStatus = when {
+        offlineState.preparing -> offlineState.message
+        semanticIndex.paused -> "Reference indexing is paused. Originals remain readable; resume indexing in Offline tools."
+        semanticIndex.running -> "Indexing references · ${semanticIndex.indexedRecords}/${semanticIndex.totalRecords}. Cross-language search may still be incomplete."
+        semanticIndex.error != null -> "Reference indexing could not finish. Originals remain readable; retry in Offline tools."
+        offlineState.searchReady && (semanticIndex.indexedRecords < semanticIndex.totalRecords || semanticIndex.indexedRecords < knowledgeCount) -> "Reference indexing is still needed. Check Offline tools; originals remain readable."
+        offlineState.searchReady && offlineState.translationReady -> "Offline search and reference translation ready. Open a source to check its original."
+        offlineState.searchReady -> "Offline search ready. Translation setup: ${offlineState.error ?: offlineState.message}"
+        else -> "Original references remain readable. ${offlineState.error ?: offlineState.message}"
+    }
     fun speak(text: String, language: String = settings.responseLanguage, script: String? = null) {
         if (appliance.running) { message("Stop the appliance session before using manual speaker controls."); return }
         speech.speechRate = settings.speechRate
@@ -152,11 +171,11 @@ fun PocketApp() = PocketTheme {
                             ?: error(if (bundledSpeech.status == BundledSpeechStatus.INSTALLING) {
                                 "The included offline speech model is being prepared. Wait for setup to finish, then try again. You can keep using text."
                             } else {
-                                "No offline speech model is selected. Open model setup to install or select a multilingual Whisper tiny/base model, then try the microphone. Text input works now."
+                                "Included offline speech is not ready. Open Offline tools to prepare or restore it from this APK, then try the microphone. Text input works now."
                             })
                         val file = models.fileFor(selected)
                         require(file.isFile && file.canRead() && file.length() in 64..(180L * 1024 * 1024)) {
-                            "The selected speech model is missing, unreadable or too large. Choose a multilingual Whisper tiny/base model under 180 MiB in model setup."
+                            "The selected speech resource is missing, unreadable or too large. Prepare the included speech again in Offline tools. Optional custom speech files must fit the 180 MiB limit."
                         }
                         val header = ModelValidator.validateHeader(file, ModelKind.WHISPER)
                         require(header.metadata["multilingual"] == "true" || language.substringBefore('-') == "en") {
@@ -192,7 +211,7 @@ fun PocketApp() = PocketTheme {
                 withContext(Dispatchers.IO) { db.addConversation("user", question, settings.responseLanguage) }
                 conversations = withContext(Dispatchers.IO) { db.conversations(80) }
                 val answer = withContext(Dispatchers.IO) { assistant.answer(question) }
-                withContext(Dispatchers.IO) { db.addConversation("assistant", answer.text, settings.responseLanguage, answer.storedSources) }
+                withContext(Dispatchers.IO) { db.addConversation("assistant", answer.text, settings.responseLanguage, answer.storedSources, sourceIds = answer.sourceIds) }
                 conversations = withContext(Dispatchers.IO) { db.conversations(80) }
                 lastEngine = answer.engine
                 if (settings.speechEnabled) speak(answer.text)
@@ -203,31 +222,22 @@ fun PocketApp() = PocketTheme {
     }
     LaunchedEffect(Unit) {
         try {
-            BundledSpeechModel.ensureInstalled(context, models, settings)
+            offlineRag.prepare()
+            offlineRag.startIndexing()
             revision++
         } catch (cancelled: CancellationException) { throw cancelled }
-        catch (failure: Exception) { message(failure.message ?: "The included speech model could not be prepared. Open model setup to retry.") }
+        catch (failure: Exception) { message(failure.message ?: "Offline setup could not finish. Open Offline tools to retry; originals remain readable.") }
     }
+    LaunchedEffect(revision, offlineState.searchReady) { if (offlineState.searchReady) offlineRag.startIndexing() }
     LaunchedEffect(revision, setupComplete) {
         try {
             val refreshed = withContext(Dispatchers.IO) {
                 val history = db.conversations(80)
                 val count = db.countKnowledge()
-                val selected = models.list().firstOrNull { it.id == settings.selectedLlmId && it.kind == ModelKind.LLM }
-                val nativeIssue = NativeBridge.availabilityMessage()
-                val selectedUsable = selected != null && models.fileFor(selected).let { it.isFile && it.canRead() } && nativeIssue == null
-                val modelName = if (selectedUsable) selected?.name else null
-                val status = when {
-                    nativeIssue != null -> "Saved document search is available. Local inference is unavailable on this device; check compatibility in model setup."
-                    modelName != null -> "Local AI selected. Ask about saved documents in English, Urdu or Punjabi; answer quality depends on this model."
-                    else -> "Saved text search is available. Add a multilingual local AI model for Urdu/Punjabi answers from English documents."
-                }
-                Triple(history, count, modelName to status)
+                history to count
             }
             conversations = refreshed.first
             knowledgeCount = refreshed.second
-            localModelName = refreshed.third.first
-            localModelStatus = refreshed.third.second
         } catch (cancelled: CancellationException) { throw cancelled }
         catch (failure: Exception) { message(failure.message ?: "Local data could not be refreshed.") }
         unlocked = auth.isUnlocked
@@ -244,12 +254,12 @@ fun PocketApp() = PocketTheme {
             }
         }
         lifecycleOwner.lifecycle.addObserver(observer)
-        onDispose { lifecycleOwner.lifecycle.removeObserver(observer); speech.close(); if (answerJob?.isActive == true) engine.cancel(); db.close() }
+        onDispose { lifecycleOwner.lifecycle.removeObserver(observer); speech.close(); if (answerJob?.isActive == true) engine.cancel(); offlineRag.close(); db.close() }
     }
     BackHandler(page != "chat") { if (page == "teach") { training = false; auth.lock(); unlocked = false }; page = "chat" }
 
     if (!setupComplete) {
-        SetupScreen(settings, auth, speech, onComplete = { settings.setupComplete = true; setupComplete = true; auth.lock(); revision++ }, onMessage = message)
+        SetupScreen(settings, auth, speech, offlineRag, onComplete = { settings.setupComplete = true; setupComplete = true; auth.lock(); revision++ }, onMessage = message)
     } else {
         Scaffold(
             containerColor = MaterialTheme.colorScheme.background,
@@ -280,7 +290,7 @@ fun PocketApp() = PocketTheme {
             bottomBar = {
                 NavigationBar(containerColor = MaterialTheme.colorScheme.background, tonalElevation = 0.dp) {
                     NavigationBarItem(selected = page == "chat" || page == "teach", onClick = { page = if (training && auth.isUnlocked) "teach" else "chat" }, icon = { Icon(if (training) Icons.Outlined.School else Icons.Outlined.GraphicEq, null) }, label = { Text(if (training) "Teach" else "Assistant") })
-                    NavigationBarItem(selected = page == "memory", onClick = { page = "memory" }, icon = { Icon(Icons.Outlined.AutoStories, null) }, label = { Text("Memory") })
+                    NavigationBarItem(selected = page == "memory", onClick = { page = "memory" }, icon = { Icon(Icons.Outlined.AutoStories, null) }, label = { Text("Library") })
                     NavigationBarItem(selected = page in setOf("settings", "languages", "audio", "models", "diagnostics", "backup", "security", "history", "appliance"), onClick = { page = "settings" }, icon = { Icon(Icons.Outlined.Tune, null) }, label = { Text("Resources") })
                 }
             }
@@ -295,24 +305,27 @@ fun PocketApp() = PocketTheme {
                         onClear = { confirmClear = true }, onTeach = { guardedNavigate("teach") },
                         onModels = { page = "models" }, settings = settings, onLanguage = { settings.responseLanguage = it; revision++ },
                         voiceStatus = if (voice.recording || speech.hasPendingRecording || voice.transcribing || voice.speaking) voice.message else "",
-                        localModelName = localModelName, localModelStatus = localModelStatus
+                        localModelStatus = localModelStatus, db = db, sourceRevision = revision,
+                        onReadSource = { sourceToRead = it }
                     )
                     "teach" -> if (training && auth.isUnlocked) TrainingScreen(
                         db, settings, editRecord, teachingVoice,
                         onVoiceConsumed = { teachingVoice = "" }, onMicrophone = ::toggleMicrophone, recording = voice.recording || speech.hasPendingRecording,
                         processing = busy, processingLabel = busyLabel,
-                        onMessage = message, onSaved = { editRecord = null; revision++; page = "memory"; if (settings.speechEnabled) speak("Information saved successfully.", "en") },
+                        onMessage = message, onSaved = { document -> editRecord = null; librarySection = if (document) "documents" else "knowledge"; revision++; page = "memory"; if (settings.speechEnabled) speak("Information saved successfully.", "en") },
                         onHistory = { page = "history" }, onCancelEdit = { editRecord = null; revision++ },
                         localModelStatus = localModelStatus, onModels = { page = "models" }
                     ) else Text("Unlock Training Mode to manage knowledge.", Modifier.padding(24.dp))
-                    "memory" -> MemoryScreen(db, revision, auth.isUnlocked,
+                    "memory" -> LibraryScreen(db, revision, auth.isUnlocked, section = librarySection, onSectionChange = { librarySection = it },
                         onEdit = { item -> editRecord = item; guardedNavigate("teach") },
                         onDelete = { item ->
                             scope.launch {
                                 try { withContext(Dispatchers.IO) { db.deleteKnowledge(item.id) }; revision++; message("Knowledge deleted.") }
                                 catch (e: Exception) { message(e.message ?: "Unlock Training Mode first.") }
                             }
-                        }, onTeach = { guardedNavigate("teach") }, onSpeak = { speak(it.content, it.language, it.script) }, onMessage = message
+                        }, onTeach = { guardedNavigate("teach") }, onSpeak = { speak(it.content, it.language, it.script) }, onMessage = message,
+                        onReadDocument = { documentToRead = it }, onReadSource = { sourceToRead = it },
+                        onUnlockEditing = { guardedNavigate("memory") }, onChanged = { revision++ }
                     )
                     "history" -> HistoryScreen(db, revision)
                     "appliance" -> ApplianceScreen(onMessage = message, onModels = { page = "models" }, onAudio = { page = "audio" }, onStart = {
@@ -321,7 +334,7 @@ fun PocketApp() = PocketTheme {
                         runCatching { ApplianceSession.start(context) }.onFailure { message(it.message ?: "The session could not start.") }
                     })
                     else -> ResourceScreens(
-                        page = page, settings = settings, onSettingsChanged = { revision++ }, models = models, auth = auth, db = db,
+                        page = page, settings = settings, onSettingsChanged = { revision++ }, models = models, auth = auth, db = db, offlineRag = offlineRag,
                         onMessage = message, onNavigate = { target ->
                             if (target in setOf("backup", "security") && !auth.isUnlocked) guardedNavigate(target) else navigate(target)
                         }, onTestSpeaker = { language -> speak(when(language) { "ur" -> "پاکٹ اے آئی کی آواز کا امتحان۔"; "pa" -> if (settings.punjabiScript == "Guru") "ਪਾਕੇਟ ਏ ਆਈ ਦੀ ਆਵਾਜ਼ ਦਾ ਟੈਸਟ।" else "پاکٹ اے آئی دی آواز دا امتحان۔"; else -> "Pocket AI speaker test. Your audio stays on this device." }, language) },
@@ -333,7 +346,7 @@ fun PocketApp() = PocketTheme {
     }
     authTarget?.let { target ->
         UnlockDialog(auth, onDismiss = { authTarget = null }, onUnlocked = {
-            authTarget = null; unlocked = true; page = target; if (target == "teach") training = true
+            authTarget = null; unlocked = true; page = target; if (target in setOf("teach", "memory")) training = true
         })
     }
     if (confirmClear) AlertDialog(onDismissRequest = { confirmClear = false }, title = { Text("Clear conversation?") },
@@ -349,6 +362,13 @@ fun PocketApp() = PocketTheme {
             dismissButton = { TextButton(onClick = { speechSetupIssue = null }) { Text("Use text for now") } },
         )
     }
+    sourceToRead?.let { sourceId ->
+        SourcePassageViewer(db, sourceId, revision, settings, translationReady = offlineState.translationReady,
+            translateSource = offlineRag::translateSource, onOpenTools = { sourceToRead = null; page = "models" }, onDismiss = { sourceToRead = null }, onReadDocument = { document ->
+            sourceToRead = null; documentToRead = document
+        })
+    }
+    documentToRead?.let { document -> DocumentReader(db, document, revision, onDismiss = { documentToRead = null }) }
 }
 
 @Composable
@@ -372,7 +392,7 @@ private fun ChatScreen(
     onSubmit: () -> Unit, onMicrophone: () -> Unit, recording: Boolean, seconds: Int, busy: Boolean, busyLabel: String,
     engineLabel: String, onStop: () -> Unit, onRepeat: () -> Unit, onClear: () -> Unit, onTeach: () -> Unit,
     onModels: () -> Unit, settings: AppSettings, onLanguage: (String) -> Unit, voiceStatus: String,
-    localModelName: String?, localModelStatus: String
+    localModelStatus: String, db: PocketDatabase, sourceRevision: Int, onReadSource: (Long) -> Unit
 ) {
     val listState = rememberLazyListState()
     LaunchedEffect(conversations.size, busy) { if (conversations.isNotEmpty()) listState.animateScrollToItem(conversations.size - 1) }
@@ -389,7 +409,7 @@ private fun ChatScreen(
                 Text("ANSWERS · ${LanguageTools.name(settings.responseLanguage).uppercase()}", color = PocketAccent, style = MaterialTheme.typography.labelSmall)
                 Text(localModelStatus, color = PocketMuted, style = MaterialTheme.typography.bodySmall, maxLines = 3)
             }
-            TextButton(onClick = onModels, modifier = Modifier.padding(start = 6.dp)) { Text(if (localModelName == null) "Set up AI" else "Models") }
+            TextButton(onClick = onModels, modifier = Modifier.padding(start = 6.dp)) { Text("Offline tools") }
         }
         if (conversations.isEmpty()) {
             BoxWithConstraints(Modifier.weight(1f).fillMaxWidth()) {
@@ -398,32 +418,32 @@ private fun ChatScreen(
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         PocketMark(42)
                         Column(Modifier.padding(start = 14.dp)) {
-                            Text("Your knowledge, within reach.", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
-                            Text("$knowledgeCount memories · all on your device", color = PocketMuted, style = MaterialTheme.typography.labelSmall)
+                            Text("Your references, within reach.", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
+                            Text("$knowledgeCount saved passages · all on your device", color = PocketMuted, style = MaterialTheme.typography.labelSmall)
                         }
                     }
-                    TextButton(onClick = onTeach, modifier = Modifier.padding(top = 4.dp)) { Icon(Icons.Outlined.School, null, Modifier.size(16.dp)); Text(if (knowledgeCount == 0) " Teach your first memory" else " Teach something new") }
+                    TextButton(onClick = onTeach, modifier = Modifier.padding(top = 4.dp)) { Icon(Icons.Outlined.UploadFile, null, Modifier.size(16.dp)); Text(" Import a reference") }
                 }
             } else {
             Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(24.dp), horizontalAlignment = Alignment.CenterHorizontally) {
                 Spacer(Modifier.height(22.dp))
                 PocketMark(78)
                 Spacer(Modifier.height(24.dp))
-                Text("A little space for\neverything you know.", textAlign = TextAlign.Center, style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.SemiBold)
+                Text("Your references.\nAnswers you can check.", textAlign = TextAlign.Center, style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.SemiBold)
                 Spacer(Modifier.height(12.dp))
-                Text("Ask in your language. Teach something new.\nKeep it all on your device.", textAlign = TextAlign.Center, color = PocketMuted, style = MaterialTheme.typography.bodyMedium)
+                Text("Import an English reference, ask a question,\nthen open the original source. Everything stays on this phone.", textAlign = TextAlign.Center, color = PocketMuted, style = MaterialTheme.typography.bodyMedium)
                 Spacer(Modifier.height(28.dp))
                 Card(onClick = onTeach, colors = CardDefaults.cardColors(containerColor = PocketSurface), modifier = Modifier.fillMaxWidth()) {
                     Row(Modifier.padding(18.dp), verticalAlignment = Alignment.CenterVertically) {
                         Icon(Icons.Outlined.AutoStories, null, tint = PocketAccent)
-                        Column(Modifier.weight(1f).padding(horizontal = 14.dp)) { Text("${knowledgeCount} saved memories", fontWeight = FontWeight.Medium); Text("Build your personal knowledge library", style = MaterialTheme.typography.bodySmall, color = PocketMuted) }
+                        Column(Modifier.weight(1f).padding(horizontal = 14.dp)) { Text("Import a reference", fontWeight = FontWeight.Medium); Text("TXT, Word or text PDF · $knowledgeCount saved passages", style = MaterialTheme.typography.bodySmall, color = PocketMuted) }
                         Icon(Icons.Outlined.ArrowForward, null, Modifier.size(18.dp))
                     }
                 }
                 Spacer(Modifier.height(10.dp))
-                SuggestionChip(onClick = onModels, label = { Text("Local AI & voice setup") }, icon = { Icon(Icons.Outlined.Memory, null, Modifier.size(18.dp)) })
+                SuggestionChip(onClick = onModels, label = { Text("Check offline tools") }, icon = { Icon(Icons.Outlined.Memory, null, Modifier.size(18.dp)) })
                 Spacer(Modifier.height(8.dp))
-                Text("Search saved documents without a language model.\nIncluded offline recognition checks device compatibility.\nTranslated answers need local AI; speech output needs an installed voice.", color = PocketMuted, textAlign = TextAlign.Center, style = MaterialTheme.typography.bodySmall)
+                Text("Original references remain readable offline.\nLanguage tools and spoken voices are checked separately.\nOpen any answer's source to check names, numbers and context.", color = PocketMuted, textAlign = TextAlign.Center, style = MaterialTheme.typography.bodySmall)
             }
             }
             }
@@ -442,6 +462,13 @@ private fun ChatScreen(
                             if (references.isBlank()) kind else "Saved sources  $references\n$kind"
                         } else "Saved sources  ${item.sources}"
                         Text(details, style = MaterialTheme.typography.labelSmall, color = PocketAccent, modifier = Modifier.padding(top = 6.dp))
+                    }
+                    if (!isUser && item.sourceIds.isNotEmpty()) {
+                        Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(7.dp)) {
+                            item.sourceIds.distinct().take(20).forEachIndexed { index, id ->
+                                SourceCitationChip(db, id, index + 1, sourceRevision) { onReadSource(id) }
+                            }
+                        }
                     }
                 }
             }
@@ -466,8 +493,9 @@ private fun ChatScreen(
 }
 
 @Composable
-private fun SetupScreen(settings: AppSettings, auth: AuthManager, speech: SpeechController, onComplete: () -> Unit, onMessage: (String) -> Unit) {
+private fun SetupScreen(settings: AppSettings, auth: AuthManager, speech: SpeechController, offlineRag: OfflineRagServices, onComplete: () -> Unit, onMessage: (String) -> Unit) {
     val scope = rememberCoroutineScope()
+    val tools by offlineRag.state.collectAsState()
     val existingAdministrator = remember { auth.isConfigured }
     var step by remember { mutableIntStateOf(if (existingAdministrator) 2 else 0) }
     var pin by remember { mutableStateOf("") }
@@ -483,14 +511,14 @@ private fun SetupScreen(settings: AppSettings, auth: AuthManager, speech: Speech
         Column(Modifier.safeDrawingPadding().fillMaxSize().verticalScroll(rememberScrollState()).padding(28.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) { PocketMark(46); Text("  pocket ai", fontWeight = FontWeight.Bold, fontSize = 24.sp) }
             Spacer(Modifier.height(42.dp))
-            PageHeading("WELCOME · ${step + 1} / 4", when(step) { 0 -> "An assistant that\nstays with you."; 1 -> "Make it your own."; 2 -> "Protect what you teach."; else -> "Check this phone." }, when(step) { 0 -> "Your personal, offline knowledge companion. Built for the phone you already have."; 1 -> "English, Urdu and Punjabi are always available for text. Choose an extra language and Punjabi script."; 2 -> "Only an authorized owner can change permanent knowledge. Your PIN and recovery code stay on this device."; else -> "Inspect compatibility and optionally test the microphone and speaker. You can begin with text even when voices or models are unavailable." })
+            PageHeading("WELCOME · ${step + 1} / 4", when(step) { 0 -> "An assistant that\nstays with you."; 1 -> "Make it your own."; 2 -> "Protect what you teach."; else -> "Prepare this phone." }, when(step) { 0 -> "Your personal, offline knowledge companion. Built for the phone you already have."; 1 -> "English, Urdu and Punjabi are always available for text. Choose an extra language and Punjabi script."; 2 -> "Only an authorized owner can change permanent knowledge. Your PIN and recovery code stay on this device."; else -> "Included tools prepare from this APK. Check language readiness and optionally test the microphone and speaker. Originals remain readable while setup is incomplete." })
             Spacer(Modifier.height(30.dp))
             if (step == 0) {
                 FeatureRow(Icons.Outlined.WifiOff, "Offline from the start", "No account. No cloud connection.")
                 FeatureRow(Icons.Outlined.School, "Teach it what matters", "Keep facts, answers, notes and preferences.")
                 FeatureRow(Icons.Outlined.Translate, "Your words, your language", "Urdu, Punjabi and a language you choose.")
                 Spacer(Modifier.height(18.dp))
-                Text("Text and saved knowledge work immediately. The included multilingual speech model prepares automatically on compatible phones. Generated or translated answers need a compatible local GGUF model and sufficient memory; spoken output depends on installed Android voices.", color = PocketMuted, style = MaterialTheme.typography.bodySmall)
+                Text("Text references work immediately. Included tools prepare locally and check device compatibility. Android 6 or later and sufficient free memory/storage are required; availability and speed vary by phone. Originals remain readable while language or speech setup is unavailable.", color = PocketMuted, style = MaterialTheme.typography.bodySmall)
             } else if (step == 1) {
                 Text("PUNJABI SCRIPT", color = PocketAccent, style = MaterialTheme.typography.labelSmall)
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -502,6 +530,8 @@ private fun SetupScreen(settings: AppSettings, auth: AuthManager, speech: Speech
                 LanguageTools.optionalLanguages.chunked(2).forEach { row -> Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) { row.forEach { option -> FilterChip(third == option.tag, { third = option.tag }, { Text(option.name) }) } } }
                 Text("Text support does not guarantee translation or offline ASR/TTS for a language. Check each in Resources.", style = MaterialTheme.typography.bodySmall, color = PocketMuted)
             } else if (step == 3) {
+                OfflinePreparationPanel(offlineRag, onMessage, showIndex = false)
+                Spacer(Modifier.height(24.dp))
                 SetupDeviceChecks(settings, speech, onMessage)
             } else if (recovery.isBlank()) {
                 OutlinedTextField(pin, { pin = pinDigits(it) }, label = { Text("Administrator PIN · 6–12 digits") }, visualTransformation = PasswordVisualTransformation(), keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword), modifier = Modifier.fillMaxWidth())
@@ -527,7 +557,7 @@ private fun SetupScreen(settings: AppSettings, auth: AuthManager, speech: Speech
                 else if (pin != confirmation || pin.length < 6) error = "Enter matching PINs with 6–12 digits."
                 else { busy = true; scope.launch { try { recovery = withContext(Dispatchers.IO) { auth.configure(pin) }; pin = ""; confirmation = "" } catch(e: Exception) { error = e.message ?: "Could not configure administrator." } finally { busy = false } } }
             }, enabled = !busy && (step == 3 || recovery.isBlank() || acknowledged), modifier = Modifier.fillMaxWidth().height(54.dp)) {
-                if (busy) CircularProgressIndicator(Modifier.size(20.dp), strokeWidth = 2.dp) else Text(if (step < 2) "Continue" else if (step == 3) "Open Pocket AI" else if (existingAdministrator || recovery.isNotBlank()) "Check this phone" else "Create administrator")
+                if (busy) CircularProgressIndicator(Modifier.size(20.dp), strokeWidth = 2.dp) else Text(if (step < 2) "Continue" else if (step == 3) { if (tools.searchReady && tools.translationReady) "Open Pocket AI" else "Continue with originals" } else if (existingAdministrator || recovery.isNotBlank()) "Prepare this phone" else "Create administrator")
             }
             if (step > 0 && recovery.isBlank()) TextButton(onClick = { step-- }, modifier = Modifier.align(Alignment.CenterHorizontally)) { Text("Back") }
             if (existingAdministrator && step == 2) TextButton(onClick = { showRecovery = true }, modifier = Modifier.align(Alignment.CenterHorizontally)) { Text("Use recovery code") }
@@ -577,7 +607,7 @@ private fun UnlockDialog(auth: AuthManager, onDismiss: () -> Unit, onUnlocked: (
 @Composable
 private fun TrainingScreen(db: PocketDatabase, settings: AppSettings, edit: KnowledgeRecord?, voiceText: String,
     onVoiceConsumed: () -> Unit, onMicrophone: (String) -> Unit, recording: Boolean, processing: Boolean, processingLabel: String, onMessage: (String) -> Unit,
-    onSaved: () -> Unit, onHistory: () -> Unit, onCancelEdit: () -> Unit, localModelStatus: String, onModels: () -> Unit) {
+    onSaved: (Boolean) -> Unit, onHistory: () -> Unit, onCancelEdit: () -> Unit, localModelStatus: String, onModels: () -> Unit) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     var content by remember(edit?.id) { mutableStateOf(edit?.content ?: "") }
@@ -627,9 +657,9 @@ private fun TrainingScreen(db: PocketDatabase, settings: AppSettings, edit: Know
             Card(colors = CardDefaults.cardColors(containerColor = PocketSurface)) {
                 Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text("Ask your documents", fontWeight = FontWeight.SemiBold)
-                    Text("Import English TXT, Word (.docx) or a text-based PDF. Review the text, then save it for questions in English, Urdu or Punjabi. Source language stays separate from answer language.", style = MaterialTheme.typography.bodySmall, color = PocketMuted)
+                    Text("Import English TXT, Word (.docx) or a text-based PDF. Review and index it, then choose your question and answer language. English originals stay available in the reference library.", style = MaterialTheme.typography.bodySmall, color = PocketMuted)
                     Text(localModelStatus, style = MaterialTheme.typography.bodySmall, color = PocketAccent)
-                    TextButton(onClick = onModels, enabled = !busy && !processing && !recording) { Text("Local AI & speech setup") }
+                    TextButton(onClick = onModels, enabled = !busy && !processing && !recording) { Text("Check offline tools") }
                 }
             }
             Spacer(Modifier.height(12.dp))
@@ -678,11 +708,11 @@ private fun TrainingScreen(db: PocketDatabase, settings: AppSettings, edit: Know
             TextButton(onClick = onHistory) { Text("Training history") }
             if (edit != null) TextButton(onClick = { content = ""; question = ""; onCancelEdit() }) { Text("Cancel edit") }
         }
-        Text("Saving creates a searchable knowledge index on this device; it does not retrain model weights. Documents keep their original wording and filename references. A capable multilingual local AI model is needed to translate English sources into Urdu/Punjabi answers.", style = MaterialTheme.typography.bodySmall, color = PocketMuted)
+        Text("Saving creates a searchable local index; it does not retrain a model. Documents keep their original wording and filename references. Translated text is separate from the original, and its language tools must be ready before use.", style = MaterialTheme.typography.bodySmall, color = PocketMuted)
     }
     preview?.let { draft -> AlertDialog(onDismissRequest = { preview = null }, title = { Text(if (edit == null) "Save this knowledge?" else "Confirm correction?") },
         text = { Column(Modifier.heightIn(max = 350.dp).verticalScroll(rememberScrollState())) { if (conflictWarning.isNotBlank()) Text(conflictWarning, color = MaterialTheme.colorScheme.error, modifier = Modifier.padding(bottom = 12.dp)); Text(draft.content); Spacer(Modifier.height(12.dp)); Text("${LanguageTools.name(draft.language)} · ${draft.category}", color = PocketMuted) } },
-        confirmButton = { TextButton(enabled = !busy, onClick = { busy = true; scope.launch { try { withContext(Dispatchers.IO) { db.saveKnowledge(draft, edit?.id) }; preview = null; onMessage("Knowledge saved and verified."); onSaved() } catch(e: Exception) { onMessage(e.message ?: "Save failed.") } finally { busy = false } } }) { Text("Confirm & save") } },
+        confirmButton = { TextButton(enabled = !busy, onClick = { busy = true; scope.launch { try { withContext(Dispatchers.IO) { db.saveKnowledge(draft, edit?.id) }; preview = null; onMessage("Knowledge saved and verified."); onSaved(false) } catch(e: Exception) { onMessage(e.message ?: "Save failed.") } finally { busy = false } } }) { Text("Confirm & save") } },
         dismissButton = { TextButton(onClick = { preview = null }) { Text("Keep editing") } }) }
     documentPreview?.let { document -> AlertDialog(
         onDismissRequest = { if (!busy) documentPreview = null }, title = { Text("Import this document?") },
@@ -707,7 +737,7 @@ private fun TrainingScreen(db: PocketDatabase, settings: AppSettings, edit: Know
             busy = true
             scope.launch { try {
                 val count = withContext(Dispatchers.IO) { db.importText(document.text, document.name, document.language, document.script, document.category) }
-                documentPreview = null; onMessage("Indexed $count document passages. Ask about them in User Mode; filename references are kept."); onSaved()
+                documentPreview = null; onMessage("Indexed $count document passages. Ask about them in User Mode; filename references are kept."); onSaved(true)
             } catch(e: Exception) { onMessage(e.message ?: "Document import failed.") } finally { busy = false } }
         }) { Text(if (busy) "Indexing…" else "Save & index document") } },
         dismissButton = { TextButton(enabled = !busy, onClick = { documentPreview = null }) { Text("Cancel") } }
@@ -720,8 +750,279 @@ private data class PendingDocumentImport(
 )
 
 @Composable
+private fun SourceCitationChip(db: PocketDatabase, sourceId: Long, number: Int, revision: Int, onClick: () -> Unit) {
+    var label by remember(sourceId) { mutableStateOf("Source $number") }
+    LaunchedEffect(sourceId, revision) {
+        try {
+            val record = withContext(Dispatchers.IO) { db.getKnowledge(sourceId) }
+            label = if (record == null) "$number · Deleted source" else "$number · ${record.sourceReference.ifBlank { record.question.ifBlank { record.category } }}"
+        } catch (cancelled: CancellationException) { throw cancelled }
+        catch (_: Exception) { label = "$number · Open source" }
+    }
+    AssistChip(onClick = onClick, label = { Text(label, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.widthIn(max = 270.dp)) },
+        leadingIcon = { Icon(Icons.Outlined.Description, null, Modifier.size(17.dp)) })
+}
+
+@Composable
+private fun LibraryScreen(
+    db: PocketDatabase, revision: Int, unlocked: Boolean, section: String, onSectionChange: (String) -> Unit,
+    onEdit: (KnowledgeRecord) -> Unit, onDelete: (KnowledgeRecord) -> Unit, onTeach: () -> Unit,
+    onSpeak: (KnowledgeRecord) -> Unit, onMessage: (String) -> Unit,
+    onReadDocument: (DocumentSummary) -> Unit, onReadSource: (Long) -> Unit,
+    onUnlockEditing: () -> Unit, onChanged: () -> Unit,
+) {
+    Column(Modifier.fillMaxSize()) {
+        Row(Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 7.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            FilterChip(selected = section == "documents", onClick = { onSectionChange("documents") }, label = { Text("Documents") })
+            FilterChip(selected = section != "documents", onClick = { onSectionChange("knowledge") }, label = { Text("All knowledge") })
+        }
+        Box(Modifier.weight(1f).fillMaxWidth()) {
+            if (section == "documents") DocumentLibraryScreen(db, revision, unlocked, onReadDocument, onTeach, onUnlockEditing, onChanged, onMessage)
+            else MemoryScreen(db, revision, unlocked, onEdit, onDelete, onTeach, onSpeak, onMessage, onReadSource)
+        }
+    }
+}
+
+@Composable
+private fun DocumentLibraryScreen(
+    db: PocketDatabase, revision: Int, unlocked: Boolean, onRead: (DocumentSummary) -> Unit,
+    onImport: () -> Unit, onUnlockEditing: () -> Unit, onChanged: () -> Unit, onMessage: (String) -> Unit,
+) {
+    var query by remember { mutableStateOf("") }
+    var documents by remember { mutableStateOf<List<DocumentSummary>>(emptyList()) }
+    var offset by remember { mutableIntStateOf(0) }
+    var hasMore by remember { mutableStateOf(false) }
+    var loading by remember { mutableStateOf(false) }
+    var error by remember { mutableStateOf<String?>(null) }
+    var deleting by remember { mutableStateOf<DocumentSummary?>(null) }
+    var deleteBusy by remember { mutableStateOf(false) }
+    val scope = rememberCoroutineScope()
+    LaunchedEffect(revision) { offset = 0 }
+    LaunchedEffect(query, revision, offset) {
+        if (query.isNotBlank()) delay(180)
+        loading = true
+        try {
+            val batch = withContext(Dispatchers.IO) { db.listDocuments(query = query, limit = 20, offset = offset) }
+            documents = if (offset == 0) batch else (documents + batch).distinctBy { it.id }
+            hasMore = batch.size == 20
+            error = null
+        } catch (cancelled: CancellationException) { throw cancelled }
+        catch (failure: Exception) { error = failure.message ?: "References could not be read." }
+        finally { loading = false }
+    }
+    Column(Modifier.fillMaxSize().padding(horizontal = 20.dp)) {
+        PageHeading("REFERENCE LIBRARY", "Read your originals.", "Open saved document text even while User Mode is locked for editing.")
+        Spacer(Modifier.height(12.dp))
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
+            OutlinedButton(onClick = onImport) { Icon(Icons.Outlined.UploadFile, null, Modifier.size(18.dp)); Text(" Import reference") }
+            if (!unlocked) TextButton(onClick = onUnlockEditing) { Text("Unlock editing") }
+        }
+        OutlinedTextField(query, { query = it; offset = 0 }, modifier = Modifier.fillMaxWidth(), singleLine = true,
+            leadingIcon = { Icon(Icons.Outlined.Search, null) }, placeholder = { Text("Search reference names…") }, shape = RoundedCornerShape(18.dp))
+        Spacer(Modifier.height(12.dp))
+        if (loading) LinearProgressIndicator(Modifier.fillMaxWidth())
+        error?.let { Text(it, color = MaterialTheme.colorScheme.error, modifier = Modifier.padding(vertical = 8.dp)) }
+        if (documents.isEmpty() && !loading) {
+            Column(Modifier.weight(1f).fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+                Icon(Icons.Outlined.Description, null, Modifier.size(44.dp), tint = PocketMuted)
+                Text(if (query.isBlank()) "Your reference library starts here." else "No matching reference names.", modifier = Modifier.padding(16.dp), textAlign = TextAlign.Center)
+                if (query.isBlank()) TextButton(onClick = onImport) { Text("Import TXT, Word or text PDF") }
+            }
+        } else LazyColumn(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(12.dp), contentPadding = PaddingValues(bottom = 20.dp)) {
+            items(documents, key = { it.id }) { document ->
+                Card(onClick = { onRead(document) }, colors = CardDefaults.cardColors(containerColor = PocketSurface)) {
+                    Column(Modifier.fillMaxWidth().padding(17.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Icon(Icons.Outlined.Description, null, tint = PocketAccent, modifier = Modifier.size(23.dp))
+                            Text(document.name, fontWeight = FontWeight.SemiBold, modifier = Modifier.weight(1f).padding(start = 11.dp))
+                            if (unlocked) IconButton(onClick = { deleting = document }, enabled = !deleteBusy) { Icon(Icons.Outlined.DeleteOutline, "Delete ${document.name}", Modifier.size(20.dp)) }
+                        }
+                        Text("${LanguageTools.name(document.language)} · ${document.chunkCount} saved passages", color = PocketMuted, style = MaterialTheme.typography.bodySmall)
+                        Text("Imported ${DateFormat.getDateInstance(DateFormat.SHORT).format(Date(document.importedAt))}", color = PocketMuted, style = MaterialTheme.typography.labelSmall)
+                        Text("Read original text  →", color = PocketAccent, style = MaterialTheme.typography.labelMedium)
+                    }
+                }
+            }
+            if (hasMore) item { OutlinedButton(onClick = { offset += 20 }, enabled = !loading, modifier = Modifier.fillMaxWidth()) { Text("Load more references") } }
+        }
+    }
+    deleting?.let { document -> AlertDialog(
+        onDismissRequest = { if (!deleteBusy) deleting = null }, title = { Text("Delete this reference?") },
+        text = { Text("${document.name}\n\nThis removes its saved passages from the local library. Existing conversations remain, and their source links will show that the source was deleted. The file you originally selected is not removed.") },
+        confirmButton = { TextButton(enabled = !deleteBusy, onClick = {
+            deleteBusy = true
+            scope.launch {
+                try {
+                    val count = withContext(Dispatchers.IO) { db.deleteDocument(document.id) }
+                    deleting = null; onChanged(); onMessage("Reference deleted · $count saved passages removed.")
+                } catch (cancelled: CancellationException) { throw cancelled }
+                catch (failure: Exception) { onChanged(); onMessage(failure.message ?: "Unlock administrator access before deleting this reference.") }
+                finally { deleteBusy = false }
+            }
+        }) { Text(if (deleteBusy) "Deleting…" else "Delete reference", color = MaterialTheme.colorScheme.error) } },
+        dismissButton = { TextButton(enabled = !deleteBusy, onClick = { deleting = null }) { Text("Keep reference") } },
+    ) }
+}
+
+@Composable
+private fun OriginalSourceWindow(title: String, onDismiss: () -> Unit, content: @Composable () -> Unit) {
+    Dialog(onDismissRequest = onDismiss, properties = DialogProperties(usePlatformDefaultWidth = false, decorFitsSystemWindows = false)) {
+        Surface(Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
+            Column(Modifier.fillMaxSize().safeDrawingPadding()) {
+                Row(Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 6.dp), verticalAlignment = Alignment.CenterVertically) {
+                    IconButton(onClick = onDismiss) { Icon(Icons.Outlined.Close, "Close source") }
+                    Text(title, style = MaterialTheme.typography.titleMedium, maxLines = 2, overflow = TextOverflow.Ellipsis, modifier = Modifier.weight(1f).padding(end = 12.dp))
+                }
+                HorizontalDivider()
+                Box(Modifier.fillMaxWidth().weight(1f)) { content() }
+            }
+        }
+    }
+}
+
+@Composable
+private fun SourcePassageViewer(
+    db: PocketDatabase, sourceId: Long, revision: Int, settings: AppSettings, translationReady: Boolean,
+    translateSource: suspend (Long, String, String) -> OfflineTranslation,
+    onOpenTools: () -> Unit, onDismiss: () -> Unit, onReadDocument: (DocumentSummary) -> Unit,
+) {
+    var source by remember(sourceId) { mutableStateOf<KnowledgeRecord?>(null) }
+    var document by remember(sourceId) { mutableStateOf<DocumentSummary?>(null) }
+    var loading by remember(sourceId) { mutableStateOf(true) }
+    var error by remember(sourceId) { mutableStateOf<String?>(null) }
+    LaunchedEffect(sourceId, revision) {
+        loading = true
+        try {
+            val result = withContext(Dispatchers.IO) { db.getKnowledge(sourceId) to db.getDocumentForKnowledge(sourceId) }
+            source = result.first; document = result.second; error = null
+        } catch (cancelled: CancellationException) { throw cancelled }
+        catch (failure: Exception) { error = failure.message ?: "This source could not be read." }
+        finally { loading = false }
+    }
+    OriginalSourceWindow("Original source", onDismiss) {
+        Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(22.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
+            if (loading) LinearProgressIndicator(Modifier.fillMaxWidth())
+            error?.let { Text(it, color = MaterialTheme.colorScheme.error) }
+            val record = source
+            if (!loading && error == null && record == null) {
+                Text("This source was deleted.", style = MaterialTheme.typography.headlineSmall)
+                Text("The saved answer remains in the conversation, but the original source passage is no longer in this library.", color = PocketMuted)
+            }
+            if (record != null && error == null) {
+                Text(record.sourceReference.ifBlank { record.question.ifBlank { record.category } }, style = MaterialTheme.typography.titleLarge)
+                Text("Original saved text · ${LanguageTools.name(record.language)}", color = PocketAccent, style = MaterialTheme.typography.labelMedium)
+                Text("Current saved version · updated ${DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT).format(Date(record.updatedAt))}", color = PocketMuted, style = MaterialTheme.typography.labelSmall)
+                Text("Check the original wording, names, numbers and surrounding context. An answer or translation does not change this source.", color = PocketMuted, style = MaterialTheme.typography.bodySmall)
+                document?.let { original -> OutlinedButton(onClick = { onReadDocument(original) }, modifier = Modifier.fillMaxWidth()) { Text("Read all saved passages from this reference") } }
+                HorizontalDivider()
+                SelectionContainer { Text(record.content, lineHeight = 26.sp, textAlign = if (LanguageTools.isRtl(record.content)) TextAlign.Right else TextAlign.Start) }
+                key(record.id, record.updatedAt) {
+                    SourceTranslationPanel(db, record, settings, translationReady, translateSource, onOpenTools)
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun SourceTranslationPanel(
+    db: PocketDatabase, source: KnowledgeRecord, settings: AppSettings, ready: Boolean,
+    translateSource: suspend (Long, String, String) -> OfflineTranslation, onOpenTools: () -> Unit,
+) {
+    if (source.language.substringBefore('-') != "en") return
+    var target by remember { mutableStateOf(settings.responseLanguage.takeIf { it in setOf("ur", "pa") } ?: "ur") }
+    var result by remember { mutableStateOf<OfflineTranslation?>(null) }
+    var failure by remember { mutableStateOf<String?>(null) }
+    var busy by remember { mutableStateOf(false) }
+    var stopping by remember { mutableStateOf(false) }
+    var job by remember { mutableStateOf<Job?>(null) }
+    val scope = rememberCoroutineScope()
+    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+        HorizontalDivider()
+        Text("Optional local translation", style = MaterialTheme.typography.titleMedium)
+        Text("The English original above stays unchanged. Check names, quantities and instructions against it.", color = PocketMuted, style = MaterialTheme.typography.bodySmall)
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            FilterChip(selected = target == "ur", onClick = { target = "ur"; result = null; failure = null }, enabled = !busy, label = { Text("اردو") })
+            FilterChip(selected = target == "pa", onClick = { target = "pa"; result = null; failure = null }, enabled = !busy, label = { Text(if (settings.punjabiScript == "Guru") "ਪੰਜਾਬੀ" else "پنجابی") })
+        }
+        if (target == "pa" && settings.punjabiScript == "Arab") Text("Shahmukhi uses script conversion after Punjabi translation.", color = PocketMuted, style = MaterialTheme.typography.bodySmall)
+        if (busy) {
+            LinearProgressIndicator(Modifier.fillMaxWidth())
+            Text(if (stopping) "Stopping local translation…" else "Translating on this phone…", style = MaterialTheme.typography.bodySmall)
+            OutlinedButton(enabled = !stopping, onClick = { stopping = true; job?.cancel() }) { Text("Stop translation") }
+        } else if (ready) {
+            OutlinedButton(onClick = {
+                if (busy) return@OutlinedButton
+                busy = true; stopping = false; result = null; failure = null
+                job = scope.launch {
+                    try {
+                        val translated = translateSource(source.id, target, if (target == "pa") settings.punjabiScript else "Arab")
+                        val current = withContext(Dispatchers.IO) { db.getKnowledge(source.id) }
+                        if (current != null && current.updatedAt == source.updatedAt && current.content == source.content && current.language == source.language && current.script == source.script && translated.sourceText == source.content) result = translated
+                        else failure = "The source changed or was removed during translation. Reopen its current original before translating again."
+                    } catch (cancelled: CancellationException) { throw cancelled }
+                    catch (error: Exception) { failure = error.message ?: "Local translation could not finish. The original remains available." }
+                    finally { busy = false; stopping = false; job = null }
+                }
+            }, modifier = Modifier.fillMaxWidth()) { Text("Translate this passage") }
+        } else {
+            Text("Translation tools are not ready. The full original remains available above.", color = PocketMuted, style = MaterialTheme.typography.bodySmall)
+            OutlinedButton(onClick = onOpenTools, modifier = Modifier.fillMaxWidth()) { Text("Prepare offline translation") }
+        }
+        failure?.let { Text(it, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall) }
+        result?.let { translated ->
+            Text(if (translated.cacheHit) "Saved local translation · reused" else "Translated locally", color = PocketAccent, style = MaterialTheme.typography.labelMedium)
+            if (translated.scriptConverted) Text("Punjabi translation with Shahmukhi script conversion", color = PocketMuted, style = MaterialTheme.typography.labelSmall)
+            if (translated.description.isNotBlank()) Text(translated.description, color = PocketMuted, style = MaterialTheme.typography.bodySmall)
+            SelectionContainer { Text(translated.text, lineHeight = 26.sp, textAlign = if (LanguageTools.isRtl(translated.text)) TextAlign.Right else TextAlign.Start) }
+        }
+    }
+}
+
+@Composable
+private fun DocumentReader(db: PocketDatabase, document: DocumentSummary, revision: Int, onDismiss: () -> Unit) {
+    var records by remember(document.id) { mutableStateOf<List<KnowledgeRecord>>(emptyList()) }
+    var offset by remember(document.id) { mutableIntStateOf(0) }
+    var hasMore by remember(document.id) { mutableStateOf(false) }
+    var loading by remember(document.id) { mutableStateOf(true) }
+    var error by remember(document.id) { mutableStateOf<String?>(null) }
+    LaunchedEffect(document.id, revision) { offset = 0 }
+    LaunchedEffect(document.id, revision, offset) {
+        loading = true
+        try {
+            val batch = withContext(Dispatchers.IO) { db.getDocumentChunks(document.id, limit = 12, offset = offset) }
+            records = if (offset == 0) batch else (records + batch).distinctBy { it.id }
+            hasMore = batch.size == 12; error = null
+        } catch (cancelled: CancellationException) { throw cancelled }
+        catch (failure: Exception) { error = failure.message ?: "The reference could not be read." }
+        finally { loading = false }
+    }
+    OriginalSourceWindow(document.name, onDismiss) {
+        LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(20.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
+            item {
+                Text(document.name, style = MaterialTheme.typography.headlineSmall)
+                Text("${LanguageTools.name(document.language)} · original saved passages", color = PocketAccent, modifier = Modifier.padding(top = 8.dp), style = MaterialTheme.typography.labelMedium)
+                Text("Saved extracted text is shown in source order. Passages may overlap; document formatting and page positions are not preserved.", color = PocketMuted, modifier = Modifier.padding(top = 8.dp), style = MaterialTheme.typography.bodySmall)
+            }
+            if (loading) item { LinearProgressIndicator(Modifier.fillMaxWidth()) }
+            error?.let { message -> item { Text(message, color = MaterialTheme.colorScheme.error) } }
+            if (!loading && records.isEmpty() && error == null) item { Text("This reference has no remaining saved passages. It may have been deleted.", color = PocketMuted) }
+            items(records, key = { it.id }) { record ->
+                Card(colors = CardDefaults.cardColors(containerColor = PocketSurface)) {
+                    Column(Modifier.fillMaxWidth().padding(17.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                        Text(record.sourceReference, color = PocketAccent, style = MaterialTheme.typography.labelMedium)
+                        SelectionContainer { Text(record.content, lineHeight = 26.sp, textAlign = if (LanguageTools.isRtl(record.content)) TextAlign.Right else TextAlign.Start) }
+                    }
+                }
+            }
+            if (hasMore) item { OutlinedButton(enabled = !loading, onClick = { offset += 12 }, modifier = Modifier.fillMaxWidth()) { Text("Read more passages") } }
+        }
+    }
+}
+
+@Composable
 private fun MemoryScreen(db: PocketDatabase, revision: Int, unlocked: Boolean, onEdit: (KnowledgeRecord) -> Unit,
-    onDelete: (KnowledgeRecord) -> Unit, onTeach: () -> Unit, onSpeak: (KnowledgeRecord) -> Unit, onMessage: (String) -> Unit) {
+    onDelete: (KnowledgeRecord) -> Unit, onTeach: () -> Unit, onSpeak: (KnowledgeRecord) -> Unit, onMessage: (String) -> Unit, onReadSource: (Long) -> Unit) {
     var query by remember { mutableStateOf("") }
     var records by remember { mutableStateOf(emptyList<KnowledgeRecord>()) }
     var offset by remember { mutableIntStateOf(0) }
@@ -769,6 +1070,7 @@ private fun MemoryScreen(db: PocketDatabase, revision: Int, unlocked: Boolean, o
                         if (record.question.isNotBlank()) Text(record.question, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(top = 10.dp))
                         SelectionContainer { Text(record.content, modifier = Modifier.padding(top = 8.dp), textAlign = if (LanguageTools.isRtl(record.content)) TextAlign.Right else TextAlign.Start, maxLines = 20, lineHeight = 24.sp) }
                         if (record.sourceReference.isNotBlank()) Text(record.sourceReference, color = PocketMuted, style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(top = 8.dp))
+                        TextButton(onClick = { onReadSource(record.id) }) { Text("Read full source") }
                         Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                             Text("Owner verified · ${DateFormat.getDateInstance(DateFormat.SHORT).format(Date(record.updatedAt))}", color = PocketMuted, style = MaterialTheme.typography.labelSmall, modifier = Modifier.weight(1f))
                             IconButton(onClick = { onSpeak(record) }, modifier = Modifier.size(36.dp)) { Icon(Icons.Outlined.VolumeUp, "Read memory", Modifier.size(18.dp)) }

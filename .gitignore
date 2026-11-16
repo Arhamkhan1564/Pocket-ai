@@ -57,3 +57,13 @@ signing/
 !downloads/rag-v1.1/PocketAI.apk
 !downloads/rag-v1.1/PocketAI-debug.apk
 !downloads/rag-v1.1/PocketAI-source.zip
+*.aar
+*.data
+*.spm
+model.SRC
+model.TGT
+dict.SRC.json
+dict.TGT.json
+!downloads/offline-v1.2/PocketAI.apk
+!downloads/offline-v1.2/PocketAI-debug.apk
+!downloads/offline-v1.2/PocketAI-source.zip

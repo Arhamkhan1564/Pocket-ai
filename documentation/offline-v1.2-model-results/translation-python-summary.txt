@@ -1,0 +1,89 @@
+IndicTrans2 dedicated offline translation prototype — actual host execution
+2026-11-16, x86_64 development CPU. No application source changed.
+
+Checkpoint
+hari31416/indictrans2-en-indic-dist-200M-ONNX-int8
+Revision: 1eaa43a3fb76f382f1b22c76e56f6ab4926ad68b
+Public repository card license: MIT. Model manifest records exact URLs, bytes and hashes.
+17 inspected/downloaded files total289,641,809 bytes; the ONNX data/graphs and
+source/target tokenizer dictionaries are the substantive deployment resources.
+No translation service, provider API, network runtime, Torch, TensorFlow or Flax
+was used for inference. Downloads were build-time development resources only.
+
+Processing and actual runtime
+- ONNX Runtime1.20.0 CPUExecutionProvider, SentencePiece0.2.1.
+- Official IndicTransToolkit1.1.1 IndicProcessor, reviewed processor.pyx, with
+  sacremoses / IndicNLP helpers and inference=True. Transformers4.49 utilities
+  are installed for toolkit imports; its model backends are absent and unused.
+- Fresh process: source encoder, first decoder, then cached decoder are opened
+  sequentially. An earlier heavyweight graph is closed before the next opens.
+  Short synthetic encoder outputs and first-step attention caches are retained.
+- Input English is normalized/tokenized using the official processor and prefixed
+  with two literal language tokens. Source SentencePiece piece STRINGS are mapped
+  through dict.SRC.json, not SentencePiece internal integer IDs. Append EOS2.
+- IDs: BOS0, PAD1, EOS2, UNK3, eng_Latn4, pan_Guru46, urd_Arab68. Decoder starts2.
+- Source dictionary32322, target dictionary122672. Generated token strings from
+  dict.TGT.json are joined, ▁ replaced with spaces, then processor postprocessed.
+- Urdu model output is already Arabic script. Guru output is unified Devanagari
+  and requires official hi->pa transliteration and Indic detokenization.
+- 18 layers, eight heads, head dimension64, hidden512; first decoder has73 outputs
+  (logits+72 caches), cached graph has74 inputs including input IDs and source mask.
+  The cached graph returns full encoder cross-caches, not Marian's empty outputs.
+- Graph contracts: session-contracts.json. Exact source/output IDs and raw versus
+  processed text for all eight cases: greedy-results.json. Code: run_indic.py.
+
+Actual results (greedy, no beam search needed for these fixtures)
+Source: The tablet contains 250 mg of paracetamol.
+Urdu processed:
+  گولی میں 250 ملی گرام پیراسیٹامول ہوتا ہے۔
+Guru processed:
+  ਗੋਲੀ ਵਿੱਚ 250 ਮਿਲੀਗ੍ਰਾਮ ਪੈਰਾਸੀਟਾਮੋਲ ਹੁੰਦਾ ਹੈ।
+Both retain value250, an equivalent milligram unit, and recognizable paracetamol.
+
+Source: Do not use during pregnancy.
+Urdu processed:
+  حمل کے دوران استعمال نہ کریں۔
+Guru processed:
+  ਗਰਭ ਅਵਸਥਾ ਦੌਰਾਨ ਇਸ ਦੀ ਵਰਤੋਂ ਨਾ ਕਰੋ।
+Both visibly retain pregnancy and the prohibition in these synthetic examples.
+
+Exact two-sentence source:
+  The tablet contains 250 mg of paracetamol. Do not use during pregnancy.
+Urdu processed:
+  گولی میں 250 ملی گرام پیراسیٹامول ہوتا ہے۔ حمل کے دوران استعمال نہ کریں۔
+Guru processed:
+  ਗੋਲੀ ਵਿੱਚ 250 ਮਿਲੀਗ੍ਰਾਮ ਪੈਰਾਸੀਟਾਮੋਲ ਹੁੰਦਾ ਹੈ। ਗਰਭ ਅਵਸਥਾ ਦੌਰਾਨ ਇਸ ਦੀ ਵਰਤੋਂ ਨਾ ਕਰੋ।
+Raw Guru before official processing:
+  गोली विੱच 250 मिलीग्राम पैरासीटामोल हुੰदा है । गरभ अवसथा दौरान इस दी वरतों ना करो ।
+
+Reference-code source:
+  The workshop code is cedar47 and the manual reference number is 250.
+Urdu processed:
+  ورکشاپ کا کوڈ سیڈر 47 ہے اور دستی حوالہ نمبر 250 ہے۔
+Guru processed:
+  ਵਰਕਸ਼ਾਪ ਦਾ ਕੋਡ ਸੀਡਰ 47 ਹੈ ਅਤੇ ਹੱਥੀਂ ਹਵਾਲਾ ਨੰਬਰ 250 ਹੈ।
+The numeric values remain, but the exact identifier cedar47 is transliterated,
+so explicit identifier protection or a source-preservation guard is still needed.
+Official toolkit placeholders do not automatically protect plain alphanumeric codes.
+
+Observed resource use
+Host only; not Android/ARMv7 performance evidence.
+- Encoder graph load0.334s; first decoder0.584s; cached decoder0.315s.
+- Warm request inference sums0.061–0.183s for these short inputs, two CPU threads.
+  These exclude graph load times. Batch staging shares graph initialization; this
+  is not a complete cold single-request wall-clock benchmark.
+- Linux resource.getrusage maximum RSS424,740KiB =434,933,760 bytes (~414.8MiB).
+  The10ms psutil sampler missed a short allocation peak and saw385,298,432 bytes.
+- Exactly one heavyweight model graph is resident at each stage in this prototype;
+  app embedding and speech sessions must likewise unload before translation.
+
+Decision and limits
+This is a materially better candidate than the failed Marian model: all six short
+medical-text fixtures visibly preserve the selected number/unit/drug/prohibition
+checks. Eight cases are not a translation-quality benchmark or clinical validation.
+No fluent-speaker acceptance or actual 2GB ARMv7 device run was performed. Broader
+texts, names, identifiers, dates, decimals, units, negation, domain terms, and low
+memory still need meaningful validation. No direct Shahmukhi target exists in this
+checkpoint. A separately labeled Punjabi Gurmukhi->Shahmukhi transliteration stage
+would operate on genuine Punjabi output; it must not substitute Urdu for Punjabi.
+Do not claim the prototype completes every language/script or permits clinical use.

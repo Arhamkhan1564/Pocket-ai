@@ -1,0 +1,52 @@
+SmolLM2-360M-Instruct Q4_K_M English RAG host prototype
+Date: 2026-11-16
+No application code changed. Test model remains under work/validation.
+
+Candidate: bartowski/SmolLM2-360M-Instruct-GGUF
+Revision: 7be6f65f1db715fe5dc5a4634c0d459b4eed42ec
+Model bytes: 270590880 (258.06 MiB)
+Model SHA-256: 2fa3f013dcdd7b99f9b237717fa0b12d75bbb89984cc1274be1471a465bac9c2
+Upstream and conversion model-card license: Apache 2.0.
+Pinned download: https://huggingface.co/bartowski/SmolLM2-360M-Instruct-GGUF/resolve/7be6f65f1db715fe5dc5a4634c0d459b4eed42ec/SmolLM2-360M-Instruct-Q4_K_M.gguf
+Upstream card explicitly describes English-focused understanding/generation.
+
+Runtime: exact existing /workspace/work/validation/native-build/libpocketai.so JNI
+Linux x86_64, Java21 -Xms16m -Xmx128m; context512,max generation96,4threads,greedy.
+Model is loaded/unloaded inside each native request.
+
+literal_copy: PASS
+Elapsed: 17.141 seconds
+Raw output: The workshop access phrase is cedar-47, and the manual reference number is 250.
+
+two_fact_summary: PASS
+Elapsed: 14.693 seconds
+Raw output: The garden room has three windows and is used for painting classes on Fridays.
+
+missing_fact: FAIL
+Elapsed: 13.367 seconds
+Raw output: The workshop is on the ground floor.
+
+Manual assessment: literal copying and two-fact summary preserve the provided
+content. Missing-PIN case neither invented a PIN nor followed the required
+abstention instruction; it repeated an irrelevant true fact. This is a genuine
+quality failure, not a passing no-answer result. Do not count it as 3/3.
+
+Peak RSS sampled: 364326912 bytes (347.45 MiB)
+Kernel child max RSS: 355560 KiB
+Total elapsed: 45.326 seconds
+Current app RAM guard requires (modelBytes+192MiB)/.75 = 629,223,296 bytes
+(600.07 MiB) available before a generation request. This is a feasibility
+estimate, not measured Android/ARMv7 acceptance. Host JVM virtual-memory
+reservations differ substantially from Android, so host VMS is not target proof.
+
+The compiled app ModelValidator also accepted this real file:
+GGUFv3, architecture llama,290tensors,361,821,120parameters,context metadata8192.
+
+Conclusion: smaller English generation candidate with two narrowly successful
+grounded outputs; requires strict retrieval coverage/abstention checks and
+extractive/unknown fallback. No claim of robust factuality, multilingual ability,
+clinical quality, 2GB target memory, or target latency. The failed abstention
+test remains visible in smoke-report.json and smoke-raw.log.
+
+Artifacts: pinned model + metadata/cards, harness Java source/classes,
+run_smoke.py (20ms RSS sampler), smoke-report.json, smoke-raw.log.

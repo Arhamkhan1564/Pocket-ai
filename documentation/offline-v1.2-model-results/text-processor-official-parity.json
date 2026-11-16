@@ -1,0 +1,29 @@
+{
+  "status": "PASS",
+  "files": {
+    "/workspace/work/PocketAI/app/src/main/java/com/pocketai/translation/IndicTextProcessor.kt": "5780db517be0ddfeab7a3e487a7bd81e1b2ac2934ef720e5b2dafeb0485fe332",
+    "/workspace/work/PocketAI/app/src/test/java/com/pocketai/translation/IndicTextProcessorTest.kt": "89a1ce12a2767900da8858ead387eca4a7dbf4c354c2dcff16b442d103666638",
+    "/workspace/work/PocketAI/app/src/test/resources/indic-text-processor-fixtures.tsv": "3edc3f751346ca70b0bfed695411824ca3967c1c38d474bd545dfcc0be17ce52"
+  },
+  "standalone_junit_tests": 5,
+  "official_python_parity_fixtures": 49,
+  "preprocess_fixtures": 25,
+  "postprocess_fixtures": 24,
+  "actual_greedy_decoder_output_cases": 8,
+  "reference_versions": {
+    "IndicTransToolkit": "1.1.1",
+    "sacremoses": "0.2.0"
+  },
+  "api23_regex": "No (?U)/UNICODE_CHARACTER_CLASS usage. Unicode-aware shorthands expand to explicit ICU-compatible properties; frozen sacremoses English membership classes used. Toolkit regex-module word semantics tested including superscript exclusion, combining marks, Roman numerals, connectors.",
+  "bounds": "8192 source chars,128 distinct entities,65536 decoded/restored outputchars; reserved sourceplaceholders rejected; maps are request-local.",
+  "targets": [
+    "urd_Arab",
+    "pan_Guru"
+  ],
+  "limitations": [
+    "No Android runtime execution established by these standalone JVM tests.",
+    "This deterministic processor does not translate languages or establish model/clinical accuracy.",
+    "Entity serial order uses deterministic first-occurrence iteration instead of Python set ordering; each request carries its own mapping.",
+    "Official digit-table asymmetries and the reviewed detokenizer sequence are preserved."
+  ]
+}

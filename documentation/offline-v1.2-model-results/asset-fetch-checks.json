@@ -1,0 +1,13 @@
+{
+  "result": "PASS",
+  "checks": [
+    "size/digest failures preserve old final file and clean partial files",
+    "complete verified stream atomically replaces final file",
+    "offline local cache completes with network client disabled",
+    "offline mode rejects corrupt cache without requesting network",
+    "asset path escapes rejected"
+  ],
+  "manifest_schema": 1,
+  "manifest_total_bytes": 715732683,
+  "manifest_file_count": 13
+}

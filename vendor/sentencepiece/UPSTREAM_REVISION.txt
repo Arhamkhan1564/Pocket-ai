@@ -1,0 +1,5 @@
+https://github.com/google/sentencepiece
+v0.2.1
+31646a467d2051eb904e0b45de3a73e91fe1c1e3
+Processor sources plus upstream CMake and licensing; test-data/model binaries omitted.
+Only sentencepiece-static is linked; training tools are not built.

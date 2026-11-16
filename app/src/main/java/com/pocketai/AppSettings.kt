@@ -29,6 +29,9 @@ class AppSettings(context: Context) {
     var contextSize: Int
         get() = prefs.getInt("context_size", 512)
         set(value) { prefs.edit().putInt("context_size", value.coerceIn(256, 2048)).apply() }
+    var ragAnswerStyle: String
+        get() = prefs.getString("rag_answer_style", "excerpt").takeIf { it in setOf("excerpt", "synthesis") } ?: "excerpt"
+        set(value) { require(value in setOf("excerpt", "synthesis")); prefs.edit().putString("rag_answer_style", value).apply() }
     var selectedLlmId: String?
         get() = prefs.getString("llm_id", null)
         set(value) { prefs.edit().putString("llm_id", value).apply() }

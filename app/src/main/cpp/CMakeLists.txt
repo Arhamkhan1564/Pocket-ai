@@ -56,3 +56,34 @@ else()
     target_include_directories(pocketai PRIVATE ${JNI_INCLUDE_DIRS})
 endif()
 target_compile_options(pocketai PRIVATE -fexceptions -frtti)
+
+# Generic tokenizer for verified local ONNX packs. This does not load model
+# weights or use llama/whisper token IDs, and does not build SentencePiece trainers.
+set(SPM_ENABLE_SHARED OFF CACHE BOOL "" FORCE)
+set(SPM_BUILD_TEST OFF CACHE BOOL "" FORCE)
+set(SPM_ENABLE_TCMALLOC OFF CACHE BOOL "" FORCE)
+set(SPM_ENABLE_NFKC_COMPILE OFF CACHE BOOL "" FORCE)
+set(SPM_PROTOBUF_PROVIDER internal CACHE STRING "" FORCE)
+set(SPM_ABSL_PROVIDER internal CACHE STRING "" FORCE)
+add_subdirectory("${VENDOR_ROOT}/sentencepiece" "sentencepiece-build" EXCLUDE_FROM_ALL)
+# Upstream 0.2.1 unconditionally defines training and command-line targets.
+# Exclude them explicitly even when building the upstream src/all target.
+# AGP separately discovers executable targets, so Gradle also limits native
+# build targets to pocketai and pocketai_tokenizer.
+foreach(SPM_UNUSED_TARGET IN ITEMS sentencepiece_train-static spm_encode spm_decode
+        spm_normalize spm_train spm_export_vocab compile_charsmap spm_test)
+    if(TARGET ${SPM_UNUSED_TARGET})
+        set_target_properties(${SPM_UNUSED_TARGET} PROPERTIES
+            EXCLUDE_FROM_ALL TRUE EXCLUDE_FROM_DEFAULT_BUILD TRUE)
+    endif()
+endforeach()
+add_library(pocketai_tokenizer SHARED tokenizer_jni.cpp)
+target_include_directories(pocketai_tokenizer PRIVATE "${VENDOR_ROOT}/sentencepiece/src")
+target_link_libraries(pocketai_tokenizer PRIVATE sentencepiece-static)
+target_compile_options(pocketai_tokenizer PRIVATE -fexceptions -frtti)
+if(ANDROID)
+    target_link_libraries(pocketai_tokenizer PRIVATE log)
+    target_link_options(pocketai_tokenizer PRIVATE "-Wl,-z,max-page-size=16384" "-Wl,--exclude-libs,ALL")
+else()
+    target_include_directories(pocketai_tokenizer PRIVATE ${JNI_INCLUDE_DIRS})
+endif()

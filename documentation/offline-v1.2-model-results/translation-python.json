@@ -1,0 +1,665 @@
+[
+  {
+    "source": "The tablet contains 250 mg of paracetamol.",
+    "target": "urd_Arab",
+    "preprocessed": "eng_Latn urd_Arab The tablet contains 250 mg of paracetamol .",
+    "source_ids": [
+      4,
+      68,
+      18,
+      7275,
+      1875,
+      3987,
+      9415,
+      8,
+      2979,
+      1930,
+      789,
+      441,
+      1077,
+      5,
+      2
+    ],
+    "tokens": [
+      45252,
+      63,
+      5921,
+      18405,
+      46189,
+      23206,
+      59917,
+      1415,
+      13301,
+      9481,
+      4789,
+      73,
+      70,
+      2
+    ],
+    "timings": {
+      "encoder_seconds": 0.011424426000303356,
+      "first_decoder_seconds": 0.01421609399949375,
+      "past_decoder_seconds": 0.08714586700079963
+    },
+    "first_cache_shapes": {
+      "present.0.decoder.key": [
+        1,
+        8,
+        1,
+        64
+      ],
+      "present.0.encoder.key": [
+        1,
+        8,
+        15,
+        64
+      ]
+    },
+    "raw_output": "گولی میں 250 ملی گرام پیراسیٹامول ہوتا ہے ۔",
+    "processed_output": "گولی میں 250 ملی گرام پیراسیٹامول ہوتا ہے۔",
+    "truncated": false,
+    "elapsed_inference_seconds": 0.11278638700059673,
+    "rss_after": 379482112,
+    "peak_process_rss": 379469824,
+    "method": "greedy",
+    "threads": 2,
+    "next_cache_shapes": {
+      "present.0.decoder.key": [
+        1,
+        8,
+        2,
+        64
+      ],
+      "present.0.encoder.key": [
+        1,
+        8,
+        15,
+        64
+      ]
+    }
+  },
+  {
+    "source": "Do not use during pregnancy.",
+    "target": "urd_Arab",
+    "preprocessed": "eng_Latn urd_Arab Do not use during pregnancy .",
+    "source_ids": [
+      4,
+      68,
+      332,
+      39,
+      184,
+      232,
+      2560,
+      5,
+      2
+    ],
+    "tokens": [
+      34785,
+      42,
+      4921,
+      1580,
+      1391,
+      1926,
+      70,
+      2
+    ],
+    "timings": {
+      "encoder_seconds": 0.005893334000575123,
+      "first_decoder_seconds": 0.009907038000164903,
+      "past_decoder_seconds": 0.044735683000908466
+    },
+    "first_cache_shapes": {
+      "present.0.decoder.key": [
+        1,
+        8,
+        1,
+        64
+      ],
+      "present.0.encoder.key": [
+        1,
+        8,
+        9,
+        64
+      ]
+    },
+    "raw_output": "حمل کے دوران استعمال نہ کریں ۔",
+    "processed_output": "حمل کے دوران استعمال نہ کریں۔",
+    "truncated": false,
+    "elapsed_inference_seconds": 0.06053605500164849,
+    "rss_after": 380104704,
+    "peak_process_rss": 380104704,
+    "method": "greedy",
+    "threads": 2,
+    "next_cache_shapes": {
+      "present.0.decoder.key": [
+        1,
+        8,
+        2,
+        64
+      ],
+      "present.0.encoder.key": [
+        1,
+        8,
+        9,
+        64
+      ]
+    }
+  },
+  {
+    "source": "The tablet contains 250 mg of paracetamol. Do not use during pregnancy.",
+    "target": "urd_Arab",
+    "preprocessed": "eng_Latn urd_Arab The tablet contains 250 mg of paracetamol . Do not use during pregnancy .",
+    "source_ids": [
+      4,
+      68,
+      18,
+      7275,
+      1875,
+      3987,
+      9415,
+      8,
+      2979,
+      1930,
+      789,
+      441,
+      1077,
+      5,
+      332,
+      39,
+      184,
+      232,
+      2560,
+      5,
+      2
+    ],
+    "tokens": [
+      45252,
+      63,
+      5921,
+      18405,
+      46189,
+      23206,
+      59917,
+      1415,
+      13301,
+      9481,
+      4789,
+      73,
+      70,
+      34785,
+      42,
+      4921,
+      1580,
+      1391,
+      1926,
+      70,
+      2
+    ],
+    "timings": {
+      "encoder_seconds": 0.011408299000322586,
+      "first_decoder_seconds": 0.01297995599998103,
+      "past_decoder_seconds": 0.12790652900002897
+    },
+    "first_cache_shapes": {
+      "present.0.decoder.key": [
+        1,
+        8,
+        1,
+        64
+      ],
+      "present.0.encoder.key": [
+        1,
+        8,
+        21,
+        64
+      ]
+    },
+    "raw_output": "گولی میں 250 ملی گرام پیراسیٹامول ہوتا ہے ۔ حمل کے دوران استعمال نہ کریں ۔",
+    "processed_output": "گولی میں 250 ملی گرام پیراسیٹامول ہوتا ہے۔ حمل کے دوران استعمال نہ کریں۔",
+    "truncated": false,
+    "elapsed_inference_seconds": 0.15229478400033258,
+    "rss_after": 380112896,
+    "peak_process_rss": 380112896,
+    "method": "greedy",
+    "threads": 2,
+    "next_cache_shapes": {
+      "present.0.decoder.key": [
+        1,
+        8,
+        2,
+        64
+      ],
+      "present.0.encoder.key": [
+        1,
+        8,
+        21,
+        64
+      ]
+    }
+  },
+  {
+    "source": "The workshop code is cedar47 and the manual reference number is 250.",
+    "target": "urd_Arab",
+    "preprocessed": "eng_Latn urd_Arab The workshop code is cedar47 and the manual reference number is 250 .",
+    "source_ids": [
+      4,
+      68,
+      18,
+      9434,
+      2192,
+      13,
+      501,
+      12771,
+      12227,
+      10,
+      6,
+      5677,
+      4933,
+      199,
+      13,
+      3987,
+      5,
+      2
+    ],
+    "tokens": [
+      9718,
+      33641,
+      32891,
+      199,
+      33896,
+      2326,
+      13330,
+      6596,
+      73,
+      98,
+      60612,
+      35463,
+      13862,
+      5921,
+      73,
+      70,
+      2
+    ],
+    "timings": {
+      "encoder_seconds": 0.007903658999566687,
+      "first_decoder_seconds": 0.012490022001657053,
+      "past_decoder_seconds": 0.10149254200041469
+    },
+    "first_cache_shapes": {
+      "present.0.decoder.key": [
+        1,
+        8,
+        1,
+        64
+      ],
+      "present.0.encoder.key": [
+        1,
+        8,
+        18,
+        64
+      ]
+    },
+    "raw_output": "ورکشاپ کا کوڈ سیڈر 47 ہے اور دستی حوالہ نمبر 250 ہے ۔",
+    "processed_output": "ورکشاپ کا کوڈ سیڈر 47 ہے اور دستی حوالہ نمبر 250 ہے۔",
+    "truncated": false,
+    "elapsed_inference_seconds": 0.12188622300163843,
+    "rss_after": 382144512,
+    "peak_process_rss": 382144512,
+    "method": "greedy",
+    "threads": 2,
+    "next_cache_shapes": {
+      "present.0.decoder.key": [
+        1,
+        8,
+        2,
+        64
+      ],
+      "present.0.encoder.key": [
+        1,
+        8,
+        18,
+        64
+      ]
+    }
+  },
+  {
+    "source": "The tablet contains 250 mg of paracetamol.",
+    "target": "pan_Guru",
+    "preprocessed": "eng_Latn pan_Guru The tablet contains 250 mg of paracetamol .",
+    "source_ids": [
+      4,
+      46,
+      18,
+      7275,
+      1875,
+      3987,
+      9415,
+      8,
+      2979,
+      1930,
+      789,
+      441,
+      1077,
+      5,
+      2
+    ],
+    "tokens": [
+      10720,
+      94,
+      19,
+      55,
+      5921,
+      2366,
+      12631,
+      8719,
+      5694,
+      138,
+      462,
+      1114,
+      671,
+      18,
+      450,
+      8,
+      6,
+      2
+    ],
+    "timings": {
+      "encoder_seconds": 0.008385559000089415,
+      "first_decoder_seconds": 0.01097591200050374,
+      "past_decoder_seconds": 0.10688658700019005
+    },
+    "first_cache_shapes": {
+      "present.0.decoder.key": [
+        1,
+        8,
+        1,
+        64
+      ],
+      "present.0.encoder.key": [
+        1,
+        8,
+        15,
+        64
+      ]
+    },
+    "raw_output": "गोली विੱच 250 मिलीग्राम पैरासीटामोल हुੰदा है ।",
+    "processed_output": "ਗੋਲੀ ਵਿੱਚ 250 ਮਿਲੀਗ੍ਰਾਮ ਪੈਰਾਸੀਟਾਮੋਲ ਹੁੰਦਾ ਹੈ।",
+    "truncated": false,
+    "elapsed_inference_seconds": 0.1262480580007832,
+    "rss_after": 383528960,
+    "peak_process_rss": 383528960,
+    "method": "greedy",
+    "threads": 2,
+    "next_cache_shapes": {
+      "present.0.decoder.key": [
+        1,
+        8,
+        2,
+        64
+      ],
+      "present.0.encoder.key": [
+        1,
+        8,
+        15,
+        64
+      ]
+    }
+  },
+  {
+    "source": "Do not use during pregnancy.",
+    "target": "pan_Guru",
+    "preprocessed": "eng_Latn pan_Guru Do not use during pregnancy .",
+    "source_ids": [
+      4,
+      46,
+      332,
+      39,
+      184,
+      232,
+      2560,
+      5,
+      2
+    ],
+    "tokens": [
+      31142,
+      38093,
+      676,
+      39,
+      56,
+      5767,
+      46,
+      432,
+      6,
+      2
+    ],
+    "timings": {
+      "encoder_seconds": 0.005252159000519896,
+      "first_decoder_seconds": 0.008358789998965221,
+      "past_decoder_seconds": 0.055763792001016554
+    },
+    "first_cache_shapes": {
+      "present.0.decoder.key": [
+        1,
+        8,
+        1,
+        64
+      ],
+      "present.0.encoder.key": [
+        1,
+        8,
+        9,
+        64
+      ]
+    },
+    "raw_output": "गरभ अवसथा दौरान इस दी वरतों ना करो ।",
+    "processed_output": "ਗਰਭ ਅਵਸਥਾ ਦੌਰਾਨ ਇਸ ਦੀ ਵਰਤੋਂ ਨਾ ਕਰੋ।",
+    "truncated": false,
+    "elapsed_inference_seconds": 0.06937474100050167,
+    "rss_after": 384380928,
+    "peak_process_rss": 384380928,
+    "method": "greedy",
+    "threads": 2,
+    "next_cache_shapes": {
+      "present.0.decoder.key": [
+        1,
+        8,
+        2,
+        64
+      ],
+      "present.0.encoder.key": [
+        1,
+        8,
+        9,
+        64
+      ]
+    }
+  },
+  {
+    "source": "The tablet contains 250 mg of paracetamol. Do not use during pregnancy.",
+    "target": "pan_Guru",
+    "preprocessed": "eng_Latn pan_Guru The tablet contains 250 mg of paracetamol . Do not use during pregnancy .",
+    "source_ids": [
+      4,
+      46,
+      18,
+      7275,
+      1875,
+      3987,
+      9415,
+      8,
+      2979,
+      1930,
+      789,
+      441,
+      1077,
+      5,
+      332,
+      39,
+      184,
+      232,
+      2560,
+      5,
+      2
+    ],
+    "tokens": [
+      10720,
+      94,
+      19,
+      55,
+      5921,
+      2366,
+      12631,
+      8719,
+      5694,
+      138,
+      462,
+      1114,
+      671,
+      18,
+      450,
+      8,
+      6,
+      31142,
+      38093,
+      676,
+      39,
+      56,
+      5767,
+      46,
+      432,
+      6,
+      2
+    ],
+    "timings": {
+      "encoder_seconds": 0.008007841999642551,
+      "first_decoder_seconds": 0.011702286999934586,
+      "past_decoder_seconds": 0.16315464099898236
+    },
+    "first_cache_shapes": {
+      "present.0.decoder.key": [
+        1,
+        8,
+        1,
+        64
+      ],
+      "present.0.encoder.key": [
+        1,
+        8,
+        21,
+        64
+      ]
+    },
+    "raw_output": "गोली विੱच 250 मिलीग्राम पैरासीटामोल हुੰदा है । गरभ अवसथा दौरान इस दी वरतों ना करो ।",
+    "processed_output": "ਗੋਲੀ ਵਿੱਚ 250 ਮਿਲੀਗ੍ਰਾਮ ਪੈਰਾਸੀਟਾਮੋਲ ਹੁੰਦਾ ਹੈ। ਗਰਭ ਅਵਸਥਾ ਦੌਰਾਨ ਇਸ ਦੀ ਵਰਤੋਂ ਨਾ ਕਰੋ।",
+    "truncated": false,
+    "elapsed_inference_seconds": 0.1828647699985595,
+    "rss_after": 384389120,
+    "peak_process_rss": 384389120,
+    "method": "greedy",
+    "threads": 2,
+    "next_cache_shapes": {
+      "present.0.decoder.key": [
+        1,
+        8,
+        2,
+        64
+      ],
+      "present.0.encoder.key": [
+        1,
+        8,
+        21,
+        64
+      ]
+    }
+  },
+  {
+    "source": "The workshop code is cedar47 and the manual reference number is 250.",
+    "target": "pan_Guru",
+    "preprocessed": "eng_Latn pan_Guru The workshop code is cedar47 and the manual reference number is 250 .",
+    "source_ids": [
+      4,
+      46,
+      18,
+      9434,
+      2192,
+      13,
+      501,
+      12771,
+      12227,
+      10,
+      6,
+      5677,
+      4933,
+      199,
+      13,
+      3987,
+      5,
+      2
+    ],
+    "tokens": [
+      938,
+      45051,
+      1503,
+      171,
+      4126,
+      234,
+      2721,
+      6596,
+      8,
+      81,
+      324,
+      19,
+      727,
+      2803,
+      22000,
+      80,
+      18,
+      2017,
+      5921,
+      8,
+      6,
+      2
+    ],
+    "timings": {
+      "encoder_seconds": 0.007500334000724251,
+      "first_decoder_seconds": 0.009683480999228777,
+      "past_decoder_seconds": 0.13032269199902657
+    },
+    "first_cache_shapes": {
+      "present.0.decoder.key": [
+        1,
+        8,
+        1,
+        64
+      ],
+      "present.0.encoder.key": [
+        1,
+        8,
+        18,
+        64
+      ]
+    },
+    "raw_output": "वरकस़ाप दा कोड सीडर 47 है अते हੱथीं हवाला नੰबर 250 है ।",
+    "processed_output": "ਵਰਕਸ਼ਾਪ ਦਾ ਕੋਡ ਸੀਡਰ 47 ਹੈ ਅਤੇ ਹੱਥੀਂ ਹਵਾਲਾ ਨੰਬਰ 250 ਹੈ।",
+    "truncated": false,
+    "elapsed_inference_seconds": 0.1475065069989796,
+    "rss_after": 385298432,
+    "peak_process_rss": 385298432,
+    "method": "greedy",
+    "threads": 2,
+    "next_cache_shapes": {
+      "present.0.decoder.key": [
+        1,
+        8,
+        2,
+        64
+      ],
+      "present.0.encoder.key": [
+        1,
+        8,
+        18,
+        64
+      ]
+    }
+  }
+]

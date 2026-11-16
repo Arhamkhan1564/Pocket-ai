@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.pocketai.data.PocketDatabaseTest" tests="13" skipped="0" failures="0" errors="0" timestamp="2026-11-16T17:45:32" hostname="d3658c0bc222" time="6.715">
+  <properties/>
+  <testcase name="backupRestoresKnowledgeAndConversationWithoutReplacingCredentials" classname="com.pocketai.data.PocketDatabaseTest" time="0.802"/>
+  <testcase name="invalidBulkImportCannotLeavePartialRecordsOrAuditEvents" classname="com.pocketai.data.PocketDatabaseTest" time="0.569"/>
+  <testcase name="duplicatesAndPotentialQaConflictsAreDetected" classname="com.pocketai.data.PocketDatabaseTest" time="0.701"/>
+  <testcase name="retrievalCanFindWordsBeyondTheBeginningOfLongNotes" classname="com.pocketai.data.PocketDatabaseTest" time="0.615"/>
+  <testcase name="englishDocumentsCanBeRetrievedWithUrduPunjabiAndRomanKeywords" classname="com.pocketai.data.PocketDatabaseTest" time="0.649"/>
+  <testcase name="documentDuplicatesKeepDistinctFileProvenanceAndSurvivePortableBackup" classname="com.pocketai.data.PocketDatabaseTest" time="0.412"/>
+  <testcase name="paginationAndDocumentImportRemainBoundedAndSourceLinked" classname="com.pocketai.data.PocketDatabaseTest" time="0.432"/>
+  <testcase name="broadMedicineKeywordsDoNotCrowdOutAnOlderSpecificSymptomReference" classname="com.pocketai.data.PocketDatabaseTest" time="0.6"/>
+  <testcase name="verifiedKnowledgeRequiresAnActiveAdministratorSession" classname="com.pocketai.data.PocketDatabaseTest" time="0.5"/>
+  <testcase name="medicineNameExpansionRetrievesTheOriginalReferencedExcerpt" classname="com.pocketai.data.PocketDatabaseTest" time="0.375"/>
+  <testcase name="knowledgeSurvivesReopenAndCorrectionsUpdateRetrieval" classname="com.pocketai.data.PocketDatabaseTest" time="0.359"/>
+  <testcase name="unicodeSearchPreservesOriginalUrduAndPunjabiScripts" classname="com.pocketai.data.PocketDatabaseTest" time="0.342"/>
+  <testcase name="invalidRestoreDoesNotDestroyExistingKnowledge" classname="com.pocketai.data.PocketDatabaseTest" time="0.353"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

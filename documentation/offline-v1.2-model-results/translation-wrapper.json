@@ -1,0 +1,158 @@
+{
+  "accepted_translation_cases": 12,
+  "rejected_controls": 5,
+  "results": [
+    {
+      "output": "گولی میں 250 ملی گرام پیراسیٹامول ہوتا ہے۔",
+      "expected": true,
+      "accepted": true,
+      "language": "ur",
+      "source": "The tablet contains 250 mg of paracetamol.",
+      "case": "saved-real-model-0"
+    },
+    {
+      "output": "حمل کے دوران استعمال نہ کریں۔",
+      "expected": true,
+      "accepted": true,
+      "language": "ur",
+      "source": "Do not use during pregnancy.",
+      "case": "saved-real-model-1"
+    },
+    {
+      "output": "گولی میں 250 ملی گرام پیراسیٹامول ہوتا ہے۔ حمل کے دوران استعمال نہ کریں۔",
+      "expected": true,
+      "accepted": true,
+      "language": "ur",
+      "source": "The tablet contains 250 mg of paracetamol. Do not use during pregnancy.",
+      "case": "saved-real-model-2"
+    },
+    {
+      "output": "ورکشاپ کا کوڈ سیڈر 47 ہے اور دستی حوالہ نمبر 250 ہے۔",
+      "expected": false,
+      "accepted": false,
+      "language": "ur",
+      "source": "The workshop code is cedar47 and the manual reference number is 250.",
+      "case": "saved-real-model-3"
+    },
+    {
+      "output": "ਗੋਲੀ ਵਿੱਚ 250 ਮਿਲੀਗ੍ਰਾਮ ਪੈਰਾਸੀਟਾਮੋਲ ਹੁੰਦਾ ਹੈ।",
+      "expected": true,
+      "accepted": true,
+      "language": "pa-Guru",
+      "source": "The tablet contains 250 mg of paracetamol.",
+      "case": "saved-real-model-4"
+    },
+    {
+      "output": "گولی وچ 250 ملیگرام پیراسیٹامول ہوندا ہے।",
+      "expected": true,
+      "accepted": true,
+      "language": "pa-Arab",
+      "source": "The tablet contains 250 mg of paracetamol.",
+      "case": "saved-real-model-4-then-Shahmukhi"
+    },
+    {
+      "output": "ਗਰਭ ਅਵਸਥਾ ਦੌਰਾਨ ਇਸ ਦੀ ਵਰਤੋਂ ਨਾ ਕਰੋ।",
+      "expected": true,
+      "accepted": true,
+      "language": "pa-Guru",
+      "source": "Do not use during pregnancy.",
+      "case": "saved-real-model-5"
+    },
+    {
+      "output": "گربھ اوستھا دوران اس دی ورتوں نہ کرو।",
+      "expected": true,
+      "accepted": true,
+      "language": "pa-Arab",
+      "source": "Do not use during pregnancy.",
+      "case": "saved-real-model-5-then-Shahmukhi"
+    },
+    {
+      "output": "ਗੋਲੀ ਵਿੱਚ 250 ਮਿਲੀਗ੍ਰਾਮ ਪੈਰਾਸੀਟਾਮੋਲ ਹੁੰਦਾ ਹੈ। ਗਰਭ ਅਵਸਥਾ ਦੌਰਾਨ ਇਸ ਦੀ ਵਰਤੋਂ ਨਾ ਕਰੋ।",
+      "expected": true,
+      "accepted": true,
+      "language": "pa-Guru",
+      "source": "The tablet contains 250 mg of paracetamol. Do not use during pregnancy.",
+      "case": "saved-real-model-6"
+    },
+    {
+      "output": "گولی وچ 250 ملیگرام پیراسیٹامول ہوندا ہے। گربھ اوستھا دوران اس دی ورتوں نہ کرو।",
+      "expected": true,
+      "accepted": true,
+      "language": "pa-Arab",
+      "source": "The tablet contains 250 mg of paracetamol. Do not use during pregnancy.",
+      "case": "saved-real-model-6-then-Shahmukhi"
+    },
+    {
+      "output": "ਵਰਕਸ਼ਾਪ ਦਾ ਕੋਡ ਸੀਡਰ 47 ਹੈ ਅਤੇ ਹੱਥੀਂ ਹਵਾਲਾ ਨੰਬਰ 250 ਹੈ।",
+      "expected": false,
+      "accepted": false,
+      "language": "pa-Guru",
+      "source": "The workshop code is cedar47 and the manual reference number is 250.",
+      "case": "saved-real-model-7"
+    },
+    {
+      "output": "ورکشاپ دا کوڈ سیڈر 47 ہے اتے ہتّھیں ہوالا نمبر 250 ہے।",
+      "expected": false,
+      "accepted": false,
+      "language": "pa-Arab",
+      "source": "The workshop code is cedar47 and the manual reference number is 250.",
+      "case": "saved-real-model-7-then-Shahmukhi"
+    },
+    {
+      "output": "ورکشاپ کا کوڈ cedar-47 ہے اور دستی حوالہ نمبر 250 ہے۔",
+      "expected": true,
+      "accepted": true,
+      "language": "ur",
+      "source": "The workshop code is cedar-47 and the manual reference number is 250.",
+      "case": "protected-real-model-1"
+    },
+    {
+      "output": "ਵਰਕਸ਼ਾਪ ਦਾ ਕੋਡ cedar-47 ਹੈ ਅਤੇ ਮੈਨੂਅਲ ਹਵਾਲਾ ਨੰਬਰ 250 ਹੈ।",
+      "expected": true,
+      "accepted": true,
+      "language": "pa-Guru",
+      "source": "The workshop code is cedar-47 and the manual reference number is 250.",
+      "case": "protected-real-model-3"
+    },
+    {
+      "output": "ورکشاپ دا کوڈ cedar-47 ہے اتے مینوال ہوالا نمبر 250 ہے।",
+      "expected": true,
+      "accepted": true,
+      "language": "pa-Arab",
+      "source": "The workshop code is cedar-47 and the manual reference number is 250.",
+      "case": "protected-real-model-3-then-Shahmukhi"
+    },
+    {
+      "output": "حمل کے دوران استعمال کریں۔",
+      "expected": false,
+      "accepted": false,
+      "language": "ur",
+      "source": "Do not use during pregnancy.",
+      "case": "dropped-medical-warning-control"
+    },
+    {
+      "output": "گولی میں 500 ملی گرام پیراسیٹامول ہوتا ہے۔",
+      "expected": false,
+      "accepted": false,
+      "language": "ur",
+      "source": "The tablet contains 250 mg of paracetamol.",
+      "case": "invented-dose-control"
+    }
+  ],
+  "limits": "Canonical deterministic wrapper functions tested on saved actual IndicTrans2 model outputs. Shahmukhi is script conversion. No fluent-speaker/clinical validation or Android service/cache/runtime performance claim.",
+  "status": "PASS",
+  "canonical_source_sha256": {
+    "rag/OfflineTranslationService.kt": "f7711394cdd72fe25495c40c60680141062bdcd5dee737b185c9d78cf1e6f6fa",
+    "assistant/GroundedEvidence.kt": "c4e31de23c6e525bcbaf7d055676924ed747f93bf3946ceaa0926eed67bf9962",
+    "assistant/MedicalGuidance.kt": "79eeea7200477b2d9e8ec65efb7a73e2d696868b3fafed36701b107c0b71687d",
+    "translation/PunjabiShahmukhi.kt": "7ecd77aa4280459e163355825f3470e1f6f5bfdc9b8dbda050c5d52948d6a014"
+  },
+  "source_extraction": {
+    "source": "/workspace/work/PocketAI/app/src/main/java/com/pocketai/rag/OfflineTranslationService.kt",
+    "source_sha256": "f7711394cdd72fe25495c40c60680141062bdcd5dee737b185c9d78cf1e6f6fa",
+    "literal_object_sha256": "f616ee4bef7090c8ff39a835ca38e5ac4ddb7c50d82cb9028229e17e1361b829",
+    "checks_function_sha256": "3ab4db1d1fac1489bb719336fa0258c19271b719adb5520dc6da9f48122b6c10",
+    "method": "Exact canonical LiteralProtection object and checks body extracted without edits; private checks visibility changed to public solely for host harness; full Android service not instantiated."
+  },
+  "runtime": "Kotlin2.0.21/JVM17 on JDK21; deterministic wrapper validation using saved actual IndicTrans2 outputs"
+}

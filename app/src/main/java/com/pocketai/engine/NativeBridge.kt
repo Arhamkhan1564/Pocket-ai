@@ -8,10 +8,21 @@ import kotlinx.coroutines.withContext
 /** One local inference at a time: ASR and generation never retain models together. */
 object NativeExecution {
     private val mutex = Mutex()
+    private val cancellationLock = Any()
+    private var cancellationHook: (() -> Unit)? = null
     suspend fun <T> runExclusive(block: () -> T): T = withContext(Dispatchers.IO) {
-        mutex.withLock { block() }
+        mutex.withLock {
+            try { block() }
+            finally { clearCancellationHook() }
+        }
     }
-    fun cancel() = NativeBridge.cancel()
+    /** Register only inside runExclusive, and clear before disposing the native run options. */
+    fun installCancellationHook(hook: () -> Unit) = synchronized(cancellationLock) { cancellationHook = hook }
+    fun clearCancellationHook() = synchronized(cancellationLock) { cancellationHook = null }
+    fun cancel() {
+        NativeBridge.cancel()
+        synchronized(cancellationLock) { cancellationHook?.invoke() }
+    }
 }
 
 object NativeBridge {

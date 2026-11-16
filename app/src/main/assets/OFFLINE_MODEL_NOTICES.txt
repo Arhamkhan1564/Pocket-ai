@@ -1,0 +1,78 @@
+Pocket AI offline baseline model resources
+
+The exact file names, byte sizes, SHA-256 digests, pinned public download URLs,
+model roles and directions are in offline-model-manifest.json. Resources are
+bundled into this APK from an external build-assets directory. No application
+runtime download, account, cloud inference or provider translation API is used.
+Source distributions omit standalone weights; scripts/fetch-offline-models.py
+reconstructs and verifies the pinned assets before an Android build.
+
+1. Multilingual saved-document search
+
+Upstream: intfloat/multilingual-e5-small
+Conversion: Xenova/multilingual-e5-small
+Pinned revision: 761b726dd34fb83930e26aab4e9ac3899aa1fa78
+License declared by upstream: MIT
+Copyright notice: Microsoft Corporation
+Full license: licenses/MULTILINGUAL_E5_MIT.txt
+Source: https://huggingface.co/intfloat/multilingual-e5-small
+Converted resources: https://huggingface.co/Xenova/multilingual-e5-small
+
+This encoder maps text to search vectors. It is not a translator or a generative
+answer model. The selected resources are its quantized ONNX graph and original
+SentencePiece model; large fast-tokenizer JSON files are not bundled.
+
+2. English-to-Urdu and English-to-Gurmukhi Punjabi translation
+
+Upstream: ai4bharat/indictrans2-en-indic-dist-200M
+Conversion: hari31416/indictrans2-en-indic-dist-200M-ONNX-int8
+Pinned revision: 1eaa43a3fb76f382f1b22c76e56f6ab4926ad68b
+License declared by upstream and conversion model cards: MIT
+Copyright notice: AI4Bharat
+Full license: licenses/INDICTRANS2_MIT.txt
+Source: https://github.com/AI4Bharat/IndicTrans2
+Converted resources: https://huggingface.co/hari31416/indictrans2-en-indic-dist-200M-ONNX-int8
+
+The bundled direction is English to Indic languages; this app's tested target
+paths are Urdu (urd_Arab) and Punjabi Gurmukhi (pan_Guru). There is no direct
+Shahmukhi or Western Punjabi target code in this checkpoint. Any separately
+labelled Punjabi script conversion operates after actual Punjabi translation.
+
+IndicTransToolkit preprocessing/postprocessing reference:
+https://github.com/VarunGumma/IndicTransToolkit
+Version used for development-host parity: 1.1.1
+License: MIT; Copyright (c) Varun Gumma
+Full license: licenses/INDICTRANS_TOOLKIT_MIT.txt
+
+Small synthetic host checks are not a broad translation benchmark or medical
+validation. Source identifiers, quantities and prohibitions require preservation
+checks; the original saved source remains the evidence.
+
+3. Conditional English answer generation
+
+Upstream: HuggingFaceTB/SmolLM2-360M-Instruct
+Conversion: bartowski/SmolLM2-360M-Instruct-GGUF
+Pinned revision: 7be6f65f1db715fe5dc5a4634c0d459b4eed42ec
+File: SmolLM2-360M-Instruct-Q4_K_M.gguf
+Upstream and conversion model-card license: Apache License 2.0
+Full license: licenses/Apache-2.0.txt
+Source: https://huggingface.co/HuggingFaceTB/SmolLM2-360M-Instruct
+Converted resources: https://huggingface.co/bartowski/SmolLM2-360M-Instruct-GGUF
+
+This is an English-focused small generator. Its host prototype passed a literal
+copy and a two-fact summary but failed missing-fact abstention by repeating an
+irrelevant saved fact. It requires conditional use and an original-source or
+unknown-answer fallback. No Urdu/Punjabi generation capability is claimed here.
+
+4. Multilingual voice recognition
+
+Model: multilingual Whisper tiny, whisper.cpp GGML Q5_1
+Conversion repository: ggerganov/whisper.cpp
+Pinned revision: 5359861c739e955e79d9a303bcbc70fb988958b1
+License: MIT; Copyright (c) 2022 OpenAI
+Full license: licenses/WHISPER_MODEL_LICENSE.txt
+Detailed model notice: BUNDLED_SPEECH_MODEL_NOTICE.txt
+
+This recognizer does not supply Android text-to-speech voices. Installed offline
+voice availability, pronunciation, microphone quality, device RAM, inference
+latency and all target-phone behavior require their own checks.

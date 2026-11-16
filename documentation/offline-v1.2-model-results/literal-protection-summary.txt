@@ -1,0 +1,22 @@
+IndicTrans2 numeric-sentinel literal protection trial
+Fresh host process; actual pinned ONNX model and official IndicProcessor; no app changes.
+Source exact identifier: cedar-47; unique test sentinel: 9876543210.
+
+urd_Arab
+Unprotected: ورکشاپ کا کوڈ سیڈر-47 ہے اور دستی حوالہ نمبر 250 ہے۔
+Protected model output: ورکشاپ کا کوڈ 9876543210 ہے اور دستی حوالہ نمبر 250 ہے۔
+Restore after exact single-sentinel check: ورکشاپ کا کوڈ cedar-47 ہے اور دستی حوالہ نمبر 250 ہے۔
+Sentinel count: 1; reference250 preserved: True
+
+pan_Guru
+Unprotected: ਵਰਕਸ਼ਾਪ ਦਾ ਕੋਡ ਸੀਡਰ-47 ਹੈ ਅਤੇ ਹੱਥੀਂ ਹਵਾਲਾ ਨੰਬਰ 250 ਹੈ।
+Protected model output: ਵਰਕਸ਼ਾਪ ਦਾ ਕੋਡ 9876543210 ਹੈ ਅਤੇ ਮੈਨੂਅਲ ਹਵਾਲਾ ਨੰਬਰ 250 ਹੈ।
+Restore after exact single-sentinel check: ਵਰਕਸ਼ਾਪ ਦਾ ਕੋਡ cedar-47 ਹੈ ਅਤੇ ਮੈਨੂਅਲ ਹਵਾਲਾ ਨੰਬਰ 250 ਹੈ।
+Sentinel count: 1; reference250 preserved: True
+
+Result: both targets retained the sentinel exactly once, permitting exact identifier restoration.
+This is a narrow synthetic trial, not a universal placeholder-preservation guarantee.
+A production sentinel must be absent from the original source and all other protected values.
+Reject restoration when a sentinel is missing, altered, duplicated or ambiguous.
+Comparison can normalize Unicode decimal digit glyphs while preserving character-span positions.
+Never modify the original saved knowledge/source when creating a translated answer.

@@ -1,0 +1,10 @@
+PASS composed source→SPM→dict→ORT→dict→processor fixture=0 target=urd_Arab output=گولی میں 250 ملی گرام پیراسیٹامول ہوتا ہے۔
+PASS composed source→SPM→dict→ORT→dict→processor fixture=1 target=urd_Arab output=حمل کے دوران استعمال نہ کریں۔
+PASS composed source→SPM→dict→ORT→dict→processor fixture=2 target=urd_Arab output=گولی میں 250 ملی گرام پیراسیٹامول ہوتا ہے۔ حمل کے دوران استعمال نہ کریں۔
+PASS composed source→SPM→dict→ORT→dict→processor fixture=3 target=urd_Arab output=ورکشاپ کا کوڈ سیڈر 47 ہے اور دستی حوالہ نمبر 250 ہے۔
+PASS composed source→SPM→dict→ORT→dict→processor fixture=4 target=pan_Guru output=ਗੋਲੀ ਵਿੱਚ 250 ਮਿਲੀਗ੍ਰਾਮ ਪੈਰਾਸੀਟਾਮੋਲ ਹੁੰਦਾ ਹੈ।
+PASS composed source→SPM→dict→ORT→dict→processor fixture=5 target=pan_Guru output=ਗਰਭ ਅਵਸਥਾ ਦੌਰਾਨ ਇਸ ਦੀ ਵਰਤੋਂ ਨਾ ਕਰੋ।
+PASS composed source→SPM→dict→ORT→dict→processor fixture=6 target=pan_Guru output=ਗੋਲੀ ਵਿੱਚ 250 ਮਿਲੀਗ੍ਰਾਮ ਪੈਰਾਸੀਟਾਮੋਲ ਹੁੰਦਾ ਹੈ। ਗਰਭ ਅਵਸਥਾ ਦੌਰਾਨ ਇਸ ਦੀ ਵਰਤੋਂ ਨਾ ਕਰੋ।
+PASS composed source→SPM→dict→ORT→dict→processor fixture=7 target=pan_Guru output=ਵਰਕਸ਼ਾਪ ਦਾ ਕੋਡ ਸੀਡਰ 47 ਹੈ ਅਤੇ ਹੱਥੀਂ ਹਵਾਲਾ ਨੰਬਰ 250 ਹੈ।
+VmHWM:	  393388 kB
+PASS all8 composed real-model pipeline fixtures; identifier corruption in unprotected fixture3/7 remains modelquality limitation, wrapper literalprotection required

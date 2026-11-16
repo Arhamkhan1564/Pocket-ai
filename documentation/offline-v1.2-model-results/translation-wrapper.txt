@@ -1,0 +1,22 @@
+PASS saved-real-model-0 language=ur accepted=true output=گولی میں 250 ملی گرام پیراسیٹامول ہوتا ہے۔
+PASS saved-real-model-1 language=ur accepted=true output=حمل کے دوران استعمال نہ کریں۔
+PASS saved-real-model-2 language=ur accepted=true output=گولی میں 250 ملی گرام پیراسیٹامول ہوتا ہے۔ حمل کے دوران استعمال نہ کریں۔
+PASS saved-real-model-3 language=ur accepted=false output=ورکشاپ کا کوڈ سیڈر 47 ہے اور دستی حوالہ نمبر 250 ہے۔
+PASS saved-real-model-4 language=pa-Guru accepted=true output=ਗੋਲੀ ਵਿੱਚ 250 ਮਿਲੀਗ੍ਰਾਮ ਪੈਰਾਸੀਟਾਮੋਲ ਹੁੰਦਾ ਹੈ।
+PASS saved-real-model-4-then-Shahmukhi language=pa-Arab accepted=true output=گولی وچ 250 ملیگرام پیراسیٹامول ہوندا ہے।
+PASS saved-real-model-5 language=pa-Guru accepted=true output=ਗਰਭ ਅਵਸਥਾ ਦੌਰਾਨ ਇਸ ਦੀ ਵਰਤੋਂ ਨਾ ਕਰੋ।
+PASS saved-real-model-5-then-Shahmukhi language=pa-Arab accepted=true output=گربھ اوستھا دوران اس دی ورتوں نہ کرو।
+PASS saved-real-model-6 language=pa-Guru accepted=true output=ਗੋਲੀ ਵਿੱਚ 250 ਮਿਲੀਗ੍ਰਾਮ ਪੈਰਾਸੀਟਾਮੋਲ ਹੁੰਦਾ ਹੈ। ਗਰਭ ਅਵਸਥਾ ਦੌਰਾਨ ਇਸ ਦੀ ਵਰਤੋਂ ਨਾ ਕਰੋ।
+PASS saved-real-model-6-then-Shahmukhi language=pa-Arab accepted=true output=گولی وچ 250 ملیگرام پیراسیٹامول ہوندا ہے। گربھ اوستھا دوران اس دی ورتوں نہ کرو।
+PASS saved-real-model-7 language=pa-Guru accepted=false output=ਵਰਕਸ਼ਾਪ ਦਾ ਕੋਡ ਸੀਡਰ 47 ਹੈ ਅਤੇ ਹੱਥੀਂ ਹਵਾਲਾ ਨੰਬਰ 250 ਹੈ।
+PASS saved-real-model-7-then-Shahmukhi language=pa-Arab accepted=false output=ورکشاپ دا کوڈ سیڈر 47 ہے اتے ہتّھیں ہوالا نمبر 250 ہے।
+PASS protected-real-model-1 language=ur accepted=true output=ورکشاپ کا کوڈ cedar-47 ہے اور دستی حوالہ نمبر 250 ہے۔
+PASS duplicate-sentinel rejected
+PASS missing-sentinel rejected
+PASS protected-real-model-3 language=pa-Guru accepted=true output=ਵਰਕਸ਼ਾਪ ਦਾ ਕੋਡ cedar-47 ਹੈ ਅਤੇ ਮੈਨੂਅਲ ਹਵਾਲਾ ਨੰਬਰ 250 ਹੈ।
+PASS protected-real-model-3-then-Shahmukhi language=pa-Arab accepted=true output=ورکشاپ دا کوڈ cedar-47 ہے اتے مینوال ہوالا نمبر 250 ہے।
+PASS duplicate-sentinel rejected
+PASS missing-sentinel rejected
+PASS dropped-medical-warning-control language=ur accepted=false output=حمل کے دوران استعمال کریں۔
+PASS invented-dose-control language=ur accepted=false output=گولی میں 500 ملی گرام پیراسیٹامول ہوتا ہے۔
+ALL PASS accepted=12 rejected=5 plus4 duplicate/missing sentinel guards

@@ -24,6 +24,7 @@ import com.pocketai.engine.LocalAiEngine
 import com.pocketai.engine.NativeBridge
 import com.pocketai.models.ModelKind
 import com.pocketai.models.ModelManager
+import com.pocketai.rag.OfflineRagServices
 import com.pocketai.security.AuthManager
 import com.pocketai.voice.SpeechController
 import java.util.Locale
@@ -33,6 +34,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.first
@@ -52,6 +54,7 @@ class ApplianceForegroundService : Service() {
     private var speech: SpeechController? = null
     private var engine: LocalAiEngine? = null
     private var database: PocketDatabase? = null
+    private var offlineRag: OfflineRagServices? = null
     private var wakeLock: PowerManager.WakeLock? = null
     private var stopping = false
 
@@ -103,6 +106,15 @@ class ApplianceForegroundService : Service() {
         NativeBridge.availabilityMessage()?.let { error(it) }
         val settings = AppSettings(this)
         val models = ModelManager(this)
+        val auth = AuthManager(this).apply { lock() }
+        val db = PocketDatabase(this, auth).also { database = it }
+        val localEngine = LocalAiEngine(this).also { engine = it }
+        val rag = OfflineRagServices(this, db, settings, models).also { offlineRag = it }
+        update("Preparing local search and translation resources…")
+        // Preparation reads only APK/local files. The existing 30-minute session
+        // deadline includes this phase, and cancellation propagates through it.
+        rag.prepare()
+        currentCoroutineContext().ensureActive()
         val whisper = withContext(Dispatchers.IO) {
             models.list().firstOrNull { it.id == settings.selectedWhisperId && it.kind == ModelKind.WHISPER }
         } ?: error("Select an imported multilingual Whisper tiny or base model in Resources before starting hands-free mode.")
@@ -117,13 +129,10 @@ class ApplianceForegroundService : Service() {
         val initialTag = speechTag(settings)
         require(speaker.hasOfflineVoice(initialTag)) { "No installed offline voice for $initialTag. Hands-free mode needs audible replies; configure a compatible voice first." }
         require(settings.voiceVolume > 0f) { "Increase voice volume before starting hands-free mode." }
-        val auth = AuthManager(this).apply { lock() }
-        val db = PocketDatabase(this, auth).also { database = it }
-        val localEngine = LocalAiEngine(this).also { engine = it }
-        val assistant = AssistantService(db, models, localEngine, settings)
+        val assistant = AssistantService(db, models, localEngine, settings, offlineRag = rag)
         say(speaker, startupText(settings), initialTag, settings)
         while (!stopping) {
-            scope.coroutineContext.ensureActive()
+            currentCoroutineContext().ensureActive()
             val language = settings.responseLanguage
             require(whisper.metadata["multilingual"] != "false" || language == "en") { "The newly selected language needs a multilingual speech model. Session stopped." }
             require(speaker.hasOfflineVoice(speechTag(settings))) { "The selected response language has no installed offline voice. Session stopped." }
@@ -154,7 +163,7 @@ class ApplianceForegroundService : Service() {
             val answer = withContext(Dispatchers.IO) {
                 val result = assistant.answer(question)
                 db.addConversation("user", question, language)
-                db.addConversation("assistant", result.text, settings.responseLanguage, result.storedSources)
+                db.addConversation("assistant", result.text, settings.responseLanguage, result.storedSources, sourceIds = result.sourceIds)
                 result
             }
             ApplianceSession.publish { it.copy(lastAnswer = answer.text, status = "Speaking offline…") }
@@ -205,6 +214,7 @@ class ApplianceForegroundService : Service() {
         sessionJob?.cancel()
         speech?.cancelTranscription()
         engine?.cancel()
+        offlineRag?.cancel()
         speech?.close()
         speech = null
         wakeLock?.let { if (it.isHeld) it.release() }
@@ -216,6 +226,8 @@ class ApplianceForegroundService : Service() {
     override fun onDestroy() {
         if (!stopping) finish("The voice service ended. Restart it from the app.")
         scope.cancel()
+        offlineRag?.close()
+        offlineRag = null
         // An in-flight native task owns the database until cancellation returns; closing
         // this helper is safe once its transaction has released SQLite's own lock.
         database?.close()

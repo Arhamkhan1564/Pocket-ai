@@ -81,6 +81,15 @@ class MedicalGuidanceTest {
         assertTrue(GroundedEvidence.safeTranslation("حمل کے دوران استعمال نہ کریں۔", "ਗਰਭ ਅਵਸਥਾ ਦੌਰਾਨ ਵਰਤੋਂ ਨਾ ਕਰੋ।", "pa-Guru", true))
     }
 
+    @Test fun faithfulQuotedLeafletInstructionsAreAllowedWithoutCreatingPersonalAdvice() {
+        val original = "Take 5 mg daily. Do not use during pregnancy."
+        assertTrue(GroundedEvidence.safeTranslation(original, "روزانہ 5 mg لیں۔ حمل کے دوران استعمال نہ کریں۔", "ur", true))
+        assertFalse(GroundedEvidence.safeTranslation("The tablet contains 5 mg of medicine.", "روزانہ 5 mg لیں۔", "ur", true))
+        assertFalse(GroundedEvidence.safeTranslation(original, "روزانہ 50 mg لیں۔ حمل کے دوران استعمال نہ کریں۔", "ur", true))
+        assertFalse(GroundedEvidence.safeTranslation(original, "آپ کو روزانہ 5 mg لینا چاہیے۔ حمل کے دوران استعمال نہ کریں۔", "ur", true))
+        assertEquals(MedicalGuidance.Intent.PERSONAL_TREATMENT, MedicalGuidance.assess("Which medicine should I take?").intent)
+    }
+
     @Test fun literalAlphanumericIdentifiersCannotBeTranslatedOrCorrupted() {
         val original = "The workshop code is cedar-47."
         assertFalse(GroundedEvidence.safeTranslation(original, "ورکشاپ کا کوڈ چEAR-47 ہے۔", "ur", false))

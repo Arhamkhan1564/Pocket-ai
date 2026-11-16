@@ -9,8 +9,17 @@ revision 5922450fbce1ed9d1648babd0d5ac4520055b436
 license MIT (see whisper.cpp/LICENSE)
 
 Whisper uses the single GGML implementation supplied by pinned llama.cpp.
-No AI or speech model weights are bundled. Import licensed compatible weights
-through Models. Header validation is not a guarantee of compatibility or quality.
+Whisper tiny speech weights are supplied separately by the pinned asset script.
+Optional GGUF weights may be imported through Models. Header validation is not
+a guarantee of compatibility or quality. See the offline asset manifest for
+separately pinned retrieval/translation weights.
 
-arm64-v8a, x86_64: CPU GGUF generation and Whisper ggml transcription.
-armeabi-v7a: lightweight JNI compatibility stub; native model inference unavailable.
+arm64-v8a, armeabi-v7a (NEON), x86_64: CPU GGUF generation and Whisper
+ggml transcription; available memory and model compatibility are checked.
+
+SentencePiece https://github.com/google/sentencepiece
+revision 31646a467d2051eb904e0b45de3a73e91fe1c1e3 (v0.2.1)
+license Apache-2.0; bundled processor dependencies retain BSD-3-Clause/Apache
+licenses in sentencepiece/third_party. Only sentencepiece-static is linked.
+No model weights, trainer target, or CLI executable are included in this runtime.
+Native UTF-8 byte-array JNI exposes raw encode/decode IDs and pieces.

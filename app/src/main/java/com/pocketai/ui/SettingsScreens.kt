@@ -1,7 +1,5 @@
 package com.pocketai.ui
 
-import android.content.Intent
-import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
@@ -59,11 +57,15 @@ import com.pocketai.hardware.HardwareSnapshot
 import com.pocketai.models.InstalledModel
 import com.pocketai.models.ModelKind
 import com.pocketai.models.ModelManager
+import com.pocketai.models.OfflinePackStatus
+import com.pocketai.rag.OfflineRagServices
 import com.pocketai.models.BundledSpeechModel
 import com.pocketai.models.BundledSpeechStatus
 import com.pocketai.security.AuthManager
 import com.pocketai.voice.SpeechController
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.text.DateFormat
@@ -79,6 +81,7 @@ fun ResourceScreens(
     models: ModelManager,
     auth: AuthManager,
     db: PocketDatabase,
+    offlineRag: OfflineRagServices,
     onMessage: (String) -> Unit,
     onNavigate: (String) -> Unit,
     onTestSpeaker: (String) -> Unit,
@@ -92,7 +95,7 @@ fun ResourceScreens(
         when (page) {
             "languages" -> LanguageResources(settings, onSettingsChanged)
             "audio" -> AudioResources(settings, onSettingsChanged, onTestSpeaker, onTestMicrophone, speech)
-            "models" -> ModelResources(models, settings, onSettingsChanged, auth, onMessage)
+            "models" -> ModelResources(models, settings, onSettingsChanged, auth, offlineRag, onMessage, onAudio = { onNavigate("audio") })
             "diagnostics" -> DiagnosticResources()
             "backup" -> BackupResources(auth, db, onMessage, onSettingsChanged)
             "security" -> SecurityResources(auth, onMessage)
@@ -100,7 +103,7 @@ fun ResourceScreens(
                 ResourceTitle("Make it yours", "SETTINGS", "Everything stays on this device. No account or connection is required.")
                 ResourceLink("Languages", "English, Urdu, Punjabi and an optional extra language", onClick = { onNavigate("languages") })
                 ResourceLink("Voice & audio", "Offline voices, speech speed and audio tests", onClick = { onNavigate("audio") })
-                ResourceLink("Local models & voice setup", "Set up translation and offline speech recognition", onClick = { onNavigate("models") })
+                ResourceLink("Offline tools", "Prepare included search, translation and speech resources", onClick = { onNavigate("models") })
                 ResourceLink("Device & storage", "Compatibility, memory, battery and audio devices", onClick = { onNavigate("diagnostics") })
                 ResourceLink("Appliance session", "Keep a visible assistant session ready for voice use", onClick = { onNavigate("appliance") })
                 ResourceLink("Backup & restore", "Move your knowledge using a JSON backup", onClick = { onNavigate("backup") })
@@ -115,7 +118,7 @@ fun ResourceScreens(
 @Composable
 private fun LanguageResources(settings: AppSettings, changed: () -> Unit) {
     ResourceTitle("Your languages", "LANGUAGE", "Original text is preserved. Search normalization never replaces your saved wording.")
-    ResourcePanel("Your document languages", "English · اردو · پنجابی / ਪੰਜਾਬੀ\nKeep English documents in their original language, then choose the language for each answer. Translation needs a compatible multilingual language model. Without one, matching source passages are shown in their original language.")
+    ResourcePanel("Your document languages", "English · اردو · پنجابی / ਪੰਜਾਬੀ\nKeep English references in their original language, then choose the answer language. Dedicated translation tools run on this phone. Original passages remain readable while those tools are unavailable.")
     Text("Optional extra language", style = MaterialTheme.typography.titleMedium)
     val languages = LanguageTools.optionalLanguages.map { it.tag to it.nativeName }
     languages.chunked(3).forEach { row ->
@@ -138,7 +141,7 @@ private fun LanguageResources(settings: AppSettings, changed: () -> Unit) {
     }
     Text("Response language", style = MaterialTheme.typography.titleMedium)
     LanguageChoice(settings.responseLanguage, settings.thirdLanguage) { settings.responseLanguage = it; changed() }
-    ResourcePanel("Voice support is checked separately", "A language can work for text even when its speech recognition, translation or offline voice is unavailable. Punjabi and Urdu may require a multilingual Whisper model and an installed compatible system voice. Automatic detection cannot reliably distinguish Urdu and Shahmukhi Punjabi; select Punjabi manually.")
+    ResourcePanel("Punjabi scripts and voices", "Prepared Punjabi translation uses Gurmukhi; Shahmukhi display uses script conversion after Punjabi translation. Check the original source for names, numbers and context. Speech recognition and offline spoken voices are checked separately. Arabic-script Urdu and Punjabi may need manual language selection. Extra-language translation support is not implied by text selection.")
 }
 
 @Composable
@@ -191,18 +194,19 @@ private fun AudioResources(settings: AppSettings, changed: () -> Unit, testSpeak
     }
     Button(onClick = { testSpeaker(settings.responseLanguage) }, modifier = Modifier.fillMaxWidth()) { Text("Test offline speaker") }
     OutlinedButton(onClick = testMicrophone, modifier = Modifier.fillMaxWidth()) { Text("Test microphone in conversation") }
-    ResourcePanel("Tap to talk", "Recording starts only after you tap the microphone and grant permission. Tap stop to transcribe with an imported Whisper model. Audio is held temporarily in memory and is not saved. Wake-word and unattended background listening are not enabled.")
+    ResourcePanel("Tap to talk", "Recording starts only after speech setup is checked, you tap the microphone and grant permission. Tap stop to transcribe with the prepared offline speech resource. Audio is held temporarily in memory and is not saved. Wake-word and unattended background listening are not enabled.")
     ResourcePanel("If you hear no speech", "An offline voice must be installed for the selected language. Pocket AI refuses voices that require a network connection. Text responses remain available. Your Android media volume also affects playback.")
 }
 
 @Composable
-private fun ModelResources(manager: ModelManager, settings: AppSettings, changed: () -> Unit, auth: AuthManager, message: (String) -> Unit) {
-    ResourceTitle("Document answers & voice", "MODEL SETUP", "Document search, translation and speech have separate setup steps. Your imported documents stay on this phone.")
+private fun ModelResources(manager: ModelManager, settings: AppSettings, changed: () -> Unit, auth: AuthManager, offlineRag: OfflineRagServices, message: (String) -> Unit, onAudio: () -> Unit) {
+    ResourceTitle("Prepare offline tools", "ON THIS PHONE", "Included resources are copied and checked locally from the APK. Your references and questions stay on this phone.")
     var refresh by remember { mutableIntStateOf(0) }
     var installed by remember { mutableStateOf<List<InstalledModel>>(emptyList()) }
     var busy by remember { mutableStateOf(false) }
     var importProgress by remember { mutableStateOf("Preparing import…") }
     var kind by remember { mutableStateOf(ModelKind.LLM) }
+    var advanced by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
     val bundledSpeech by BundledSpeechModel.state.collectAsState()
@@ -232,31 +236,27 @@ private fun ModelResources(manager: ModelManager, settings: AppSettings, changed
             busy = false
         }
     }
-    ResourcePanel("1 · Add your reference documents", "In Training Mode, import an English TXT, DOCX or text PDF, preview it and save. The app indexes passages with their file names. This is retrieval (RAG); adding a file does not retrain a model.")
-    val languageReady = installed.any { it.kind == ModelKind.LLM && it.id == settings.selectedLlmId }
-    ResourcePanel(if (languageReady) "2 · Language model selected" else "2 · Set up translated answers", "A multilingual GGUF model can read retrieved English passages and answer in English, Urdu or Punjabi. Without it, search shows original passages. Translation accuracy depends on the model; check medicine names, numbers and units against the cited original.")
-    if (installed.any { it.id == settings.selectedLlmId && it.sha256 == "ac2d97712095a558e31573f62f466a3f9d93990898b0ec79d7c974c1780d524a" }) {
-        ResourcePanel("English demo model selected", "This small Qwen3 model failed our Urdu/Punjabi answer and translation checks. Use the original passages, or import a more capable model. A larger model may need more memory than this phone has.")
-    }
-    if (!languageReady) {
-        Text("A compatible multilingual model is needed for translated answers. The small Qwen3 0.6B Q4_K_M file below (379 MiB) is for English RAG experiments: it failed our Urdu/Punjabi checks and is not recommended for those translations. A stronger model may need more RAM. No model here is medically validated.", style = MaterialTheme.typography.bodySmall)
-        OutlinedButton(onClick = {
-            try {
-                context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://huggingface.co/unsloth/Qwen3-0.6B-GGUF/resolve/50968a4468ef4233ed78cd7c3de230dd1d61a56b/Qwen3-0.6B-Q4_K_M.gguf")))
-            } catch (failure: Exception) { message(failure.message ?: "No browser is available. Copy the model link from the project documentation.") }
-        }, modifier = Modifier.fillMaxWidth()) { Text("Download experimental English model") }
-    }
-    ResourcePanel("For a 2 GB phone", "Use a small quantized language model. Speech and text inference run one at a time. Close other apps if memory is low. Compatibility, Urdu/Punjabi quality and speed need a test on your phone.")
-    ResourcePanel("3 · Offline speech recognition", bundledSpeech.message + "\nThe included multilingual Whisper tiny model recognizes speech. It does not translate your reference documents or provide spoken-answer voices.")
+    ResourcePanel("Your reference workflow", "Import an English TXT, Word or text PDF in Training Mode. Review and index it, ask in your language, then tap a source to read the original. Adding a file indexes knowledge; it does not retrain a model.")
+    OfflinePreparationPanel(offlineRag, onMessage = message, onPrepared = changed)
+    ResourcePanel("Offline speech recognition", bundledSpeech.message + "\nRecognition, translated text and spoken-answer voices have separate readiness checks.")
     if (bundledSpeech.status == BundledSpeechStatus.INSTALLING) {
         LinearProgressIndicator(Modifier.fillMaxWidth())
         Text("Preparing included speech model…", style = MaterialTheme.typography.bodySmall)
     }
-    Text("Context window", style = MaterialTheme.typography.titleMedium)
+    OutlinedButton(onClick = onAudio, modifier = Modifier.fillMaxWidth()) { Text("Check offline voices & phone audio") }
+    ResourcePanel("Readiness and real-world checks", "Verified local files are a setup check. Recognition quality, pronunciation, memory use and speed still depend on this phone. Original English references remain available for checking medical terms and quantities.")
+    ResourcePanel("Phone compatibility", "Android 6.0 / API 23+ with ARM64, ARMv7 with NEON, or x86_64. Actual tool availability also depends on CPU features, free RAM and storage. These supported targets do not guarantee every Android phone. The itel A25 Pro still needs on-device checks.")
+    Text("Answer style", style = MaterialTheme.typography.titleMedium)
+    FilterChip(selected = settings.ragAnswerStyle == "excerpt", onClick = { settings.ragAnswerStyle = "excerpt"; changed() }, label = { Text("Fast cited passages · recommended") })
+    Text("Retrieve a short, source-linked excerpt. This is the default for a low-memory phone.", color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.bodySmall)
+    FilterChip(selected = settings.ragAnswerStyle == "synthesis", onClick = { settings.ragAnswerStyle = "synthesis"; changed() }, label = { Text("English explanation · slower") })
+    Text("Uses the included English explanation model. It is slower and uses more memory; originals remain linked, and unavailable generation falls back to passages.", color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.bodySmall)
+    TextButton(onClick = { advanced = !advanced }, modifier = Modifier.fillMaxWidth()) { Text(if (advanced) "Hide advanced model controls" else "Advanced · custom models") }
+    if (advanced) {
+    ResourcePanel("Optional custom runtimes", "Manual model files are advanced options. The small English demo model is not a validated Urdu/Punjabi translator. Custom models can exceed available memory and have not been medically validated.")
+    Text("Custom model context", style = MaterialTheme.typography.titleMedium)
     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-        listOf(256, 512, 1024).forEach { tokens ->
-            FilterChip(settings.contextSize == tokens, { settings.contextSize = tokens; changed() }, label = { Text("$tokens tokens") })
-        }
+        listOf(256, 512, 1024).forEach { tokens -> FilterChip(settings.contextSize == tokens, { settings.contextSize = tokens; changed() }, label = { Text("$tokens tokens") }) }
     }
     if (busy) {
         LinearProgressIndicator(Modifier.fillMaxWidth())
@@ -285,7 +285,7 @@ private fun ModelResources(manager: ModelManager, settings: AppSettings, changed
             kind = ModelKind.WHISPER
             launchExternal(message) { importer.launch(arrayOf("*/*")) }
         }, enabled = !busy, modifier = Modifier.fillMaxWidth()) { Text("Import speech model · Whisper") }
-        if (installed.isEmpty()) ResourcePanel("No models installed", "Saved document search already works. Import a multilingual GGUF for translated answers. Speech recognition uses a separate Whisper model; spoken answers use an installed Android offline voice.")
+        if (installed.isEmpty()) ResourcePanel("No custom models installed", "Prepared baseline tools do not require a manual model import. Use the controls here only for an optional custom engine.")
         installed.forEach { model ->
             val selected = if (model.kind == ModelKind.LLM) settings.selectedLlmId == model.id else settings.selectedWhisperId == model.id
             Card(Modifier.fillMaxWidth()) {
@@ -320,6 +320,58 @@ private fun ModelResources(manager: ModelManager, settings: AppSettings, changed
                     }
                 }
             }
+        }
+    }
+    }
+}
+
+/** Shared by first-run setup and Resources. All controls invoke local services, never downloads. */
+@Composable
+fun OfflinePreparationPanel(offlineRag: OfflineRagServices, onMessage: (String) -> Unit, onPrepared: () -> Unit = {}, showIndex: Boolean = true) {
+    val state by offlineRag.state.collectAsState()
+    val index by offlineRag.indexState.collectAsState()
+    val packs by offlineRag.packStates.collectAsState()
+    val scope = rememberCoroutineScope()
+    var prepareJob by remember { mutableStateOf<Job?>(null) }
+    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+        ResourcePanel("Prepare once · use offline", state.message + "\nAll included resources come from this APK; no cloud connection or browser is used.")
+        packs.values.forEach { pack ->
+            Text(pack.message, style = MaterialTheme.typography.bodySmall, color = if (pack.status == OfflinePackStatus.FAILED) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant)
+            if (pack.status == OfflinePackStatus.PREPARING) {
+                val progress = if (pack.totalBytes > 0) pack.copiedBytes.toFloat() / pack.totalBytes else 0f
+                LinearProgressIndicator(progress = { progress.coerceIn(0f, 1f) }, modifier = Modifier.fillMaxWidth())
+                Text("${formatBytes(pack.copiedBytes)} / ${formatBytes(pack.totalBytes)} checked locally", style = MaterialTheme.typography.labelSmall)
+            }
+        }
+        if (state.preparing && packs.values.none { it.status == OfflinePackStatus.PREPARING }) LinearProgressIndicator(Modifier.fillMaxWidth())
+        state.error?.let { Text(it, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall) }
+        Text("Search: ${if (state.searchReady) "ready on this phone" else "not ready"}\nUrdu/Punjabi reference translation: ${if (state.translationReady) "ready on this phone" else "not ready"}\nEnglish explanation: ${if (state.englishGeneratorReady) "prepared" else "not prepared"}", style = MaterialTheme.typography.bodySmall)
+        if (state.preparing) {
+            OutlinedButton(onClick = { prepareJob?.cancel(); offlineRag.pausePreparation() }, modifier = Modifier.fillMaxWidth()) { Text("Pause local setup") }
+        } else Button(onClick = {
+            if (prepareJob?.isActive == true) return@Button
+            prepareJob = scope.launch {
+                try { offlineRag.prepare(); offlineRag.startIndexing(); onPrepared() }
+                catch (cancelled: CancellationException) { throw cancelled }
+                catch (failure: Exception) { onMessage(failure.message ?: "Offline setup could not finish. Your originals are unchanged.") }
+                finally { prepareJob = null }
+            }
+        }, enabled = prepareJob?.isActive != true, modifier = Modifier.fillMaxWidth()) { Text(if (state.error != null) "Retry local setup" else if (state.searchReady && state.translationReady) "Check included resources" else "Prepare offline tools") }
+        if (showIndex) {
+            HorizontalDivider()
+            Text("Reference search index", style = MaterialTheme.typography.titleMedium)
+            Text(index.message, style = MaterialTheme.typography.bodySmall)
+            if (index.totalRecords > 0) {
+                LinearProgressIndicator(progress = { (index.indexedRecords.toFloat() / index.totalRecords).coerceIn(0f, 1f) }, modifier = Modifier.fillMaxWidth())
+                Text("${index.indexedRecords} / ${index.totalRecords} saved passages indexed", style = MaterialTheme.typography.labelSmall)
+            }
+            index.error?.let { Text(it, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall) }
+            when {
+                index.paused -> OutlinedButton(onClick = { offlineRag.resumeIndexing() }, enabled = state.searchReady, modifier = Modifier.fillMaxWidth()) { Text("Resume reference indexing") }
+                index.running -> OutlinedButton(onClick = { offlineRag.pauseIndexing() }, modifier = Modifier.fillMaxWidth()) { Text("Pause reference indexing") }
+                else -> OutlinedButton(onClick = { offlineRag.startIndexing() }, enabled = state.searchReady && !state.preparing, modifier = Modifier.fillMaxWidth()) { Text(if (index.error == null) "Refresh reference index" else "Retry reference indexing") }
+            }
+            Text("Indexing helps questions match English references across languages. You can still read every original while indexing is paused.", color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.bodySmall)
         }
     }
 }
@@ -387,7 +439,7 @@ private fun BackupResources(auth: AuthManager, db: PocketDatabase, message: (Str
             busy = false
         }
     }
-    ResourcePanel("Keep backups private", "Backup files contain personal knowledge and conversation text. Store them in a trusted location. PIN credentials, settings, model files, correction history and training history are not included. Models can be re-imported separately. Portable backups have a 16 MB safety limit.")
+    ResourcePanel("Keep backups private", "Backup files contain personal knowledge and conversation text. Store them in a trusted location. PIN credentials, settings, model files, correction history and training history are not included. Included tools can be prepared again from the APK; custom models can be re-imported. Search indexes rebuild after restore. Portable backups have a 16 MB safety limit.")
     AdminGate(auth, message) {
         if (busy) LinearProgressIndicator(Modifier.fillMaxWidth())
         Button(onClick = {

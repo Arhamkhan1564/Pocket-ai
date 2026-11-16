@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.pocketai.data.DocumentChunkerTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-11-16T17:45:24" hostname="d3658c0bc222" time="0.214">
+  <properties/>
+  <testcase name="shortOriginalParagraphsAndUnicodeRemainEditableWithoutRewriting" classname="com.pocketai.data.DocumentChunkerTest" time="0.043"/>
+  <testcase name="longParagraphKeepsEveryWordAndSharesBoundedContextBetweenChunks" classname="com.pocketai.data.DocumentChunkerTest" time="0.044"/>
+  <testcase name="pathologicalLongWordsAndDocumentLimitsRemainBounded" classname="com.pocketai.data.DocumentChunkerTest" time="0.127"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

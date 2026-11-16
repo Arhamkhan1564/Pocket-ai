@@ -1,0 +1,56 @@
+{
+  "candidate": "bartowski/SmolLM2-360M-Instruct-GGUF",
+  "revision": "7be6f65f1db715fe5dc5a4634c0d459b4eed42ec",
+  "file": "SmolLM2-360M-Instruct-Q4_K_M.gguf",
+  "size_bytes": 270590880,
+  "sha256": "2fa3f013dcdd7b99f9b237717fa0b12d75bbb89984cc1274be1471a465bac9c2",
+  "upstream_license": "Apache-2.0",
+  "conversion_card_license": "Apache-2.0",
+  "runtime": "existing host JNI libpocketai.so, Linux x86_64, Java21",
+  "parameters": {
+    "context_tokens": 512,
+    "max_generated_tokens": 96,
+    "threads": 4,
+    "sampler": "greedy",
+    "java_xmx_mib": 128
+  },
+  "results": [
+    {
+      "event": "result",
+      "case": "literal_copy",
+      "seconds": 17.141383622,
+      "heuristic_pass": true,
+      "prompt": "Saved knowledge:\n[1] The workshop access phrase is cedar-47. The manual reference number is 250.\nQuestion: What are the workshop access phrase and manual reference number? Answer in one short sentence.",
+      "answer": "The workshop access phrase is cedar-47, and the manual reference number is 250."
+    },
+    {
+      "event": "result",
+      "case": "two_fact_summary",
+      "seconds": 14.693015343,
+      "heuristic_pass": true,
+      "prompt": "Saved knowledge:\n[1] The garden room has three windows.\n[2] The garden room is used for painting classes on Fridays.\nQuestion: Summarize these two facts in one short sentence. Include only the provided facts.",
+      "answer": "The garden room has three windows and is used for painting classes on Fridays."
+    },
+    {
+      "event": "result",
+      "case": "missing_fact",
+      "seconds": 13.366658558,
+      "heuristic_pass": false,
+      "prompt": "Saved knowledge:\n[1] The workshop is on the ground floor.\nQuestion: What is the workshop door PIN? If it is not in saved knowledge, say 'I do not know from the saved knowledge.' Do not guess.",
+      "answer": "The workshop is on the ground floor."
+    }
+  ],
+  "process_exit_code": 0,
+  "total_seconds": 45.32624993799982,
+  "kernel_child_max_rss_kib": 355560,
+  "sampled_memory": {
+    "peak_rss_bytes_sampled": 364326912,
+    "peak_vms_bytes_sampled": 3311353856,
+    "per_case_peak_rss_bytes": {
+      "literal_copy": 357269504,
+      "two_fact_summary": 362614784,
+      "missing_fact": 364326912
+    }
+  },
+  "limits": "Synthetic English host checks only; not Android/ARMv7 memory or latency proof, not general factuality or clinical validation. Heuristic checks need human review."
+}

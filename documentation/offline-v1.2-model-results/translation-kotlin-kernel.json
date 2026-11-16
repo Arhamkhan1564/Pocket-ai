@@ -1,0 +1,19 @@
+{
+  "runtime": "ONNX Runtime1.20.0 CPU Java API",
+  "language": "Kotlin2.0.21/JVM17 on JDK21",
+  "host": "x86_64",
+  "kernel_source_sha256": "d6861cdd269fe7457dd5e6825033169588fc77cf6b5592399f306854ab5b1a3d",
+  "fixture_token_sha256": "71c27b4868722ceb43e92cabc872fd449cf200f7c2e7a612ca2e3a64eff5a9dc",
+  "exact_python_token_fixtures": 8,
+  "exact_python_token_fixtures_passed": 8,
+  "length_limit_status_passed": true,
+  "cancellation_after_past_session_load_passed": true,
+  "native_runoptions_termination_and_reuse_passed": true,
+  "model_sessions_concurrent_maximum": 1,
+  "cache_values_copied_to_java_arrays": false,
+  "logits_output": "Single pinned direct FloatBuffer",
+  "peak_rss_bytes": 306393088,
+  "elapsed_seconds": 10.723318034999465,
+  "exit_code": 0,
+  "limits": "Host tensor-path parity and cleanup proof; physical Android/itel A25 Pro execution, speed and end-to-end language quality are separate checks."
+}

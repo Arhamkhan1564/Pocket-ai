@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "cmake_sha256": "e5b434725027eef97a3b1e92b41a18659774a340daf6c867b1db8b8d9b764d18",
+  "source_directory_all_rule": "sentencepiece-build/src/all: sentencepiece-build/src/CMakeFiles/sentencepiece-static.dir/all",
+  "gradle_explicit_jni_targets": [
+    "pocketai",
+    "pocketai_tokenizer"
+  ],
+  "cause": "AGP explicitly invoked every discovered executable, bypassing directory EXCLUDE_FROM_ALL; Gradle target whitelist now prevents CLI invocation. Explicit target exclusions also remove trainers/CLIs from upstream directory ALL."
+}

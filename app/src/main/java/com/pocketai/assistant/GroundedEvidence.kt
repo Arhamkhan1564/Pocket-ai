@@ -39,7 +39,8 @@ internal object GroundedEvidence {
         if (output.isBlank() || !MedicalGuidance.matchesRequestedScript(output, languageTag)) return false
         if (numbers(output) != numbers(original)) return false
         if (!preservesIdentifiers(original, output) || hasUnsupportedIdentifiers(output, original)) return false
-        if (medical && (measurements(output) != measurements(original) || MedicalGuidance.containsPersonalPrescription(output))) return false
+        if (medical && measurements(output) != measurements(original)) return false
+        if (medical && MedicalGuidance.containsPersonalPrescription(output) && !quotedLeafletInstruction(original, output)) return false
         if (medical && negation.containsMatchIn(original) && !negation.containsMatchIn(output)) return false
         return !Regex("\\[(\\d+)\\]").containsMatchIn(output) // A translation is not allowed to invent source indexes.
     }
@@ -56,6 +57,19 @@ internal object GroundedEvidence {
 
     private val negation = Regex("\\b(?:no|not|never|avoid|without|don't|cannot|can't|contraindicated)\\b|" +
         "نہیں|نہ |مت |اجتناب|پرہیز|بغیر|منع|ممنوع|ਨਹੀਂ|ਨਹੀ|ਨਾ |ਪਰਹੇਜ਼|ਬਿਨਾਂ|ਮਨਾਹੀ|ਵਰਜਿਤ", RegexOption.IGNORE_CASE)
+
+    /** A quoted leaflet instruction remains reference material; newly personalized advice does not. */
+    private fun quotedLeafletInstruction(original: String, output: String): Boolean {
+        val sourceDirective = Regex(
+            "(?:^|[.!?:]\\s*|\\n)\\s*(?:take|use|give|apply|swallow)\\s+(?:up to\\s+)?\\d+(?:[.,]\\d+)?\\s*(?:tablets?|capsules?|drops?|puffs?|mg|mcg|g|ml|milligrams?|millilit(?:er|re)s?)(?!\\p{L})",
+            setOf(RegexOption.IGNORE_CASE, RegexOption.MULTILINE),
+        )
+        val newPersonalAdvice = Regex(
+            "\\b(?:you should|you must|i recommend|i prescribe|you have)\\b|آپ کو|آپ کی|ਤੁਹਾਨੂੰ|ਤੁਹਾਡੀ",
+            RegexOption.IGNORE_CASE,
+        )
+        return sourceDirective.containsMatchIn(original) && !newPersonalAdvice.containsMatchIn(output)
+    }
 
     private fun canonicalNumber(value: String): String = buildString {
         value.forEach { character ->

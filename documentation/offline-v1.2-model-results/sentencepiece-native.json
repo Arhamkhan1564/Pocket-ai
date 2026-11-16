@@ -1,0 +1,103 @@
+{
+  "canonical_cpp_sha256": "3ea26d28ee88e2d330f70e800ddf0073eb0ef62305ac27cb2897447136fa48a5",
+  "cmake_sha256": "d3c259af3f75e87e9ae331a6b9449e23bb3ee065c9b13fd3ad92794f439d416c",
+  "host_library_sha256": "0882581ce9807ea355a0f035a076dd3f17abb4fedc20fe148917d11e4651e7e5",
+  "android_cross_compile": {
+    "armeabi-v7a": {
+      "success": true,
+      "elf_class": "ELF32",
+      "machine": "ARM",
+      "android_api": 23,
+      "ndk": "27.2.12479018",
+      "all_load_segments_16k_aligned": true,
+      "load_segments": [
+        {
+          "offset": 0,
+          "virtual_address": 0,
+          "alignment": 16384
+        },
+        {
+          "offset": 281712,
+          "virtual_address": 298096,
+          "alignment": 16384
+        },
+        {
+          "offset": 285736,
+          "virtual_address": 318504,
+          "alignment": 16384
+        }
+      ],
+      "jni_exports_verified": 8,
+      "bytes_unstripped": 9724460,
+      "sha256": "96a64f5a4194d393c84bfc12224e150aecd880109f62584e19dfb81e2bf0136b"
+    },
+    "arm64-v8a": {
+      "success": true,
+      "elf_class": "ELF64",
+      "machine": "AArch64",
+      "android_api": 23,
+      "ndk": "27.2.12479018",
+      "all_load_segments_16k_aligned": true,
+      "load_segments": [
+        {
+          "offset": 0,
+          "virtual_address": 0,
+          "alignment": 16384
+        },
+        {
+          "offset": 459472,
+          "virtual_address": 475856,
+          "alignment": 16384
+        },
+        {
+          "offset": 467600,
+          "virtual_address": 500368,
+          "alignment": 16384
+        }
+      ],
+      "jni_exports_verified": 8,
+      "bytes_unstripped": 11898984,
+      "sha256": "5de3ab3475134c690da0bfcea0bf5d5dfc7301a1db097906c6111b03861c699d"
+    },
+    "x86_64": {
+      "success": true,
+      "elf_class": "ELF64",
+      "machine": "Advanced Micro Devices X86-64",
+      "android_api": 23,
+      "ndk": "27.2.12479018",
+      "all_load_segments_16k_aligned": true,
+      "load_segments": [
+        {
+          "offset": 0,
+          "virtual_address": 0,
+          "alignment": 16384
+        },
+        {
+          "offset": 461808,
+          "virtual_address": 478192,
+          "alignment": 16384
+        },
+        {
+          "offset": 468928,
+          "virtual_address": 501696,
+          "alignment": 16384
+        }
+      ],
+      "jni_exports_verified": 8,
+      "bytes_unstripped": 11483448,
+      "sha256": "164113c5a04d8c704226c31a62ce1d104c61a9bc57e4ecb7bdc42682e06eab9b"
+    }
+  },
+  "host_parity": {
+    "fixture_cases": 24,
+    "assertions": 157,
+    "python_sentencepiece": "0.2.1",
+    "passed": true,
+    "jni_checked": true
+  },
+  "limits": [
+    "Android cross-compilation and ELF validation only; no Android device/emulator tokenizer execution claimed.",
+    "Raw SentencePiece IDs are distinct from Marian shared-vocabulary IDs and E5 transformer IDs; app mappings require their own parity tests.",
+    "Model files remain validation inputs under work and are not bundled in source or APK."
+  ]
+}

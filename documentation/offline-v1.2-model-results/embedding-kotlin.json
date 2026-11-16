@@ -1,0 +1,107 @@
+{
+  "unknown_queries_below_0_82": 1,
+  "max_document_vector_absolute_error": 4.470348358154297e-08,
+  "corpus_vectors": 7,
+  "max_cosine_score_absolute_error": 1.3173885882178382e-07,
+  "correct_known_queries": 10,
+  "queries": 11,
+  "max_query_vector_absolute_error": 2.9802322387695312e-08,
+  "results": [
+    {
+      "max_vector_absolute_error": 1.4901161193847656e-08,
+      "found": "insulin-storage",
+      "top_score": 0.885600662759059,
+      "query": "How should insulin be stored?",
+      "language": "en",
+      "unknown_below_threshold": false
+    },
+    {
+      "max_vector_absolute_error": 1.4901161193847656e-08,
+      "found": "insulin-storage",
+      "top_score": 0.8271050383546978,
+      "query": "انسولین کو کیسے محفوظ رکھنا چاہئے؟",
+      "language": "ur",
+      "unknown_below_threshold": false
+    },
+    {
+      "max_vector_absolute_error": 2.9802322387695312e-08,
+      "found": "insulin-storage",
+      "top_score": 0.8326878438002228,
+      "query": "ਇਨਸੁਲਿਨ ਨੂੰ ਕਿਵੇਂ ਸੰਭਾਲ ਕੇ ਰੱਖਣਾ ਚਾਹੀਦਾ ਹੈ?",
+      "language": "pa-Guru",
+      "unknown_below_threshold": false
+    },
+    {
+      "max_vector_absolute_error": 2.2351741790771484e-08,
+      "found": "insulin-storage",
+      "top_score": 0.8410319861248958,
+      "query": "انسولین نوں کیویں سنبھال کے رکھنا چاہیدا اے؟",
+      "language": "pa-Arab",
+      "unknown_below_threshold": false
+    },
+    {
+      "max_vector_absolute_error": 0,
+      "found": "paracetamol-reference",
+      "top_score": 0.8836747531755215,
+      "query": "What does the reference say about paracetamol?",
+      "language": "en",
+      "unknown_below_threshold": false
+    },
+    {
+      "max_vector_absolute_error": 2.2351741790771484e-08,
+      "found": "paracetamol-reference",
+      "top_score": 0.8281325553623804,
+      "query": "پیراسیٹامول کے بارے میں دستاویز میں کیا لکھا ہے؟",
+      "language": "ur",
+      "unknown_below_threshold": false
+    },
+    {
+      "max_vector_absolute_error": 2.9802322387695312e-08,
+      "found": "paracetamol-reference",
+      "top_score": 0.8620860701925331,
+      "query": "ਪੈਰਾਸੀਟਾਮੋਲ ਬਾਰੇ ਦਸਤਾਵੇਜ਼ ਕੀ ਕਹਿੰਦਾ ਹੈ?",
+      "language": "pa-Guru",
+      "unknown_below_threshold": false
+    },
+    {
+      "max_vector_absolute_error": 2.9802322387695312e-08,
+      "found": "paracetamol-reference",
+      "top_score": 0.8234512825967311,
+      "query": "پیراسیٹامول بارے دستاویز کیہ کہندی اے؟",
+      "language": "pa-Arab",
+      "unknown_below_threshold": false
+    },
+    {
+      "max_vector_absolute_error": 1.4901161193847656e-08,
+      "found": "workshop-code",
+      "top_score": 0.8229660340761296,
+      "query": "ورکشاپ کا کوڈ کیا ہے؟",
+      "language": "ur",
+      "unknown_below_threshold": false
+    },
+    {
+      "max_vector_absolute_error": 2.2351741790771484e-08,
+      "found": "workshop-code",
+      "top_score": 0.8373808342317796,
+      "query": "ਵਰਕਸ਼ਾਪ ਦਾ ਕੋਡ ਕੀ ਹੈ?",
+      "language": "pa-Guru",
+      "unknown_below_threshold": false
+    },
+    {
+      "max_vector_absolute_error": 2.9802322387695312e-08,
+      "found": "filter-maintenance",
+      "top_score": 0.800452092497786,
+      "query": "How do I book a flight? ",
+      "language": "en",
+      "unknown_below_threshold": true
+    }
+  ],
+  "limits": "Host canonical Kotlin/SPM/ORT parity on synthetic fixtures; no physical Android speed or clinical accuracy validation.",
+  "status": "PASS",
+  "source_sha256": {
+    "engine/NativeTokenizer.kt": "c2a20fda7fc09e6decc28f7c5d2d074cc1c999fa60c4c88a26c53aa3927b6884",
+    "retrieval/OnnxEmbeddingKernel.kt": "94cf23ee9afc1910a92736a2b74e855f9f20d260cc54ae29c30b73586e65a13b"
+  },
+  "runtime": "ONNX Runtime1.20.0 CPU / canonical Kotlin2.0.21 / native SentencePiece0.2.1 / hostx86_64",
+  "elapsed_seconds": 2.240432024002075
+}

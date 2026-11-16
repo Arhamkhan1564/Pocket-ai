@@ -32,8 +32,11 @@ data class KnowledgeRecord(
     fun toDraft() = KnowledgeDraft(content, question, language, script, category, source, sourceReference, confidence)
 }
 
-data class ConversationRecord(val id: Long, val role: String, val content: String, val language: String, val sources: String, val createdAt: Long)
+data class ConversationRecord(val id: Long, val role: String, val content: String, val language: String, val sources: String, val createdAt: Long, val sourceIds: List<Long> = emptyList())
 data class TrainingEvent(val id: Long, val knowledgeId: Long?, val action: String, val details: String, val createdAt: Long)
+data class DocumentSummary(val id: Long, val name: String, val language: String, val importedAt: Long, val chunkCount: Int, val characterCount: Long)
+data class KnowledgeVectorPart(val part: Int, val startOffset: Int, val endOffset: Int, val vector: FloatArray)
+data class KnowledgeVectorHit(val knowledgeId: Long, val score: Double, val startOffset: Int, val endOffset: Int)
 
 /** Search normalization only. The administrator's original script and text are never overwritten. */
 object SearchText {

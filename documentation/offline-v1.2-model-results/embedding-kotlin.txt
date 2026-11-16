@@ -1,0 +1,20 @@
+DOCUMENT PASS insulin-storage maxAbs=2.9802322387695312E-8
+DOCUMENT PASS ibuprofen-warning maxAbs=3.725290298461914E-8
+DOCUMENT PASS filter-maintenance maxAbs=2.2351741790771484E-8
+DOCUMENT PASS astronomy maxAbs=4.470348358154297E-8
+DOCUMENT PASS paracetamol-reference maxAbs=0.0
+DOCUMENT PASS workshop-code maxAbs=2.9802322387695312E-8
+DOCUMENT PASS bread-recipe maxAbs=2.9802322387695312E-8
+QUERY PASS 0 language=en found=insulin-storage score=0.885600662759059 unknown=false maxAbs=1.4901161193847656E-8
+QUERY PASS 1 language=ur found=insulin-storage score=0.8271050383546978 unknown=false maxAbs=1.4901161193847656E-8
+QUERY PASS 2 language=pa-Guru found=insulin-storage score=0.8326878438002228 unknown=false maxAbs=2.9802322387695312E-8
+QUERY PASS 3 language=pa-Arab found=insulin-storage score=0.8410319861248958 unknown=false maxAbs=2.2351741790771484E-8
+QUERY PASS 4 language=en found=paracetamol-reference score=0.8836747531755215 unknown=false maxAbs=0.0
+QUERY PASS 5 language=ur found=paracetamol-reference score=0.8281325553623804 unknown=false maxAbs=2.2351741790771484E-8
+QUERY PASS 6 language=pa-Guru found=paracetamol-reference score=0.8620860701925331 unknown=false maxAbs=2.9802322387695312E-8
+QUERY PASS 7 language=pa-Arab found=paracetamol-reference score=0.8234512825967311 unknown=false maxAbs=2.9802322387695312E-8
+QUERY PASS 8 language=ur found=workshop-code score=0.8229660340761296 unknown=false maxAbs=1.4901161193847656E-8
+QUERY PASS 9 language=pa-Guru found=workshop-code score=0.8373808342317796 unknown=false maxAbs=2.2351741790771484E-8
+QUERY PASS 10 language=en found=filter-maintenance score=0.800452092497786 unknown=true maxAbs=2.9802322387695312E-8
+VmHWM:	  329440 kB
+ALL PASS documents=7 queries=11 maxDoc=4.470348358154297E-8 maxQuery=2.9802322387695312E-8 maxScore=1.3173885882178382E-7

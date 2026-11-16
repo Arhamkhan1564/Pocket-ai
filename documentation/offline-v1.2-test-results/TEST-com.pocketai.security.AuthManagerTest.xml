@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.pocketai.security.AuthManagerTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-11-16T17:45:40" hostname="d3658c0bc222" time="6.901">
+  <properties/>
+  <testcase name="readingAndLockingSessionDoesNotWaitForPendingPinVerification" classname="com.pocketai.security.AuthManagerTest" time="0.764"/>
+  <testcase name="rejectsWeakPinAndUnauthorizedChanges" classname="com.pocketai.security.AuthManagerTest" time="1.203"/>
+  <testcase name="hashedPinSurvivesRestartButAuthorizationDoesNot" classname="com.pocketai.security.AuthManagerTest" time="0.642"/>
+  <testcase name="sessionExpiresAndBadPinAttemptsAreRateLimited" classname="com.pocketai.security.AuthManagerTest" time="1.984"/>
+  <testcase name="recoveryRotatesBothPinAndRecoveryCode" classname="com.pocketai.security.AuthManagerTest" time="1.387"/>
+  <testcase name="pendingRecoveryCanRotateCredentialsButCannotOverrideNewerLock" classname="com.pocketai.security.AuthManagerTest" time="0.921"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

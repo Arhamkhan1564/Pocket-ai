@@ -1,0 +1,7 @@
+{
+  "source": "/workspace/work/PocketAI/app/src/main/java/com/pocketai/rag/OfflineTranslationService.kt",
+  "source_sha256": "f7711394cdd72fe25495c40c60680141062bdcd5dee737b185c9d78cf1e6f6fa",
+  "literal_object_sha256": "f616ee4bef7090c8ff39a835ca38e5ac4ddb7c50d82cb9028229e17e1361b829",
+  "checks_function_sha256": "3ab4db1d1fac1489bb719336fa0258c19271b719adb5520dc6da9f48122b6c10",
+  "method": "Exact canonical LiteralProtection object and checks body extracted without edits; private checks visibility changed to public solely for host harness; full Android service not instantiated."
+}

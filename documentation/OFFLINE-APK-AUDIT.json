@@ -1,0 +1,381 @@
+{
+  "version": "1.2.0",
+  "version_code": 3,
+  "kind": "release",
+  "artifact": {
+    "path": "app/build/outputs/apk/release/app-release.apk",
+    "bytes": 804012710,
+    "sha256": "0d4b5784ace8846bdc32fead9a657a66b7ded7125e93e98cbe808c5831ea7c3e"
+  },
+  "source_snapshot": {
+    "main_inputs_sha256": "c57fa9befe27f6e58cc36c5f6e19b6ee0816ecf780c7b0ec25f643a8ea13d188",
+    "files": 64,
+    "no_main_source_newer_than_apk": true
+  },
+  "android": {
+    "min_sdk": 23,
+    "target_sdk": 35,
+    "abis": [
+      "arm64-v8a",
+      "armeabi-v7a",
+      "x86_64"
+    ],
+    "armv7_requires_neon": true
+  },
+  "signature": {
+    "verified": true,
+    "certificate_sha256": "8ac67ade5eaf37abb50dc8d89e32317584f6baa194f4d97246209b27743f4e42",
+    "same_release_identity_as_v1_0": true
+  },
+  "zip_alignment": "16-KiB native page / 4-byte file alignment verified",
+  "privacy": {
+    "internet_permission": false,
+    "allow_backup": false,
+    "full_backup": false,
+    "explicit_data_extraction_rules": true
+  },
+  "bundled_baseline": {
+    "manifest_sha256": "193d49e2ec6ace170fc55088bec6ac288bf474f6af89f5d24888988f5cecfcd6",
+    "count": 13,
+    "total_bytes": 715732683,
+    "all_sha256_verified": true,
+    "files": [
+      {
+        "pack": "search",
+        "path": "offline/search/model.onnx",
+        "bytes": 118308185,
+        "sha256": "f80102d3f2a1229f387d3c81909990d8945513e347b0eab049f7de3c6f98c193",
+        "compression": 0
+      },
+      {
+        "pack": "search",
+        "path": "offline/search/tokenizer.spm",
+        "bytes": 5069051,
+        "sha256": "cfc8146abe2a0488e9e2a0c56de7952f7c11ab059eca145a0a727afce0db2865",
+        "compression": 0
+      },
+      {
+        "pack": "translation",
+        "path": "offline/translation/indictrans-v1/encoder_model.onnx",
+        "bytes": 831399,
+        "sha256": "87c3d6c6fbc48d9d7081927f3bd59915d5443a06cb63460e0d3705bae74de5a9",
+        "compression": 0
+      },
+      {
+        "pack": "translation",
+        "path": "offline/translation/indictrans-v1/encoder_model.onnx.data",
+        "bytes": 73791488,
+        "sha256": "71a4d119514411a3cb3f9d76d2d88d5c4eac7c8e907397d62d5b29e2468a0c16",
+        "compression": 0
+      },
+      {
+        "pack": "translation",
+        "path": "offline/translation/indictrans-v1/decoder_model.onnx",
+        "bytes": 2037502,
+        "sha256": "58c0fafb7ba0f343acba8643a386fab08143d49ef24472cefaecc87080f44e75",
+        "compression": 0
+      },
+      {
+        "pack": "translation",
+        "path": "offline/translation/indictrans-v1/decoder_with_past_model.onnx",
+        "bytes": 1850479,
+        "sha256": "a2e9a87ff7563f5fc87fe8102188be37fb66771cf30970e649ca67be7f895497",
+        "compression": 0
+      },
+      {
+        "pack": "translation",
+        "path": "offline/translation/indictrans-v1/decoder_shared.onnx.data",
+        "bytes": 203048944,
+        "sha256": "902314746ac629ae2ff584709c03eecdb0b3f7be4fb70ce0ff1bfbe66f14e574",
+        "compression": 0
+      },
+      {
+        "pack": "translation",
+        "path": "offline/translation/indictrans-v1/model.SRC",
+        "bytes": 759425,
+        "sha256": "3cedc5cbcc740369b76201942a0f096fec7287fee039b55bdb956f301235b914",
+        "compression": 0
+      },
+      {
+        "pack": "translation",
+        "path": "offline/translation/indictrans-v1/model.TGT",
+        "bytes": 3256903,
+        "sha256": "ac9257c8e76b8b607705b959cc3d075656ea33032f7a974e467b8941df6e98d4",
+        "compression": 0
+      },
+      {
+        "pack": "translation",
+        "path": "offline/translation/indictrans-v1/dict.SRC.json",
+        "bytes": 645314,
+        "sha256": "c6f65113581422c8777991d3770123c63447fe63dc5f3e8f4187eeff7553a689",
+        "compression": 8
+      },
+      {
+        "pack": "translation",
+        "path": "offline/translation/indictrans-v1/dict.TGT.json",
+        "bytes": 3390440,
+        "sha256": "f7817850c9e4b99c59fad57d0611c7720f1921f215e6f247cf25d52eff7f1146",
+        "compression": 8
+      },
+      {
+        "pack": "english",
+        "path": "offline/english/model.gguf",
+        "bytes": 270590880,
+        "sha256": "2fa3f013dcdd7b99f9b237717fa0b12d75bbb89984cc1274be1471a465bac9c2",
+        "compression": 0
+      },
+      {
+        "pack": "speech",
+        "path": "models/ggml-tiny-q5_1.bin",
+        "bytes": 32152673,
+        "sha256": "818710568da3ca15689e31a743197b520007872ff9576237bda97bd1b469c3d7",
+        "compression": 0
+      }
+    ]
+  },
+  "native_libraries": {
+    "all_64bit_load_segments_at_least_16KiB": true,
+    "all_app_and_onnx_libraries_at_least_16KiB": true,
+    "stock_arm32_stl_4KiB_exception": "lib/armeabi-v7a/libc++_shared.so",
+    "files": [
+      {
+        "path": "lib/arm64-v8a/libandroidx.graphics.path.so",
+        "elf_class": 64,
+        "machine": 183,
+        "load_segment_alignments": [
+          16384,
+          16384,
+          16384
+        ],
+        "bytes": 10096,
+        "sha256": "41e9a793c43a0f4fddb19e33f346bace464f30f888ba7b9eaf96294ea115bfb6"
+      },
+      {
+        "path": "lib/arm64-v8a/libc++_shared.so",
+        "elf_class": 64,
+        "machine": 183,
+        "load_segment_alignments": [
+          16384,
+          16384,
+          16384,
+          16384
+        ],
+        "bytes": 1292904,
+        "sha256": "4397241b4bd20a8e579bfb41d21107857e12985f6a01ca0c2a5f83380d1270b4"
+      },
+      {
+        "path": "lib/arm64-v8a/libonnxruntime.so",
+        "elf_class": 64,
+        "machine": 183,
+        "load_segment_alignments": [
+          16384,
+          16384,
+          16384
+        ],
+        "bytes": 17571152,
+        "sha256": "e3233d399e6eec5ec3e15c724fad7ecb826e7a95dc2bb08952ecaffea5e7d952"
+      },
+      {
+        "path": "lib/arm64-v8a/libonnxruntime4j_jni.so",
+        "elf_class": 64,
+        "machine": 183,
+        "load_segment_alignments": [
+          16384,
+          16384,
+          16384
+        ],
+        "bytes": 67936,
+        "sha256": "f0a8bc5b99a05cd386a61c0144049815637209625a991687fcbb0b1e47ad3066"
+      },
+      {
+        "path": "lib/arm64-v8a/libpocketai.so",
+        "elf_class": 64,
+        "machine": 183,
+        "load_segment_alignments": [
+          16384,
+          16384,
+          16384
+        ],
+        "bytes": 5565600,
+        "sha256": "07b6ffb2d974bf25eb397c067fed47dcc152126d291bfffed6cf48b64d686485"
+      },
+      {
+        "path": "lib/arm64-v8a/libpocketai_tokenizer.so",
+        "elf_class": 64,
+        "machine": 183,
+        "load_segment_alignments": [
+          16384,
+          16384,
+          16384
+        ],
+        "bytes": 443424,
+        "sha256": "fef24061de58c16b0cb65ed806d9d2fc4efc21a76b1e7bead6c9e466c2809391"
+      },
+      {
+        "path": "lib/armeabi-v7a/libandroidx.graphics.path.so",
+        "elf_class": 32,
+        "machine": 40,
+        "load_segment_alignments": [
+          16384,
+          16384,
+          16384
+        ],
+        "bytes": 7252,
+        "sha256": "41399eba6fc2a60f6f14642375c1824f3cf25eb8fec7397d753730a3ceda3e2b"
+      },
+      {
+        "path": "lib/armeabi-v7a/libc++_shared.so",
+        "elf_class": 32,
+        "machine": 40,
+        "load_segment_alignments": [
+          4096,
+          4096,
+          4096,
+          4096
+        ],
+        "bytes": 872872,
+        "sha256": "91b49f121b3120538faff020fcf535ade1d945e65ccd793fc0b815b5799bbdf0",
+        "platform_exception": "Stock NDK27 ARMv7 C++ runtime has 4-KiB alignment; ARM32 is supported on its 4-KiB devices. The 16-KiB claim applies to the ARM64/x86_64 process libraries."
+      },
+      {
+        "path": "lib/armeabi-v7a/libonnxruntime.so",
+        "elf_class": 32,
+        "machine": 40,
+        "load_segment_alignments": [
+          16384,
+          16384,
+          16384
+        ],
+        "bytes": 12294868,
+        "sha256": "f1e6e11ec6f84197bb2c28348f07bb89fc1cd4836456f3b2b50f27ba231e4232"
+      },
+      {
+        "path": "lib/armeabi-v7a/libonnxruntime4j_jni.so",
+        "elf_class": 32,
+        "machine": 40,
+        "load_segment_alignments": [
+          16384,
+          16384,
+          16384
+        ],
+        "bytes": 53620,
+        "sha256": "343d80f0eb742d5900874630fa22b6b4bc6f802f61a445979cde23534481d36c"
+      },
+      {
+        "path": "lib/armeabi-v7a/libpocketai.so",
+        "elf_class": 32,
+        "machine": 40,
+        "load_segment_alignments": [
+          16384,
+          16384,
+          16384
+        ],
+        "bytes": 4230420,
+        "sha256": "4c6708020ce7f0677a41920a17b43755dc18c0adcd540dce191cf2c23415a048"
+      },
+      {
+        "path": "lib/armeabi-v7a/libpocketai_tokenizer.so",
+        "elf_class": 32,
+        "machine": 40,
+        "load_segment_alignments": [
+          16384,
+          16384,
+          16384
+        ],
+        "bytes": 275848,
+        "sha256": "692a78b6214e4ed25b5c240b5e2bad95be72c6a02dec7ae41579d1269cff8470"
+      },
+      {
+        "path": "lib/x86_64/libandroidx.graphics.path.so",
+        "elf_class": 64,
+        "machine": 62,
+        "load_segment_alignments": [
+          16384,
+          16384,
+          16384
+        ],
+        "bytes": 10760,
+        "sha256": "4e56c996f13670e70082658de7880c4020eabf4f25e43387f88ed78a713fc9f0"
+      },
+      {
+        "path": "lib/x86_64/libc++_shared.so",
+        "elf_class": 64,
+        "machine": 62,
+        "load_segment_alignments": [
+          16384,
+          16384,
+          16384,
+          16384
+        ],
+        "bytes": 1252080,
+        "sha256": "db9609240e60ca18b816a5e95a6bbc784e799261efbd5b30c8e2e03b540b3fa8"
+      },
+      {
+        "path": "lib/x86_64/libonnxruntime.so",
+        "elf_class": 64,
+        "machine": 62,
+        "load_segment_alignments": [
+          16384,
+          16384,
+          16384
+        ],
+        "bytes": 20290896,
+        "sha256": "1ef4408db117a5af62188dc86182b81d9969de9839e5a358d15a398051de88db"
+      },
+      {
+        "path": "lib/x86_64/libonnxruntime4j_jni.so",
+        "elf_class": 64,
+        "machine": 62,
+        "load_segment_alignments": [
+          16384,
+          16384,
+          16384
+        ],
+        "bytes": 64720,
+        "sha256": "8fca3e8f6df95ac848d1b0c29024ab2de8702a82a15239f657ccfd405ce84661"
+      },
+      {
+        "path": "lib/x86_64/libpocketai.so",
+        "elf_class": 64,
+        "machine": 62,
+        "load_segment_alignments": [
+          16384,
+          16384,
+          16384
+        ],
+        "bytes": 6247424,
+        "sha256": "519b4eacdcb3d11e78ba778ccc6c5eacbaf59fa1481875b3614695c8bdb1f46f"
+      },
+      {
+        "path": "lib/x86_64/libpocketai_tokenizer.so",
+        "elf_class": 64,
+        "machine": 62,
+        "load_segment_alignments": [
+          16384,
+          16384,
+          16384
+        ],
+        "bytes": 453400,
+        "sha256": "caeb9e38d78976b68064ff5a774fcde888c597b18fe137b93f3d7febe4b4667d"
+      }
+    ]
+  },
+  "onnx_runtime": {
+    "version": "1.20.0",
+    "source_commit": "c4fb724e810bb496165b9015c77f402727392933",
+    "prepared_aar_sha256": "eec68ad9f11f457ebb8d0f68cdd83e0934d8c6fba22e60a5b4145b7a7ff96fb5",
+    "preparation": "Pinned official core/classes; unchanged official JNI rebuilt for API23 and16KiB alignment, all148exports retained per ABI"
+  },
+  "tests": {
+    "tests": 148,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 1,
+    "passed": 147
+  },
+  "lint": {
+    "errors": 0,
+    "warnings": 19
+  },
+  "acceptance_limits": "Packaged resources and host/component tests verified. Physical Android/itel phone operation, latency, audio quality and fluent-speaker/clinical translation acceptance are not established by this audit."
+}

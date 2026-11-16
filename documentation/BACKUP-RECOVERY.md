@@ -1,45 +1,58 @@
-# Backup and recovery
+# Backup and recovery · 1.2
 
-## Export knowledge
+## Export your saved references
 
-Unlock administrator access, open Resources → Backup & restore, and choose Export knowledge backup. Pick a destination in Android's file picker. Wait for the successful-save message.
+Unlock administrator access, open Resources → Backup & restore, and choose Export knowledge backup. Select a destination through Android's file picker and wait for the successful-save message. Check that the file exists before removing the original installation.
 
-The portable JSON backup contains:
+Portable JSON **format 2** contains:
 
-- Original verified knowledge, question/answer fields, language/script/category and source metadata.
-- Categories and the most recent bounded conversation history.
+- Saved original knowledge and Q/A fields, record IDs, language/script/category, timestamps and source references.
+- The imported-document catalog and its ordered passage mappings.
+- Categories and up to 500 recent conversations, including separately stored trusted citation IDs.
 
-It does not include administrator PIN/recovery credentials, model files, app settings, full correction history or training history. Imported document text remains in knowledge records with its source references; the original document file is separate. A portable backup is limited to 16 MB and 20,000 knowledge records. Very large collections need a future streaming/full-database export workflow.
+It does **not** contain PIN/recovery credentials, model weights, app settings, embedding vectors, translation caches, full training/correction history or microphone recordings. Imported text is preserved in saved passages; the original PDF/DOCX/TXT file is separate and is not embedded in this backup. Keep the source file too if you need to preserve its original layout.
 
-**The JSON backup is plaintext.** It can contain private facts and conversations. Store it privately, check that it exists and can be opened as JSON, and keep another trusted copy if the device matters to you. A destination supplied by a cloud document provider is governed by that provider; Pocket AI itself makes no network request.
+The export is bounded to 16 MiB and 20,000 knowledge records, with bounded catalog/mapping counts. It is not an unlimited streaming copy of the full SQLite database. Very large collections may exceed this portable limit.
 
-## Restore knowledge
+**The JSON is plaintext.** It may contain personal facts, references and conversations. Keep trusted copies separately from the phone. Pocket AI itself makes no network requests; a destination supplied by an Android cloud document provider operates under that provider's own permissions.
 
-1. Export the current installation first if it contains information you want to keep.
-2. Unlock administrator access, choose Restore from backup, and select a Pocket AI JSON backup.
+## Restore a collection
+
+1. Export the current collection first if you want to retain it.
+2. Unlock administration, choose Restore from backup, and select a Pocket AI JSON backup.
 3. Read the replacement warning and confirm.
-4. After success, check the memory browser and a known question in User Mode.
+4. Check the Documents library, a known passage and a question after success.
 
-Restore validates the backup format/version, sizes, record IDs and fields before destructive changes. Replacement runs in a database transaction and checks the resulting count and SQLite integrity. Invalid backups are rejected. Restore replaces current knowledge/categories/conversations and prior training/correction history; it does not merge two collections. The resulting restore event is recorded in the new training history.
+Restore validates supported version, size, IDs, source fields, conversation citation arrays and document mappings before destructive work. New catalog mappings cannot point at missing records or unrelated manual facts. Replacement occurs in a SQLite transaction, followed by count/integrity checks. Invalid input leaves existing data unchanged.
 
-Restore does not change the current administrator PIN. Reconfigure languages/settings and re-import model files separately on a new installation. If the source file is larger than the portable safety limit, split/re-export a smaller supported collection rather than editing record IDs manually.
+Restore replaces knowledge, catalog/mappings, categories and conversations; it is not a merge. Full prior training/correction history is replaced by a restore event. The current administrator PIN remains unchanged. Source record IDs are preserved so valid typed conversation citations still refer to the same saved passages. A citation whose source was deleted before export can remain historical and show Source removed; the app does not infer a replacement from a filename or model text.
+
+Old **format 1** backups remain accepted. Their document catalog was not exported, so the app reconstructs groups from saved document records. Legacy conversation labels remain display text and may have no clickable trusted IDs. This reconstruction does not recover the original binary document or prove the original import-batch grouping.
+
+Derived semantic vectors are cleared on restore and rebuilt locally. Open Offline tools, prepare/check included resources if necessary, then resume the reference search index. Keyword search and original reading remain available during indexing. Translation caches are disposable and invalidated when saved-reference revision changes; they are not restored as verified knowledge.
+
+## Resources on a replacement installation
+
+The 1.2 APK already contains the baseline search, translation, English-synthesis and recognition files. A fresh installation copies/checks them locally through Prepare offline tools; a cloud service or browser download is not needed for those baseline resources. Prepared copies, caches and indexes are separate from the knowledge backup.
+
+Reconfigure answer language, Punjabi script, answer style and audio settings after moving to a new installation. Optional custom model files must be re-imported from copies you retained. Android TTS voices are system resources and may differ on another phone. Enough free storage/RAM and a supported CPU are still required.
 
 ## Forgotten administrator PIN
 
-Use the recovery-code option on the administrator unlock screen. Enter the private recovery code and a new 6–12 digit PIN. On success, a **new recovery code** is shown; keep it and discard the old code. Changing the PIN also rotates the recovery code.
+Use the recovery-code option on the unlock screen. Enter your private recovery code and a new 6–12 digit PIN. Save the new recovery code shown after success and discard the old one. Changing the PIN also rotates recovery credentials.
 
-PINs and recovery codes are salted and derived using PBKDF2. They are not stored as readable text and are not included in knowledge backups. Repeated failures trigger increasing delays. Sessions expire after inactivity, and backgrounding normally locks administration.
+PINs/recovery codes are salted and derived with PBKDF2; they are not stored in readable form or included in exports. Repeated failures trigger delays. Sessions expire after inactivity, and normal backgrounding locks administration. There is no cloud account recovery or hidden bypass.
 
-If both PIN and recovery code are lost, there is no bypass or cloud account recovery. Retained private backup files can be restored into a fresh installation with new credentials. Clearing Android app storage or uninstalling destroys the current private database and imported models, so do not do either while relying on data that has not been exported.
+If both PIN and recovery code are lost, an existing knowledge backup can be restored into a fresh installation with new credentials. Clearing storage or uninstalling removes the current private database, prepared model copies and caches. Export first when you still have authorized access; do not rely on a reinstall to recover unsaved knowledge.
 
-## Updating or rebuilding the app
+## Update and signing identity
 
-Android accepts an in-place update only when its application ID and signing identity match. The supplied release uses `com.pocketai`; the debug build uses `com.pocketai.debug` and stores separate data.
+The SQLite schema upgrades from version 1 to version 2 while retaining saved knowledge/history. New conversations have typed source IDs; legacy conversations default to an empty ID list rather than parsing IDs from visible labels. This schema migration is distinct from portable backup format conversion.
 
-Signing keys, passwords and signing-backup archives are excluded from the public repository and downloads. If you hold the original signing key privately, keep it and its credentials secure; anyone who obtains them can sign APKs with that identity.
+Android accepts an in-place release update only when application ID and signing identity match. Release uses `com.pocketai`; debug uses `com.pocketai.debug` with separate storage. Keep a knowledge backup before replacing an installation. A new signing key cannot update an APK signed by the old key.
 
-A developer needs the same privately retained key and a local `signing.properties` configuration to build an update with the supplied release's identity. Generating a new key creates a different signing identity and will not update the old release. Export knowledge before replacing an installation. No signing credentials can be recovered from the source archive.
+Signing keys, passwords and signing-backup archives are excluded from public source/downloads. Developers must retain the original key privately to preserve its update identity. Neither the source ZIP nor an APK certificate can recover that private signing key.
 
-## Device loss or failure
+## Device failure
 
-An app-private database does not protect against physical device failure. Keep portable knowledge backups separately from the phone and separately from model downloads. Knowledge recovery requires the JSON backup; rebuilding the APK or retaining its signing key alone does not recover the database.
+Private app storage does not protect against physical failure or loss. Keep knowledge backups and original document files somewhere else. APK/model resources can reconstruct the runtime, but they do not reconstruct your saved collection without its backup.
