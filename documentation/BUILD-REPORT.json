@@ -1,4 +1,6 @@
 {
+  "historical_version": "1.0.0-initial",
+  "current_version_report": "RAG-BUILD-REPORT.json",
   "build_command": "./gradlew --no-daemon assembleDebug testDebugUnitTest assembleRelease assembleDebugAndroidTest lintDebug lintVitalRelease",
   "result": "BUILD SUCCESSFUL",
   "min_sdk": 23,
@@ -132,7 +134,7 @@
   "hardware_validation": "Physical target phone absent. Earlier candidate APKs installed and app rendered on API28. A preceding candidate with the final native core was installed during a single 10Hz software-emulator trial, but UI instrumentation did not complete: SurfaceFlinger/zygote failure and ADB timeout. The latest changes are training-voice progress/guard UI only. Complete phone UI/ASR/TTS/performance acceptance remains unverified.",
   "model_import_validation": "PASS: compiled app parser accepted official Qwen Q4_K_M GGUF (491400032bytes) and multilingual Whisper tiny (77691713bytes); weights not bundled.",
   "artifact_distribution": {
-    "type": "GitHub Release",
+    "type": "GitHub repository downloads linked from the initial prerelease",
     "tag": "v1.0.0-initial",
     "release_asset": "PocketAI.apk",
     "debug_asset": "PocketAI-debug.apk",

@@ -108,7 +108,7 @@ fun SetupDeviceChecks(settings: AppSettings, speech: SpeechController, onMessage
                     }
                 }
                 TextButton(onClick = { refresh++ }) { Text("Refresh device readings") }
-                Text("Text knowledge is ready without model downloads. No AI or speech model is bundled.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.primary)
+                Text("Text knowledge is ready without model downloads. A small multilingual speech model is included for compatible ARM and x86_64 phones. Translated document answers need a separate language model and enough free memory.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.primary)
                 NativeBridge.availabilityMessage()?.let { Text(it, style = MaterialTheme.typography.bodySmall) }
             }
         }

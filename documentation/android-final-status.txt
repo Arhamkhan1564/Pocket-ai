@@ -1,3 +1,5 @@
+HISTORICAL INITIAL RELEASE (1.0.0). Current RAG update results are in RAG-BUILD-REPORT.json.
+
 PUBLICATION NOTE: work/validation and work/toolchains references below identify historical development-session evidence. Those temporary logs are not repository paths or additional public downloads. Test outcomes and limitations are retained verbatim.
 
 Pocket AI final Android runtime evidence

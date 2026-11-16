@@ -8,7 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Locale;
 
-/** Host JNI smoke harness; model weights are test inputs, never application assets. */
+/** Host JNI smoke harness; GGUF and speech models are explicit test inputs. */
 public final class NativeBridge {
     private native boolean supportsInferenceNative();
     private native byte[] generateNative(String modelPath, byte[] system, byte[] prompt,

@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuite name="com.pocketai.models.ModelValidatorTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-11-16T15:21:01" time="0.044">
+  <properties />
+  <testcase name="distinguishesEnglishOnlyAndMultilingualWhisper" classname="com.pocketai.models.ModelValidatorTest" time="0.027" />
+  <testcase name="rejectsTruncatedTensorPayload" classname="com.pocketai.models.ModelValidatorTest" time="0.002" />
+  <testcase name="readsValidGgufArchitectureAndParameterCount" classname="com.pocketai.models.ModelValidatorTest" time="0.004" />
+  <testcase name="rejectsHugeMetadataCountWithoutAllocating" classname="com.pocketai.models.ModelValidatorTest" time="0.001" />
+  <testcase name="rejectsForeignFileBeforeModelLoading" classname="com.pocketai.models.ModelValidatorTest" time="0.007" />
+  <testcase name="rejectsIncompleteWhisperFile" classname="com.pocketai.models.ModelValidatorTest" time="0.003" />
+  <system-out />
+  <system-err />
+</testsuite>

@@ -1,0 +1,39 @@
+Pocket AI 1.1 - actual language-model validation and limits
+
+Candidate: unsloth/Qwen3-0.6B-GGUF, Qwen3-0.6B-Q4_K_M.gguf
+Pinned revision: 50968a4468ef4233ed78cd7c3de230dd1d61a56b
+Bytes: 396705472
+SHA-256: ac2d97712095a558e31573f62f466a3f9d93990898b0ec79d7c974c1780d524a
+
+Synthetic tests used the real JNI adapter on a Linux x86_64 development host,
+not the itel A25 Pro. The native model was given the app's source-constrained
+and /no_think prompts. These results do not establish phone speed or medical
+accuracy. Concurrent Android compilation also affected timings.
+
+RESULTS
+English RAG returned both supplied literal values: cedar-47 and 250.
+Urdu RAG preserved digits but changed the literal code cedar-47 to a mixed-script
+corruption. Punjabi Gurmukhi returned a question without the requested values.
+Punjabi Shahmukhi returned only 250. All three short translation cases failed
+script, content or negation checks, often returning only 250 mg. A retrieval
+rewrite of an Urdu paracetamol question dropped the named drug and returned
+generic medicine keywords.
+
+CONCLUSION
+This small candidate is an English RAG experiment, not a proven Urdu/Punjabi
+translator. It must not be presented as a reliable medical translation option.
+The app can import a different compatible GGUF, but its actual multilingual
+quality and fit on a 2 GB phone must be tested separately. A larger model may
+need more available RAM than the itel A25 Pro can provide.
+
+The app rejects translations with failed checks and retains the intact saved
+original. It protects numeric quantities/units, explicit negation and literal
+alphanumeric identifiers, and does not let a failed rewrite replace a better
+original keyword match. Such checks are conservative and incomplete; passing
+them does not clinically validate a translation or prove semantic equivalence.
+
+Medicine documents remain unverified reference material. This release does not
+provide validated diagnosis, automatic prescribing, or a universal emergency
+triage system. The bundled Whisper model is separate: it passed a real English
+transcription test, but Urdu/Punjabi recognition and all phone audio paths still
+need representative device testing.

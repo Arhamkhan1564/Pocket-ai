@@ -1,5 +1,7 @@
 package com.pocketai.ui
 
+import android.content.Intent
+import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
@@ -57,6 +59,8 @@ import com.pocketai.hardware.HardwareSnapshot
 import com.pocketai.models.InstalledModel
 import com.pocketai.models.ModelKind
 import com.pocketai.models.ModelManager
+import com.pocketai.models.BundledSpeechModel
+import com.pocketai.models.BundledSpeechStatus
 import com.pocketai.security.AuthManager
 import com.pocketai.voice.SpeechController
 import kotlinx.coroutines.Dispatchers
@@ -94,9 +98,9 @@ fun ResourceScreens(
             "security" -> SecurityResources(auth, onMessage)
             else -> {
                 ResourceTitle("Make it yours", "SETTINGS", "Everything stays on this device. No account or connection is required.")
-                ResourceLink("Languages", "Urdu, Punjabi and your third language", onClick = { onNavigate("languages") })
+                ResourceLink("Languages", "English, Urdu, Punjabi and an optional extra language", onClick = { onNavigate("languages") })
                 ResourceLink("Voice & audio", "Offline voices, speech speed and audio tests", onClick = { onNavigate("audio") })
-                ResourceLink("Local models", "Import and select a GGUF or Whisper model", onClick = { onNavigate("models") })
+                ResourceLink("Local models & voice setup", "Set up translation and offline speech recognition", onClick = { onNavigate("models") })
                 ResourceLink("Device & storage", "Compatibility, memory, battery and audio devices", onClick = { onNavigate("diagnostics") })
                 ResourceLink("Appliance session", "Keep a visible assistant session ready for voice use", onClick = { onNavigate("appliance") })
                 ResourceLink("Backup & restore", "Move your knowledge using a JSON backup", onClick = { onNavigate("backup") })
@@ -111,8 +115,8 @@ fun ResourceScreens(
 @Composable
 private fun LanguageResources(settings: AppSettings, changed: () -> Unit) {
     ResourceTitle("Your languages", "LANGUAGE", "Original text is preserved. Search normalization never replaces your saved wording.")
-    ResourcePanel("Always available for text", "اردو · Urdu\nپنجابی / ਪੰਜਾਬੀ · Punjabi\nText works without downloading a model or voice.")
-    Text("Third language", style = MaterialTheme.typography.titleMedium)
+    ResourcePanel("Your document languages", "English · اردو · پنجابی / ਪੰਜਾਬੀ\nKeep English documents in their original language, then choose the language for each answer. Translation needs a compatible multilingual language model. Without one, matching source passages are shown in their original language.")
+    Text("Optional extra language", style = MaterialTheme.typography.titleMedium)
     val languages = LanguageTools.optionalLanguages.map { it.tag to it.nativeName }
     languages.chunked(3).forEach { row ->
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -140,7 +144,7 @@ private fun LanguageResources(settings: AppSettings, changed: () -> Unit) {
 @Composable
 fun LanguageChoice(selected: String, third: String, onChange: (String) -> Unit) {
     Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-        listOf("ur", "pa", third).distinct().forEach { code ->
+        LanguageTools.configured(third).map { it.tag }.forEach { code ->
             FilterChip(selected == code, { onChange(code) }, label = { Text(languageLabel(code)) })
         }
     }
@@ -193,14 +197,16 @@ private fun AudioResources(settings: AppSettings, changed: () -> Unit, testSpeak
 
 @Composable
 private fun ModelResources(manager: ModelManager, settings: AppSettings, changed: () -> Unit, auth: AuthManager, message: (String) -> Unit) {
-    ResourceTitle("Intelligence, locally", "MODEL LIBRARY", "No large model is bundled. Import files from your phone or USB storage using Android's file picker.")
+    ResourceTitle("Document answers & voice", "MODEL SETUP", "Document search, translation and speech have separate setup steps. Your imported documents stay on this phone.")
     var refresh by remember { mutableIntStateOf(0) }
     var installed by remember { mutableStateOf<List<InstalledModel>>(emptyList()) }
     var busy by remember { mutableStateOf(false) }
     var importProgress by remember { mutableStateOf("Preparing import…") }
     var kind by remember { mutableStateOf(ModelKind.LLM) }
     val scope = rememberCoroutineScope()
-    LaunchedEffect(refresh) {
+    val context = LocalContext.current
+    val bundledSpeech by BundledSpeechModel.state.collectAsState()
+    LaunchedEffect(refresh, bundledSpeech.status, bundledSpeech.modelId) {
         runCatching { withContext(Dispatchers.IO) { manager.list() } }
             .onSuccess { installed = it }
             .onFailure { message(it.message ?: "Could not read the model library.") }
@@ -226,7 +232,26 @@ private fun ModelResources(manager: ModelManager, settings: AppSettings, changed
             busy = false
         }
     }
-    ResourcePanel("For a 2 GB phone", "Start with a small quantized GGUF and a multilingual Whisper tiny/base model. Speech and text inference run sequentially. Memory estimates are conservative; actual compatibility and speed require a device benchmark.")
+    ResourcePanel("1 · Add your reference documents", "In Training Mode, import an English TXT, DOCX or text PDF, preview it and save. The app indexes passages with their file names. This is retrieval (RAG); adding a file does not retrain a model.")
+    val languageReady = installed.any { it.kind == ModelKind.LLM && it.id == settings.selectedLlmId }
+    ResourcePanel(if (languageReady) "2 · Language model selected" else "2 · Set up translated answers", "A multilingual GGUF model can read retrieved English passages and answer in English, Urdu or Punjabi. Without it, search shows original passages. Translation accuracy depends on the model; check medicine names, numbers and units against the cited original.")
+    if (installed.any { it.id == settings.selectedLlmId && it.sha256 == "ac2d97712095a558e31573f62f466a3f9d93990898b0ec79d7c974c1780d524a" }) {
+        ResourcePanel("English demo model selected", "This small Qwen3 model failed our Urdu/Punjabi answer and translation checks. Use the original passages, or import a more capable model. A larger model may need more memory than this phone has.")
+    }
+    if (!languageReady) {
+        Text("A compatible multilingual model is needed for translated answers. The small Qwen3 0.6B Q4_K_M file below (379 MiB) is for English RAG experiments: it failed our Urdu/Punjabi checks and is not recommended for those translations. A stronger model may need more RAM. No model here is medically validated.", style = MaterialTheme.typography.bodySmall)
+        OutlinedButton(onClick = {
+            try {
+                context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://huggingface.co/unsloth/Qwen3-0.6B-GGUF/resolve/50968a4468ef4233ed78cd7c3de230dd1d61a56b/Qwen3-0.6B-Q4_K_M.gguf")))
+            } catch (failure: Exception) { message(failure.message ?: "No browser is available. Copy the model link from the project documentation.") }
+        }, modifier = Modifier.fillMaxWidth()) { Text("Download experimental English model") }
+    }
+    ResourcePanel("For a 2 GB phone", "Use a small quantized language model. Speech and text inference run one at a time. Close other apps if memory is low. Compatibility, Urdu/Punjabi quality and speed need a test on your phone.")
+    ResourcePanel("3 · Offline speech recognition", bundledSpeech.message + "\nThe included multilingual Whisper tiny model recognizes speech. It does not translate your reference documents or provide spoken-answer voices.")
+    if (bundledSpeech.status == BundledSpeechStatus.INSTALLING) {
+        LinearProgressIndicator(Modifier.fillMaxWidth())
+        Text("Preparing included speech model…", style = MaterialTheme.typography.bodySmall)
+    }
     Text("Context window", style = MaterialTheme.typography.titleMedium)
     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
         listOf(256, 512, 1024).forEach { tokens ->
@@ -238,6 +263,20 @@ private fun ModelResources(manager: ModelManager, settings: AppSettings, changed
         Text(importProgress, style = MaterialTheme.typography.bodySmall)
     }
     AdminGate(auth, message) {
+        OutlinedButton(onClick = {
+            scope.launch {
+                busy = true
+                try {
+                    auth.requireAuthorized()
+                    BundledSpeechModel.ensureInstalled(context, manager, settings, force = true)
+                    changed(); refresh++
+                    message(BundledSpeechModel.state.value.message)
+                } catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled }
+                catch (failure: Exception) { message(failure.message ?: "Could not restore the included speech model.") }
+                finally { busy = false }
+            }
+        }, enabled = !busy && bundledSpeech.status != BundledSpeechStatus.INSTALLING && bundledSpeech.status != BundledSpeechStatus.UNSUPPORTED,
+            modifier = Modifier.fillMaxWidth()) { Text("Restore included speech model") }
         Button(onClick = {
             kind = ModelKind.LLM
             launchExternal(message) { importer.launch(arrayOf("*/*")) }
@@ -246,7 +285,7 @@ private fun ModelResources(manager: ModelManager, settings: AppSettings, changed
             kind = ModelKind.WHISPER
             launchExternal(message) { importer.launch(arrayOf("*/*")) }
         }, enabled = !busy, modifier = Modifier.fillMaxWidth()) { Text("Import speech model · Whisper") }
-        if (installed.isEmpty()) ResourcePanel("No models installed", "Saved knowledge search already works. A GGUF enables generated answers; a Whisper model enables local speech recognition. Installing a model does not automatically provide translation or a voice.")
+        if (installed.isEmpty()) ResourcePanel("No models installed", "Saved document search already works. Import a multilingual GGUF for translated answers. Speech recognition uses a separate Whisper model; spoken answers use an installed Android offline voice.")
         installed.forEach { model ->
             val selected = if (model.kind == ModelKind.LLM) settings.selectedLlmId == model.id else settings.selectedWhisperId == model.id
             Card(Modifier.fillMaxWidth()) {
@@ -265,7 +304,7 @@ private fun ModelResources(manager: ModelManager, settings: AppSettings, changed
                             if (model.kind == ModelKind.LLM) settings.selectedLlmId = if (selected) null else model.id
                             else settings.selectedWhisperId = if (selected) null else model.id
                             changed()
-                        }, enabled = !busy) { Text(if (selected) "Selected · disable" else "Use model") }
+                        }, enabled = !busy && bundledSpeech.status != BundledSpeechStatus.INSTALLING) { Text(if (selected) "Selected · disable" else "Use model") }
                         TextButton(onClick = {
                             scope.launch {
                                 busy = true
@@ -277,7 +316,7 @@ private fun ModelResources(manager: ModelManager, settings: AppSettings, changed
                                     }.onFailure { message(it.message ?: "Could not remove model.") }
                                 busy = false
                             }
-                        }, enabled = !busy) { Text("Remove", color = MaterialTheme.colorScheme.error) }
+                        }, enabled = !busy && bundledSpeech.status != BundledSpeechStatus.INSTALLING) { Text("Remove", color = MaterialTheme.colorScheme.error) }
                     }
                 }
             }

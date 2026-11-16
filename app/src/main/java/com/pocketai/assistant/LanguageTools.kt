@@ -16,10 +16,11 @@ object LanguageTools {
         LanguageOption("zh", "Chinese", "中文")
     )
     fun configured(third: String) = listOf(
+        LanguageOption("en", "English", "English"),
         LanguageOption("ur", "Urdu", "اردو"),
         LanguageOption("pa", "Punjabi", "پنجابی / ਪੰਜਾਬੀ"),
         optionalLanguages.firstOrNull { it.tag == third } ?: optionalLanguages.first()
-    )
+    ).distinctBy { it.tag }
     fun name(tag: String) = (configured(tag) + optionalLanguages).firstOrNull { it.tag == tag }?.name ?: tag
     fun isRtl(text: String) = text.firstOrNull { Character.isLetter(it) }?.let {
         Character.getDirectionality(it) in setOf(Character.DIRECTIONALITY_RIGHT_TO_LEFT, Character.DIRECTIONALITY_RIGHT_TO_LEFT_ARABIC)
@@ -40,8 +41,8 @@ object LanguageTools {
         .replace(Regex("[\\u064B-\\u065F\\u0670\\u0640]"), "")
         .replace('ي', 'ی').replace('ك', 'ک').trim()
     fun unknown(language: String, script: String = "Arab") = when (language) {
-        "ur" -> "اس سوال کے لیے کوئی متعلقہ محفوظ معلومات نہیں ملیں۔ ٹریننگ موڈ میں معلومات شامل کریں، یا مقامی AI ماڈل درآمد کریں۔"
-        "pa" -> if (script == "Guru") "ਇਸ ਸਵਾਲ ਲਈ ਸੰਬੰਧਿਤ ਸੰਭਾਲੀ ਜਾਣਕਾਰੀ ਨਹੀਂ ਮਿਲੀ। ਟ੍ਰੇਨਿੰਗ ਮੋਡ ਵਿੱਚ ਜਾਣਕਾਰੀ ਜੋੜੋ ਜਾਂ ਸਥਾਨਕ AI ਮਾਡਲ ਇੰਪੋਰਟ ਕਰੋ।" else "اس سوال لئی متعلقہ محفوظ معلومات نہیں لبھیاں۔ ٹریننگ موڈ وچ معلومات شامل کرو یا مقامی AI ماڈل درآمد کرو۔"
-        else -> "I couldn’t find matching saved knowledge. Teach me in Training Mode, or import a compatible local AI model in Resources."
+        "ur" -> "اس سوال کے لیے کوئی متعلقہ محفوظ حوالہ نہیں ملا۔ ٹریننگ موڈ میں دستاویز یا معلومات شامل کریں، یا محفوظ متن کے الفاظ سے سوال پوچھیں۔"
+        "pa" -> if (script == "Guru") "ਇਸ ਸਵਾਲ ਲਈ ਸੰਬੰਧਿਤ ਸੰਭਾਲਿਆ ਹਵਾਲਾ ਨਹੀਂ ਮਿਲਿਆ। ਟ੍ਰੇਨਿੰਗ ਮੋਡ ਵਿੱਚ ਦਸਤਾਵੇਜ਼ ਜਾਂ ਜਾਣਕਾਰੀ ਜੋੜੋ, ਜਾਂ ਸੰਭਾਲੇ ਪਾਠ ਦੇ ਸ਼ਬਦਾਂ ਨਾਲ ਸਵਾਲ ਪੁੱਛੋ।" else "اس سوال لئی متعلقہ محفوظ حوالہ نہیں لبھیا۔ ٹریننگ موڈ وچ دستاویز یا معلومات شامل کرو، یا محفوظ متن دے لفظاں نال سوال پچھو۔"
+        else -> "I couldn’t find a matching saved reference. Add a document or knowledge in Training Mode, or ask using a term from the saved text."
     }
 }

@@ -1,4 +1,18 @@
-# Implementation and verification checklist
+# Verification
+
+## Current document RAG update · 1.1.0
+
+The [current build report](RAG-BUILD-REPORT.json) records **95 discovered tests: 94 passed, one explicitly skipped, zero failures/errors**. The six Gradle build/check tasks succeeded. Android lint reported zero errors and 18 warnings. Both APK signatures, the original release signing identity, 16 KiB alignment, the included speech asset checksum, PDF classes and license notices were verified. Full ARMv7 NEON, ARM64 and x86_64 runtimes are packaged.
+
+New component coverage includes TXT/DOCX/PDF extraction and malformed-document rejection, source-linked chunking and retrieval, installation integrity/concurrency, source-only answers, treatment clarification, urgent-message rules and translation/rewrite guards. The existing Compose dialog-idling test is still skipped; it is not counted as passed. [Per-suite XML](rag-test-results/) records the actual run with host identifiers removed.
+
+**Language-model acceptance failed for Urdu/Punjabi.** The tested small Qwen3 candidate passed a synthetic English RAG fixture, but corrupted an identifier in Urdu, gave incomplete Punjabi answers, failed all three translation cases and dropped a named drug during query rewriting. See [actual model results](MODEL-VALIDATION.txt). It is labeled an English experiment, not a validated multilingual/clinical translator. The app preserves original evidence when translation checks fail; passing those checks cannot prove medical accuracy.
+
+The bundled Whisper tiny q5_1 passed real host-native English transcription/recovery checks. These results do not validate Urdu/Punjabi ASR, Android microphone/TTS routes or translation quality. The itel A25 Pro was not attached; physical-device execution, available RAM, latency, thermals and complete UI acceptance remain unverified. A single APK cannot establish usable AI performance on every phone.
+
+## Historical initial release · 1.0.0
+
+The records below describe the initial release only. Its old limits concerning bundled speech, document formats and ARMv7 inference have been superseded by the 1.1 implementation above. The original [BUILD-REPORT.json](BUILD-REPORT.json) and [test-results](test-results/) remain historical evidence.
 
 This document distinguishes implemented behavior from completed acceptance testing. The actual target Android phone was not attached. A build, unit test, emulator test or English model test does not establish 2 GB target-device acceptance or Urdu/Punjabi voice quality.
 

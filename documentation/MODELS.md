@@ -1,6 +1,17 @@
-# Models and language compatibility
+# Models and language compatibility · 1.1
 
-## Verified host candidate
+## Experimental English model and failed multilingual checks
+
+The tested small candidate passed a synthetic English RAG fixture but **failed Urdu and Punjabi answer/translation checks**. It is not a validated multilingual or clinical translation option. See [MODEL-VALIDATION.txt](MODEL-VALIDATION.txt) for actual results. Resources → Local models offers its browser download for English experiments only:
+
+- File: `Qwen3-0.6B-Q4_K_M.gguf`.
+- URL: https://huggingface.co/unsloth/Qwen3-0.6B-GGUF/resolve/50968a4468ef4233ed78cd7c3de230dd1d61a56b/Qwen3-0.6B-Q4_K_M.gguf
+- Size: **396,705,472 bytes** (about 379 MiB).
+- SHA-256: `ac2d97712095a558e31573f62f466a3f9d93990898b0ec79d7c974c1780d524a`.
+
+Download in the browser, return to the app, unlock administration, import the GGUF and select it. The APK does not include an LLM and does not download files itself. A model of this size can still exceed the available memory of a 2 GB phone. This general model is not medically validated; verify source names, medicine names, quantities and units against the cited original. Do not use its language metadata as evidence of usable Urdu/Punjabi translation. A different, more capable model needs its own real tests and may not fit the itel A25 Pro.
+
+## Historical host candidate from the initial release
 
 The official Qwen `Qwen2.5-0.5B-Instruct-GGUF` Q4_K_M file was tested through the exact JNI adapter on a Linux x86_64 host. It answered a question using the supplied saved access phrase correctly. This establishes one real instruct-model/chat-template path; it does not establish performance or language quality on the target phone.
 
@@ -10,11 +21,23 @@ The official Qwen `Qwen2.5-0.5B-Instruct-GGUF` Q4_K_M file was tested through th
 - Host test: context 1024, four threads, 31.528 seconds. The test was English. The model omitted the requested inline citation, so the app's retrieved-source labels remain necessary.
 - A 2 GB phone may still lack enough free RAM. Run diagnostics first; the app can refuse loading when available RAM is insufficient. Urdu/Punjabi generation quality remains unverified.
 
-This file is an optional, separately obtained candidate, not part of the APK or source archive.
+This historical test is retained as evidence for the original runtime path. It is not a test result for the 1.1 RAG changes or the Qwen3 experiment above. The file is an optional, separately obtained candidate, not part of the APK or source archive.
 
 ## What is included
 
-The APK includes CPU inference code for llama.cpp and whisper.cpp. It includes no model weights, no translation pack, no wake-word model and no TTS voice data. Pocket AI does not download models and has no Internet permission.
+The 1.1 APK includes CPU inference code for llama.cpp and whisper.cpp and one **multilingual Whisper tiny q5_1 speech-recognition model**. It includes no LLM/GGUF, dedicated translation pack, wake-word model or TTS voice data. Pocket AI has no Internet permission; optional download links open a separate browser.
+
+Included speech provenance:
+
+- Filename: `ggml-tiny-q5_1.bin`.
+- Official pinned URL: https://huggingface.co/ggerganov/whisper.cpp/resolve/5359861c739e955e79d9a303bcbc70fb988958b1/ggml-tiny-q5_1.bin
+- Size: **32,152,673 bytes** (30.7 MiB).
+- SHA-256: `818710568da3ca15689e31a743197b520007872ff9576237bda97bd1b469c3d7`.
+- License: MIT, with the model license and provenance included under `app/src/main/assets/licenses/`.
+
+When runtime compatibility checks succeed, startup verifies and copies the asset into private model storage. ARM64, ARMv7 with NEON, and x86_64 inference libraries are included. It selects the included model only when there is no valid user selection. Removing its private copy is respected on later starts; use Restore included speech model in Local models to copy it back. This frees/recreates the private copy; the APK still contains the bundled asset. Unsupported CPU features produce a clear compatibility result and keep text features usable.
+
+Project source files and source archives exclude standalone weight binaries. APK distribution files include the speech asset. Developers fetch this exact pinned speech asset with `scripts/fetch-bundled-speech.py` before building; see [DEVELOPMENT.md](DEVELOPMENT.md). The build verifies the asset before packaging.
 
 The pinned native source and licenses are recorded in `vendor/REVISIONS.txt`:
 
@@ -25,7 +48,7 @@ Whisper is linked against the pinned shared GGML implementation from llama.cpp. 
 
 ## Import workflow
 
-1. Download a model with a computer or a separate browser and transfer it to the phone or mounted USB storage.
+1. For a language model or optional replacement speech model, download the file with a computer/separate browser and transfer it to the phone or mounted USB storage. The included speech model normally needs no manual import.
 2. Unlock administrator access in Resources → Local models.
 3. Choose the correct import kind and select the actual model file using Android's file picker.
 4. Wait for the copy and validation to finish. Imported files are copied into private internal storage and indexed with their SHA-256 checksum.
@@ -45,13 +68,13 @@ Generation is refused if current available RAM fails the app's conservative guar
 
 ## Speech recognition
 
-Use a whisper.cpp **multilingual** `ggml-*.bin` model. Official upstream model sources are:
+The included multilingual tiny q5_1 model is prepared automatically on a compatible device. Its actual memory use, recognition quality and latency still need measurement on the itel A25 Pro. Optionally replace it with a compatible whisper.cpp **multilingual** `ggml-*.bin` model. Official upstream sources are:
 
 - [Model documentation and checksums](https://github.com/ggml-org/whisper.cpp/tree/master/models)
 - [Multilingual tiny](https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-tiny.bin)
 - [Multilingual base](https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-base.bin)
 
-Do **not** choose `tiny.en` or `base.en` for Urdu or Punjabi: `.en` variants are English-only. Keep filenames/model provenance available for diagnosis. Runtime execution in this build restricts speech model files to less than 180 MiB, intended for tiny/base profiles, and recordings to 60 seconds. A model accepted by the generic import registry may still exceed the speech execution limit.
+Do **not** choose `tiny.en` or `base.en` for Urdu or Punjabi: `.en` variants are English-only. An explicitly selected English-only file remains usable for English, but Urdu/Punjabi microphone preflight requests a multilingual selection before recording. Keep filenames/model provenance available for diagnosis. Runtime execution limits speech files to at most 180 MiB, intended for tiny/base profiles, and recordings to 60 seconds. A model accepted by the generic import registry may still exceed the speech execution limit.
 
 The pinned Whisper source contains `ur` and `pa` language identifiers. That establishes recognized language identifiers, not sufficient accuracy, script control or real-device language acceptance. Urdu and Punjabi must each be tested with representative speakers and noise conditions. Punjabi output script may require manual correction; changing the app's Punjabi script does not retrain the recognizer or guarantee transliteration. The app uses explicit selected language when transcribing rather than a guaranteed automatic language detector.
 
@@ -63,7 +86,7 @@ Install desired offline voices using the phone's Android TTS settings, then use 
 
 ## Compatibility matrix
 
-| Capability | Urdu | Punjabi Shahmukhi | Punjabi Gurmukhi | Configurable third language |
+| Capability | Urdu | Punjabi Shahmukhi | Punjabi Gurmukhi | Configurable extra language |
 | --- | --- | --- | --- | --- |
 | Unicode storage and original text | Implemented | Implemented | Implemented | Implemented |
 | Script metadata and appropriate text direction | Implemented | Implemented | Implemented | Script-dependent |
@@ -73,8 +96,12 @@ Install desired offline voices using the phone's Android TTS settings, then use 
 | Offline spoken output | Requires installed compatible voice | Requires installed compatible voice | Requires installed compatible voice | Requires installed compatible voice |
 | Translation/transliteration | No dedicated engine | No dedicated engine | No dedicated engine | No dedicated engine |
 
-Arabic-script language detection is ambiguous. Select Urdu/Punjabi manually when necessary. Cross-language retrieval currently uses language-aware lexical ranking rather than embeddings or a multilingual semantic index; translated or semantically related questions may not retrieve differently worded facts.
+English, Urdu and Punjabi remain directly selectable even when an extra language was configured. Arabic-script language detection is ambiguous; select Urdu/Punjabi manually when necessary. The database uses lexical ranking rather than embeddings. A capable local language model can help rewrite a question for English-document retrieval and synthesize a cited answer in the requested language, but poor translation or retrieval can still omit relevant evidence. Without that model, original-text results and an explicit translation-unavailable status remain available. If no supporting passage is retrieved, strict RAG abstains even with a model selected. Citations identify filenames/chunks, not exact PDF pages.
+
+## Medicine-reference limits
+
+An imported medicine leaflet becomes searchable source text, not a medically verified model update. The app supports sourced explanations and clarification of symptom questions; it does not automatically diagnose or prescribe. A general model can mistranslate medicine names, numbers and units. Compare translated answers with the cited original and use qualified clinical judgment for an individual's care. No curated drug database or validated prescribing rules are bundled.
 
 ## Target-device benchmark
 
-Record Android/API/ABI, total and available RAM, model name/checksum/quantization, context size, storage usage, startup/load time, first and repeated answer latency, speech latency, peak memory, thermal state and failures. Test with internet disabled and after restarting. Run Urdu, Punjabi in each intended script and the chosen third language separately. Results for another model, emulator or language do not establish target-phone acceptance.
+Record Android/API/ABI, total and available RAM, model name/checksum/quantization, context size, storage usage, startup/load time, first and repeated answer latency, speech latency, peak memory, thermal state and failures. Test with internet disabled and after restarting. Run English, Urdu, Punjabi in each intended script and any extra language separately. Results for another model, emulator or language do not establish target-phone acceptance.

@@ -1,4 +1,5 @@
 import java.util.Properties
+import java.security.MessageDigest
 
 plugins {
     id("com.android.application")
@@ -11,6 +12,37 @@ val localSigning = Properties().apply {
     if (file.isFile) file.inputStream().use(::load)
 }
 
+// Keep licensed model weights outside the source checkout and Git/source ZIPs.
+// A distribution build must contain the verified speech model; never silently
+// produce an APK whose advertised bundled voice input is missing.
+val bundledModelAssetsDir = rootProject.file(
+    providers.gradleProperty("pocketAiModelAssetsDir")
+        .orElse(providers.environmentVariable("POCKETAI_MODEL_ASSETS_DIR"))
+        .getOrElse("../model-assets")
+)
+val bundledSpeechModel = bundledModelAssetsDir.resolve("models/ggml-tiny-q5_1.bin")
+val bundledSpeechSha256 = "818710568da3ca15689e31a743197b520007872ff9576237bda97bd1b469c3d7"
+if (!bundledSpeechModel.isFile || bundledSpeechModel.length() != 32_152_673L) {
+    throw GradleException(
+        "The bundled multilingual Whisper tiny-q5_1 model is missing or incomplete. " +
+            "Run python3 scripts/fetch-bundled-speech.py before Gradle sync/build. " +
+            "Use POCKETAI_MODEL_ASSETS_DIR or -PpocketAiModelAssetsDir to override the external assets directory."
+    )
+}
+val actualSpeechSha256 = MessageDigest.getInstance("SHA-256").apply {
+    bundledSpeechModel.inputStream().buffered().use { input ->
+        val buffer = ByteArray(64 * 1024)
+        while (true) {
+            val count = input.read(buffer)
+            if (count < 0) break
+            update(buffer, 0, count)
+        }
+    }
+}.digest().joinToString("") { "%02x".format(it.toInt() and 255) }
+if (actualSpeechSha256 != bundledSpeechSha256) {
+    throw GradleException("The bundled speech model failed SHA-256 verification. Run python3 scripts/fetch-bundled-speech.py again.")
+}
+
 android {
     namespace = "com.pocketai"
     compileSdk = 35
@@ -20,15 +52,15 @@ android {
         applicationId = "com.pocketai"
         minSdk = 23
         targetSdk = 35
-        versionCode = 1
-        versionName = "1.0.0"
+        versionCode = 2
+        versionName = "1.1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         ndk { abiFilters += listOf("arm64-v8a", "armeabi-v7a", "x86_64") }
         externalNativeBuild {
             cmake {
                 cppFlags += listOf("-std=c++17")
-                arguments += listOf("-DANDROID_STL=c++_shared")
+                arguments += listOf("-DANDROID_STL=c++_shared", "-DANDROID_ARM_NEON=TRUE")
             }
         }
     }
@@ -58,6 +90,8 @@ android {
     }
     kotlinOptions { jvmTarget = "17" }
     buildFeatures { compose = true; buildConfig = true }
+    sourceSets.getByName("main").assets.srcDir(bundledModelAssetsDir)
+    androidResources { noCompress += "bin" }
     externalNativeBuild {
         cmake { path = file("src/main/cpp/CMakeLists.txt"); version = "3.22.1" }
     }
@@ -81,6 +115,7 @@ dependencies {
     implementation("androidx.compose.material3:material3")
     implementation("androidx.compose.material:material-icons-extended")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.9.0")
+    implementation("com.tom-roush:pdfbox-android:2.0.27.0")
     debugImplementation("androidx.compose.ui:ui-tooling")
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.robolectric:robolectric:4.14.1")

@@ -52,3 +52,8 @@ signing/
 !downloads/initial/PocketAI.apk
 !downloads/initial/PocketAI-debug.apk
 !downloads/initial/PocketAI-source.zip
+
+# Audited public distribution files for the document RAG update.
+!downloads/rag-v1.1/PocketAI.apk
+!downloads/rag-v1.1/PocketAI-debug.apk
+!downloads/rag-v1.1/PocketAI-source.zip

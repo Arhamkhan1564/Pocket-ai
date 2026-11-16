@@ -1,6 +1,8 @@
 Pocket AI — third-party software notices
 
-The application bundles CPU inference code from the following projects. No model weights are bundled.
+The application bundles CPU inference code from the following projects and a
+quantized multilingual Whisper tiny speech model. No language model or TTS
+voice is bundled.
 
 Pocket AI native dependencies (CPU only, no downloads at application runtime)
 
@@ -13,11 +15,19 @@ revision 5922450fbce1ed9d1648babd0d5ac4520055b436
 license MIT (see whisper.cpp/LICENSE)
 
 Whisper uses the single GGML implementation supplied by pinned llama.cpp.
-No AI or speech model weights are bundled. Import licensed compatible weights
-through Models. Header validation is not a guarantee of compatibility or quality.
+The included Whisper model's license and pinned provenance are in
+licenses/WHISPER_MODEL_LICENSE.txt and BUNDLED_SPEECH_MODEL_NOTICE.txt.
+Import a compatible licensed GGUF language model through Models for generated
+or translated answers. Header validation does not guarantee model quality.
 
-arm64-v8a, x86_64: CPU GGUF generation and Whisper ggml transcription.
-armeabi-v7a: lightweight JNI compatibility stub; native model inference unavailable.
+arm64-v8a, armeabi-v7a (NEON), x86_64: CPU GGUF generation and Whisper
+ggml transcription. Actual model memory use and speed depend on the device.
+
+PDFBox-Android 2.0.27.0 https://github.com/TomRoush/PdfBox-Android
+Copyright 2015 Tom Roush; derived from Apache PDFBox, Copyright The Apache
+Software Foundation. Licensed under Apache License 2.0.
+See licenses/Apache-2.0.txt. Bundled dependency resources retain their notices.
+PDF text extraction does not perform OCR or execute document actions.
 
 
 llama.cpp

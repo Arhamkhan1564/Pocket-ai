@@ -36,9 +36,9 @@ If both PIN and recovery code are lost, there is no bypass or cloud account reco
 
 Android accepts an in-place update only when its application ID and signing identity match. The supplied release uses `com.pocketai`; the debug build uses `com.pocketai.debug` and stores separate data.
 
-Keep `PocketAI-signing-backup.zip` privately. It contains the local signing keystore and its properties/password in an **unencrypted archive**. Anyone who obtains it can sign APKs with that local identity. Do not publish it or include it in a shared source repository.
+Signing keys, passwords and signing-backup archives are excluded from the public repository and downloads. If you hold the original signing key privately, keep it and its credentials secure; anyone who obtains them can sign APKs with that identity.
 
-A developer can extract the signing archive at the Android Studio project root before running `./gradlew assembleRelease`. This preserves the supplied release's identity. Generating a new key creates a different signing identity and will not update the old release. Export knowledge before replacing an installation. The source archive intentionally excludes signing credentials.
+A developer needs the same privately retained key and a local `signing.properties` configuration to build an update with the supplied release's identity. Generating a new key creates a different signing identity and will not update the old release. Export knowledge before replacing an installation. No signing credentials can be recovered from the source archive.
 
 ## Device loss or failure
 

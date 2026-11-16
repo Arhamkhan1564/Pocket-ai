@@ -54,6 +54,7 @@ class PocketDatabaseTest {
         assertThrows(IllegalStateException::class.java) { db.restoreBackup(backup) }
         assertThrows(IllegalStateException::class.java) { db.exportBackup() }
         assertThrows(IllegalStateException::class.java) { db.addCategory("Private") }
+        assertThrows(IllegalStateException::class.java) { db.importText("Unreviewed reference", "reference.txt") }
         db.addConversation("user", "Remember this unverified conversation")
         assertEquals(1, db.countKnowledge())
         assertEquals(1, db.conversations().size)
@@ -131,5 +132,60 @@ class PocketDatabaseTest {
         db.clearConversations()
         assertTrue(db.conversations().isEmpty())
         assertEquals(1, db.countKnowledge())
+    }
+
+    @Test fun englishDocumentsCanBeRetrievedWithUrduPunjabiAndRomanKeywords() {
+        db.importText("A headache is pain or discomfort in the head. This is an educational reference.", "headache-reference.txt")
+        db.importText("A cough is a protective reflex. Fever means an elevated body temperature.", "cough-fever-reference.txt")
+        val queries = listOf("مجھے سر میں درد ہے کونسی دوا" to "ur", "ਮੈਨੂੰ ਸਿਰ ਦਰਦ ਹੈ" to "pa", "ਮੈਨੂੰ ਸਿਰ ਵਿੱਚ ਦਰਦ ਹੈ" to "pa", "مینوں سر وچ درد اے" to "pa", "mainu sir dard hai" to "pa", "mujhe sar mein dard hai" to "ur")
+        queries.forEach { (question, language) ->
+            val first = db.retrieve(question, language).first()
+            assertTrue("No headache match for $question", first.content.contains("headache"))
+            assertEquals("en", first.language)
+            assertEquals("headache-reference.txt · chunk 1/1", first.sourceReference)
+        }
+        assertTrue(db.retrieve("بخار", "ur").first().content.contains("Fever"))
+        assertTrue(db.retrieve("ਖੰਘ", "pa").first().content.contains("cough"))
+    }
+
+    @Test fun medicineNameExpansionRetrievesTheOriginalReferencedExcerpt() {
+        val text = "Paracetamol is also called acetaminophen. Side effects and warnings must be checked in the original leaflet."
+        db.importText(text, "medicine-leaflet.docx", category = "Medicine references")
+        val match = db.retrieve("پیراسیٹامول کے مضر اثرات", "ur").single()
+        assertEquals(text, match.content)
+        assertEquals("medicine-leaflet.docx · chunk 1/1", match.sourceReference)
+        assertEquals("medicine-leaflet.docx", match.question)
+        assertEquals(match.id, db.retrieve("ਪੈਰਾਸੀਟਾਮੋਲ", "pa").single().id)
+    }
+
+    @Test fun broadMedicineKeywordsDoNotCrowdOutAnOlderSpecificSymptomReference() {
+        db.importText("Fever is an elevated body temperature.", "fever-reference.txt")
+        repeat(120) { db.saveKnowledge(KnowledgeDraft("Medicine reference number $it describes a different condition.", category = "Medicine references")) }
+        val results = db.retrieve("Which medicine for fever?", "en")
+        assertTrue(results.isNotEmpty())
+        assertTrue(results.first().content.contains("Fever"))
+    }
+
+    @Test fun documentDuplicatesKeepDistinctFileProvenanceAndSurvivePortableBackup() {
+        val text = "An original document sentence with its own provenance."
+        db.saveKnowledge(KnowledgeDraft(text))
+        assertEquals(1, db.importText(text, "first.docx"))
+        assertEquals(0, db.importText(text, "first.docx"))
+        assertEquals(1, db.importText(text, "second.pdf"))
+        assertEquals(setOf("first.docx · chunk 1/1", "second.pdf · chunk 1/1"), db.listKnowledge(category = "Documents").map { it.sourceReference }.toSet())
+        val backup = db.exportBackup()
+        assertEquals(3, db.restoreBackup(backup))
+        assertEquals(2, db.listKnowledge(category = "Documents").size)
+        assertTrue(db.listKnowledge(category = "Documents").all { it.language == "en" && it.script == "Latn" })
+        assertTrue(db.findConflicts(KnowledgeDraft("Another legitimate passage", question = "first.docx", source = "document")).isEmpty())
+    }
+
+    @Test fun invalidBulkImportCannotLeavePartialRecordsOrAuditEvents() {
+        db.saveKnowledge(KnowledgeDraft("Keep existing knowledge"))
+        val events = db.trainingHistory().size
+        assertThrows(IllegalArgumentException::class.java) { db.importText("Good paragraph.\n\nAnother paragraph.", "reference.txt", category = "X".repeat(101)) }
+        assertThrows(IllegalArgumentException::class.java) { db.importText((1..1001).joinToString("\n\n") { "Paragraph $it" }, "too-many.txt") }
+        assertEquals(1, db.countKnowledge())
+        assertEquals(events, db.trainingHistory().size)
     }
 }

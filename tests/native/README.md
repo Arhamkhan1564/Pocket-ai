@@ -3,8 +3,9 @@
 This test compiles the same JNI adapter on a Linux x86_64 host, exercises actual
 GGUF token generation and known-speech Whisper transcription, and verifies
 invalid-input recovery. It does not benchmark the user's Android phone or prove
-Urdu/Punjabi recognition quality. Models are explicit test inputs and are not
-bundled in the APK or source project.
+Urdu/Punjabi recognition quality. Models are explicit test inputs. Version 1.1
+ships a multilingual Whisper tiny q5_1 speech model in the APK; model weights
+remain external to the source project and language models are not bundled.
 
 Requirements: CMake 3.22.1+, Ninja, C++17 compiler, JDK 17+ with JNI headers.
 Use a tiny valid GGUF, a multilingual Whisper tiny `ggml` model, and a mono
@@ -37,8 +38,8 @@ delivery validation report.
 
 `NativeRuntimeTest` runs the same two real inference operations inside the
 debug Android application. It is skipped unless explicit fixture files are
-present, so model weights never enter either APK. With a connected x86_64 or
-arm64 test device and the debug app installed:
+present; these additional test fixtures are not packaged into the APK. With a
+connected compatible ARM or x86_64 test device and the debug app installed:
 
 ```sh
 adb shell mkdir -p /data/local/tmp/pocket-native-fixtures

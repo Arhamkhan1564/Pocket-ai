@@ -4,9 +4,10 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class LanguageToolsTest {
-    @Test fun alwaysConfiguresUrduPunjabiAndOneChosenLanguage() {
-        assertEquals(listOf("ur", "pa", "fr"), LanguageTools.configured("fr").map { it.tag })
-        assertEquals(listOf("ur", "pa", "en"), LanguageTools.configured("unknown").map { it.tag })
+    @Test fun englishRemainsAvailableAlongsideUrduPunjabiAndOptionalLanguage() {
+        assertEquals(listOf("en", "ur", "pa", "fr"), LanguageTools.configured("fr").map { it.tag })
+        assertEquals(listOf("en", "ur", "pa"), LanguageTools.configured("unknown").map { it.tag })
+        assertEquals(listOf("en", "ur", "pa"), LanguageTools.configured("en").map { it.tag })
     }
 
     @Test fun identifiesScriptsWhileKeepingAmbiguousManualLanguage() {

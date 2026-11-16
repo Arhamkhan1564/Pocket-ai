@@ -115,11 +115,10 @@ class PocketDatabase(context: Context, private val auth: AuthManager) : SQLiteOp
     /** Bounded lexical retrieval across stored languages. This does not claim machine translation. */
     fun retrieve(query: String, language: String? = null, limit: Int = 5): List<KnowledgeRecord> {
         require(limit in 1..20)
-        val normalized = SearchText.normalize(query.take(2000))
-        val originalTerms = SearchText.terms(normalized)
-        val terms = originalTerms.filterNot { it in STOP_WORDS }
-        if (terms.isEmpty()) return emptyList()
-        val match = terms.joinToString(" OR ") { "\"${it.replace("\"", "") }\"" }
+        val plan = SearchText.keywordQuery(query)
+        if (plan.terms.isEmpty()) return emptyList()
+        // Broad words such as "medicine" must not crowd a specific symptom/drug out of the candidate set.
+        val match = plan.primaryTerms.joinToString(" OR ") { "\"${it.replace("\"", "") }\"" }
         val candidates = readableDatabase.rawQuery(
             "SELECT k.* FROM knowledge k INNER JOIN knowledge_fts ON knowledge_fts.rowid=k.id WHERE knowledge_fts MATCH ? AND k.verified=1 ORDER BY k.updated_at DESC LIMIT 100",
             arrayOf(match)
@@ -127,13 +126,17 @@ class PocketDatabase(context: Context, private val auth: AuthManager) : SQLiteOp
         return candidates.map { record ->
             val body = SearchText.normalize(record.content)
             val question = SearchText.normalize(record.question)
-            val bodyTerms = body.split(' ').toSet()
-            val questionTerms = question.split(' ').toSet()
-            val bodyMatches = terms.count { it in bodyTerms }
-            val questionMatches = terms.count { it in questionTerms }
-            val exact = question.isNotEmpty() && question == normalized
-            val score = (if (exact) 100.0 else 0.0) + 5.0 * questionMatches + 2.0 * bodyMatches +
-                (if (body.contains(normalized)) 4.0 else 0.0) + (if (record.language == language) 0.5 else 0.0)
+            val bodyMatches = plan.literalTerms.count { SearchText.containsTerm(body, it) }
+            val questionMatches = plan.literalTerms.count { SearchText.containsTerm(question, it) }
+            val conceptScore = plan.concepts.sumOf { concept ->
+                val questionHit = concept.terms.any { SearchText.containsTerm(question, it) }
+                val bodyHit = concept.terms.any { SearchText.containsTerm(body, it) }
+                (if (questionHit) if (concept.generic) 1.0 else 7.0 else 0.0) +
+                    (if (bodyHit) if (concept.generic) 0.5 else 4.0 else 0.0)
+            }
+            val exact = question.isNotEmpty() && question == plan.normalized
+            val score = (if (exact) 100.0 else 0.0) + 5.0 * questionMatches + 2.0 * bodyMatches + conceptScore +
+                (if (body.contains(plan.normalized)) 4.0 else 0.0) + (if (record.language == language) 0.5 else 0.0)
             record to score
         }.filter { it.second > 0.5 }.sortedByDescending { it.second }.take(limit).map { it.first }
     }
@@ -144,6 +147,8 @@ class PocketDatabase(context: Context, private val auth: AuthManager) : SQLiteOp
     ).use { cursor -> buildList { while (cursor.moveToNext()) add(cursor.knowledge()) } }
 
     fun findConflicts(draft: KnowledgeDraft): List<KnowledgeRecord> {
+        // Document titles are shared by many passages; they are not competing Q/A answers.
+        if (draft.source == "document") return emptyList()
         val question = SearchText.normalize(draft.question)
         if (question.isBlank()) return emptyList()
         return readableDatabase.query("knowledge", null, "normalized_question=? AND language=? AND normalized_content<>?",
@@ -205,27 +210,32 @@ class PocketDatabase(context: Context, private val auth: AuthManager) : SQLiteOp
 
     fun clearConversations() { writableDatabase.delete("conversations", null, null) }
 
-    /** Imports bounded UTF-8/plain text. Each paragraph is an individually editable source-linked fact. */
+    /** Indexes already-extracted text after administrator review. No document changes model parameters. */
     @Synchronized
     fun importText(text: String, filename: String, language: String = "en", script: String = "Latn", category: String = "Documents"): Int {
         auth.requireAuthorized()
-        require(text.isNotBlank() && text.length <= 1_000_000) { "Import a nonempty plain text file smaller than 1 MB." }
-        val chunks = text.replace("\r\n", "\n").split(Regex("\n\\s*\n")).flatMap { paragraph -> paragraph.trim().chunked(3000) }.filter { it.isNotBlank() }
-        require(chunks.size in 1..500) { "The document has too many paragraphs. Split it into smaller files." }
+        val name = filename.substringAfterLast('/').substringAfterLast('\\')
+            .replace(Regex("[\\p{Cntrl}]"), " ").trim().take(200).ifBlank { "Imported document" }
+        val chunks = DocumentChunker.chunk(text)
+        val drafts = chunks.mapIndexed { position, chunk -> validate(KnowledgeDraft(
+            content = chunk, question = name, language = language, script = script, category = category,
+            source = "document", sourceReference = "$name · chunk ${position + 1}/${chunks.size}"
+        )) }
+        auth.requireAuthorized()
         val db = writableDatabase
         var imported = 0
         db.beginTransaction()
         try {
-            val documentId = db.insertOrThrow("documents", null, ContentValues().apply { put("name", filename.take(200)); put("language", language); put("imported_at", System.currentTimeMillis()) })
-            chunks.forEachIndexed { position, chunk ->
-                val draft = KnowledgeDraft(chunk, language = language, script = script, category = category, source = "document", sourceReference = "${filename.take(200)} · ${position + 1}")
+            var documentId: Long? = null
+            drafts.forEachIndexed { position, draft ->
                 if (findDuplicates(draft).isEmpty()) {
+                    if (documentId == null) documentId = db.insertOrThrow("documents", null, ContentValues().apply { put("name", name); put("language", language); put("imported_at", System.currentTimeMillis()) })
                     val id = saveKnowledge(draft)
                     db.insertOrThrow("document_chunks", null, ContentValues().apply { put("document_id", documentId); put("knowledge_id", id); put("position", position) })
                     imported++
                 }
             }
-            event(db, null, "document_imported", "${filename.take(200)}: $imported records")
+            event(db, null, if (imported == 0) "document_duplicate" else "document_imported", "$name: $imported new chunks; ${drafts.size - imported} already indexed")
             db.setTransactionSuccessful()
         } finally { db.endTransaction() }
         return imported
@@ -364,6 +374,5 @@ class PocketDatabase(context: Context, private val auth: AuthManager) : SQLiteOp
     companion object {
         const val MAX_BACKUP_BYTES = 16 * 1024 * 1024
         private const val MAX_CONTENT = 100_000
-        private val STOP_WORDS = setOf("what", "who", "when", "where", "why", "how", "is", "are", "was", "were", "a", "an", "the", "of", "about", "me", "tell", "do", "you", "know", "did", "i", "teach", "taught", "my", "please", "explain", "in", "on", "to", "and", "it", "ہے", "ہیں", "کیا", "کے", "کی", "کا", "کو", "میں", "سے", "یہ", "وہ", "مجھے", "بتائیں", "ਬਾਰੇ", "ਕੀ", "ਹੈ", "ਨੂੰ", "ਦੱਸੋ")
     }
 }

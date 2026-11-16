@@ -3,13 +3,15 @@ package com.pocketai.models
 import android.app.ActivityManager
 import android.content.Context
 import android.net.Uri
-import android.os.Build
 import android.os.StatFs
 import android.provider.OpenableColumns
+import com.pocketai.engine.NativeBridge
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
+import java.io.FileOutputStream
 import java.io.IOException
+import java.io.InputStream
 import java.security.MessageDigest
 import java.util.UUID
 
@@ -37,12 +39,11 @@ class ModelManager(context: Context) {
     private val directory = File(appContext.filesDir, "models").apply { mkdirs() }
     private val registry = File(directory, "registry.json")
 
-    @Synchronized
-    fun list(): List<InstalledModel> {
-        if (!registry.exists()) return emptyList()
+    fun list(): List<InstalledModel> = synchronized(registryLock) {
+        if (!registry.exists()) return@synchronized emptyList()
         require(registry.length() <= 1024 * 1024) { "The model registry is invalid." }
         val json = JSONArray(registry.readText())
-        return (0 until json.length()).map { index ->
+        (0 until json.length()).map { index ->
             val item = json.getJSONObject(index)
             val id = item.getString("id")
             require(id.matches(Regex("[a-f0-9-]{36}"))) { "Invalid model registry ID." }
@@ -57,25 +58,71 @@ class ModelManager(context: Context) {
     }
 
     /** Blocking I/O; call on Dispatchers.IO. Progress is emitted at most every 512 KiB. */
-    @Synchronized
-    fun importModel(uri: Uri, kind: ModelKind, onProgress: (Long, Long?) -> Unit = { _, _ -> }): InstalledModel {
+    fun importModel(uri: Uri, kind: ModelKind, onProgress: (Long, Long?) -> Unit = { _, _ -> }): InstalledModel = synchronized(registryLock) {
         val current = list()
         require(current.size < 12) { "Remove an unused model before importing another (maximum 12)." }
         val descriptor = describe(uri)
+        install(current, descriptor.first, kind, descriptor.second, null, emptyMap(), null, onProgress) {
+            appContext.contentResolver.openInputStream(uri)
+                ?: throw IOException("The selected storage provider could not open this file.")
+        }
+    }
+
+    /** App-bundled resource only. A known digest is mandatory; existing private copies are checked. */
+    internal fun installVerifiedBundledModel(
+        name: String,
+        expectedSize: Long,
+        expectedSha256: String,
+        onProgress: (Long, Long?) -> Unit = { _, _ -> },
+        source: () -> InputStream
+    ): InstalledModel = synchronized(registryLock) {
+        require(expectedSha256.matches(Regex("[a-f0-9]{64}"))) { "A trusted speech-model checksum is required." }
+        val current = list()
+        val existing = current.firstOrNull { it.kind == ModelKind.WHISPER && it.sha256 == expectedSha256 }
+        if (existing != null) {
+            val file = fileFor(existing)
+            if (file.length() == expectedSize && sha256(file) == expectedSha256) {
+                ModelValidator.validateHeader(file, ModelKind.WHISPER)
+                onProgress(expectedSize, expectedSize)
+                return@synchronized existing
+            }
+        }
+        require(existing != null || current.size < 12) { "Remove an unused model before restoring the included speech model (maximum 12)." }
+        // A stable destination lets an interrupted first install overwrite its own orphan
+        // instead of leaving another full model copy after each process interruption.
+        val destinationId = existing?.id ?: UUID.nameUUIDFromBytes(expectedSha256.toByteArray(Charsets.US_ASCII)).toString()
+        install(current.filterNot { it.id == existing?.id }, name, ModelKind.WHISPER, expectedSize,
+            expectedSha256, mapOf("bundled" to "true", "license" to "MIT", "source" to BundledSpeechModel.SOURCE_URL),
+            destinationId, onProgress, source)
+    }
+
+    private fun install(
+        current: List<InstalledModel>,
+        name: String,
+        kind: ModelKind,
+        expectedSize: Long?,
+        expectedSha256: String?,
+        extraMetadata: Map<String, String>,
+        replacementId: String?,
+        onProgress: (Long, Long?) -> Unit,
+        source: () -> InputStream
+    ): InstalledModel {
         val maximum = if (kind == ModelKind.LLM) 4L * 1024 * 1024 * 1024 else 2L * 1024 * 1024 * 1024
         val reserve = 128L * 1024 * 1024
         val available = StatFs(directory.absolutePath).availableBytes - reserve
         require(available > 1024 * 1024) { "Free at least 128 MB of internal storage before importing." }
-        descriptor.second?.let { require(it in 64..minOf(maximum, available)) { "The file is too large, incomplete, or exceeds available storage." } }
-        val id = UUID.randomUUID().toString()
+        expectedSize?.let { require(it in 64..minOf(maximum, available)) { "The file is too large, incomplete, or exceeds available storage." } }
+        val id = replacementId ?: UUID.randomUUID().toString()
         val temporary = File(directory, "$id.part")
         val destination = File(directory, "$id.${if (kind == ModelKind.LLM) "gguf" else "bin"}")
+        var finalized = false
         try {
             val digest = MessageDigest.getInstance("SHA-256")
             var copied = 0L
             var lastProgress = 0L
-            appContext.contentResolver.openInputStream(uri)?.use { input ->
-                temporary.outputStream().buffered(64 * 1024).use { output ->
+            source().use { input ->
+                FileOutputStream(temporary).use { rawOutput ->
+                    val output = rawOutput.buffered(64 * 1024)
                     val buffer = ByteArray(64 * 1024)
                     while (true) {
                         if (Thread.currentThread().isInterrupted) throw IOException("Model import cancelled.")
@@ -84,40 +131,45 @@ class ModelManager(context: Context) {
                         if (count == 0) continue
                         copied += count
                         require(copied <= maximum && copied <= available) { "The model exceeds available storage or the supported import size." }
+                        require(expectedSize == null || copied <= expectedSize) { "The speech-model resource is larger than expected." }
                         output.write(buffer, 0, count)
                         digest.update(buffer, 0, count)
                         if (copied - lastProgress >= 512 * 1024) {
-                            onProgress(copied, descriptor.second)
+                            onProgress(copied, expectedSize)
                             lastProgress = copied
                         }
                     }
                     output.flush()
+                    rawOutput.fd.sync()
                 }
-            } ?: throw IOException("The selected storage provider could not open this file.")
-            descriptor.second?.let { require(it == copied) { "The file was not copied completely. Try importing it again." } }
+            }
+            expectedSize?.let { require(it == copied) { "The file was not copied completely. Try importing it again." } }
             val header = ModelValidator.validateHeader(temporary, kind)
             val checksum = digest.digest().joinToString("") { "%02x".format(it.toInt() and 255) }
+            require(expectedSha256 == null || checksum == expectedSha256) { "The included speech-model checksum did not match. Install a verified Pocket AI APK or import your own model." }
             current.find { it.sha256 == checksum }?.let { throw IllegalArgumentException("This model is already installed as ${it.name}.") }
             require(temporary.renameTo(destination)) { "Could not finalize the model import." }
-            val model = InstalledModel(id, descriptor.first, kind, destination.absolutePath, copied,
-                checksum, System.currentTimeMillis(), header.architecture, header.metadata + ("format" to header.format))
+            val model = InstalledModel(id, name, kind, destination.absolutePath, copied,
+                checksum, System.currentTimeMillis(), header.architecture, header.metadata + ("format" to header.format) + extraMetadata)
             writeRegistry(current + model)
-            onProgress(copied, descriptor.second ?: copied)
+            finalized = true
+            onProgress(copied, expectedSize ?: copied)
             return model
         } catch (e: Exception) {
             temporary.delete()
-            destination.delete()
+            // Preserve a previous private copy if verification failed before replacement.
+            if (!finalized && replacementId == null) destination.delete()
             throw e
         }
     }
 
-    @Synchronized
-    fun remove(id: String) {
+    fun remove(id: String): Unit = synchronized(registryLock) {
         val models = list()
-        val model = models.find { it.id == id } ?: return
+        val model = models.find { it.id == id } ?: return@synchronized
         val file = fileFor(model)
         require(!file.exists() || file.delete()) { "The model could not be removed." }
         writeRegistry(models.filterNot { it.id == id })
+        BundledSpeechModel.markRemoved(appContext, model.sha256)
     }
 
     fun fileFor(model: InstalledModel): File {
@@ -129,13 +181,17 @@ class ModelManager(context: Context) {
     fun compatibility(model: InstalledModel): ModelCompatibility {
         val memory = ActivityManager.MemoryInfo()
         (appContext.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager).getMemoryInfo(memory)
-        val supported = Build.SUPPORTED_ABIS.any { it in setOf("arm64-v8a", "x86_64") }
+        val nativeIssue = NativeBridge.availabilityMessage()
+        val supported = nativeIssue == null
         val messages = mutableListOf<String>()
-        if (!supported) messages += "This build requires a 64-bit ARM or x86 device for GGUF and Whisper inference. On a 32-bit phone, saved-knowledge text answers and installed offline TTS remain available."
+        if (nativeIssue != null) messages += nativeIssue
         if (model.sizeBytes > memory.totalMem * 0.5) messages += "This model is large for the device RAM; loading may fail. Use a smaller quantized model."
         if (model.sizeBytes > memory.availMem * 0.7) messages += "Current free memory is limited. Close other apps before running this model."
-        if (Build.SUPPORTED_ABIS.firstOrNull() == "armeabi-v7a" && model.sizeBytes > 512L * 1024 * 1024) {
-            messages += "32-bit address space restricts large models. Prefer a model below 512 MB."
+        if (!android.os.Process.is64Bit()) {
+            messages += "This app process is 32-bit. Use Whisper tiny and a small quantized language model; available RAM and address space can still prevent loading."
+            if (model.sizeBytes > 512L * 1024 * 1024) {
+                messages += "This model exceeds 512 MiB. A smaller model is strongly recommended for 32-bit inference."
+            }
         }
         if (model.kind == ModelKind.WHISPER && model.metadata["multilingual"] == "false") {
             messages += "This is an English-only speech model; Urdu and Punjabi need a multilingual Whisper model."
@@ -168,7 +224,26 @@ class ModelManager(context: Context) {
                 .put("architecture", m.architecture ?: "").put("metadata", JSONObject(m.metadata)))
         }
         val temporary = File(directory, "registry.tmp")
-        temporary.writeText(json.toString())
+        FileOutputStream(temporary).use { output ->
+            output.write(json.toString().toByteArray(Charsets.UTF_8))
+            output.fd.sync()
+        }
         require(temporary.renameTo(registry)) { "Could not save the model registry." }
     }
+
+    private fun sha256(file: File): String {
+        val digest = MessageDigest.getInstance("SHA-256")
+        file.inputStream().use { input ->
+            val buffer = ByteArray(64 * 1024)
+            while (true) {
+                if (Thread.currentThread().isInterrupted) throw IOException("Speech-model verification cancelled.")
+                val count = input.read(buffer)
+                if (count < 0) break
+                if (count > 0) digest.update(buffer, 0, count)
+            }
+        }
+        return digest.digest().joinToString("") { "%02x".format(it.toInt() and 255) }
+    }
+
+    companion object { private val registryLock = Any() }
 }

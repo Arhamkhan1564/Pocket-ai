@@ -1,0 +1,176 @@
+{
+  "version": "1.1.0",
+  "build_command": "./gradlew --no-daemon testDebugUnitTest lintDebug lintVitalRelease assembleDebug assembleRelease assembleDebugAndroidTest",
+  "result": "BUILD SUCCESSFUL",
+  "tests": {
+    "tests": 95,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 1,
+    "passed": 94
+  },
+  "suites": [
+    {
+      "name": "com.pocketai.appliance.ApplianceSessionTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.pocketai.assistant.AssistantServiceTest",
+      "tests": 20,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.pocketai.assistant.LanguageToolsTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.pocketai.assistant.MedicalGuidanceTest",
+      "tests": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.pocketai.data.DocumentChunkerTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.pocketai.data.DocumentTextExtractorTest",
+      "tests": 12,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.pocketai.data.PocketDatabaseTest",
+      "tests": 13,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.pocketai.data.SearchTextTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.pocketai.models.BundledModelInstallTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.pocketai.models.ModelManagerTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.pocketai.models.ModelValidatorTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.pocketai.security.AuthManagerTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "com.pocketai.ui.PocketComposeFlowTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 1
+    },
+    {
+      "name": "com.pocketai.voice.VoiceSignalTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "lint": {
+    "errors": 0,
+    "warnings": 18
+  },
+  "artifacts": {
+    "release": {
+      "path": "app/build/outputs/apk/release/app-release.apk",
+      "bytes": 71143051,
+      "sha256": "b25655bdbfd5f3bfcb5da3e515ecc3d7bb9bfa711bfb0dde9530326b734e5217",
+      "version_code": 2,
+      "version_name": "1.1.0",
+      "signature_verified": true,
+      "zip_alignment": "16KiB page /4-byte alignment verified"
+    },
+    "debug": {
+      "path": "app/build/outputs/apk/debug/app-debug.apk",
+      "bytes": 78306989,
+      "sha256": "cc26c655dbe2d8f956a6aa615beb954dd50dfcc298f0637876a99fc58b34ff66",
+      "version_code": 2,
+      "version_name": "1.1.0-debug",
+      "signature_verified": true,
+      "zip_alignment": "16KiB page /4-byte alignment verified"
+    }
+  },
+  "release_certificate_sha256": "8ac67ade5eaf37abb50dc8d89e32317584f6baa194f4d97246209b27743f4e42",
+  "matches_initial_release_signing_identity": true,
+  "bundled_speech": {
+    "asset": "assets/models/ggml-tiny-q5_1.bin",
+    "bytes": 32152673,
+    "sha256": "818710568da3ca15689e31a743197b520007872ff9576237bda97bd1b469c3d7",
+    "stored_uncompressed": true,
+    "language_scope": "multilingual tiny model; language quality requires device testing"
+  },
+  "model_weights_in_source_distribution": false,
+  "language_model_validation": {
+    "candidate": "Qwen3-0.6B-Q4_K_M",
+    "sha256": "ac2d97712095a558e31573f62f466a3f9d93990898b0ec79d7c974c1780d524a",
+    "english_rag": "PASS on synthetic host fixture",
+    "urdu_punjabi": "FAIL: identifier corruption, incomplete or unfaithful answers/translations; not a validated translation option",
+    "clinical_translation": "Not clinically validated",
+    "details": "MODEL-VALIDATION.txt"
+  },
+  "pdf_extraction_dependency": "com.tom-roush:pdfbox-android:2.0.27.0",
+  "pdf_dependency_classes_present_in_apk": true,
+  "native_inference_abis": [
+    "armeabi-v7a with runtime NEON guard",
+    "arm64-v8a",
+    "x86_64"
+  ],
+  "native_armv7_status": "Full ELF32 ARM runtime compiled and linked, including NEON capability checks at all inference entry points. Actual itel A25 Pro execution and speed remain unverified.",
+  "licenses_bundled": [
+    "native MIT notices",
+    "Whisper model MIT",
+    "PDFBox Apache-2.0 and upstream NOTICE",
+    "Adobe AFM/CMap terms",
+    "Bouncy Castle MIT",
+    "Liberation Sans 2.1.5 SIL OFL 1.1"
+  ],
+  "privacy": {
+    "internet_permission": false,
+    "allow_backup": false,
+    "explicit_backup_and_device_transfer_exclusions": true
+  },
+  "acceptance_limits": "Automated component tests and packaged assets verified. Physical target-phone audio, latency, memory, thermal behavior and complete on-device acceptance are separate checks."
+}

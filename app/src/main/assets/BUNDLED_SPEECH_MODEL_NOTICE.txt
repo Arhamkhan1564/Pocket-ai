@@ -1,0 +1,26 @@
+Pocket AI included offline speech model
+
+Model: multilingual Whisper tiny, whisper.cpp GGML Q5_1 quantization
+APK asset: models/ggml-tiny-q5_1.bin
+Size: 32,152,673 bytes (30.7 MiB)
+SHA-256: 818710568da3ca15689e31a743197b520007872ff9576237bda97bd1b469c3d7
+Source: https://huggingface.co/ggerganov/whisper.cpp/resolve/5359861c739e955e79d9a303bcbc70fb988958b1/ggml-tiny-q5_1.bin
+Original model: https://github.com/openai/whisper
+Converted model repository: https://huggingface.co/ggerganov/whisper.cpp
+Repository model-card license: MIT
+Weight license: MIT; Copyright (c) 2022 OpenAI
+Full license: licenses/WHISPER_MODEL_LICENSE.txt
+
+This APK includes the speech model so supported devices do not need to
+download a separate file before voice input. At first launch Pocket AI verifies
+and copies the model to app-private storage, then selects it only when no valid
+speech model is already selected. The application performs no network requests.
+
+Urdu and Punjabi language identifiers are supported by the inference runtime.
+Recognition accuracy, script output, latency, microphone quality, and memory
+use depend on the device and speech. This inclusion does not add a TTS voice,
+a translation pack, or a generative language model. Native inference is included
+for ARM64, x86_64 and 32-bit ARMv7 with NEON. The running native library checks
+capability; unsupported hardware keeps saved-knowledge text and installed offline
+TTS. A 32-bit process has tighter address-space limits, so larger models can fail
+even with free storage. Actual 2 GB target-phone performance remains unverified.

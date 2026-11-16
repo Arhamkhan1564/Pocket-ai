@@ -49,7 +49,13 @@ import com.pocketai.assistant.LanguageTools
 import com.pocketai.appliance.ApplianceSession
 import com.pocketai.data.*
 import com.pocketai.engine.LocalAiEngine
+import com.pocketai.engine.NativeBridge
+import com.pocketai.models.BundledSpeechModel
+import com.pocketai.models.BundledSpeechStatus
+import com.pocketai.models.InstalledModel
+import com.pocketai.models.ModelKind
 import com.pocketai.models.ModelManager
+import com.pocketai.models.ModelValidator
 import com.pocketai.security.AuthManager
 import com.pocketai.voice.SpeechController
 import kotlinx.coroutines.*
@@ -85,7 +91,12 @@ fun PocketApp() = PocketTheme {
     var answerJob by remember { mutableStateOf<Job?>(null) }
     var lastEngine by remember { mutableStateOf("") }
     var confirmClear by remember { mutableStateOf(false) }
+    var speechSetupIssue by remember { mutableStateOf<String?>(null) }
+    var readySpeechModel by remember { mutableStateOf<InstalledModel?>(null) }
+    var localModelName by remember { mutableStateOf<String?>(null) }
+    var localModelStatus by remember { mutableStateOf("Checking local AI setup…") }
     val voice by speech.state.collectAsState()
+    val bundledSpeech by BundledSpeechModel.state.collectAsState()
     val appliance by ApplianceSession.state.collectAsState()
     val message: (String) -> Unit = { text -> scope.launch { snackbar.showSnackbar(text.take(600)) }; Unit }
     fun speak(text: String, language: String = settings.responseLanguage, script: String? = null) {
@@ -103,19 +114,23 @@ fun PocketApp() = PocketTheme {
     fun beginRecording() {
         if (busy) return
         if (appliance.running) { message("Stop the appliance session before using tap-to-talk."); return }
+        if (readySpeechModel == null) {
+            speechSetupIssue = "Check your speech model before using the microphone. Open model setup, or tap the microphone again after setup is ready. No audio has been recorded."
+            return
+        }
         runCatching { speech.startRecording() }.onFailure { message(it.message ?: "Microphone unavailable") }
     }
     val micPermission = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
         if (granted) beginRecording() else message("Microphone access was not granted. Text input is available.")
     }
     fun toggleMicrophone(language: String = settings.responseLanguage) {
+        if (busy) return
         if (speech.hasPendingRecording) {
             busy = true; busyLabel = "Recognizing speech locally…"
             answerJob = scope.launch {
                 try {
-                    val model = withContext(Dispatchers.IO) { models.list().firstOrNull { it.id == settings.selectedWhisperId } }
-                    require(model?.metadata?.get("multilingual") != "false" || recordingLanguage == "en") { "This speech model supports English only. Import a multilingual Whisper tiny or base model for ${LanguageTools.name(recordingLanguage)}." }
-                    val recognized = speech.finishTranscription(model?.let { models.fileFor(it) }, recordingLanguage)
+                    val model = readySpeechModel ?: error("The speech model is no longer selected. Check model setup and try again.")
+                    val recognized = speech.finishTranscription(models.fileFor(model), recordingLanguage)
                     if (training && page == "teach") teachingVoice = recognized else { page = "chat"; composer = recognized }
                     message("Speech recognized. Review the text before ${if (training) "saving" else "sending"}.")
                 } catch (e: CancellationException) { speech.cancelRecording(); throw e }
@@ -123,9 +138,43 @@ fun PocketApp() = PocketTheme {
                 finally { busy = false; answerJob = null }
             }
         } else {
-            recordingLanguage = language
-            if (context.checkSelfPermission(Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) beginRecording()
-            else micPermission.launch(Manifest.permission.RECORD_AUDIO)
+            if (busy || appliance.running) {
+                if (appliance.running) message("Stop the appliance session before using tap-to-talk.")
+                return
+            }
+            busy = true
+            busyLabel = "Checking offline speech setup…"
+            answerJob = scope.launch {
+                try {
+                    val model = withContext(Dispatchers.IO) {
+                        NativeBridge.availabilityMessage()?.let { error(it) }
+                        val selected = models.list().firstOrNull { it.id == settings.selectedWhisperId && it.kind == ModelKind.WHISPER }
+                            ?: error(if (bundledSpeech.status == BundledSpeechStatus.INSTALLING) {
+                                "The included offline speech model is being prepared. Wait for setup to finish, then try again. You can keep using text."
+                            } else {
+                                "No offline speech model is selected. Open model setup to install or select a multilingual Whisper tiny/base model, then try the microphone. Text input works now."
+                            })
+                        val file = models.fileFor(selected)
+                        require(file.isFile && file.canRead() && file.length() in 64..(180L * 1024 * 1024)) {
+                            "The selected speech model is missing, unreadable or too large. Choose a multilingual Whisper tiny/base model under 180 MiB in model setup."
+                        }
+                        val header = ModelValidator.validateHeader(file, ModelKind.WHISPER)
+                        require(header.metadata["multilingual"] == "true" || language.substringBefore('-') == "en") {
+                            "The selected speech model is English-only. In model setup, select the included multilingual Whisper model for ${LanguageTools.name(language)}. English-only .en models cannot recognize Urdu or Punjabi."
+                        }
+                        selected
+                    }
+                    readySpeechModel = model
+                    recordingLanguage = language
+                    busy = false
+                    if (context.checkSelfPermission(Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) beginRecording()
+                    else micPermission.launch(Manifest.permission.RECORD_AUDIO)
+                } catch (cancelled: CancellationException) { throw cancelled }
+                catch (failure: Exception) {
+                    readySpeechModel = null
+                    speechSetupIssue = (failure.message ?: "Offline speech is not ready. Open model setup to check the selected model.") + "\n\nNo audio has been recorded."
+                } finally { busy = false; answerJob = null }
+            }
         }
     }
     fun submit() {
@@ -152,11 +201,35 @@ fun PocketApp() = PocketTheme {
             finally { busy = false; answerJob = null; revision++ }
         }
     }
+    LaunchedEffect(Unit) {
+        try {
+            BundledSpeechModel.ensureInstalled(context, models, settings)
+            revision++
+        } catch (cancelled: CancellationException) { throw cancelled }
+        catch (failure: Exception) { message(failure.message ?: "The included speech model could not be prepared. Open model setup to retry.") }
+    }
     LaunchedEffect(revision, setupComplete) {
-        withContext(Dispatchers.IO) {
-            conversations = db.conversations(80)
-            knowledgeCount = db.countKnowledge()
-        }
+        try {
+            val refreshed = withContext(Dispatchers.IO) {
+                val history = db.conversations(80)
+                val count = db.countKnowledge()
+                val selected = models.list().firstOrNull { it.id == settings.selectedLlmId && it.kind == ModelKind.LLM }
+                val nativeIssue = NativeBridge.availabilityMessage()
+                val selectedUsable = selected != null && models.fileFor(selected).let { it.isFile && it.canRead() } && nativeIssue == null
+                val modelName = if (selectedUsable) selected?.name else null
+                val status = when {
+                    nativeIssue != null -> "Saved document search is available. Local inference is unavailable on this device; check compatibility in model setup."
+                    modelName != null -> "Local AI selected. Ask about saved documents in English, Urdu or Punjabi; answer quality depends on this model."
+                    else -> "Saved text search is available. Add a multilingual local AI model for Urdu/Punjabi answers from English documents."
+                }
+                Triple(history, count, modelName to status)
+            }
+            conversations = refreshed.first
+            knowledgeCount = refreshed.second
+            localModelName = refreshed.third.first
+            localModelStatus = refreshed.third.second
+        } catch (cancelled: CancellationException) { throw cancelled }
+        catch (failure: Exception) { message(failure.message ?: "Local data could not be refreshed.") }
         unlocked = auth.isUnlocked
     }
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -221,14 +294,16 @@ fun PocketApp() = PocketTheme {
                         onRepeat = { conversations.lastOrNull { it.role == "assistant" }?.let { speak(it.content, it.language) } ?: message("Ask a question first.") },
                         onClear = { confirmClear = true }, onTeach = { guardedNavigate("teach") },
                         onModels = { page = "models" }, settings = settings, onLanguage = { settings.responseLanguage = it; revision++ },
-                        voiceStatus = if (voice.recording || speech.hasPendingRecording || voice.transcribing || voice.speaking) voice.message else ""
+                        voiceStatus = if (voice.recording || speech.hasPendingRecording || voice.transcribing || voice.speaking) voice.message else "",
+                        localModelName = localModelName, localModelStatus = localModelStatus
                     )
                     "teach" -> if (training && auth.isUnlocked) TrainingScreen(
                         db, settings, editRecord, teachingVoice,
                         onVoiceConsumed = { teachingVoice = "" }, onMicrophone = ::toggleMicrophone, recording = voice.recording || speech.hasPendingRecording,
                         processing = busy, processingLabel = busyLabel,
                         onMessage = message, onSaved = { editRecord = null; revision++; page = "memory"; if (settings.speechEnabled) speak("Information saved successfully.", "en") },
-                        onHistory = { page = "history" }, onCancelEdit = { editRecord = null; revision++ }
+                        onHistory = { page = "history" }, onCancelEdit = { editRecord = null; revision++ },
+                        localModelStatus = localModelStatus, onModels = { page = "models" }
                     ) else Text("Unlock Training Mode to manage knowledge.", Modifier.padding(24.dp))
                     "memory" -> MemoryScreen(db, revision, auth.isUnlocked,
                         onEdit = { item -> editRecord = item; guardedNavigate("teach") },
@@ -265,6 +340,15 @@ fun PocketApp() = PocketTheme {
         text = { Text("This deletes the conversation history. Saved knowledge stays in your library.") },
         confirmButton = { TextButton(onClick = { confirmClear = false; scope.launch { withContext(Dispatchers.IO) { db.clearConversations() }; revision++ } }) { Text("Clear history") } },
         dismissButton = { TextButton(onClick = { confirmClear = false }) { Text("Cancel") } })
+    speechSetupIssue?.let { issue ->
+        AlertDialog(
+            onDismissRequest = { speechSetupIssue = null },
+            title = { Text("Set up offline voice") },
+            text = { Text(issue) },
+            confirmButton = { TextButton(onClick = { speechSetupIssue = null; page = "models" }) { Text("Open model setup") } },
+            dismissButton = { TextButton(onClick = { speechSetupIssue = null }) { Text("Use text for now") } },
+        )
+    }
 }
 
 @Composable
@@ -287,7 +371,8 @@ private fun ChatScreen(
     conversations: List<ConversationRecord>, knowledgeCount: Int, composer: String, onComposer: (String) -> Unit,
     onSubmit: () -> Unit, onMicrophone: () -> Unit, recording: Boolean, seconds: Int, busy: Boolean, busyLabel: String,
     engineLabel: String, onStop: () -> Unit, onRepeat: () -> Unit, onClear: () -> Unit, onTeach: () -> Unit,
-    onModels: () -> Unit, settings: AppSettings, onLanguage: (String) -> Unit, voiceStatus: String
+    onModels: () -> Unit, settings: AppSettings, onLanguage: (String) -> Unit, voiceStatus: String,
+    localModelName: String?, localModelStatus: String
 ) {
     val listState = rememberLazyListState()
     LaunchedEffect(conversations.size, busy) { if (conversations.isNotEmpty()) listState.animateScrollToItem(conversations.size - 1) }
@@ -298,6 +383,13 @@ private fun ChatScreen(
             }
             Spacer(Modifier.weight(1f))
             if (conversations.isNotEmpty()) IconButton(onClick = onClear, modifier = Modifier.size(36.dp)) { Icon(Icons.Outlined.DeleteSweep, "Clear conversation", Modifier.size(20.dp)) }
+        }
+        Row(Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 4.dp), verticalAlignment = Alignment.CenterVertically) {
+            Column(Modifier.weight(1f)) {
+                Text("ANSWERS · ${LanguageTools.name(settings.responseLanguage).uppercase()}", color = PocketAccent, style = MaterialTheme.typography.labelSmall)
+                Text(localModelStatus, color = PocketMuted, style = MaterialTheme.typography.bodySmall, maxLines = 3)
+            }
+            TextButton(onClick = onModels, modifier = Modifier.padding(start = 6.dp)) { Text(if (localModelName == null) "Set up AI" else "Models") }
         }
         if (conversations.isEmpty()) {
             BoxWithConstraints(Modifier.weight(1f).fillMaxWidth()) {
@@ -329,9 +421,9 @@ private fun ChatScreen(
                     }
                 }
                 Spacer(Modifier.height(10.dp))
-                SuggestionChip(onClick = onModels, label = { Text("Add local AI & speech models") }, icon = { Icon(Icons.Outlined.Memory, null, Modifier.size(18.dp)) })
+                SuggestionChip(onClick = onModels, label = { Text("Local AI & voice setup") }, icon = { Icon(Icons.Outlined.Memory, null, Modifier.size(18.dp)) })
                 Spacer(Modifier.height(8.dp))
-                Text("No model needed to retrieve taught facts.\nModels and offline voices are imported separately.", color = PocketMuted, textAlign = TextAlign.Center, style = MaterialTheme.typography.bodySmall)
+                Text("Search saved documents without a language model.\nIncluded offline recognition checks device compatibility.\nTranslated answers need local AI; speech output needs an installed voice.", color = PocketMuted, textAlign = TextAlign.Center, style = MaterialTheme.typography.bodySmall)
             }
             }
             }
@@ -391,14 +483,14 @@ private fun SetupScreen(settings: AppSettings, auth: AuthManager, speech: Speech
         Column(Modifier.safeDrawingPadding().fillMaxSize().verticalScroll(rememberScrollState()).padding(28.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) { PocketMark(46); Text("  pocket ai", fontWeight = FontWeight.Bold, fontSize = 24.sp) }
             Spacer(Modifier.height(42.dp))
-            PageHeading("WELCOME · ${step + 1} / 4", when(step) { 0 -> "An assistant that\nstays with you."; 1 -> "Make it your own."; 2 -> "Protect what you teach."; else -> "Check this phone." }, when(step) { 0 -> "Your personal, offline knowledge companion. Built for the phone you already have."; 1 -> "Urdu and Punjabi are always available for text. Choose your third language and Punjabi script."; 2 -> "Only an authorized owner can change permanent knowledge. Your PIN and recovery code stay on this device."; else -> "Inspect compatibility and optionally test the microphone and speaker. You can begin with text even when voices or models are unavailable." })
+            PageHeading("WELCOME · ${step + 1} / 4", when(step) { 0 -> "An assistant that\nstays with you."; 1 -> "Make it your own."; 2 -> "Protect what you teach."; else -> "Check this phone." }, when(step) { 0 -> "Your personal, offline knowledge companion. Built for the phone you already have."; 1 -> "English, Urdu and Punjabi are always available for text. Choose an extra language and Punjabi script."; 2 -> "Only an authorized owner can change permanent knowledge. Your PIN and recovery code stay on this device."; else -> "Inspect compatibility and optionally test the microphone and speaker. You can begin with text even when voices or models are unavailable." })
             Spacer(Modifier.height(30.dp))
             if (step == 0) {
                 FeatureRow(Icons.Outlined.WifiOff, "Offline from the start", "No account. No cloud connection.")
                 FeatureRow(Icons.Outlined.School, "Teach it what matters", "Keep facts, answers, notes and preferences.")
                 FeatureRow(Icons.Outlined.Translate, "Your words, your language", "Urdu, Punjabi and a language you choose.")
                 Spacer(Modifier.height(18.dp))
-                Text("Text and saved knowledge work immediately. Voice recognition and generative AI need compatible model files. Offline speech depends on installed Android voices.", color = PocketMuted, style = MaterialTheme.typography.bodySmall)
+                Text("Text and saved knowledge work immediately. The included multilingual speech model prepares automatically on compatible phones. Generated or translated answers need a compatible local GGUF model and sufficient memory; spoken output depends on installed Android voices.", color = PocketMuted, style = MaterialTheme.typography.bodySmall)
             } else if (step == 1) {
                 Text("PUNJABI SCRIPT", color = PocketAccent, style = MaterialTheme.typography.labelSmall)
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -406,7 +498,7 @@ private fun SetupScreen(settings: AppSettings, auth: AuthManager, speech: Speech
                     FilterChip(script == "Guru", { script = "Guru" }, { Text("ਗੁਰਮੁਖੀ") })
                 }
                 Spacer(Modifier.height(20.dp))
-                Text("THIRD LANGUAGE", color = PocketAccent, style = MaterialTheme.typography.labelSmall)
+                Text("EXTRA LANGUAGE", color = PocketAccent, style = MaterialTheme.typography.labelSmall)
                 LanguageTools.optionalLanguages.chunked(2).forEach { row -> Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) { row.forEach { option -> FilterChip(third == option.tag, { third = option.tag }, { Text(option.name) }) } } }
                 Text("Text support does not guarantee translation or offline ASR/TTS for a language. Check each in Resources.", style = MaterialTheme.typography.bodySmall, color = PocketMuted)
             } else if (step == 3) {
@@ -485,7 +577,7 @@ private fun UnlockDialog(auth: AuthManager, onDismiss: () -> Unit, onUnlocked: (
 @Composable
 private fun TrainingScreen(db: PocketDatabase, settings: AppSettings, edit: KnowledgeRecord?, voiceText: String,
     onVoiceConsumed: () -> Unit, onMicrophone: (String) -> Unit, recording: Boolean, processing: Boolean, processingLabel: String, onMessage: (String) -> Unit,
-    onSaved: () -> Unit, onHistory: () -> Unit, onCancelEdit: () -> Unit) {
+    onSaved: () -> Unit, onHistory: () -> Unit, onCancelEdit: () -> Unit, localModelStatus: String, onModels: () -> Unit) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     var content by remember(edit?.id) { mutableStateOf(edit?.content ?: "") }
@@ -499,41 +591,68 @@ private fun TrainingScreen(db: PocketDatabase, settings: AppSettings, edit: Know
     var conflictWarning by remember { mutableStateOf("") }
     var documentUri by remember { mutableStateOf<Uri?>(null) }
     var documentPreview by remember { mutableStateOf<PendingDocumentImport?>(null) }
+    var preparingDocument by remember { mutableStateOf(false) }
     val documentPicker = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri -> ExternalActivityFlow.active = false; documentUri = uri }
     LaunchedEffect(voiceText) { if (voiceText.isNotBlank()) { content = if (content.isBlank()) voiceText else content.trimEnd() + "\n" + voiceText; source = "voice"; onVoiceConsumed() } }
     LaunchedEffect(documentUri) {
         val uri = documentUri ?: return@LaunchedEffect
         busy = true
+        preparingDocument = true
         try {
-            val (text, filename) = withContext(Dispatchers.IO) {
-                val value = context.contentResolver.openInputStream(uri)?.use { stream ->
-                    stream.readBytesBounded(2 * 1024 * 1024).toString(Charsets.UTF_8)
-                } ?: error("Could not open document.")
+            val extracted = runInterruptible(Dispatchers.IO) {
                 val name = runCatching {
                     context.contentResolver.query(uri, arrayOf(OpenableColumns.DISPLAY_NAME), null, null, null)?.use { cursor ->
                         if (cursor.moveToFirst()) cursor.getString(0) else null
                     }
-                }.getOrNull() ?: uri.lastPathSegment?.substringAfterLast('/') ?: "Imported text"
-                value to name.take(200)
+                }.getOrNull()?.takeIf { it.isNotBlank() } ?: uri.lastPathSegment?.substringAfterLast('/') ?: "Imported document"
+                val mime = runCatching { context.contentResolver.getType(uri) }.getOrNull()
+                context.contentResolver.openInputStream(uri)?.use { stream ->
+                    DocumentTextExtractor(context).extract(stream, name.take(200), mime)
+                } ?: error("Could not open this document. Copy it to the phone and try again.")
             }
-            require(text.isNotBlank() && text.length <= 1_000_000) { "Import a nonempty plain text document below one million characters." }
-            val chunks = text.replace("\r\n", "\n").split(Regex("\n\\s*\n")).sumOf { paragraph -> (paragraph.trim().length + 2999) / 3000 }
-            require(chunks in 1..500) { "Split this document into smaller files before importing (maximum 500 chunks)." }
-            val (detected, script) = LanguageTools.detectScript(text, language, settings.punjabiScript)
-            documentPreview = PendingDocumentImport(text, filename, detected, script, category.ifBlank { "Documents" }, chunks)
-        } catch(e: Exception) { onMessage(e.message ?: "Document import failed.") } finally { busy = false; documentUri = null }
+            val passages = runInterruptible(Dispatchers.IO) { DocumentChunker.chunk(extracted.text).size }
+            documentPreview = PendingDocumentImport(
+                text = extracted.text, name = extracted.fileName, format = extracted.format,
+                pages = extracted.pages, chunks = passages, warnings = extracted.warnings, language = "en", script = "Latn",
+                category = category.takeUnless { it.isBlank() || it == "General" } ?: "Documents",
+            )
+        } catch (cancelled: CancellationException) { throw cancelled }
+        catch(e: Exception) { onMessage(e.message ?: "Document import failed.") }
+        finally { busy = false; preparingDocument = false; documentUri = null }
     }
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(22.dp)) {
         PageHeading("OWNER WORKSPACE", if (edit == null) "Teach something new." else "Correct a memory.", "Facts you confirm here become permanent knowledge. Ordinary conversations do not.")
         Spacer(Modifier.height(14.dp))
+        if (edit == null) {
+            Card(colors = CardDefaults.cardColors(containerColor = PocketSurface)) {
+                Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text("Ask your documents", fontWeight = FontWeight.SemiBold)
+                    Text("Import English TXT, Word (.docx) or a text-based PDF. Review the text, then save it for questions in English, Urdu or Punjabi. Source language stays separate from answer language.", style = MaterialTheme.typography.bodySmall, color = PocketMuted)
+                    Text(localModelStatus, style = MaterialTheme.typography.bodySmall, color = PocketAccent)
+                    TextButton(onClick = onModels, enabled = !busy && !processing && !recording) { Text("Local AI & speech setup") }
+                }
+            }
+            Spacer(Modifier.height(12.dp))
+        }
         if (processing) {
             LinearProgressIndicator(Modifier.fillMaxWidth())
             Text(processingLabel, color = PocketAccent, style = MaterialTheme.typography.labelMedium, modifier = Modifier.padding(vertical = 8.dp))
         }
-        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            OutlinedButton(onClick = { onMicrophone(language) }, enabled = !busy && !processing) { Icon(if (recording) Icons.Outlined.Stop else Icons.Outlined.Mic, null, Modifier.size(18.dp)); Text(if (recording) " Finish voice" else " Teach by voice") }
-            if (edit == null) OutlinedButton(onClick = { ExternalActivityFlow.active = true; runCatching { documentPicker.launch(arrayOf("text/plain")) }.onFailure { ExternalActivityFlow.active = false; onMessage("No document picker is available.") } }, enabled = !busy && !processing && !recording) { Icon(Icons.Outlined.UploadFile, null, Modifier.size(18.dp)); Text(" Import TXT") }
+        if (preparingDocument) {
+            LinearProgressIndicator(Modifier.fillMaxWidth())
+            Text("Extracting document text on this device…", color = PocketAccent, style = MaterialTheme.typography.labelMedium, modifier = Modifier.padding(vertical = 8.dp))
         }
+        Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            OutlinedButton(onClick = { onMicrophone(language) }, enabled = !busy && !processing) { Icon(if (recording) Icons.Outlined.Stop else Icons.Outlined.Mic, null, Modifier.size(18.dp)); Text(if (recording) " Finish voice" else " Teach by voice") }
+            if (edit == null) OutlinedButton(onClick = {
+                ExternalActivityFlow.active = true
+                runCatching { documentPicker.launch(arrayOf("text/plain", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/pdf", "application/msword", "application/octet-stream")) }
+                    .onFailure { ExternalActivityFlow.active = false; onMessage("No document picker is available. Open Android Files and check that a document provider is installed.") }
+            }, enabled = !busy && !processing && !recording) { Icon(Icons.Outlined.UploadFile, null, Modifier.size(18.dp)); Text(" Import document") }
+        }
+        if (edit == null) Text("TXT · DOCX · text PDF · Legacy .doc needs conversion to .docx", color = PocketMuted, style = MaterialTheme.typography.labelSmall)
+        Spacer(Modifier.height(8.dp))
+        Text("KNOWLEDGE LANGUAGE", color = PocketAccent, style = MaterialTheme.typography.labelSmall)
         Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(5.dp)) { LanguageTools.configured(settings.thirdLanguage).forEach { option -> FilterChip(language == option.tag, { language = option.tag }, enabled = !recording && !busy && !processing, label = { Text(if (option.tag == "pa") { if (settings.punjabiScript == "Guru") "ਪੰਜਾਬੀ" else "پنجابی" } else option.nativeName) }) } }
         OutlinedTextField(question, { question = it.take(2000) }, label = { Text("Question or title · optional") }, placeholder = { Text("What should I remember this for?") }, modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(14.dp))
         Spacer(Modifier.height(12.dp))
@@ -559,7 +678,7 @@ private fun TrainingScreen(db: PocketDatabase, settings: AppSettings, edit: Know
             TextButton(onClick = onHistory) { Text("Training history") }
             if (edit != null) TextButton(onClick = { content = ""; question = ""; onCancelEdit() }) { Text("Cancel edit") }
         }
-        Text("Learning stores verified knowledge in SQLite. It does not retrain the underlying AI model. Imported text is saved as original-language chunks.", style = MaterialTheme.typography.bodySmall, color = PocketMuted)
+        Text("Saving creates a searchable knowledge index on this device; it does not retrain model weights. Documents keep their original wording and filename references. A capable multilingual local AI model is needed to translate English sources into Urdu/Punjabi answers.", style = MaterialTheme.typography.bodySmall, color = PocketMuted)
     }
     preview?.let { draft -> AlertDialog(onDismissRequest = { preview = null }, title = { Text(if (edit == null) "Save this knowledge?" else "Confirm correction?") },
         text = { Column(Modifier.heightIn(max = 350.dp).verticalScroll(rememberScrollState())) { if (conflictWarning.isNotBlank()) Text(conflictWarning, color = MaterialTheme.colorScheme.error, modifier = Modifier.padding(bottom = 12.dp)); Text(draft.content); Spacer(Modifier.height(12.dp)); Text("${LanguageTools.name(draft.language)} · ${draft.category}", color = PocketMuted) } },
@@ -569,22 +688,36 @@ private fun TrainingScreen(db: PocketDatabase, settings: AppSettings, edit: Know
         onDismissRequest = { if (!busy) documentPreview = null }, title = { Text("Import this document?") },
         text = { Column(Modifier.heightIn(max = 350.dp).verticalScroll(rememberScrollState())) {
             Text(document.name, fontWeight = FontWeight.SemiBold)
-            Text("${document.text.length} characters · up to ${document.chunks} chunks\n${LanguageTools.name(document.language)} · ${document.category}", color = PocketMuted, modifier = Modifier.padding(vertical = 10.dp))
-            Text("The original text will become permanent knowledge. Existing duplicates will be skipped.", modifier = Modifier.padding(bottom = 10.dp))
-            SelectionContainer { Text(document.text.take(1600) + if (document.text.length > 1600) "\n…" else "") }
+            Text("${document.format}${document.pages?.let { " · $it pages" } ?: ""} · ${document.text.length} characters\n${document.chunks} passages before duplicate checks · ${document.category}", color = PocketMuted, modifier = Modifier.padding(vertical = 10.dp))
+            Text("SOURCE LANGUAGE", color = PocketAccent, style = MaterialTheme.typography.labelSmall)
+            Text("English is the default for imported documents. This does not change your answer language.", style = MaterialTheme.typography.bodySmall, color = PocketMuted)
+            Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                LanguageTools.configured(settings.thirdLanguage).forEach { option ->
+                    FilterChip(selected = document.language == option.tag, enabled = !busy, onClick = {
+                        val script = when (option.tag) { "en" -> "Latn"; "ur" -> "Arab"; "pa" -> settings.punjabiScript; else -> LanguageTools.detectScript(document.text, option.tag, settings.punjabiScript).second }
+                        documentPreview = document.copy(language = option.tag, script = script)
+                    }, label = { Text(option.nativeName) })
+                }
+            }
+            document.warnings.forEach { warning -> Text(warning, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(bottom = 8.dp)) }
+            Text("Review the extracted text. Confirming saves source-linked passages for document search; existing duplicates are skipped. Original file text is evidence to review, not instructions for the assistant.", modifier = Modifier.padding(bottom = 10.dp))
+            SelectionContainer { Text(document.text.take(2400) + if (document.text.length > 2400) "\n… (preview only; all extracted text will be indexed)" else "", textAlign = if (LanguageTools.isRtl(document.text)) TextAlign.Right else TextAlign.Start) }
         } },
         confirmButton = { TextButton(enabled = !busy, onClick = {
             busy = true
             scope.launch { try {
                 val count = withContext(Dispatchers.IO) { db.importText(document.text, document.name, document.language, document.script, document.category) }
-                documentPreview = null; onMessage("Imported $count knowledge chunks."); onSaved()
+                documentPreview = null; onMessage("Indexed $count document passages. Ask about them in User Mode; filename references are kept."); onSaved()
             } catch(e: Exception) { onMessage(e.message ?: "Document import failed.") } finally { busy = false } }
-        }) { Text(if (busy) "Importing…" else "Confirm import") } },
+        }) { Text(if (busy) "Indexing…" else "Save & index document") } },
         dismissButton = { TextButton(enabled = !busy, onClick = { documentPreview = null }) { Text("Cancel") } }
     ) }
 }
 
-private data class PendingDocumentImport(val text: String, val name: String, val language: String, val script: String, val category: String, val chunks: Int)
+private data class PendingDocumentImport(
+    val text: String, val name: String, val format: String, val pages: Int?, val chunks: Int, val warnings: List<String>,
+    val language: String, val script: String, val category: String,
+)
 
 @Composable
 private fun MemoryScreen(db: PocketDatabase, revision: Int, unlocked: Boolean, onEdit: (KnowledgeRecord) -> Unit,
@@ -676,14 +809,6 @@ private fun HistoryScreen(db: PocketDatabase, revision: Int) {
             Text(DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT).format(Date(event.createdAt)), style = MaterialTheme.typography.labelSmall, color = PocketMuted)
         } } }
     }
-}
-
-private fun java.io.InputStream.readBytesBounded(max: Int): ByteArray {
-    val output = java.io.ByteArrayOutputStream()
-    val buffer = ByteArray(8192)
-    var total = 0
-    while (true) { val count = read(buffer); if (count < 0) break; total += count; require(total <= max) { "Text document must be below ${max / 1024} KiB." }; output.write(buffer, 0, count) }
-    return output.toByteArray()
 }
 
 private fun pinDigits(value: String): String = value.mapNotNull { char ->

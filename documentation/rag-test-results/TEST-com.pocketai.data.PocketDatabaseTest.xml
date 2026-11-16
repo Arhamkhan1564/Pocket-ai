@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuite name="com.pocketai.data.PocketDatabaseTest" tests="13" skipped="0" failures="0" errors="0" timestamp="2026-11-16T15:20:52" time="8.219">
+  <properties />
+  <testcase name="backupRestoresKnowledgeAndConversationWithoutReplacingCredentials" classname="com.pocketai.data.PocketDatabaseTest" time="0.979" />
+  <testcase name="invalidBulkImportCannotLeavePartialRecordsOrAuditEvents" classname="com.pocketai.data.PocketDatabaseTest" time="0.635" />
+  <testcase name="duplicatesAndPotentialQaConflictsAreDetected" classname="com.pocketai.data.PocketDatabaseTest" time="0.584" />
+  <testcase name="retrievalCanFindWordsBeyondTheBeginningOfLongNotes" classname="com.pocketai.data.PocketDatabaseTest" time="0.699" />
+  <testcase name="englishDocumentsCanBeRetrievedWithUrduPunjabiAndRomanKeywords" classname="com.pocketai.data.PocketDatabaseTest" time="0.62" />
+  <testcase name="documentDuplicatesKeepDistinctFileProvenanceAndSurvivePortableBackup" classname="com.pocketai.data.PocketDatabaseTest" time="0.521" />
+  <testcase name="paginationAndDocumentImportRemainBoundedAndSourceLinked" classname="com.pocketai.data.PocketDatabaseTest" time="0.648" />
+  <testcase name="broadMedicineKeywordsDoNotCrowdOutAnOlderSpecificSymptomReference" classname="com.pocketai.data.PocketDatabaseTest" time="0.736" />
+  <testcase name="verifiedKnowledgeRequiresAnActiveAdministratorSession" classname="com.pocketai.data.PocketDatabaseTest" time="0.552" />
+  <testcase name="medicineNameExpansionRetrievesTheOriginalReferencedExcerpt" classname="com.pocketai.data.PocketDatabaseTest" time="0.507" />
+  <testcase name="knowledgeSurvivesReopenAndCorrectionsUpdateRetrieval" classname="com.pocketai.data.PocketDatabaseTest" time="0.533" />
+  <testcase name="unicodeSearchPreservesOriginalUrduAndPunjabiScripts" classname="com.pocketai.data.PocketDatabaseTest" time="0.521" />
+  <testcase name="invalidRestoreDoesNotDestroyExistingKnowledge" classname="com.pocketai.data.PocketDatabaseTest" time="0.672" />
+  <system-out />
+  <system-err />
+</testsuite>

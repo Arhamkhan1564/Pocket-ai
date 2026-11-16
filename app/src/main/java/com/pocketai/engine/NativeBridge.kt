@@ -19,7 +19,7 @@ object NativeBridge {
 
     fun availabilityMessage(): String? = when {
         loadingError != null -> "Local inference is unavailable for this device ABI: ${loadingError.message}"
-        !supportsInferenceNative() -> "This 32-bit device supports saved-knowledge answers and installed offline TTS. Local LLM and Whisper inference require a 64-bit device in this build."
+        !supportsInferenceNative() -> "This processor does not support the included inference runtime. ARMv7 needs NEON support. Saved-document text search and installed offline TTS remain available."
         else -> null
     }
 

@@ -48,7 +48,7 @@ fun ApplianceScreen(onMessage: (String) -> Unit, onModels: () -> Unit, onAudio: 
         else Button(onClick = { if (needed.isNotEmpty()) permissions.launch(needed.toTypedArray()) else onStart() }, modifier = Modifier.fillMaxWidth().height(52.dp)) { Text(if (needed.isEmpty()) "Start session" else "Allow microphone & notifications") }
         OutlinedButton(onClick = onModels, modifier = Modifier.fillMaxWidth()) { Text("Set up a speech model") }
         OutlinedButton(onClick = onAudio, modifier = Modifier.fillMaxWidth()) { Text("Check offline voice & speaker") }
-        Text("Requires a 64-bit device, an imported compatible Whisper tiny/base model, an installed offline voice, and audible volume. The ongoing notification includes a Stop control. Say “stop assistant” to end a session.", color = PocketMuted, style = MaterialTheme.typography.bodySmall)
+        Text("Requires a compatible processor, a selected Whisper model with enough free memory, an installed offline voice, and audible volume. The included multilingual tiny model can be used. The ongoing notification includes a Stop control. Say “stop assistant” to end a session.", color = PocketMuted, style = MaterialTheme.typography.bodySmall)
         Text("Sessions end after 30 minutes and keep the CPU awake while active. Android or the device manufacturer may stop background audio. Start from the visible app each time. Wake words and startup after boot are future features.", color = PocketMuted, style = MaterialTheme.typography.bodySmall)
         Text("Microphone recordings stay temporarily in memory. This session runs User Mode and cannot teach or change permanent knowledge.", color = PocketMuted, style = MaterialTheme.typography.bodySmall)
     }

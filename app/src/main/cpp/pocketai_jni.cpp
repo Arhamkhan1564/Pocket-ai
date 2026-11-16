@@ -7,15 +7,29 @@
 #include <stdexcept>
 #include <string>
 #include <vector>
+#if defined(__ANDROID__) && defined(__arm__)
+#include <sys/auxv.h>
+#include <asm/hwcap.h>
+#endif
 
-#ifndef POCKETAI_LIGHTWEIGHT32
 #include "llama.h"
 #include "whisper.h"
-#endif
 
 namespace {
 std::atomic_bool cancelled{false};
 std::mutex inference_mutex;
+bool cpu_supported() noexcept {
+#if defined(__ANDROID__) && defined(__arm__)
+    return (getauxval(AT_HWCAP) & HWCAP_NEON) != 0;
+#else
+    return true;
+#endif
+}
+void require_supported_cpu() {
+    if (!cpu_supported()) {
+        throw std::runtime_error("This ARM processor lacks NEON support required by the local inference runtime. Saved-knowledge text answers remain available.");
+    }
+}
 void fail(JNIEnv *env, const std::string &message) {
     if (!env->ExceptionCheck()) {
         auto error = env->FindClass("java/lang/IllegalStateException");
@@ -44,7 +58,6 @@ jbyteArray output(JNIEnv *env, const std::string &text) {
                                       reinterpret_cast<const jbyte *>(text.data()));
     return bytes;
 }
-#ifndef POCKETAI_LIGHTWEIGHT32
 bool should_abort(void *) { return cancelled.load(); }
 bool load_progress(float, void *) { return !cancelled.load(); }
 void quiet_log(enum ggml_log_level, const char *, void *) {
@@ -81,7 +94,6 @@ std::string chat_prompt(llama_model *model, const std::string &system, const std
     if (length < 0) throw std::runtime_error("Cannot prepare model prompt.");
     return std::string(buffer.data(), length);
 }
-#endif
 }
 
 extern "C" JNIEXPORT void JNICALL
@@ -91,22 +103,15 @@ Java_com_pocketai_engine_NativeBridge_cancelNative(JNIEnv *, jobject) {
 
 extern "C" JNIEXPORT jboolean JNICALL
 Java_com_pocketai_engine_NativeBridge_supportsInferenceNative(JNIEnv *, jobject) {
-#ifdef POCKETAI_LIGHTWEIGHT32
-    return JNI_FALSE;
-#else
-    return JNI_TRUE;
-#endif
+    return cpu_supported() ? JNI_TRUE : JNI_FALSE;
 }
 
 extern "C" JNIEXPORT jbyteArray JNICALL
 Java_com_pocketai_engine_NativeBridge_generateNative(JNIEnv *env, jobject,
     jstring model_path, jbyteArray system_input, jbyteArray user_input,
     jint context_size, jint max_tokens, jint thread_count) {
-#ifdef POCKETAI_LIGHTWEIGHT32
-    fail(env, "Local model inference requires a 64-bit Android device. Saved-knowledge answers remain available.");
-    return nullptr;
-#else
     try {
+        require_supported_cpu();
         std::lock_guard<std::mutex> lock(inference_mutex);
         cancelled.store(false);
         static std::once_flag initialization;
@@ -115,6 +120,11 @@ Java_com_pocketai_engine_NativeBridge_generateNative(JNIEnv *env, jobject,
         auto model_parameters = llama_model_default_params();
         model_parameters.n_gpu_layers = 0;
         model_parameters.load_mode = LLAMA_LOAD_MODE_MMAP;
+#if defined(__arm__) && !defined(__aarch64__)
+        // Upstream AUTO uses a 4 GiB size_t threshold, which wraps on ARM32.
+        // Small-phone models cannot need that optimization; keep it off.
+        model_parameters.lazy_mode = LLAMA_LAZY_MODE_OFF;
+#endif
         model_parameters.progress_callback = load_progress;
         std::unique_ptr<llama_model, decltype(&llama_model_free)> model(
             llama_model_load_from_file(model_file.c_str(), model_parameters), llama_model_free);
@@ -172,17 +182,13 @@ Java_com_pocketai_engine_NativeBridge_generateNative(JNIEnv *env, jobject,
       catch (const std::exception &error) { fail(env, error.what()); }
       catch (...) { fail(env, "Unexpected local inference error."); }
     return nullptr;
-#endif
 }
 
 extern "C" JNIEXPORT jbyteArray JNICALL
 Java_com_pocketai_engine_NativeBridge_transcribeNative(JNIEnv *env, jobject,
     jstring model_path, jfloatArray audio, jstring language_input, jint thread_count) {
-#ifdef POCKETAI_LIGHTWEIGHT32
-    fail(env, "Whisper speech recognition requires a 64-bit device in this build. Text input remains available.");
-    return nullptr;
-#else
     try {
+        require_supported_cpu();
         std::lock_guard<std::mutex> lock(inference_mutex);
         cancelled.store(false);
         whisper_log_set(quiet_log, nullptr);
@@ -232,5 +238,4 @@ Java_com_pocketai_engine_NativeBridge_transcribeNative(JNIEnv *env, jobject,
       catch (const std::exception &error) { fail(env, error.what()); }
       catch (...) { fail(env, "Unexpected offline transcription error."); }
     return nullptr;
-#endif
 }

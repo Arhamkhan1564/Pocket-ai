@@ -1,0 +1,25 @@
+Elapsed 112.683s; displayed answer chars 69
+RAG en actual: The workshop code is cedar-47 and the manual reference number is 250.
+RAG en literal+script check: true
+Elapsed 133.482s; displayed answer chars 44
+RAG ur actual: ورکشاپ کا کوڈ چEAR-47 ہے، حوالہ نمبر 250 ہے۔
+RAG ur literal+script check: true
+Elapsed 94.877s; displayed answer chars 40
+RAG pa-Guru actual: ਸੀਵਸ਼ਾਪ ਦਾ ਕੋਡ ਅਤੇ ਹਵਾਲਾ ਨੰਬਰ ਕੀ ਹੈ? [1]
+RAG pa-Guru literal+script check: false
+Elapsed 81.959s; displayed answer chars 4
+RAG pa-Arab actual: 250.
+RAG pa-Arab literal+script check: false
+Elapsed 46.546s; displayed answer chars 7
+TRANSLATION ur actual: 250 mg.
+TRANSLATION ur numeric/unit/script/negation check: false
+Elapsed 92.309s; displayed answer chars 7
+TRANSLATION pa-Guru actual: 250 mg.
+TRANSLATION pa-Guru numeric/unit/script/negation check: false
+Elapsed 76.303s; displayed answer chars 18
+TRANSLATION pa-Arab actual: 250 mg. چاکن چاکن.
+TRANSLATION pa-Arab numeric/unit/script/negation check: false
+Elapsed 51.170s; displayed answer chars 58
+REWRITE actual: medicinal action, drug, medicine, drug action, drug effect
+REWRITE English medicine token: false
+LIMITS: Host integration only; no Android/ARMv7 performance proof, clinical validation, or fluent-speaker acceptance. Test weights stay outside deliverables.
