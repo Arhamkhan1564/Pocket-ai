@@ -1,0 +1,32 @@
+Pocket AI 1.2.1 — full offline RAG
+
+Install PocketAI.apk (release, 804,012,691 bytes / 766.8 MiB).
+Direct download:
+https://media.githubusercontent.com/media/Arhamkhan1564/Pocket-ai/main/downloads/offline-v1.2.1/PocketAI.apk
+
+Android 6.0/API 23+; ARM64, ARMv7 with NEON, or x86_64. This does not guarantee every Android phone. Leave several GB of free storage. Low free RAM can prevent AI stages even on a 2 GB phone; the itel A25 Pro has not been physically tested.
+
+1. Install the release APK using Android's file manager. It keeps the existing release signing identity for in-place updates; back up knowledge first.
+2. Complete setup, choose Punjabi script, set your administrator PIN, and save the recovery code privately.
+3. Let local preparation finish. Search, translation, English explanation and Whisper resources come from this APK; no model download, account, API key or Internet connection is required. The app has no Internet permission.
+4. Open Training Mode, unlock, import an English TXT, DOCX or text PDF, review the preview and save. Wait for reference indexing to finish.
+5. Ask in English, Urdu or Punjabi. Open citations to inspect the original or translate a passage. Default fast cited passages are recommended for limited-memory phones.
+
+English references translate locally to Urdu or Gurmukhi Punjabi. Shahmukhi uses a labelled script conversion with spelling/dialect limits. Arbitrary reverse translation is not included. Scanned PDFs need external OCR; binary DOC needs conversion to DOCX.
+
+Included speech recognition fixes the missing-baseline-model setup: let Whisper prepare before recording. If intentionally removed earlier, restore the included speech model in Offline tools. Review and correct recognized text before sending or teaching. Actual host tests found substantial Urdu errors and Punjabi script mismatches; recognition remains experimental. Use reviewed text when exact names or numbers matter. Spoken output still requires a suitable installed Android offline TTS voice. Phone microphone, Urdu/Punjabi recognition, pronunciation and real-device performance require on-device testing.
+
+Medication documents are reference material, not verified clinical training. The app does not establish a diagnosis or choose safe treatment for an individual. Check translations against the intact original and ask a qualified clinician about treatment.
+
+Files:
+- PocketAI.apk: signed release, com.pocketai, versionCode 4/version 1.2.1.
+- PocketAI-debug.apk: separate debug installation/data, com.pocketai.debug; for developers.
+- PocketAI-source.zip: complete Android Studio source without signing credentials, model weights or build caches. Source commit: ba86a8bb0174f7300fd756a3fa93a425c2f5aabd.
+- SHA256SUMS.txt: checksums for this folder's distribution files.
+- BUILD-REPORT.json: final test/packaging audit; detailed evidence is also in source documentation.
+
+Fresh verification: 171 passed tests, 1 explicitly skipped, zero failures; Android lint zero errors. Actual synthetic host model/parity tests are documented separately. No physical-phone or clinical acceptance pass is claimed.
+
+Source builds require JDK 17/21, SDK 35, Build Tools 35.0.0, NDK 27.2.12479018 and CMake 3.22.1. Follow README and documentation/DEVELOPMENT.md. Fetch pinned external model assets with scripts/fetch-offline-models.py and prepare the API 23 ONNX dependency with scripts/prepare-onnxruntime-android.py before Gradle sync. The distributed APK already contains those model assets.
+
+The large APKs use Git LFS. Use the direct link above or GitHub's Download raw file button; a small text LFS pointer is not the APK. The source ZIP and all documentation are also public in Arhamkhan1564/Pocket-ai. Keep exported plaintext backups private. Do not publish signing credentials.
