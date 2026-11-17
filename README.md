@@ -1,10 +1,16 @@
-# Pocket AI 1.2 · offline Android RAG
+# Pocket AI 1.2.1 · offline Android RAG
 
 Import English **TXT, DOCX or text PDF** files, index them on the device, and ask about them in **English, Urdu or Punjabi**. Pocket AI retrieves saved passages, preserves the originals, and links answers to their sources. Teaching and importing create a local retrieval index; they do not retrain the model weights.
 
 The full APK contains its baseline AI resources. First setup copies and checks them locally. No account, API key, cloud service or in-app model download is needed, and the app declares no Internet permission.
 
-Download the [full offline APK](https://media.githubusercontent.com/media/Arhamkhan1564/Pocket-ai/main/downloads/offline-v1.2/PocketAI.apk), [source ZIP](downloads/offline-v1.2/PocketAI-source.zip?raw=true), and [installation guide](downloads/offline-v1.2/READ-ME.txt). The APK is stored with Git LFS; use **Download raw file** on GitHub when downloading from the file page. The [download folder](https://github.com/Arhamkhan1564/Pocket-ai/tree/main/downloads/offline-v1.2) contains checksums and build details. Earlier 1.0/1.1 downloads and reports describe historical builds.
+Download the [full offline APK](https://media.githubusercontent.com/media/Arhamkhan1564/Pocket-ai/main/downloads/offline-v1.2.1/PocketAI.apk), [source ZIP](downloads/offline-v1.2.1/PocketAI-source.zip?raw=true), and [installation guide](downloads/offline-v1.2.1/READ-ME.txt). The APK is stored with Git LFS; use **Download raw file** on GitHub when downloading from the file page. The [download folder](https://github.com/Arhamkhan1564/Pocket-ai/tree/main/downloads/offline-v1.2) contains checksums and build details. Earlier 1.0, 1.1 and 1.2 downloads and reports describe historical builds.
+
+## Checks and fixes in 1.2.1
+
+Keyboard Send now obeys the active/pending recording guard. An oversized saved note no longer prevents later references from being indexed: its original remains readable and keyword-searchable, its pending status stays visible, and Offline tools explains how to split it. Editing it into a supported passage allows indexing again.
+
+Additional checks passed 171 unit tests with one explicit skip and all 11 model-backed host workflow phases. In a small synthetic probe, the expected reference was present for 14 of 16 known questions and none of 32 negative questions returned a false match. Two known questions still abstained, and some answers included extra references, including unrelated medicine passages; see the full records rather than treating these counts as universal accuracy. The reports separately retain observed speech-recognition failures and checks requiring a real Android phone. The APK remains a prerelease while device acceptance is pending.
 
 ## Start here
 
@@ -34,12 +40,12 @@ The 13 pinned model files total **715,732,683 bytes (682.6 MiB)** before app cod
 - Free memory matters more than advertised RAM. Search and translation check available memory; close other apps when prompted. A 2 GB phone may be slow or unable to run a stage under memory pressure. The itel A25 Pro was not connected for testing.
 - Actual host inference found the correct reference for 10/10 known multilingual fixture queries and rejected one unrelated query by threshold. Canonical Kotlin translation matched eight prototype outputs. These small synthetic checks do not establish broad accuracy, phone performance or clinical reliability.
 - English is the included document translation source. Other saved languages retain their originals; the included pack does not provide arbitrary reverse translation. Punjabi Shahmukhi is a separate script conversion, not a direct trained target.
-- Offline speech output uses Android's installed offline TTS voices. Voice availability, Urdu/Punjabi recognition and pronunciation, microphone behavior, and actual phone latency still need device testing.
+- Offline speech output uses Android's installed offline TTS voices. [Six actual host recognition checks](documentation/OFFLINE-VOICE-VALIDATION.md) found substantial Urdu errors and Punjabi output in another script; recognition remains experimental. Review and correct transcripts, especially names and numbers. Voice availability, microphone behavior, pronunciation and phone latency still need device testing.
 - TXT, DOCX and text PDFs are supported. Convert legacy `.doc` files to DOCX. Scanned PDFs require OCR outside this app; password-protected PDFs are rejected. Imports are bounded to 8 MiB and one million extracted characters.
 - Medicine documents are reference material. The app can explain sourced information and request context for personal symptom questions; it cannot establish a diagnosis or choose a safe medicine for an individual. It has not been clinically validated. Machine translation can be wrong even when preservation checks pass; inspect the original and consult a qualified clinician for treatment decisions.
 - Foreground appliance sessions require a visible user start. Wake-word detection, automatic boot startup, external LEDs and a remote administration dashboard are not included.
 
-See [verification scope](documentation/VERIFICATION.md) and the [1.2 build report](documentation/OFFLINE-BUILD-REPORT.json).
+See [verification scope](documentation/VERIFICATION.md), the [1.2.1 build report](documentation/OFFLINE-1.2.1-BUILD-REPORT.json), and [additional offline acceptance checks](documentation/OFFLINE-ACCEPTANCE-1.2.1.md).
 
 ## Build from source
 

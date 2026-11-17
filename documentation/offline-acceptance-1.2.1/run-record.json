@@ -1,0 +1,27 @@
+{
+  "canonical_source_sha256": {
+    "assistant/AssistantService.kt": "fd685a856d1c6c633cd8533ecd0223f3b23684160e4a4f46e7dcf27dc0fce5a6",
+    "assistant/GroundedEvidence.kt": "c4e31de23c6e525bcbaf7d055676924ed747f93bf3946ceaa0926eed67bf9962",
+    "assistant/MedicalGuidance.kt": "79eeea7200477b2d9e8ec65efb7a73e2d696868b3fafed36701b107c0b71687d",
+    "data/PocketDatabase.kt": "ff2b1a98185194b9f990e1af4fd2939f7cbcfdc845943ca02e6a0d0d29d9aa75",
+    "engine/NativeBridge.kt": "ec21a8222d72d3f83d3e162e2fbaf4225db6cdeac02cc010539b896b0ae63737",
+    "engine/NativeTokenizer.kt": "c2a20fda7fc09e6decc28f7c5d2d074cc1c999fa60c4c88a26c53aa3927b6884",
+    "models/OfflineModelAssets.kt": "9a84bf66dd7056691706387174e1d272938d46cd8353c7bfa1a370c3982c1dbb",
+    "rag/OfflineRagServices.kt": "7650b14a833b97abd6c28fe1ca30992777ee43cd6dcbc29e688daae8db5ba22a",
+    "rag/OfflineTranslationService.kt": "f7711394cdd72fe25495c40c60680141062bdcd5dee737b185c9d78cf1e6f6fa",
+    "retrieval/OfflineEmbeddingService.kt": "bf913bec3514b8461217d67a19641604ed6fc0d64d5aab442a39f0ced10da827",
+    "retrieval/OnnxEmbeddingKernel.kt": "cb3f6e27b8df8ba62bfa53ad091bd50ce4491a24de961de90116659a5a597811",
+    "retrieval/SemanticRetriever.kt": "7dc637f533536f9127b1afc5d7a3fa569f87634952fb5debd867996787ee0c4b",
+    "retrieval/QuestionAnchors.kt": "911c7209bbd24ee66e2e37f8e489e773a7b3ae0eac0cfd2b32ab7bcb30bd5d85",
+    "translation/IndicTokenizer.kt": "2932b4f5bf65705352e64f3edb1bce55004d133e2a5dea0eb5d5a8745454086d",
+    "translation/IndicTextProcessor.kt": "5780db517be0ddfeab7a3e487a7bd81e1b2ac2934ef720e5b2dafeb0485fe332",
+    "translation/OnnxTranslationKernel.kt": "d6861cdd269fe7457dd5e6825033169588fc77cf6b5592399f306854ab5b1a3d",
+    "translation/PunjabiShahmukhi.kt": "7ecd77aa4280459e163355825f3470e1f6f5bfdc9b8dbda050c5d52948d6a014"
+  },
+  "external_test_sha256": "1c56ef7cf5b9df0feb4a91a0ed71605f995f53dbc8c1c47a1daa657510965789",
+  "canonical_app_snapshot_sha256": "679495f0e6da0f3b675aa87091600b2993840bed85c6239e4a005492eb3e7389",
+  "host_ort_jar_sha256": "c46608681692b3693914defb42fa3119ad7cb6146870581ece247e0ed5793fe8",
+  "model_manifest_sha256": "193d49e2ec6ace170fc55088bec6ac288bf474f6af89f5d24888988f5cecfcd6",
+  "exit_code": 0,
+  "elapsed_seconds": 121.59773061599981
+}

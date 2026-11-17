@@ -1,0 +1,20 @@
+{
+  "trace_sha256": "cf2c7753dadb8c6b6f408c79d4ba66ccd339896074ee1549e3b4a8d5593b4e27",
+  "scope": "External Linux Robolectric JUnit JVM and its child threads under strace -f -e trace=network; not Gradle processes, Android airplane mode, or a phone network audit.",
+  "socket_family_counts": {
+    "AF_UNIX": 2,
+    "AF_INET": 1,
+    "AF_INET6": 2
+  },
+  "local_unix_operations": [
+    "6599  connect(4, {sa_family=AF_UNIX, sun_path=\"/var/run/nscd/socket\"}, 110) = -1 ENOENT (No such file or directory)",
+    "6599  connect(4, {sa_family=AF_UNIX, sun_path=\"/var/run/nscd/socket\"}, 110) = -1 ENOENT (No such file or directory)"
+  ],
+  "local_kernel_or_bind_operations": [],
+  "loopback_ip_operations": [],
+  "outbound_ip_connect_or_send_operations": [],
+  "unclassified_network_operations": [],
+  "outbound_ip_operations_observed": false,
+  "requires_further_network_review": false,
+  "interpretation": "No observed outbound IP connect/send operations in this traced scope."
+}

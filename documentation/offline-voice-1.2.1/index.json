@@ -1,0 +1,37 @@
+{
+  "title": "Pocket AI 1.2.1 offline ASR host observations",
+  "scope": "Six public read-speech clips; no phone/microphone/TTS/Android service acceptance. Native calls completed but Urdu/Punjabi language quality is not accepted from these results.",
+  "dataset": "google/fleurs",
+  "dataset_revision": "70bb2e84b976b7e960aa89f1c648e09c59f894dd",
+  "license": "CC-BY-4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0/",
+  "published_audio": false,
+  "model_weights_included": false,
+  "reports": [
+    {
+      "file": "RESULTS.txt",
+      "bytes": 9809,
+      "sha256": "1d73e3cf2e138d40d718a96a22d4a33f601ffcf83e69a8cef4a85db2b3787114"
+    },
+    {
+      "file": "fixtures.json",
+      "bytes": 14246,
+      "sha256": "9c6bcd8a85a82f49ef532948a5441b04b3ad05687b5179ce2391dbc481087f04"
+    },
+    {
+      "file": "native-build-identity.json",
+      "bytes": 2295,
+      "sha256": "cfe2a72fb7d579bc3bb146863f3f7ee7d3561467300f650de0cc7a807b3ed898"
+    },
+    {
+      "file": "voice-harness-source.txt",
+      "bytes": 3699,
+      "sha256": "7958317caab58765c3c5df135f8f75fca3a901e8572418243ebde653821b5d59"
+    },
+    {
+      "file": "voice-results.json",
+      "bytes": 24007,
+      "sha256": "24feeb26b1b8c3e80f1ce13cd17a625747f7cb52d1573699d83abfd821afebba"
+    }
+  ]
+}

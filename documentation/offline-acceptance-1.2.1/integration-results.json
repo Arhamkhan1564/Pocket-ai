@@ -1,0 +1,289 @@
+{
+  "status": "PASS",
+  "phases": [
+    {
+      "records": 9,
+      "documents": 8,
+      "long_record_chars": 24029,
+      "workshop_source_id": 7,
+      "leaflet_source_id": 9,
+      "private_data": "\/workspace\/work\/validation\/offline-acceptance-v12\/host-integration\/tmp\/robolectric-OfflineRagAcceptanceTest_completeOfflineReferenceFlow11574719833760690391\/com.pocketai.debug-dataDir\/files",
+      "name": "native_environment_and_authenticated_document_import",
+      "status": "PASS",
+      "seconds": 9.178281093
+    },
+    {
+      "pause_cancelled": true,
+      "ready": "OfflineRagState(preparing=false, searchReady=true, translationReady=true, englishGeneratorReady=true, message=Offline document search and translation ready. Originals and citations stay visible., error=null)",
+      "speech_models": 1,
+      "name": "actual_pack_preparation_cancel_resume_and_integrity",
+      "status": "PASS",
+      "seconds": 10.848043718
+    },
+    {
+      "index_state": "SemanticIndexState(running=false, paused=false, indexedRecords=8, totalRecords=9, message=Other passages are indexed. 1 passage(s) still use original text and keyword search., error=1 passage(s) could not be indexed. Semantic indexing needs nonempty passages of at most 20,000 characters. Split this note into shorter passages; its original and keyword search remain available.)",
+      "retrieved_source_ids": [
+        7
+      ],
+      "semantic": true,
+      "name": "actual_index_skips_long_record_without_starving_later_documents",
+      "status": "PASS",
+      "seconds": 7.703643964
+    },
+    {
+      "index_state": "SemanticIndexState(running=false, paused=false, indexedRecords=9, totalRecords=9, message=All saved passages are indexed for offline search., error=null)",
+      "pending": 0,
+      "name": "editing_long_record_allows_reindex_and_clears_warning",
+      "status": "PASS",
+      "seconds": 1.083571205
+    },
+    {
+      "known_questions": 16,
+      "known_matches": 14,
+      "negative_questions": 32,
+      "false_matches": 0,
+      "known_code_questions": 4,
+      "known_code_matches": 4,
+      "name": "actual_revised_canonical_retrieval_probe_48_cases",
+      "status": "PASS",
+      "seconds": 43.854336938
+    },
+    {
+      "answers": [
+        {
+          "language": "en",
+          "script": "Arab",
+          "question": "What is the workshop code?",
+          "medical_intent": "NORMAL",
+          "engine": "Saved references · cited excerpts",
+          "source_ids": [
+            7
+          ],
+          "sources": "[1] #7 workshop #999.txt · chunk 1\/1 · Documents",
+          "answer": "[1] #7 workshop #999.txt · chunk 1\/1 · Documents\nThe workshop access code is cedar-47. The reference number is 250.",
+          "raw_retrieved_ids": [
+            7
+          ],
+          "raw_semantic": true,
+          "lexical_ids": [
+            7
+          ]
+        },
+        {
+          "language": "ur",
+          "script": "Arab",
+          "question": "ورکشاپ کا کوڈ کیا ہے؟",
+          "medical_intent": "NORMAL",
+          "engine": "Saved references · offline excerpt translation",
+          "source_ids": [
+            7
+          ],
+          "sources": "[1] #7 workshop #999.txt · chunk 1\/1 · Documents",
+          "answer": "منتخب حوالہ جاتی اقتباسات کا آف لائن ترجمہ؛ مکمل اصل عبارت نیچے ہے۔\n\n[1] ورکشاپ تک رسائی کا کوڈ cedar-47 ہے۔ حوالہ نمبر 250 ہے۔\n\nمحفوظ حوالے — اصل متن:\n\n[1] #7 workshop #999.txt · chunk 1\/1 · Documents\nThe workshop access code is cedar-47. The reference number is 250.",
+          "raw_retrieved_ids": [
+            7
+          ],
+          "raw_semantic": true,
+          "lexical_ids": []
+        },
+        {
+          "language": "pa",
+          "script": "Guru",
+          "question": "ਵਰਕਸ਼ਾਪ ਦਾ ਕੋਡ ਕੀ ਹੈ?",
+          "medical_intent": "NORMAL",
+          "engine": "Saved references · offline excerpt translation",
+          "source_ids": [
+            7
+          ],
+          "sources": "[1] #7 workshop #999.txt · chunk 1\/1 · Documents",
+          "answer": "ਚੁਣੇ ਹਵਾਲਾ ਅੰਸ਼ਾਂ ਦਾ ਆਫਲਾਈਨ ਅਨੁਵਾਦ; ਪੂਰਾ ਮੂਲ ਪਾਠ ਹੇਠਾਂ ਹੈ।\n\n[1] ਵਰਕਸ਼ਾਪ ਦਾ ਐਕਸੈੱਸ ਕੋਡ cedar-47 ਹੈ। ਹਵਾਲਾ ਨੰਬਰ 250 ਹੈ।\n\nਸੰਭਾਲੇ ਹਵਾਲੇ — ਮੂਲ ਪਾਠ:\n\n[1] #7 workshop #999.txt · chunk 1\/1 · Documents\nThe workshop access code is cedar-47. The reference number is 250.",
+          "raw_retrieved_ids": [
+            7
+          ],
+          "raw_semantic": true,
+          "lexical_ids": []
+        },
+        {
+          "language": "pa",
+          "script": "Arab",
+          "question": "ورکشاپ دا کوڈ کی اے؟",
+          "medical_intent": "NORMAL",
+          "engine": "Saved references · offline excerpt translation",
+          "source_ids": [
+            7
+          ],
+          "sources": "[1] #7 workshop #999.txt · chunk 1\/1 · Documents",
+          "answer": "چُنے حوالہ جاتی حصیاں دا آف لائن ترجمہ؛ پورا اصل متن تھلّے اے۔ شاہ مکھی رسم الخط خودکار بدلیا گیا اے۔\n\n[1] ورکشاپ دا ایکسیسّ کوڈ cedar-47 ہے। ہوالا نمبر 250 ہے।\n\nمحفوظ حوالے — اصل متن:\n\n[1] #7 workshop #999.txt · chunk 1\/1 · Documents\nThe workshop access code is cedar-47. The reference number is 250.",
+          "raw_retrieved_ids": [
+            7
+          ],
+          "raw_semantic": true,
+          "lexical_ids": []
+        },
+        {
+          "type": "medicine_reference",
+          "engine": "Medical reference · offline excerpt translation",
+          "source_ids": [
+            6,
+            9
+          ],
+          "answer": "منتخب حوالہ جاتی اقتباسات کا آف لائن ترجمہ؛ مکمل اصل عبارت نیچے ہے۔\n\n[1] دستاویز پیراسیٹامول کو ایک جزو کے طور پر بیان کرتی ہے اور اس کے لیبل کے انتباہات پر تبادلہ خیال کرتی ہے۔ یہ ذاتی نسخے فراہم نہیں کرتا ہے۔\n\n[2] گولی میں 250 ملی گرام پیراسیٹامول ہوتا ہے۔ حمل کے دوران استعمال نہ کریں۔\n\nمحفوظ حوالہ — اصل متن (پاکٹ اے آئی نے طبی تصدیق نہیں کی):\n\n[1] #6 paracetamol-reference.txt · chunk 1\/1 · Documents\nThe document explains paracetamol as an ingredient and discusses its label warnings. It does not provide a personal prescription.\n\n[2] #9 medicine-leaflet.txt · chunk 1\/1 · Documents\nThe tablet contains 250 mg of paracetamol. Do not use during pregnancy."
+        }
+      ],
+      "name": "assistant_actual_english_urdu_gurmukhi_shahmukhi_answers_and_typed_citations",
+      "status": "PASS",
+      "seconds": 14.93964055
+    },
+    {
+      "first_cache_hit": true,
+      "second_cache_hit": true,
+      "translated": "ورکشاپ تک رسائی کا کوڈ cedar-47 ہے۔ حوالہ نمبر 250 ہے۔",
+      "name": "actual_translation_cache_reuses_verified_source",
+      "status": "PASS",
+      "seconds": 0.049004128
+    },
+    {
+      "vectors_still_current": true,
+      "retrieved_source_ids": [
+        7
+      ],
+      "history_source_ids": [
+        7
+      ],
+      "packs_reused": true,
+      "name": "real_database_service_reopen_preserves_vectors_and_trusted_history",
+      "status": "PASS",
+      "seconds": 1.965756135
+    },
+    {
+      "restored_records": 9,
+      "catalog_documents": 8,
+      "typed_source_ids": [
+        7
+      ],
+      "vectors_rebuilt": true,
+      "revision_cache_invalidated": true,
+      "name": "backup_restore_preserves_catalog_citations_and_rebuilds_vectors",
+      "status": "PASS",
+      "seconds": 6.021552052
+    },
+    {
+      "edited_translation": "ورکشاپ تک رسائی کا کوڈ cedar-48 ہے۔ حوالہ نمبر 251 ہے۔",
+      "deleted_source_rejected": true,
+      "retrieved_ids_after_delete": [],
+      "name": "source_edit_delete_invalidates_vectors_translation_and_citations",
+      "status": "PASS",
+      "seconds": 5.774615657
+    },
+    {
+      "interrupted_failure": "ai.onnxruntime.OrtException: Error code - ORT_FAIL - message: Exiting due to terminate flag being set to true.",
+      "next_translation": "گولی میں 252 ملی گرام پیراسیٹامول ہوتا ہے۔ حمل کے دوران استعمال نہ کریں۔",
+      "database_integrity": "ok",
+      "name": "actual_ort_cancellation_releases_runtime_and_next_translation_recovers",
+      "status": "PASS",
+      "seconds": 4.435716117
+    }
+  ],
+  "compiled_app_version": "1.2.1-debug",
+  "compiled_version_code": 4,
+  "host_environment": {
+    "cgroup_memory_max": "17179869184",
+    "cgroup_cpu_max": "400000 100000",
+    "activity_manager_shadow_total_bytes": 2147483648,
+    "activity_manager_shadow_available_bytes": 1610612736,
+    "statfs_shadow": "4096-byte blocks:524288total,393216free\/available; supplied test values only",
+    "main_dispatcher": "UnconfinedTestDispatcher to avoid paused Robolectric main-loop deadlock"
+  },
+  "answer_attempts": [
+    {
+      "language": "en",
+      "script": "Arab",
+      "question": "What is the workshop code?",
+      "medical_intent": "NORMAL",
+      "engine": "Saved references · cited excerpts",
+      "source_ids": [
+        7
+      ],
+      "sources": "[1] #7 workshop #999.txt · chunk 1\/1 · Documents",
+      "answer": "[1] #7 workshop #999.txt · chunk 1\/1 · Documents\nThe workshop access code is cedar-47. The reference number is 250.",
+      "raw_retrieved_ids": [
+        7
+      ],
+      "raw_semantic": true,
+      "lexical_ids": [
+        7
+      ]
+    },
+    {
+      "language": "ur",
+      "script": "Arab",
+      "question": "ورکشاپ کا کوڈ کیا ہے؟",
+      "medical_intent": "NORMAL",
+      "engine": "Saved references · offline excerpt translation",
+      "source_ids": [
+        7
+      ],
+      "sources": "[1] #7 workshop #999.txt · chunk 1\/1 · Documents",
+      "answer": "منتخب حوالہ جاتی اقتباسات کا آف لائن ترجمہ؛ مکمل اصل عبارت نیچے ہے۔\n\n[1] ورکشاپ تک رسائی کا کوڈ cedar-47 ہے۔ حوالہ نمبر 250 ہے۔\n\nمحفوظ حوالے — اصل متن:\n\n[1] #7 workshop #999.txt · chunk 1\/1 · Documents\nThe workshop access code is cedar-47. The reference number is 250.",
+      "raw_retrieved_ids": [
+        7
+      ],
+      "raw_semantic": true,
+      "lexical_ids": []
+    },
+    {
+      "language": "pa",
+      "script": "Guru",
+      "question": "ਵਰਕਸ਼ਾਪ ਦਾ ਕੋਡ ਕੀ ਹੈ?",
+      "medical_intent": "NORMAL",
+      "engine": "Saved references · offline excerpt translation",
+      "source_ids": [
+        7
+      ],
+      "sources": "[1] #7 workshop #999.txt · chunk 1\/1 · Documents",
+      "answer": "ਚੁਣੇ ਹਵਾਲਾ ਅੰਸ਼ਾਂ ਦਾ ਆਫਲਾਈਨ ਅਨੁਵਾਦ; ਪੂਰਾ ਮੂਲ ਪਾਠ ਹੇਠਾਂ ਹੈ।\n\n[1] ਵਰਕਸ਼ਾਪ ਦਾ ਐਕਸੈੱਸ ਕੋਡ cedar-47 ਹੈ। ਹਵਾਲਾ ਨੰਬਰ 250 ਹੈ।\n\nਸੰਭਾਲੇ ਹਵਾਲੇ — ਮੂਲ ਪਾਠ:\n\n[1] #7 workshop #999.txt · chunk 1\/1 · Documents\nThe workshop access code is cedar-47. The reference number is 250.",
+      "raw_retrieved_ids": [
+        7
+      ],
+      "raw_semantic": true,
+      "lexical_ids": []
+    },
+    {
+      "language": "pa",
+      "script": "Arab",
+      "question": "ورکشاپ دا کوڈ کی اے؟",
+      "medical_intent": "NORMAL",
+      "engine": "Saved references · offline excerpt translation",
+      "source_ids": [
+        7
+      ],
+      "sources": "[1] #7 workshop #999.txt · chunk 1\/1 · Documents",
+      "answer": "چُنے حوالہ جاتی حصیاں دا آف لائن ترجمہ؛ پورا اصل متن تھلّے اے۔ شاہ مکھی رسم الخط خودکار بدلیا گیا اے۔\n\n[1] ورکشاپ دا ایکسیسّ کوڈ cedar-47 ہے। ہوالا نمبر 250 ہے।\n\nمحفوظ حوالے — اصل متن:\n\n[1] #7 workshop #999.txt · chunk 1\/1 · Documents\nThe workshop access code is cedar-47. The reference number is 250.",
+      "raw_retrieved_ids": [
+        7
+      ],
+      "raw_semantic": true,
+      "lexical_ids": []
+    },
+    {
+      "type": "medicine_reference",
+      "engine": "Medical reference · offline excerpt translation",
+      "source_ids": [
+        6,
+        9
+      ],
+      "answer": "منتخب حوالہ جاتی اقتباسات کا آف لائن ترجمہ؛ مکمل اصل عبارت نیچے ہے۔\n\n[1] دستاویز پیراسیٹامول کو ایک جزو کے طور پر بیان کرتی ہے اور اس کے لیبل کے انتباہات پر تبادلہ خیال کرتی ہے۔ یہ ذاتی نسخے فراہم نہیں کرتا ہے۔\n\n[2] گولی میں 250 ملی گرام پیراسیٹامول ہوتا ہے۔ حمل کے دوران استعمال نہ کریں۔\n\nمحفوظ حوالہ — اصل متن (پاکٹ اے آئی نے طبی تصدیق نہیں کی):\n\n[1] #6 paracetamol-reference.txt · chunk 1\/1 · Documents\nThe document explains paracetamol as an ingredient and discusses its label warnings. It does not provide a personal prescription.\n\n[2] #9 medicine-leaflet.txt · chunk 1\/1 · Documents\nThe tablet contains 250 mg of paracetamol. Do not use during pregnancy."
+    }
+  ],
+  "medical_answer_attempt": {
+    "engine": "Medical reference · offline excerpt translation",
+    "source_ids": [
+      6,
+      9
+    ],
+    "sources": "[1] #6 paracetamol-reference.txt · chunk 1\/1 · Documents\n[2] #9 medicine-leaflet.txt · chunk 1\/1 · Documents",
+    "answer": "منتخب حوالہ جاتی اقتباسات کا آف لائن ترجمہ؛ مکمل اصل عبارت نیچے ہے۔\n\n[1] دستاویز پیراسیٹامول کو ایک جزو کے طور پر بیان کرتی ہے اور اس کے لیبل کے انتباہات پر تبادلہ خیال کرتی ہے۔ یہ ذاتی نسخے فراہم نہیں کرتا ہے۔\n\n[2] گولی میں 250 ملی گرام پیراسیٹامول ہوتا ہے۔ حمل کے دوران استعمال نہ کریں۔\n\nمحفوظ حوالہ — اصل متن (پاکٹ اے آئی نے طبی تصدیق نہیں کی):\n\n[1] #6 paracetamol-reference.txt · chunk 1\/1 · Documents\nThe document explains paracetamol as an ingredient and discusses its label warnings. It does not provide a personal prescription.\n\n[2] #9 medicine-leaflet.txt · chunk 1\/1 · Documents\nThe tablet contains 250 mg of paracetamol. Do not use during pregnancy."
+  },
+  "limits": "Host Linux x86_64 with16GiB\/4CPU quota: real canonical JNI, SentencePiece, ORT and pinned models; native SQLite with synthetic authenticated data. ActivityManager\/StatFs use supplied2GiBtotal\/1.5GiBavailable shadow values; this exercises guards and is not physical2GiB-phone proof. Main dispatcher is supplied by host test. Baseline excerpt answers, not optional Smol LLM quality. No audio hardware, TTS, UI touch, Android device acceptance, fluency or clinical validation claim.",
+  "vm_hwm": "VmHWM:\t 1494536 kB"
+}

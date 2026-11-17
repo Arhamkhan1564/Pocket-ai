@@ -1,0 +1,574 @@
+{
+  "negative_code_cases": 8,
+  "known_code_cases_retained": 4,
+  "evidence": {
+    "en": "The workshop access code is cedar-47. The reference number is 250.",
+    "pa-Guru": "ਵਰਕਸ਼ਾਪ ਦਾ ਐਕਸੈੱਸ ਕੋਡ cedar-47 ਹੈ। ਹਵਾਲਾ ਨੰਬਰ 250 ਹੈ।",
+    "ur": "ورکشاپ تک رسائی کا کوڈ cedar-47 ہے۔ حوالہ نمبر 250 ہے۔",
+    "pa-Arab": "ورکشاپ دا ایکسیسّ کوڈ cedar-47 ہے। ہوالا نمبر 250 ہے।"
+  },
+  "negative_code_cases_accepted": 0,
+  "evaluated_original_probe_cases": 48,
+  "supported_known_code_cases": 4,
+  "results": [
+    {
+      "forward_evidence_matches": true,
+      "topic_words": ["workshop"],
+      "question": "What code unlocks the workshop?",
+      "code_request": true,
+      "language": "en",
+      "id": "en-workshop-code",
+      "script": "Latn",
+      "prior_candidate_sources": ["workshop-code"],
+      "guarded_code_candidate_sources": ["workshop-code"]
+    },
+    {
+      "forward_evidence_matches": false,
+      "topic_words": [],
+      "question": "Which reference number belongs to the workshop?",
+      "code_request": false,
+      "language": "en",
+      "id": "en-workshop-reference",
+      "script": "Latn",
+      "prior_candidate_sources": [
+        "workshop-code",
+        "paracetamol-reference",
+        "insulin-storage"
+      ],
+      "guarded_code_candidate_sources": []
+    },
+    {
+      "forward_evidence_matches": false,
+      "topic_words": [],
+      "question": "What does the document say about keeping insulin cold?",
+      "code_request": false,
+      "language": "en",
+      "id": "en-insulin-storage",
+      "script": "Latn",
+      "prior_candidate_sources": [],
+      "guarded_code_candidate_sources": []
+    },
+    {
+      "forward_evidence_matches": false,
+      "topic_words": [],
+      "question": "What does the saved reference say about paracetamol and its label warnings?",
+      "code_request": false,
+      "language": "en",
+      "id": "en-paracetamol-reference",
+      "script": "Latn",
+      "prior_candidate_sources": [
+        "paracetamol-reference",
+        "medicine-leaflet"
+      ],
+      "guarded_code_candidate_sources": []
+    },
+    {
+      "forward_evidence_matches": false,
+      "topic_words": ["airport"],
+      "question": "What is the airport code?",
+      "code_request": true,
+      "language": "en",
+      "id": "en-airport-code",
+      "script": "Latn",
+      "prior_candidate_sources": ["workshop-code"],
+      "guarded_code_candidate_sources": []
+    },
+    {
+      "forward_evidence_matches": false,
+      "topic_words": ["garage"],
+      "question": "What is the garage access code?",
+      "code_request": true,
+      "language": "en",
+      "id": "en-garage-code",
+      "script": "Latn",
+      "prior_candidate_sources": ["workshop-code"],
+      "guarded_code_candidate_sources": []
+    },
+    {
+      "forward_evidence_matches": false,
+      "topic_words": [],
+      "question": "What is the door PIN?",
+      "code_request": false,
+      "language": "en",
+      "id": "en-door-pin",
+      "script": "Latn",
+      "prior_candidate_sources": [],
+      "guarded_code_candidate_sources": []
+    },
+    {
+      "forward_evidence_matches": false,
+      "topic_words": [],
+      "question": "How do I book a flight to Islamabad?",
+      "code_request": false,
+      "language": "en",
+      "id": "en-travel",
+      "script": "Latn",
+      "prior_candidate_sources": [],
+      "guarded_code_candidate_sources": []
+    },
+    {
+      "forward_evidence_matches": false,
+      "topic_words": [],
+      "question": "Will it rain tomorrow?",
+      "code_request": false,
+      "language": "en",
+      "id": "en-weather",
+      "script": "Latn",
+      "prior_candidate_sources": [],
+      "guarded_code_candidate_sources": []
+    },
+    {
+      "forward_evidence_matches": false,
+      "topic_words": [],
+      "question": "What does the saved document say about Novamed?",
+      "code_request": false,
+      "language": "en",
+      "id": "en-wrong-medicine",
+      "script": "Latn",
+      "prior_candidate_sources": [
+        "paracetamol-reference",
+        "ibuprofen-warning"
+      ],
+      "guarded_code_candidate_sources": []
+    },
+    {
+      "forward_evidence_matches": false,
+      "topic_words": [],
+      "question": "What is the workshop Wi-Fi password?",
+      "code_request": false,
+      "language": "en",
+      "id": "en-workshop-wifi",
+      "script": "Latn",
+      "prior_candidate_sources": [],
+      "guarded_code_candidate_sources": []
+    },
+    {
+      "forward_evidence_matches": false,
+      "topic_words": [],
+      "question": "What is the workshop owner's birth date?",
+      "code_request": false,
+      "language": "en",
+      "id": "en-birthdate",
+      "script": "Latn",
+      "prior_candidate_sources": ["workshop-code"],
+      "guarded_code_candidate_sources": []
+    },
+    {
+      "forward_evidence_matches": true,
+      "topic_words": ["ورکشاپ"],
+      "question": "ورکشاپ میں داخلے کا کوڈ کیا ہے؟",
+      "code_request": true,
+      "language": "ur",
+      "id": "ur-workshop-code",
+      "script": "Arab",
+      "prior_candidate_sources": ["workshop-code"],
+      "guarded_code_candidate_sources": ["workshop-code"]
+    },
+    {
+      "forward_evidence_matches": false,
+      "topic_words": [],
+      "question": "ورکشاپ کا حوالہ نمبر کیا ہے؟",
+      "code_request": false,
+      "language": "ur",
+      "id": "ur-workshop-reference",
+      "script": "Arab",
+      "prior_candidate_sources": ["workshop-code"],
+      "guarded_code_candidate_sources": []
+    },
+    {
+      "forward_evidence_matches": false,
+      "topic_words": [],
+      "question": "انسولین کو کیسے محفوظ رکھنا چاہئے؟",
+      "code_request": false,
+      "language": "ur",
+      "id": "ur-insulin-storage",
+      "script": "Arab",
+      "prior_candidate_sources": ["insulin-storage"],
+      "guarded_code_candidate_sources": []
+    },
+    {
+      "forward_evidence_matches": false,
+      "topic_words": [],
+      "question": "پیراسیٹامول کے بارے میں محفوظ حوالے میں کیا لکھا ہے؟",
+      "code_request": false,
+      "language": "ur",
+      "id": "ur-paracetamol-reference",
+      "script": "Arab",
+      "prior_candidate_sources": [
+        "paracetamol-reference",
+        "medicine-leaflet"
+      ],
+      "guarded_code_candidate_sources": []
+    },
+    {
+      "forward_evidence_matches": false,
+      "topic_words": [
+        "ہوائی",
+        "اڈے"
+      ],
+      "question": "ہوائی اڈے کا کوڈ کیا ہے؟",
+      "code_request": true,
+      "language": "ur",
+      "id": "ur-airport-code",
+      "script": "Arab",
+      "prior_candidate_sources": ["workshop-code"],
+      "guarded_code_candidate_sources": []
+    },
+    {
+      "forward_evidence_matches": false,
+      "topic_words": ["گیراج"],
+      "question": "گیراج میں داخلے کا کوڈ کیا ہے؟",
+      "code_request": true,
+      "language": "ur",
+      "id": "ur-garage-code",
+      "script": "Arab",
+      "prior_candidate_sources": ["workshop-code"],
+      "guarded_code_candidate_sources": []
+    },
+    {
+      "forward_evidence_matches": false,
+      "topic_words": [],
+      "question": "دروازے کا پن کوڈ کیا ہے؟",
+      "code_request": false,
+      "language": "ur",
+      "id": "ur-door-pin",
+      "script": "Arab",
+      "prior_candidate_sources": [],
+      "guarded_code_candidate_sources": []
+    },
+    {
+      "forward_evidence_matches": false,
+      "topic_words": [],
+      "question": "اسلام آباد کے لیے پرواز کی بکنگ کیسے کروں؟",
+      "code_request": false,
+      "language": "ur",
+      "id": "ur-travel",
+      "script": "Arab",
+      "prior_candidate_sources": [],
+      "guarded_code_candidate_sources": []
+    },
+    {
+      "forward_evidence_matches": false,
+      "topic_words": [],
+      "question": "کیا کل بارش ہوگی؟",
+      "code_request": false,
+      "language": "ur",
+      "id": "ur-weather",
+      "script": "Arab",
+      "prior_candidate_sources": [],
+      "guarded_code_candidate_sources": []
+    },
+    {
+      "forward_evidence_matches": false,
+      "topic_words": [],
+      "question": "Novamed کے بارے میں محفوظ دستاویز کیا کہتی ہے؟",
+      "code_request": false,
+      "language": "ur",
+      "id": "ur-wrong-medicine",
+      "script": "Arab",
+      "prior_candidate_sources": [],
+      "guarded_code_candidate_sources": []
+    },
+    {
+      "forward_evidence_matches": false,
+      "topic_words": [],
+      "question": "ورکشاپ کے وائی فائی کا پاس ورڈ کیا ہے؟",
+      "code_request": false,
+      "language": "ur",
+      "id": "ur-workshop-wifi",
+      "script": "Arab",
+      "prior_candidate_sources": [],
+      "guarded_code_candidate_sources": []
+    },
+    {
+      "forward_evidence_matches": false,
+      "topic_words": [],
+      "question": "ورکشاپ کے مالک کی تاریخ پیدائش کیا ہے؟",
+      "code_request": false,
+      "language": "ur",
+      "id": "ur-birthdate",
+      "script": "Arab",
+      "prior_candidate_sources": [],
+      "guarded_code_candidate_sources": []
+    },
+    {
+      "forward_evidence_matches": true,
+      "topic_words": ["ਵਰਕਸ਼ਾਪ"],
+      "question": "ਵਰਕਸ਼ਾਪ ਦਾ ਦਾਖਲਾ ਕੋਡ ਕੀ ਹੈ?",
+      "code_request": true,
+      "language": "pa-Guru",
+      "id": "pa-Guru-workshop-code",
+      "script": "Guru",
+      "prior_candidate_sources": ["workshop-code"],
+      "guarded_code_candidate_sources": ["workshop-code"]
+    },
+    {
+      "forward_evidence_matches": false,
+      "topic_words": [],
+      "question": "ਵਰਕਸ਼ਾਪ ਦਾ ਹਵਾਲਾ ਨੰਬਰ ਕੀ ਹੈ?",
+      "code_request": false,
+      "language": "pa-Guru",
+      "id": "pa-Guru-workshop-reference",
+      "script": "Guru",
+      "prior_candidate_sources": ["workshop-code"],
+      "guarded_code_candidate_sources": []
+    },
+    {
+      "forward_evidence_matches": false,
+      "topic_words": [],
+      "question": "ਇਨਸੁਲਿਨ ਨੂੰ ਕਿਵੇਂ ਸੰਭਾਲ ਕੇ ਰੱਖਣਾ ਚਾਹੀਦਾ ਹੈ?",
+      "code_request": false,
+      "language": "pa-Guru",
+      "id": "pa-Guru-insulin-storage",
+      "script": "Guru",
+      "prior_candidate_sources": ["insulin-storage"],
+      "guarded_code_candidate_sources": []
+    },
+    {
+      "forward_evidence_matches": false,
+      "topic_words": [],
+      "question": "ਪੈਰਾਸੀਟਾਮੋਲ ਬਾਰੇ ਸੰਭਾਲਿਆ ਹਵਾਲਾ ਕੀ ਕਹਿੰਦਾ ਹੈ?",
+      "code_request": false,
+      "language": "pa-Guru",
+      "id": "pa-Guru-paracetamol-reference",
+      "script": "Guru",
+      "prior_candidate_sources": [
+        "paracetamol-reference",
+        "medicine-leaflet"
+      ],
+      "guarded_code_candidate_sources": []
+    },
+    {
+      "forward_evidence_matches": false,
+      "topic_words": [
+        "ਹਵਾਈ",
+        "ਅੱਡੇ"
+      ],
+      "question": "ਹਵਾਈ ਅੱਡੇ ਦਾ ਕੋਡ ਕੀ ਹੈ?",
+      "code_request": true,
+      "language": "pa-Guru",
+      "id": "pa-Guru-airport-code",
+      "script": "Guru",
+      "prior_candidate_sources": ["workshop-code"],
+      "guarded_code_candidate_sources": []
+    },
+    {
+      "forward_evidence_matches": false,
+      "topic_words": ["ਗੈਰਾਜ"],
+      "question": "ਗੈਰਾਜ ਦਾ ਦਾਖਲਾ ਕੋਡ ਕੀ ਹੈ?",
+      "code_request": true,
+      "language": "pa-Guru",
+      "id": "pa-Guru-garage-code",
+      "script": "Guru",
+      "prior_candidate_sources": ["workshop-code"],
+      "guarded_code_candidate_sources": []
+    },
+    {
+      "forward_evidence_matches": false,
+      "topic_words": [],
+      "question": "ਦਰਵਾਜ਼ੇ ਦਾ ਪਿਨ ਕੋਡ ਕੀ ਹੈ?",
+      "code_request": false,
+      "language": "pa-Guru",
+      "id": "pa-Guru-door-pin",
+      "script": "Guru",
+      "prior_candidate_sources": ["workshop-code"],
+      "guarded_code_candidate_sources": []
+    },
+    {
+      "forward_evidence_matches": false,
+      "topic_words": [],
+      "question": "ਇਸਲਾਮਾਬਾਦ ਲਈ ਉਡਾਣ ਦੀ ਬੁਕਿੰਗ ਕਿਵੇਂ ਕਰਾਂ?",
+      "code_request": false,
+      "language": "pa-Guru",
+      "id": "pa-Guru-travel",
+      "script": "Guru",
+      "prior_candidate_sources": [],
+      "guarded_code_candidate_sources": []
+    },
+    {
+      "forward_evidence_matches": false,
+      "topic_words": [],
+      "question": "ਕੀ ਕੱਲ੍ਹ ਮੀਂਹ ਪਵੇਗਾ?",
+      "code_request": false,
+      "language": "pa-Guru",
+      "id": "pa-Guru-weather",
+      "script": "Guru",
+      "prior_candidate_sources": [],
+      "guarded_code_candidate_sources": []
+    },
+    {
+      "forward_evidence_matches": false,
+      "topic_words": [],
+      "question": "Novamed ਬਾਰੇ ਸੰਭਾਲੇ ਦਸਤਾਵੇਜ਼ ਵਿੱਚ ਕੀ ਲਿਖਿਆ ਹੈ?",
+      "code_request": false,
+      "language": "pa-Guru",
+      "id": "pa-Guru-wrong-medicine",
+      "script": "Guru",
+      "prior_candidate_sources": [],
+      "guarded_code_candidate_sources": []
+    },
+    {
+      "forward_evidence_matches": false,
+      "topic_words": [],
+      "question": "ਵਰਕਸ਼ਾਪ ਦੇ ਵਾਈ-ਫਾਈ ਦਾ ਪਾਸਵਰਡ ਕੀ ਹੈ?",
+      "code_request": false,
+      "language": "pa-Guru",
+      "id": "pa-Guru-workshop-wifi",
+      "script": "Guru",
+      "prior_candidate_sources": [],
+      "guarded_code_candidate_sources": []
+    },
+    {
+      "forward_evidence_matches": false,
+      "topic_words": [],
+      "question": "ਵਰਕਸ਼ਾਪ ਦੇ ਮਾਲਕ ਦੀ ਜਨਮ ਮਿਤੀ ਕੀ ਹੈ?",
+      "code_request": false,
+      "language": "pa-Guru",
+      "id": "pa-Guru-birthdate",
+      "script": "Guru",
+      "prior_candidate_sources": [],
+      "guarded_code_candidate_sources": []
+    },
+    {
+      "forward_evidence_matches": true,
+      "topic_words": ["ورکشاپ"],
+      "question": "ورکشاپ دا کوڈ کی اے؟",
+      "code_request": true,
+      "language": "pa-Arab",
+      "id": "pa-Arab-workshop-code",
+      "script": "Arab",
+      "prior_candidate_sources": ["workshop-code"],
+      "guarded_code_candidate_sources": ["workshop-code"]
+    },
+    {
+      "forward_evidence_matches": false,
+      "topic_words": [],
+      "question": "ورکشاپ دے حوالے دا نمبر کی اے؟",
+      "code_request": false,
+      "language": "pa-Arab",
+      "id": "pa-Arab-workshop-reference",
+      "script": "Arab",
+      "prior_candidate_sources": [],
+      "guarded_code_candidate_sources": []
+    },
+    {
+      "forward_evidence_matches": false,
+      "topic_words": [],
+      "question": "انسولین نوں کیویں سنبھال کے رکھنا چاہیدا اے؟",
+      "code_request": false,
+      "language": "pa-Arab",
+      "id": "pa-Arab-insulin-storage",
+      "script": "Arab",
+      "prior_candidate_sources": ["insulin-storage"],
+      "guarded_code_candidate_sources": []
+    },
+    {
+      "forward_evidence_matches": false,
+      "topic_words": [],
+      "question": "پیراسیٹامول بارے محفوظ حوالہ کیہ کہندا اے؟",
+      "code_request": false,
+      "language": "pa-Arab",
+      "id": "pa-Arab-paracetamol-reference",
+      "script": "Arab",
+      "prior_candidate_sources": [
+        "paracetamol-reference",
+        "medicine-leaflet"
+      ],
+      "guarded_code_candidate_sources": []
+    },
+    {
+      "forward_evidence_matches": false,
+      "topic_words": [
+        "ہوائی",
+        "اڈے"
+      ],
+      "question": "ہوائی اڈے دا کوڈ کی اے؟",
+      "code_request": true,
+      "language": "pa-Arab",
+      "id": "pa-Arab-airport-code",
+      "script": "Arab",
+      "prior_candidate_sources": [],
+      "guarded_code_candidate_sources": []
+    },
+    {
+      "forward_evidence_matches": false,
+      "topic_words": ["گیراج"],
+      "question": "گیراج وچ داخل ہون دا کوڈ کی اے؟",
+      "code_request": true,
+      "language": "pa-Arab",
+      "id": "pa-Arab-garage-code",
+      "script": "Arab",
+      "prior_candidate_sources": [],
+      "guarded_code_candidate_sources": []
+    },
+    {
+      "forward_evidence_matches": false,
+      "topic_words": [],
+      "question": "بوہے دا پن کوڈ کی اے؟",
+      "code_request": false,
+      "language": "pa-Arab",
+      "id": "pa-Arab-door-pin",
+      "script": "Arab",
+      "prior_candidate_sources": [],
+      "guarded_code_candidate_sources": []
+    },
+    {
+      "forward_evidence_matches": false,
+      "topic_words": [],
+      "question": "اسلام آباد دی پرواز دی بکنگ کیویں کراں؟",
+      "code_request": false,
+      "language": "pa-Arab",
+      "id": "pa-Arab-travel",
+      "script": "Arab",
+      "prior_candidate_sources": [],
+      "guarded_code_candidate_sources": []
+    },
+    {
+      "forward_evidence_matches": false,
+      "topic_words": [],
+      "question": "کی کل بارش ہووے گی؟",
+      "code_request": false,
+      "language": "pa-Arab",
+      "id": "pa-Arab-weather",
+      "script": "Arab",
+      "prior_candidate_sources": [],
+      "guarded_code_candidate_sources": []
+    },
+    {
+      "forward_evidence_matches": false,
+      "topic_words": [],
+      "question": "Novamed بارے محفوظ دستاویز کیہ کہندی اے؟",
+      "code_request": false,
+      "language": "pa-Arab",
+      "id": "pa-Arab-wrong-medicine",
+      "script": "Arab",
+      "prior_candidate_sources": [],
+      "guarded_code_candidate_sources": []
+    },
+    {
+      "forward_evidence_matches": false,
+      "topic_words": [],
+      "question": "ورکشاپ دے وائی فائی دا پاس ورڈ کی اے؟",
+      "code_request": false,
+      "language": "pa-Arab",
+      "id": "pa-Arab-workshop-wifi",
+      "script": "Arab",
+      "prior_candidate_sources": [],
+      "guarded_code_candidate_sources": []
+    },
+    {
+      "forward_evidence_matches": false,
+      "topic_words": [],
+      "question": "ورکشاپ دے مالک دی جنم تاریخ کی اے؟",
+      "code_request": false,
+      "language": "pa-Arab",
+      "id": "pa-Arab-birthdate",
+      "script": "Arab",
+      "prior_candidate_sources": [],
+      "guarded_code_candidate_sources": []
+    }
+  ],
+  "limits": "No model rerun. Uses actual previously generated canonical forward translations and canonical Shahmukhi conversion. Isolated topic helper evaluation over saved scores/candidates, not full upcoming production retrieval wiring. Non-code requests remain the responsibility of other field/entity policies. Small manually worded fixture set, not general language/phone/clinical validation.",
+  "status": "PASS_FOCUSED_CODE_SUBJECT_GUARD",
+  "generic_code_only_cases_rejected": 4
+}

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.pocketai.retrieval.EvidenceCoverageTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-11-17T16:02:51" hostname="09642bcf3291" time="0.017">
+  <properties/>
+  <testcase name="unknownNamedMedicineCannotMatchGenericSavedDocumentWords" classname="com.pocketai.retrieval.EvidenceCoverageTest" time="0.006"/>
+  <testcase name="birthDateAndBothGurmukhiPinSpellingsNeedTheirActualFields" classname="com.pocketai.retrieval.EvidenceCoverageTest" time="0.006"/>
+  <testcase name="anApprovedQuestionProvidesContextForItsShortAnswer" classname="com.pocketai.retrieval.EvidenceCoverageTest" time="0.001"/>
+  <testcase name="aCodeInTheFilenameDoesNotCreateACodeFieldInTheBody" classname="com.pocketai.retrieval.EvidenceCoverageTest" time="0.0"/>
+  <testcase name="mixedSourceFieldsMustActuallyExistInTheRetrievedContent" classname="com.pocketai.retrieval.EvidenceCoverageTest" time="0.001"/>
+  <testcase name="missingPinCannotBeSatisfiedByAnUnrelatedWorkshopFactOrFilename" classname="com.pocketai.retrieval.EvidenceCoverageTest" time="0.001"/>
+  <testcase name="aGenericMedicineMatchCannotAnswerForAnotherNamedDrug" classname="com.pocketai.retrieval.EvidenceCoverageTest" time="0.001"/>
+  <testcase name="keepingMedicineColdDoesNotRequireACommonColdReference" classname="com.pocketai.retrieval.EvidenceCoverageTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

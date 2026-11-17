@@ -1,0 +1,72 @@
+JUnit version 4.13.2
+PHASE PASS native_environment_and_authenticated_document_import
+PHASE START actual_pack_preparation_cancel_resume_and_integrity
+PHASE PASS actual_pack_preparation_cancel_resume_and_integrity
+PHASE START actual_index_skips_long_record_without_starving_later_documents
+PHASE PASS actual_index_skips_long_record_without_starving_later_documents
+PHASE START editing_long_record_allows_reindex_and_clears_warning
+PHASE PASS editing_long_record_allows_reindex_and_clears_warning
+PHASE START actual_revised_canonical_retrieval_probe_48_cases
+CANONICAL PROBE en-workshop-code expected=[workshop-code] actual=[workshop-code]
+CANONICAL PROBE en-workshop-reference expected=[workshop-code] actual=[workshop-code]
+CANONICAL PROBE en-insulin-storage expected=[insulin-storage] actual=[insulin-storage, ibuprofen-warning, paracetamol-reference]
+CANONICAL PROBE en-paracetamol-reference expected=[paracetamol-reference] actual=[paracetamol-reference, medicine-leaflet]
+CANONICAL PROBE en-airport-code expected=[] actual=[]
+CANONICAL PROBE en-garage-code expected=[] actual=[]
+CANONICAL PROBE en-door-pin expected=[] actual=[]
+CANONICAL PROBE en-travel expected=[] actual=[]
+CANONICAL PROBE en-weather expected=[] actual=[]
+CANONICAL PROBE en-wrong-medicine expected=[] actual=[]
+CANONICAL PROBE en-workshop-wifi expected=[] actual=[]
+CANONICAL PROBE en-birthdate expected=[] actual=[]
+CANONICAL PROBE ur-workshop-code expected=[workshop-code] actual=[workshop-code]
+CANONICAL PROBE ur-workshop-reference expected=[workshop-code] actual=[workshop-code]
+CANONICAL PROBE ur-insulin-storage expected=[insulin-storage] actual=[insulin-storage]
+CANONICAL PROBE ur-paracetamol-reference expected=[paracetamol-reference] actual=[paracetamol-reference, medicine-leaflet]
+CANONICAL PROBE ur-airport-code expected=[] actual=[]
+CANONICAL PROBE ur-garage-code expected=[] actual=[]
+CANONICAL PROBE ur-door-pin expected=[] actual=[]
+CANONICAL PROBE ur-travel expected=[] actual=[]
+CANONICAL PROBE ur-weather expected=[] actual=[]
+CANONICAL PROBE ur-wrong-medicine expected=[] actual=[]
+CANONICAL PROBE ur-workshop-wifi expected=[] actual=[]
+CANONICAL PROBE ur-birthdate expected=[] actual=[]
+CANONICAL PROBE pa-Guru-workshop-code expected=[workshop-code] actual=[workshop-code]
+CANONICAL PROBE pa-Guru-workshop-reference expected=[workshop-code] actual=[]
+CANONICAL PROBE pa-Guru-insulin-storage expected=[insulin-storage] actual=[insulin-storage]
+CANONICAL PROBE pa-Guru-paracetamol-reference expected=[paracetamol-reference] actual=[paracetamol-reference, medicine-leaflet]
+CANONICAL PROBE pa-Guru-airport-code expected=[] actual=[]
+CANONICAL PROBE pa-Guru-garage-code expected=[] actual=[]
+CANONICAL PROBE pa-Guru-door-pin expected=[] actual=[]
+CANONICAL PROBE pa-Guru-travel expected=[] actual=[]
+CANONICAL PROBE pa-Guru-weather expected=[] actual=[]
+CANONICAL PROBE pa-Guru-wrong-medicine expected=[] actual=[]
+CANONICAL PROBE pa-Guru-workshop-wifi expected=[] actual=[]
+CANONICAL PROBE pa-Guru-birthdate expected=[] actual=[]
+CANONICAL PROBE pa-Arab-workshop-code expected=[workshop-code] actual=[workshop-code]
+CANONICAL PROBE pa-Arab-workshop-reference expected=[workshop-code] actual=[]
+CANONICAL PROBE pa-Arab-insulin-storage expected=[insulin-storage] actual=[insulin-storage]
+CANONICAL PROBE pa-Arab-paracetamol-reference expected=[paracetamol-reference] actual=[paracetamol-reference, medicine-leaflet]
+CANONICAL PROBE pa-Arab-airport-code expected=[] actual=[]
+CANONICAL PROBE pa-Arab-garage-code expected=[] actual=[]
+CANONICAL PROBE pa-Arab-door-pin expected=[] actual=[]
+CANONICAL PROBE pa-Arab-travel expected=[] actual=[]
+CANONICAL PROBE pa-Arab-weather expected=[] actual=[]
+CANONICAL PROBE pa-Arab-wrong-medicine expected=[] actual=[]
+CANONICAL PROBE pa-Arab-workshop-wifi expected=[] actual=[]
+CANONICAL PROBE pa-Arab-birthdate expected=[] actual=[]
+PHASE PASS actual_revised_canonical_retrieval_probe_48_cases
+PHASE START assistant_actual_english_urdu_gurmukhi_shahmukhi_answers_and_typed_citations
+PHASE PASS assistant_actual_english_urdu_gurmukhi_shahmukhi_answers_and_typed_citations
+PHASE START actual_translation_cache_reuses_verified_source
+PHASE PASS actual_translation_cache_reuses_verified_source
+PHASE START real_database_service_reopen_preserves_vectors_and_trusted_history
+PHASE PASS real_database_service_reopen_preserves_vectors_and_trusted_history
+PHASE START backup_restore_preserves_catalog_citations_and_rebuilds_vectors
+PHASE PASS backup_restore_preserves_catalog_citations_and_rebuilds_vectors
+PHASE START source_edit_delete_invalidates_vectors_translation_and_citations
+PHASE PASS source_edit_delete_invalidates_vectors_translation_and_citations
+PHASE START actual_ort_cancellation_releases_runtime_and_next_translation_recovers
+PHASE PASS actual_ort_cancellation_releases_runtime_and_next_translation_recovers
+Time: 120.086
+OK (1 test)

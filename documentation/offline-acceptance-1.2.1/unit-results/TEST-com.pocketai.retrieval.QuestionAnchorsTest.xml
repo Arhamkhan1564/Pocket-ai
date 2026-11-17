@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.pocketai.retrieval.QuestionAnchorsTest" tests="12" skipped="0" failures="0" errors="0" timestamp="2026-11-17T16:02:51" hostname="09642bcf3291" time="0.044">
+  <properties/>
+  <testcase name="knownCodeSubjectsMatchEvidenceInTheQuestionScript" classname="com.pocketai.retrieval.QuestionAnchorsTest" time="0.007"/>
+  <testcase name="nearbyAirportAndGarageSubjectsCannotBorrowTheWorkshopCode" classname="com.pocketai.retrieval.QuestionAnchorsTest" time="0.003"/>
+  <testcase name="characterTokenAndTopicBoundsRejectInsteadOfTruncating" classname="com.pocketai.retrieval.QuestionAnchorsTest" time="0.014"/>
+  <testcase name="genericCodeFieldsDoNotSupplyTheirOwnSubject" classname="com.pocketai.retrieval.QuestionAnchorsTest" time="0.003"/>
+  <testcase name="scriptDetectionSeparatesSupportedScriptsAndNonletters" classname="com.pocketai.retrieval.QuestionAnchorsTest" time="0.001"/>
+  <testcase name="explicitPinPasswordAndWifiFieldsAreOutsideCodeMatching" classname="com.pocketai.retrieval.QuestionAnchorsTest" time="0.001"/>
+  <testcase name="subjectNumbersArePreservedAndCannotMatchANumberPrefix" classname="com.pocketai.retrieval.QuestionAnchorsTest" time="0.003"/>
+  <testcase name="subjectMatchingUsesWholeTokensInsteadOfSubstrings" classname="com.pocketai.retrieval.QuestionAnchorsTest" time="0.002"/>
+  <testcase name="nonLatinQuestionsRequireProofInTheirOwnScript" classname="com.pocketai.retrieval.QuestionAnchorsTest" time="0.001"/>
+  <testcase name="possessivesAndRequestWordsDoNotBecomeSubjectRequirements" classname="com.pocketai.retrieval.QuestionAnchorsTest" time="0.003"/>
+  <testcase name="accessPhrasesAreSupportedButAnUnrelatedPhraseIsNotACodeQuestion" classname="com.pocketai.retrieval.QuestionAnchorsTest" time="0.001"/>
+  <testcase name="allWordsInAMultiwordSubjectAreRequired" classname="com.pocketai.retrieval.QuestionAnchorsTest" time="0.004"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

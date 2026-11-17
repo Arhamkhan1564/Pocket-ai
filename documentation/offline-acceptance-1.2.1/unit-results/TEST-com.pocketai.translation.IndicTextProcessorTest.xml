@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.pocketai.translation.IndicTextProcessorTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-17T16:03:03" hostname="09642bcf3291" time="0.707">
+  <properties/>
+  <testcase name="englishPreprocessingMatchesOfficialToolkitFixtures" classname="com.pocketai.translation.IndicTextProcessorTest" time="0.259"/>
+  <testcase name="reservedPlaceholdersAndEntitySourceLimitsAreEnforced" classname="com.pocketai.translation.IndicTextProcessorTest" time="0.338"/>
+  <testcase name="postprocessingMatchesActualGreedyAndOfficialEdgeFixtures" classname="com.pocketai.translation.IndicTextProcessorTest" time="0.09"/>
+  <testcase name="onlyReviewedTargetsAreAcceptedAndArabicIsNotFabricated" classname="com.pocketai.translation.IndicTextProcessorTest" time="0.004"/>
+  <testcase name="entityMapsAreRequestLocalAndLiteralCodesAreNotInventedEntities" classname="com.pocketai.translation.IndicTextProcessorTest" time="0.014"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

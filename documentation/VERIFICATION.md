@@ -1,18 +1,34 @@
-# Verification · 1.2 offline RAG
+# Verification · 1.2.1 offline RAG
 
-## Evidence for this version
+## Patch evidence and scope
 
-Use these version-specific records together:
+Use the patch-specific records for completed 1.2.1 results:
 
-- [OFFLINE-BUILD-REPORT.json](OFFLINE-BUILD-REPORT.json): actual completed build/check commands, test counts, skipped cases, APK details and package verification.
+- [OFFLINE-1.2.1-BUILD-REPORT.json](OFFLINE-1.2.1-BUILD-REPORT.json): actual final build/check commands, test totals, skips, artifact identities and lint results.
+- [OFFLINE-ACCEPTANCE-1.2.1.md](OFFLINE-ACCEPTANCE-1.2.1.md): focused component acceptance and the canonical model-backed service harness, with explicit execution status and limits.
+- [Small acceptance records](offline-acceptance-1.2.1/) and [actual voice observations](OFFLINE-VOICE-VALIDATION.md).
+
+A focused component acceptance run has passed the real document-parser → SQLite/catalog → typed-citation → reopen → clean-restore path. This exercises actual extraction and persistent source relationships; it is not a completed Compose UI or physical-phone test.
+
+This patch fixes two concrete source behaviors: keyboard/IME submission cannot proceed during microphone capture or pending recorded audio, and an oversized unsupported saved note no longer aborts indexing of later records. Such a note is retained, stays pending/keyword-only and has an explicit skip reason. A supported edit permits retry. The schema remains 2 and the 13-file resource bundle is unchanged.
+
+The patch includes source-translation stale/edit, deleted-source and same-language passthrough checks plus the skipped-record database case. Test source presence is not a passed suite. The final test count and the full canonical real-model service harness are established only by explicit completed results in the patch reports. A started or pending harness must not be counted as successful integration.
+
+There is still no completed physical itel, Android microphone/TTS, or full current UI acceptance claim. The available development environment has no KVM/attached phone runtime for those checks. Host/Robolectric execution, including a harness using real model files, remains distinct from executing the APK on the target phone.
+
+## Baseline 1.2 architecture and model evidence
+
+These records describe the 1.2.0 baseline retained by this patch:
+
+- [OFFLINE-BUILD-REPORT.json](OFFLINE-BUILD-REPORT.json): historical 1.2.0 build/check commands, counts and artifact verification.
 - [OFFLINE-MODEL-VALIDATION.md](OFFLINE-MODEL-VALIDATION.md): actual model/processor outcomes, including unsuccessful cases and their limits.
 - [Detailed model reports](offline-v1.2-model-results/) and [test-result XML](offline-v1.2-test-results/).
 
-A model file being present, a successful build, a mocked unit test and a real native inference are different evidence. A compiled or skipped instrumentation test is not a successful Android UI run. The older 45/44/1 and 95/94/1 test totals belong to earlier releases; they must not be reused as 1.2 results. The current build report is authoritative for the new count.
+A model file being present, a successful build, a mocked unit test and a real native inference are different evidence. A compiled or skipped instrumentation test is not a successful Android UI run. The 1.2.0 baseline recorded 148 discovered tests, 147 passed and one skipped; these and the older 45/44/1 and 95/94/1 totals must not be reused as fresh 1.2.1 results.
 
 The intended distribution is one APK containing the **13 pinned baseline resource files totaling 715,732,683 bytes (682.6 MiB)**. This is the resource payload, not an APK-size or RAM measurement. The manifest fixes each file's identity and license. Gradle rejects a missing, changed or extra external asset. APK verification must establish that the packaged files match those identities; source declarations alone cannot establish that.
 
-## What changed in 1.2
+## Baseline behavior retained in 1.2.1
 
 | Area | Implemented behavior | Evidence still required on the target phone |
 | --- | --- | --- |
@@ -23,7 +39,7 @@ The intended distribution is one APK containing the **13 pinned baseline resourc
 | Sources | Typed citation IDs open saved passages and linked document passages; originals remain visible | UI behavior, long text/RTL and changed/deleted sources |
 | Documents | Bounded TXT/DOCX/selectable PDF preview, indexing, catalog and administrator deletion | Real provider/files, extraction order and small-screen operation |
 | Persistence | Schema 1→2 migration; format 2 backup with catalog/mappings/typed IDs, accepting format 1 | Update/restart and restore on a second installation |
-| Derived state | Bounded 384-dimensional vectors; stale-write protection and invalidation; revision-bound translation cache | Larger corpus growth, cancellation and low-storage conditions |
+| Derived state | Bounded 384-dimensional vectors; stale-write protection and invalidation; unsupported notes remain pending/keyword-only while later records continue; revision-bound translation cache | Larger corpus growth, cancellation and low-storage conditions |
 | Runtime | CPU libraries for ARMv7 NEON, ARM64 and x86_64; prepared API-23/16-KiB ONNX JNI wrapper | Actual API/CPU/font compatibility and sustained memory/thermal behavior |
 | Voice | Included multilingual Whisper tiny Q5_1 and installed offline Android TTS selection | Actual microphone, each requested language and speaker/media route |
 
@@ -37,7 +53,9 @@ The dedicated translator is **IndicTrans2 distilled 200M int8**, not a relabelle
 
 SmolLM2 360M is an **optional English-focused synthesizer**. Earlier host examples copied a literal and summarized two facts, but a missing-fact test did not abstain correctly. That failure remains a reason for default excerpts and source/coverage checks; it must not be counted as a successful no-answer test. A generated explanation is not proof that the cited source entails every sentence.
 
-Whisper host transcription checks demonstrate a narrow recognition path. They do not establish Urdu/Punjabi accuracy, script output, Android microphone routing or offline TTS quality. Recognition, text translation and spoken output are separate capabilities.
+The current production Whisper JNI path was exercised on **six FLEURS read-speech clips: two English, two Urdu and two Punjabi**. The [voice report](OFFLINE-VOICE-VALIDATION.md) retains references, actual outputs, hashes, scoring caveats and host timings. Urdu outputs had substantial substitutions/omissions, including an omitted spoken number word; both Punjabi outputs were Latin romanization/mixed English rather than the reference Gurmukhi script. English outputs also contained word errors. These checks do not establish acceptable Urdu/Punjabi recognition.
+
+The fixtures did not contain decimal-digit strings, so digit-quantity preservation was not tested. Punjabi edit rates across different scripts are not a fluency measure, and the small sample is not a representative language benchmark. The host checks bypassed Android AudioRecord/permissions, phone noise, TTS and speakers. Recognition, reference translation and spoken output remain separate capabilities. UI guidance now marks Urdu/Punjabi recognition experimental and requires transcript review; hands-free turns use unreviewed text and are unsuitable when exact wording is essential.
 
 ## Target-device status
 
@@ -65,11 +83,13 @@ For a target phone, complete this acceptance sequence with networking disabled:
 3. Let the index finish. Ask known and missing-fact questions in English, Urdu, Gurmukhi and Shahmukhi; compare sources and abstentions. Open each source chip and full saved document. Edit/delete a source and ensure stale vectors/translations cannot be served as current evidence.
 4. Compare translated passages with the English original, including names, identifiers, quantities, units and prohibitions. Ask for clarification when needed; do not interpret a general source as personalized prescribing.
 5. Restart the app/phone. Export/restore format 2, try an old format 1 backup and reject invalid mappings. Check catalog, original content and trusted citation IDs; observe local reindexing after restore.
-6. Test microphone/recognition and installed offline TTS separately for every intended language/script. Check permission denial and text fallback, cancellation and actual media routing.
-7. Compare default excerpts with optional synthesis. Measure first/repeated latency, peak process/native memory, storage growth and thermal behavior. Test larger collections and low-memory/low-storage recovery.
+6. Test microphone/recognition and installed offline TTS separately for every intended language/script. Check permission denial and text fallback, cancellation and actual media routing. Try keyboard/IME Send while capturing and after automatic stop leaves pending audio; finish/cancel and review before submitting.
+7. Compare default excerpts with optional synthesis. Measure first/repeated latency, peak process/native memory, storage growth and thermal behavior. Include an oversized legacy note: verify that its original survives, the skip reason and pending count remain visible, later supported records index, and a supported edit can be retried. Test low-memory/low-storage recovery.
 8. Start/stop the optional foreground appliance session visibly; check notification stop, interruption, duration limits and resource release. Test external USB equipment only when attached.
 
 ## Historical releases
+
+The 1.2.0 [build report](OFFLINE-BUILD-REPORT.json), [model validation](OFFLINE-MODEL-VALIDATION.md) and [test XML](offline-v1.2-test-results/) remain historical baseline evidence. They do not establish that the two patch fixes, new source-translation checks or patch service harness passed. Refer to the patch reports above for those outcomes.
 
 The [1.1 RAG build report](RAG-BUILD-REPORT.json), [1.1 XML](rag-test-results/) and [Qwen model findings](MODEL-VALIDATION.txt) describe the previous release. Its 95 discovered/94 passed/one skipped test count is historical. Its small Qwen candidate failed Urdu/Punjabi generation/translation checks; that is not a result for the new dedicated IndicTrans2 pipeline. Version 1.1 bundled recognition but required a separate language model and had no E5 index.
 

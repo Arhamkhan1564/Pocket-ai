@@ -154,6 +154,23 @@ class DocumentStoreAndVectorTest {
         assertTrue(db.nearestKnowledgeVectors(axis(0), modelHash).isEmpty())
     }
 
+    @Test fun unindexablePassageCanBeSkippedWithoutHidingPendingWorkOrChangingItsOriginal() {
+        val original = "Legacy source note. ".repeat(1500).trim()
+        val longRecord = saved(original)
+        val later = saved("A later short reference that still needs indexing.")
+        assertEquals(longRecord.id, db.pendingEmbeddingKnowledge(modelHash, 1).single().id)
+        assertEquals(later.id, db.pendingEmbeddingKnowledge(modelHash, 1, setOf(longRecord.id)).single().id)
+        assertTrue(store(later))
+        assertTrue(db.pendingEmbeddingKnowledge(modelHash, excludeIds = setOf(longRecord.id)).isEmpty())
+        assertEquals(1, db.countPendingEmbeddingKnowledge(modelHash))
+        assertEquals(original, db.getKnowledge(longRecord.id)!!.content)
+        val revision = db.knowledgeRevision()
+        db.saveKnowledge(longRecord.toDraft().copy(content = "A corrected short source note."), longRecord.id)
+        assertTrue(db.knowledgeRevision() > revision)
+        assertEquals(longRecord.id, db.pendingEmbeddingKnowledge(modelHash).single().id)
+        assertThrows(IllegalArgumentException::class.java) { db.pendingEmbeddingKnowledge(modelHash, excludeIds = setOf(-1L)) }
+    }
+
     @Test fun vectorsAreDerivedNotExportedAndAreClearedOnRestore() {
         val record = saved("Persistent source, regenerable vector index.")
         assertTrue(store(record))

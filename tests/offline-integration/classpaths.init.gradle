@@ -1,0 +1,17 @@
+// External test support only. Does not modify production sources or build configuration.
+gradle.projectsEvaluated {
+    def app = gradle.rootProject.findProject(':app')
+    if (app == null) throw new GradleException('This init script expects the Pocket AI :app module.')
+    app.tasks.register('writeOfflineIntegrationClasspaths') {
+        doLast {
+            def output = new File(System.getProperty('pocketai.integration.classpathDir',
+                new File(gradle.rootProject.buildDir, 'offline-integration-classpaths').absolutePath))
+            output.mkdirs()
+            new File(output, 'runtime.txt').text = app.tasks.named('testDebugUnitTest').get().classpath.asPath + '\n'
+            def compiler = app.configurations.findByName('kotlinCompilerClasspath')
+            if (compiler != null) new File(output, 'compiler.txt').text = compiler.asPath + '\n'
+            println('Wrote local classpath files to ' + output)
+            if (compiler == null) println('No compiler configuration found; supply --kotlinc to the host runner.')
+        }
+    }
+}

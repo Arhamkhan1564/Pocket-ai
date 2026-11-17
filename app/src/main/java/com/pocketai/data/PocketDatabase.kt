@@ -240,10 +240,13 @@ class PocketDatabase(context: Context, private val auth: AuthManager) : SQLiteOp
         return saved
     }
 
-    fun pendingEmbeddingKnowledge(modelHash: String, limit: Int = 5): List<KnowledgeRecord> {
+    fun pendingEmbeddingKnowledge(modelHash: String, limit: Int = 5, excludeIds: Set<Long> = emptySet()): List<KnowledgeRecord> {
         require(limit in 1..20) { "Index at most 20 records per batch." }
+        require(excludeIds.all { it > 0 }) { "Exclude only valid saved passage IDs." }
         val hash = validatedModelHash(modelHash)
-        return readableDatabase.rawQuery("""SELECT k.* FROM knowledge k WHERE k.verified=1 AND NOT EXISTS
+        // IDs are typed positive longs. This avoids SQLite's bound-parameter limit for a large skip set.
+        val exclusion = if (excludeIds.isEmpty()) "" else "AND k.id NOT IN (${excludeIds.joinToString(",")})"
+        return readableDatabase.rawQuery("""SELECT k.* FROM knowledge k WHERE k.verified=1 $exclusion AND NOT EXISTS
             (SELECT 1 FROM knowledge_vectors v WHERE v.knowledge_id=k.id AND v.model_sha=?)
             ORDER BY k.updated_at, k.id LIMIT $limit""", arrayOf(hash))
             .use { cursor -> buildList { while (cursor.moveToNext()) add(cursor.knowledge()) } }

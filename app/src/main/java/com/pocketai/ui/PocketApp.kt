@@ -198,7 +198,7 @@ fun PocketApp() = PocketTheme {
     }
     fun submit() {
         val question = composer.trim()
-        if (question.isBlank() || busy) return
+        if (question.isBlank() || busy || voice.recording || speech.hasPendingRecording) return
         if (appliance.running) { message("Stop the appliance session before starting a text conversation."); return }
         if (question.length > 4000) { message("Keep a question below 4,000 characters."); return }
         if (SearchText.normalize(question) in setOf("stop speaking", "stop", "خاموش", "بولنا بند کریں", "بولنا بند کرو", "ਬੋਲਣਾ ਬੰਦ ਕਰੋ")) {

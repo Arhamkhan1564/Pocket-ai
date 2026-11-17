@@ -1,8 +1,10 @@
-# Included models and compatibility · 1.2
+# Included models and compatibility · 1.2.1
 
 The baseline APK contains all model/tokenizer files needed for local saved-document search, English-to-Urdu/Punjabi reference translation, optional English synthesis and voice recognition. Normal use does not download a model or call a cloud service. First-run preparation copies and verifies files already inside the APK.
 
 The bundle has **13 files totaling 715,732,683 bytes (about 682.6 MiB)**. This is the model-asset total, not the complete APK size or installed-storage requirement. The installed APK and private prepared copies consume separate storage; documents, derived indexes, Android overhead and an optionally retained installer add more.
+
+This patch retains the 1.2 model identities and schema 2. Changes to capture/submission guards and per-record indexing do not retrain or replace model weights. Fresh patch build/acceptance evidence is recorded separately from the historical 1.2 report.
 
 ## Four separate roles
 
@@ -44,6 +46,8 @@ First-run setup and Resources → **Offline tools** copy included files into app
 
 Search, translation and English explanation readiness are separate. Reference indexing has progress and pause/resume controls. New or edited passages need derived vectors before complete semantic matching; keyword search and source reading remain available while indexing is incomplete. Restoring knowledge clears derived vectors for local rebuilding.
 
+The encoder accepts saved records up to 20,000 characters with bounded windows. An oversized or otherwise unsupported saved note is skipped with a reason for that indexing pass, remains pending/keyword-only, and does not abort later supported records. Editing the source makes it eligible for another attempt; split large notes or use the document importer for bounded chunks. No content is silently truncated or marked indexed by this skip path. This is distinct from the importer's one-million-character input-text limit.
+
 Default answers are cited excerpts. Urdu/Punjabi display uses dedicated English-source translation, retaining the intact original. Numeric values, identifiers, warning language and script have preservation checks, but those cannot establish full semantic equivalence. A failed or unavailable translation leaves the original available.
 
 Translation works on bounded passages, not an entire imported book in one operation. The service accepts up to 20,000 source characters and 200 sentences; each model segment is bounded to 4,000 characters, 256 source tokens and 256 output tokens. An unusually long sentence or incomplete decoding can be refused even when the document itself passed import limits. The saved original remains readable.
@@ -60,7 +64,7 @@ Heavy inference is serialized rather than keeping speech, embedding, translation
 | Semantic query against indexed references | Included E5 path | Included E5 path | Included E5 path | Included E5 path |
 | Display English evidence | Original excerpt | Dedicated local translation | Dedicated local translation | Punjabi translation, then labeled script conversion |
 | Optional synthesis | English-focused model | Translation of accepted English explanation | Translation of accepted English explanation | Punjabi explanation translation, then script conversion |
-| Offline recognition | Multilingual Whisper path | Same model; accuracy needs testing | `pa` path; accuracy/script needs testing | `pa` path; accuracy/script needs testing |
+| Offline recognition | Multilingual Whisper path; review transcript | Experimental; word/number omissions observed | Experimental; Latin/mixed output observed | Same `pa` path; requested script is not guaranteed |
 | Spoken output | Installed offline Android voice | Installed compatible voice | Installed compatible voice | Installed compatible voice |
 
 English, Urdu and Punjabi remain selectable alongside any optional configured text language. Extra-language selection does not add a translation direction or voice. The included translator reads English; arbitrary Urdu/Punjabi → English translation or arbitrary language pairs are not promised. Cross-language retrieval uses E5 embeddings rather than assuming forward translation can reverse a question.
@@ -83,6 +87,14 @@ A valid header does not establish full tensor compatibility, memory fit or langu
 
 Android TextToSpeech supplies output independently. Pocket AI selects installed voices marked as not requiring a network connection. Missing or unsuitable voices leave text available. Embedding, translation, GGUF and Whisper resources do not install TTS voices.
 
+## Recognition evidence and limits
+
+The current production JNI recognition path was exercised on six public FLEURS clips: two English, two Urdu and two Punjabi. Urdu output contained substantial substitutions and omissions, including the loss of a spoken number word. Both Punjabi samples returned Latin romanization/mixed English rather than the reference Gurmukhi script. English samples also contained word errors. These observations do not establish acceptable Urdu/Punjabi recognition. See [OFFLINE-VOICE-VALIDATION.md](OFFLINE-VOICE-VALIDATION.md) for actual transcripts, fixture provenance, scoring qualifications and timings.
+
+The fixtures contain no decimal-digit strings, so this run did not establish digit-quantity preservation. Different-script Punjabi word-edit rates are not a fluency estimate. Tests used local audio on a Linux x86_64 host; they bypassed Android microphone capture, permissions, phone noise, TTS and speakers. The itel phone and long-running hands-free operation remain untested.
+
+Review and correct all recognized text before sending or saving, particularly names, identifiers, medicine terms and numbers. Typed input is preferable when exact wording matters. Hands-free appliance turns use unreviewed transcripts and therefore have an additional limitation. Speech language identifiers, model readiness and display-script selection are not recognition-quality guarantees.
+
 ## Source and build inputs
 
 Project source/source archives exclude standalone weights. Developers reconstruct the bundle with `scripts/fetch-offline-models.py`; verified local-cache-only preparation is supported. The prepared Android ONNX Runtime AAR is another external build input reconstructed by `scripts/prepare-onnxruntime-android.py`, with pinned provenance/checks. See [DEVELOPMENT.md](DEVELOPMENT.md) for commands and paths.
@@ -91,7 +103,7 @@ Development preparation may download files when local caches are absent. This ad
 
 ## Evidence and clinical limits
 
-Read [VERIFICATION.md](VERIFICATION.md) for actual build, component and model tests. Synthetic examples, literal checks and host execution are limited evidence, not medical validity or a completed phone UI/audio acceptance run.
+Read [VERIFICATION.md](VERIFICATION.md), the patch [build report](OFFLINE-1.2.1-BUILD-REPORT.json) and [acceptance record](OFFLINE-ACCEPTANCE-1.2.1.md) for actual completed results. A pending harness or planned suite is not a passed check. Synthetic examples, literal checks and host execution are limited evidence, not medical validity or a completed phone UI/audio acceptance run.
 
 Medicine documents are unverified references. Check clinical source quality, drug names, numbers, units, negation and context against the retained English original. The assistant does not automatically diagnose or prescribe; limited urgent-message rules are not universal emergency triage.
 

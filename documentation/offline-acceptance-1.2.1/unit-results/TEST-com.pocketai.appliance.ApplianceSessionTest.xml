@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.pocketai.appliance.ApplianceSessionTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-11-17T16:01:57" hostname="09642bcf3291" time="5.801">
+  <properties/>
+  <testcase name="backgroundContextCannotStartMicrophoneService" classname="com.pocketai.appliance.ApplianceSessionTest" time="4.433"/>
+  <testcase name="visibleActivityStillNeedsExplicitMicrophonePermission" classname="com.pocketai.appliance.ApplianceSessionTest" time="1.108"/>
+  <testcase name="processRecoveryDoesNotRestartMicrophoneAutomatically" classname="com.pocketai.appliance.ApplianceSessionTest" time="0.12"/>
+  <testcase name="explicitStopCommandsSupportEnglishAndLocalScripts" classname="com.pocketai.appliance.ApplianceSessionTest" time="0.14"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

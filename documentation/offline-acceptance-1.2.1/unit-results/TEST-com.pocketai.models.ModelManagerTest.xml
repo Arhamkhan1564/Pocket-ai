@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.pocketai.models.ModelManagerTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-17T16:02:49" hostname="09642bcf3291" time="0.373">
+  <properties/>
+  <testcase name="failedValidationDoesNotInstallAnything" classname="com.pocketai.models.ModelManagerTest" time="0.084"/>
+  <testcase name="duplicateImportLeavesOriginalModelIntact" classname="com.pocketai.models.ModelManagerTest" time="0.081"/>
+  <testcase name="importsPersistsAndRemovesPrivateModel" classname="com.pocketai.models.ModelManagerTest" time="0.097"/>
+  <testcase name="reservesStorageBeforeStartingAnImport" classname="com.pocketai.models.ModelManagerTest" time="0.078"/>
+  <testcase name="refusesArbitraryFilePaths" classname="com.pocketai.models.ModelManagerTest" time="0.032"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

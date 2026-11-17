@@ -1,0 +1,370 @@
+[
+  {
+    "id": "en-workshop-code",
+    "language": "en",
+    "question": "What code unlocks the workshop?",
+    "expected": [
+      "workshop-code"
+    ],
+    "kind": "known"
+  },
+  {
+    "id": "en-workshop-reference",
+    "language": "en",
+    "question": "Which reference number belongs to the workshop?",
+    "expected": [
+      "workshop-code"
+    ],
+    "kind": "known"
+  },
+  {
+    "id": "en-insulin-storage",
+    "language": "en",
+    "question": "What does the document say about keeping insulin cold?",
+    "expected": [
+      "insulin-storage"
+    ],
+    "kind": "known"
+  },
+  {
+    "id": "en-paracetamol-reference",
+    "language": "en",
+    "question": "What does the saved reference say about paracetamol and its label warnings?",
+    "expected": [
+      "paracetamol-reference"
+    ],
+    "kind": "known"
+  },
+  {
+    "id": "en-airport-code",
+    "language": "en",
+    "question": "What is the airport code?",
+    "expected": [],
+    "kind": "negative"
+  },
+  {
+    "id": "en-garage-code",
+    "language": "en",
+    "question": "What is the garage access code?",
+    "expected": [],
+    "kind": "negative"
+  },
+  {
+    "id": "en-door-pin",
+    "language": "en",
+    "question": "What is the door PIN?",
+    "expected": [],
+    "kind": "negative"
+  },
+  {
+    "id": "en-travel",
+    "language": "en",
+    "question": "How do I book a flight to Islamabad?",
+    "expected": [],
+    "kind": "negative"
+  },
+  {
+    "id": "en-weather",
+    "language": "en",
+    "question": "Will it rain tomorrow?",
+    "expected": [],
+    "kind": "negative"
+  },
+  {
+    "id": "en-wrong-medicine",
+    "language": "en",
+    "question": "What does the saved document say about Novamed?",
+    "expected": [],
+    "kind": "negative"
+  },
+  {
+    "id": "en-workshop-wifi",
+    "language": "en",
+    "question": "What is the workshop Wi-Fi password?",
+    "expected": [],
+    "kind": "negative"
+  },
+  {
+    "id": "en-birthdate",
+    "language": "en",
+    "question": "What is the workshop owner's birth date?",
+    "expected": [],
+    "kind": "negative"
+  },
+  {
+    "id": "ur-workshop-code",
+    "language": "ur",
+    "question": "ورکشاپ میں داخلے کا کوڈ کیا ہے؟",
+    "expected": [
+      "workshop-code"
+    ],
+    "kind": "known"
+  },
+  {
+    "id": "ur-workshop-reference",
+    "language": "ur",
+    "question": "ورکشاپ کا حوالہ نمبر کیا ہے؟",
+    "expected": [
+      "workshop-code"
+    ],
+    "kind": "known"
+  },
+  {
+    "id": "ur-insulin-storage",
+    "language": "ur",
+    "question": "انسولین کو کیسے محفوظ رکھنا چاہئے؟",
+    "expected": [
+      "insulin-storage"
+    ],
+    "kind": "known"
+  },
+  {
+    "id": "ur-paracetamol-reference",
+    "language": "ur",
+    "question": "پیراسیٹامول کے بارے میں محفوظ حوالے میں کیا لکھا ہے؟",
+    "expected": [
+      "paracetamol-reference"
+    ],
+    "kind": "known"
+  },
+  {
+    "id": "ur-airport-code",
+    "language": "ur",
+    "question": "ہوائی اڈے کا کوڈ کیا ہے؟",
+    "expected": [],
+    "kind": "negative"
+  },
+  {
+    "id": "ur-garage-code",
+    "language": "ur",
+    "question": "گیراج میں داخلے کا کوڈ کیا ہے؟",
+    "expected": [],
+    "kind": "negative"
+  },
+  {
+    "id": "ur-door-pin",
+    "language": "ur",
+    "question": "دروازے کا پن کوڈ کیا ہے؟",
+    "expected": [],
+    "kind": "negative"
+  },
+  {
+    "id": "ur-travel",
+    "language": "ur",
+    "question": "اسلام آباد کے لیے پرواز کی بکنگ کیسے کروں؟",
+    "expected": [],
+    "kind": "negative"
+  },
+  {
+    "id": "ur-weather",
+    "language": "ur",
+    "question": "کیا کل بارش ہوگی؟",
+    "expected": [],
+    "kind": "negative"
+  },
+  {
+    "id": "ur-wrong-medicine",
+    "language": "ur",
+    "question": "Novamed کے بارے میں محفوظ دستاویز کیا کہتی ہے؟",
+    "expected": [],
+    "kind": "negative"
+  },
+  {
+    "id": "ur-workshop-wifi",
+    "language": "ur",
+    "question": "ورکشاپ کے وائی فائی کا پاس ورڈ کیا ہے؟",
+    "expected": [],
+    "kind": "negative"
+  },
+  {
+    "id": "ur-birthdate",
+    "language": "ur",
+    "question": "ورکشاپ کے مالک کی تاریخ پیدائش کیا ہے؟",
+    "expected": [],
+    "kind": "negative"
+  },
+  {
+    "id": "pa-Guru-workshop-code",
+    "language": "pa-Guru",
+    "question": "ਵਰਕਸ਼ਾਪ ਦਾ ਦਾਖਲਾ ਕੋਡ ਕੀ ਹੈ?",
+    "expected": [
+      "workshop-code"
+    ],
+    "kind": "known"
+  },
+  {
+    "id": "pa-Guru-workshop-reference",
+    "language": "pa-Guru",
+    "question": "ਵਰਕਸ਼ਾਪ ਦਾ ਹਵਾਲਾ ਨੰਬਰ ਕੀ ਹੈ?",
+    "expected": [
+      "workshop-code"
+    ],
+    "kind": "known"
+  },
+  {
+    "id": "pa-Guru-insulin-storage",
+    "language": "pa-Guru",
+    "question": "ਇਨਸੁਲਿਨ ਨੂੰ ਕਿਵੇਂ ਸੰਭਾਲ ਕੇ ਰੱਖਣਾ ਚਾਹੀਦਾ ਹੈ?",
+    "expected": [
+      "insulin-storage"
+    ],
+    "kind": "known"
+  },
+  {
+    "id": "pa-Guru-paracetamol-reference",
+    "language": "pa-Guru",
+    "question": "ਪੈਰਾਸੀਟਾਮੋਲ ਬਾਰੇ ਸੰਭਾਲਿਆ ਹਵਾਲਾ ਕੀ ਕਹਿੰਦਾ ਹੈ?",
+    "expected": [
+      "paracetamol-reference"
+    ],
+    "kind": "known"
+  },
+  {
+    "id": "pa-Guru-airport-code",
+    "language": "pa-Guru",
+    "question": "ਹਵਾਈ ਅੱਡੇ ਦਾ ਕੋਡ ਕੀ ਹੈ?",
+    "expected": [],
+    "kind": "negative"
+  },
+  {
+    "id": "pa-Guru-garage-code",
+    "language": "pa-Guru",
+    "question": "ਗੈਰਾਜ ਦਾ ਦਾਖਲਾ ਕੋਡ ਕੀ ਹੈ?",
+    "expected": [],
+    "kind": "negative"
+  },
+  {
+    "id": "pa-Guru-door-pin",
+    "language": "pa-Guru",
+    "question": "ਦਰਵਾਜ਼ੇ ਦਾ ਪਿਨ ਕੋਡ ਕੀ ਹੈ?",
+    "expected": [],
+    "kind": "negative"
+  },
+  {
+    "id": "pa-Guru-travel",
+    "language": "pa-Guru",
+    "question": "ਇਸਲਾਮਾਬਾਦ ਲਈ ਉਡਾਣ ਦੀ ਬੁਕਿੰਗ ਕਿਵੇਂ ਕਰਾਂ?",
+    "expected": [],
+    "kind": "negative"
+  },
+  {
+    "id": "pa-Guru-weather",
+    "language": "pa-Guru",
+    "question": "ਕੀ ਕੱਲ੍ਹ ਮੀਂਹ ਪਵੇਗਾ?",
+    "expected": [],
+    "kind": "negative"
+  },
+  {
+    "id": "pa-Guru-wrong-medicine",
+    "language": "pa-Guru",
+    "question": "Novamed ਬਾਰੇ ਸੰਭਾਲੇ ਦਸਤਾਵੇਜ਼ ਵਿੱਚ ਕੀ ਲਿਖਿਆ ਹੈ?",
+    "expected": [],
+    "kind": "negative"
+  },
+  {
+    "id": "pa-Guru-workshop-wifi",
+    "language": "pa-Guru",
+    "question": "ਵਰਕਸ਼ਾਪ ਦੇ ਵਾਈ-ਫਾਈ ਦਾ ਪਾਸਵਰਡ ਕੀ ਹੈ?",
+    "expected": [],
+    "kind": "negative"
+  },
+  {
+    "id": "pa-Guru-birthdate",
+    "language": "pa-Guru",
+    "question": "ਵਰਕਸ਼ਾਪ ਦੇ ਮਾਲਕ ਦੀ ਜਨਮ ਮਿਤੀ ਕੀ ਹੈ?",
+    "expected": [],
+    "kind": "negative"
+  },
+  {
+    "id": "pa-Arab-workshop-code",
+    "language": "pa-Arab",
+    "question": "ورکشاپ دا کوڈ کی اے؟",
+    "expected": [
+      "workshop-code"
+    ],
+    "kind": "known"
+  },
+  {
+    "id": "pa-Arab-workshop-reference",
+    "language": "pa-Arab",
+    "question": "ورکشاپ دے حوالے دا نمبر کی اے؟",
+    "expected": [
+      "workshop-code"
+    ],
+    "kind": "known"
+  },
+  {
+    "id": "pa-Arab-insulin-storage",
+    "language": "pa-Arab",
+    "question": "انسولین نوں کیویں سنبھال کے رکھنا چاہیدا اے؟",
+    "expected": [
+      "insulin-storage"
+    ],
+    "kind": "known"
+  },
+  {
+    "id": "pa-Arab-paracetamol-reference",
+    "language": "pa-Arab",
+    "question": "پیراسیٹامول بارے محفوظ حوالہ کیہ کہندا اے؟",
+    "expected": [
+      "paracetamol-reference"
+    ],
+    "kind": "known"
+  },
+  {
+    "id": "pa-Arab-airport-code",
+    "language": "pa-Arab",
+    "question": "ہوائی اڈے دا کوڈ کی اے؟",
+    "expected": [],
+    "kind": "negative"
+  },
+  {
+    "id": "pa-Arab-garage-code",
+    "language": "pa-Arab",
+    "question": "گیراج وچ داخل ہون دا کوڈ کی اے؟",
+    "expected": [],
+    "kind": "negative"
+  },
+  {
+    "id": "pa-Arab-door-pin",
+    "language": "pa-Arab",
+    "question": "بوہے دا پن کوڈ کی اے؟",
+    "expected": [],
+    "kind": "negative"
+  },
+  {
+    "id": "pa-Arab-travel",
+    "language": "pa-Arab",
+    "question": "اسلام آباد دی پرواز دی بکنگ کیویں کراں؟",
+    "expected": [],
+    "kind": "negative"
+  },
+  {
+    "id": "pa-Arab-weather",
+    "language": "pa-Arab",
+    "question": "کی کل بارش ہووے گی؟",
+    "expected": [],
+    "kind": "negative"
+  },
+  {
+    "id": "pa-Arab-wrong-medicine",
+    "language": "pa-Arab",
+    "question": "Novamed بارے محفوظ دستاویز کیہ کہندی اے؟",
+    "expected": [],
+    "kind": "negative"
+  },
+  {
+    "id": "pa-Arab-workshop-wifi",
+    "language": "pa-Arab",
+    "question": "ورکشاپ دے وائی فائی دا پاس ورڈ کی اے؟",
+    "expected": [],
+    "kind": "negative"
+  },
+  {
+    "id": "pa-Arab-birthdate",
+    "language": "pa-Arab",
+    "question": "ورکشاپ دے مالک دی جنم تاریخ کی اے؟",
+    "expected": [],
+    "kind": "negative"
+  }
+]

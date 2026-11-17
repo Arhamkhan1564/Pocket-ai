@@ -1,8 +1,8 @@
-# Install and use Pocket AI 1.2
+# Install and use Pocket AI 1.2.1
 
 Pocket AI's baseline document workflow runs on the phone without a cloud service, account, browser download or manual model import. The single APK includes search, translation, optional English explanation and speech-recognition resources. It requests no Internet permission.
 
-Use the APK and checksum file from the same release. The repository [README](../README.md) identifies current downloads. Earlier 1.0/1.1 packages and reports do not describe every feature or limit of this version.
+Use the APK and checksum file from the same release. The repository [README](../README.md) identifies current downloads. Version 1.2.1 retains the 1.2 offline resource bundle and database schema, with fixes for recording/submission conflicts and oversized saved notes. Earlier build reports describe their own releases, not a fresh acceptance run of this patch.
 
 ## Phone and storage requirements
 
@@ -48,6 +48,8 @@ Imports are bounded to **8 MiB per input file, one million extracted characters,
 
 PDF page counts are file summaries. Answer citations identify filenames/chunks, not exact PDF pages. Embedded document instructions are source material, not instructions for the assistant to execute.
 
+A saved note longer than 20,000 characters cannot use the semantic encoder in one record. It remains intact and available to original-text reading and keyword search. Indexing now skips unsupported notes for that pass, reports the reason and continues with later records; skipped notes remain pending rather than being marked indexed. Split a long note into shorter records or import its original text as TXT to obtain bounded document chunks. After a supported edit, refresh/resume indexing to retry it. The one-million-character document-import limit is separate from this per-record encoder limit.
+
 ## Ask and check the answer
 
 The default style is **Fast cited passages · recommended**. It retrieves supporting saved excerpts rather than asking a small model to invent an answer. Multilingual semantic search matches English, Urdu and Punjabi questions against indexed saved passages; keyword matching remains a fallback. Retrieval can miss or misrank information. If support is missing, the assistant abstains rather than treating a language model as the document source.
@@ -75,11 +77,15 @@ Personal symptom/treatment questions request context and point to qualified clin
 3. Speak and tap again to stop and transcribe. Tap-to-talk recording is bounded to 60 seconds.
 4. Review recognized text before sending a question or confirming training content. Voice questions use the same local document flow as typed questions.
 
-Audio is 16 kHz mono PCM, temporarily buffered and discarded after transcription or cancellation. Silent or very short recordings are rejected. English success does not establish Urdu/Punjabi accuracy or script control; test representative speech on the phone.
+Text submission, including the keyboard's Send action, waits while recording is active or recorded audio still awaits transcription. Finish or cancel that capture, then review the text before sending. This avoids a typed request competing with unfinished microphone input.
+
+**Urdu and Punjabi recognition is experimental.** Actual host tests of six public FLEURS read-speech clips found substantial Urdu word substitutions/omissions, including an omitted spoken number word, and Punjabi Latin romanization/mixed English instead of the reference's Gurmukhi script. Even the two English clips had changed words. This small test is not a language benchmark; it did not test decimal-digit preservation or the phone microphone. See [voice observations](OFFLINE-VOICE-VALIDATION.md).
+
+Review and correct the transcript in every language, especially medicine names, numbers and identifiers. Use typing or reviewed tap-to-talk when exact wording matters. Audio is 16 kHz mono PCM, temporarily buffered and discarded after transcription or cancellation. Silent or very short recordings are rejected. Script selection does not guarantee the recognizer's output script.
 
 Whisper does not supply spoken answers. Resources → **Voice & audio** checks installed Android offline TTS voices separately. Test speaker, speed, volume and microphone route. Android controls the media output route. If a compatible voice is absent, text remains available. The APK does not include TTS voice packs; configuring one through Android is optional system setup, not a requirement for text answers.
 
-An optional appliance session needs a visible user start and microphone permission. Its foreground notification provides a stop control. Sessions use about six-second recording turns and a 30-minute limit; Android can still stop them or restrict screen-off access. Wake words, automatic boot startup and indefinite unattended listening are not included.
+An optional appliance session needs a visible user start and microphone permission. Its foreground notification provides a stop control. It uses **unreviewed transcripts**, so use tap-to-talk instead when exact words or numbers matter. Sessions use about six-second recording turns and a 30-minute limit; Android can still stop them or restrict screen-off access. Wake words, automatic boot startup and indefinite unattended listening are not included.
 
 ## Troubleshooting
 
@@ -88,10 +94,13 @@ An optional appliance session needs a visible user start and microphone permissi
 | Installation or update fails | Check API 23+, supported ABI/CPU, storage and matching signing identity. Back up before uninstalling; uninstalling deletes private data. |
 | Offline setup is incomplete | Open Offline tools, free storage if requested, and retry local setup. No browser/model download is required for the baseline. |
 | Semantic matching is incomplete | Check index progress, resume or retry indexing, and try a word from the original. Read references directly while indexing is unavailable. |
+| Some notes remain keyword-only | Read the skipped-index reason. Shorten/split an unsupported note or import it as a chunked document, then refresh indexing. Its original is retained and later supported passages can still finish. |
 | Translation is unavailable | Check translation readiness, source language and free RAM. The included direction is English to Urdu/Punjabi; rejected output does not replace the original. |
 | A source will not open | It may be deleted or come from old display-only history. Check Library or ask again using current references. |
 | DOC/PDF import fails | Convert binary DOC, remove PDF password protection, or provide selectable text. Scans need external OCR. Check import limits. |
 | Voice input is unavailable | Check CPU/runtime compatibility, speech readiness and microphone permission. ARMv7 needs NEON. |
+| Recognized words, numbers or script are wrong | Correct the transcript before sending/saving, or type the question. Urdu/Punjabi recognition is experimental; changing display script is not a recognition-quality fix. |
+| Keyboard Send does nothing during capture | Finish or cancel recording/pending transcription first, then review and send. |
 | No spoken answer | Check an installed offline Android voice, media volume and output route. Text works without a TTS voice. |
 | A tool reports insufficient RAM | Close other apps and keep excerpt mode. Storage alone does not fix a RAM or 32-bit address-space limit. |
 | Administration is locked | Use the PIN or recovery code. Failed attempts impose increasing delays. |

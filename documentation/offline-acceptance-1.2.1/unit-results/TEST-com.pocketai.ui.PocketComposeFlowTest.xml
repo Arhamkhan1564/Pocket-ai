@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.pocketai.ui.PocketComposeFlowTest" tests="1" skipped="1" failures="0" errors="0" timestamp="2026-11-17T16:03:04" hostname="09642bcf3291" time="0.009">
+  <properties/>
+  <testcase name="protectedTeachingThenQuestionAndActivityRestartPreserveEvidence" classname="com.pocketai.ui.PocketComposeFlowTest" time="0.009">
+    <skipped/>
+  </testcase>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

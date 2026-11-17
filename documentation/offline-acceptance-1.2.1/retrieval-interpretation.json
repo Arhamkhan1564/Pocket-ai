@@ -1,0 +1,125 @@
+{
+  "scope": "Actual revised canonical OfflineRagServices.retrieve over the same nine-record English synthetic corpus and 48 manually worded multilingual queries.",
+  "metric_definition": "14/16 means an annotated expected source is PRESENT in the returned source list. It does not mean perfect precision or that only the expected source was returned.",
+  "known_queries": 16,
+  "known_queries_with_expected_source_present": 14,
+  "known_queries_with_exact_annotated_source_set": 9,
+  "negative_queries": 32,
+  "negative_queries_returning_any_source": 0,
+  "known_queries_with_additional_sources": 5,
+  "additional_source_occurrences": 6,
+  "additional_unique_source_labels": [
+    "ibuprofen-warning",
+    "medicine-leaflet",
+    "paracetamol-reference"
+  ],
+  "all_source_occurrences_returned_for_known_queries": 20,
+  "annotated_expected_source_occurrences_returned": 14,
+  "known_abstentions": [
+    {
+      "id": "pa-Guru-workshop-reference",
+      "language": "pa-Guru",
+      "question": "ਵਰਕਸ਼ਾਪ ਦਾ ਹਵਾਲਾ ਨੰਬਰ ਕੀ ਹੈ?",
+      "expected": [
+        "workshop-code"
+      ],
+      "actual": []
+    },
+    {
+      "id": "pa-Arab-workshop-reference",
+      "language": "pa-Arab",
+      "question": "ورکشاپ دے حوالے دا نمبر کی اے؟",
+      "expected": [
+        "workshop-code"
+      ],
+      "actual": []
+    }
+  ],
+  "additional_sources_by_query": [
+    {
+      "id": "en-insulin-storage",
+      "language": "en",
+      "question": "What does the document say about keeping insulin cold?",
+      "expected": [
+        "insulin-storage"
+      ],
+      "actual": [
+        "insulin-storage",
+        "ibuprofen-warning",
+        "paracetamol-reference"
+      ],
+      "additional_sources": [
+        "ibuprofen-warning",
+        "paracetamol-reference"
+      ],
+      "interpretation": "Additional sources outside the expected insulin-storage label; preserve these extra selections when interpreting retrieval quality."
+    },
+    {
+      "id": "en-paracetamol-reference",
+      "language": "en",
+      "question": "What does the saved reference say about paracetamol and its label warnings?",
+      "expected": [
+        "paracetamol-reference"
+      ],
+      "actual": [
+        "paracetamol-reference",
+        "medicine-leaflet"
+      ],
+      "additional_sources": [
+        "medicine-leaflet"
+      ],
+      "interpretation": "medicine-leaflet is a related, overlapping paracetamol source, but is not annotated as an expected label in this fixture."
+    },
+    {
+      "id": "ur-paracetamol-reference",
+      "language": "ur",
+      "question": "پیراسیٹامول کے بارے میں محفوظ حوالے میں کیا لکھا ہے؟",
+      "expected": [
+        "paracetamol-reference"
+      ],
+      "actual": [
+        "paracetamol-reference",
+        "medicine-leaflet"
+      ],
+      "additional_sources": [
+        "medicine-leaflet"
+      ],
+      "interpretation": "medicine-leaflet is a related, overlapping paracetamol source, but is not annotated as an expected label in this fixture."
+    },
+    {
+      "id": "pa-Guru-paracetamol-reference",
+      "language": "pa-Guru",
+      "question": "ਪੈਰਾਸੀਟਾਮੋਲ ਬਾਰੇ ਸੰਭਾਲਿਆ ਹਵਾਲਾ ਕੀ ਕਹਿੰਦਾ ਹੈ?",
+      "expected": [
+        "paracetamol-reference"
+      ],
+      "actual": [
+        "paracetamol-reference",
+        "medicine-leaflet"
+      ],
+      "additional_sources": [
+        "medicine-leaflet"
+      ],
+      "interpretation": "medicine-leaflet is a related, overlapping paracetamol source, but is not annotated as an expected label in this fixture."
+    },
+    {
+      "id": "pa-Arab-paracetamol-reference",
+      "language": "pa-Arab",
+      "question": "پیراسیٹامول بارے محفوظ حوالہ کیہ کہندا اے؟",
+      "expected": [
+        "paracetamol-reference"
+      ],
+      "actual": [
+        "paracetamol-reference",
+        "medicine-leaflet"
+      ],
+      "additional_sources": [
+        "medicine-leaflet"
+      ],
+      "interpretation": "medicine-leaflet is a related, overlapping paracetamol source, but is not annotated as an expected label in this fixture."
+    }
+  ],
+  "related_overlapping_leaflet_occurrences_not_annotated_expected": 4,
+  "fixture_limit": "The English, Urdu, Gurmukhi and Shahmukhi questions are manually authored fixtures, not fluent-speaker validation. An unannotated overlapping source is not automatically irrelevant; no precision claim is inferred from expected-source presence.",
+  "canonical_probe_sha256": "91aff4b7b1473a65d000b5614872aae4b388788d804ff562c2e7dba30981eb2d"
+}

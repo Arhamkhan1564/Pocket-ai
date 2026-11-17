@@ -1,0 +1,55 @@
+Pocket AI 1.2.1 — small offline integration evidence bundle
+
+Retrieval metric: expected-source PRESENCE, not perfect precision
+The annotated expected source was present for 14 of 16 known queries. This does
+not mean that 14 queries returned only the expected source. Five known queries
+also returned six additional-source occurrences (three unique extra labels).
+Nine known queries returned exactly their annotated expected source set.
+All 32 negative queries returned no source in this fixture. The four known
+workshop-code queries, including the exact Shahmukhi query, retained the source.
+
+Known reference-number abstentions (expected workshop-code; actual []):
+- pa-Guru-workshop-reference: ਵਰਕਸ਼ਾਪ ਦਾ ਹਵਾਲਾ ਨੰਬਰ ਕੀ ਹੈ?
+- pa-Arab-workshop-reference: ورکشاپ دے حوالے دا نمبر کی اے؟
+
+Additional sources on positive/known queries (not hidden inside 14/16):
+- en-insulin-storage: expected ['insulin-storage']; actual ['insulin-storage', 'ibuprofen-warning', 'paracetamol-reference']; additional ['ibuprofen-warning', 'paracetamol-reference']
+- en-paracetamol-reference: expected ['paracetamol-reference']; actual ['paracetamol-reference', 'medicine-leaflet']; additional ['medicine-leaflet']
+- ur-paracetamol-reference: expected ['paracetamol-reference']; actual ['paracetamol-reference', 'medicine-leaflet']; additional ['medicine-leaflet']
+- pa-Guru-paracetamol-reference: expected ['paracetamol-reference']; actual ['paracetamol-reference', 'medicine-leaflet']; additional ['medicine-leaflet']
+- pa-Arab-paracetamol-reference: expected ['paracetamol-reference']; actual ['paracetamol-reference', 'medicine-leaflet']; additional ['medicine-leaflet']
+
+The four medicine-leaflet additions overlap the requested paracetamol topic,
+but medicine-leaflet was not annotated as an expected label in these fixtures.
+The English insulin-storage query returned the correct insulin source plus
+ibuprofen-warning and paracetamol-reference. Expected-source presence therefore
+does not establish source-list precision. See retrieval-interpretation.json.
+
+Final integration run and scope
+Status PASS; 11 recorded phases passed; JUnit OK (1 test).
+The external run record reports 121.598 seconds and exit code 0.
+Actual canonical Kotlin services, native SQLite, JNI/SentencePiece, ORT and
+pinned models ran on Linux x86_64. The test supplied ActivityManager 2 GiB total /
+1.5 GiB available and StatFs values and a host Main dispatcher. This is not a
+physical 2 GiB phone, Android device, airplane-mode, microphone or clinical test.
+The multilingual fixture wording has not been validated by fluent speakers.
+Shahmukhi output uses the app's declared Gurmukhi-to-Shahmukhi script conversion.
+
+Network observation
+No observed outbound IP connect/send operations in this traced scope.
+External Linux Robolectric JUnit JVM and its child threads under strace -f -e trace=network; not Gradle processes, Android airplane mode, or a phone network audit.
+
+Evidence files and provenance
+Six canonical JSON reports were copied byte-for-byte, including all source
+hashes in run-record.json. They are not rewritten to describe a later build.
+The interpretation JSON is separately derived from the canonical probe arrays.
+The original-score probe is an earlier rejected candidate-policy experiment,
+not final release acceptance. The helper probe is an isolated helper check,
+not a new model run. Both include their original scope/limitations.
+Two clearly labeled early-failure JSONs retain their original run records and
+hashes. They are superseded failures, not discarded successful assertions.
+Focused logs include only PHASE/PROBE lines and JUnit final status/timing.
+No raw stack traces, classpaths, runtime commands, compiled libraries, model
+weights, private data directories or SDK setup files were copied as artifacts.
+The canonical integration JSON retains its synthetic test-data path as original
+provenance; that temporary directory itself is not included.

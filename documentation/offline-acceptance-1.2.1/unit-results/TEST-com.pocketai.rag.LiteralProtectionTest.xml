@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.pocketai.rag.LiteralProtectionTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-11-17T16:02:49" hostname="09642bcf3291" time="0.022">
+  <properties/>
+  <testcase name="sourceIdentifiersRoundTripWithoutCollidingWithAnExistingNumber" classname="com.pocketai.rag.LiteralProtectionTest" time="0.015"/>
+  <testcase name="equivalentUrduDigitsRestoreTheExactLatinSourceCode" classname="com.pocketai.rag.LiteralProtectionTest" time="0.001"/>
+  <testcase name="droppedOrDuplicatedIdentifierNeverProducesAUsableTranslation" classname="com.pocketai.rag.LiteralProtectionTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

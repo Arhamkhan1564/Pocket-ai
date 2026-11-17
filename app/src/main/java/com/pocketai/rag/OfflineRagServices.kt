@@ -13,6 +13,7 @@ import com.pocketai.models.OfflineModelAssets
 import com.pocketai.models.OfflinePackSpec
 import com.pocketai.retrieval.OfflineEmbeddingService
 import com.pocketai.retrieval.OnnxEmbeddingKernel
+import com.pocketai.retrieval.QuestionAnchors
 import com.pocketai.retrieval.RagSearchResult
 import com.pocketai.retrieval.SemanticIndexState
 import com.pocketai.retrieval.SemanticRetriever
@@ -46,7 +47,9 @@ open class OfflineRagServices(
     private val appContext = context.applicationContext
     private val specifications = OfflineModelAssets.specs(appContext).associateBy { it.id }
     private val embedding = OfflineEmbeddingService(appContext)
-    private val retriever = SemanticRetriever(db, embedding)
+    private val retriever = SemanticRetriever(db, embedding) { question, language, record, passage ->
+        verifyCodeReference(question, language, record.language, passage)
+    }
     private val translator = OfflineTranslationService(appContext, specifications.getValue("translation"))
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
     private var indexJob: Job? = null
@@ -112,16 +115,26 @@ open class OfflineRagServices(
         indexJob = scope.launch {
             try {
                 translator.invalidateForRevision(db.knowledgeRevision())
+                val skipped = linkedMapOf<Long, String>()
+                var revision = db.knowledgeRevision()
                 while (!paused) {
                     ensureActive()
+                    val currentRevision = db.knowledgeRevision()
+                    if (currentRevision != revision) { skipped.clear(); revision = currentRevision }
                     val total = db.countKnowledge()
-                    val remaining = db.countPendingEmbeddingKnowledge(OnnxEmbeddingKernel.MODEL_SHA256)
-                    mutableIndex.value = SemanticIndexState(remaining > 0, false, (total - remaining).coerceAtLeast(0), total,
-                        if (remaining == 0) "All saved passages are indexed for offline search." else "Indexing saved passages locally · $remaining remaining")
+                    val pending = db.countPendingEmbeddingKnowledge(OnnxEmbeddingKernel.MODEL_SHA256)
+                    val remaining = (pending - skipped.size).coerceAtLeast(0)
+                    val skippedNotice = skipped.values.firstOrNull()?.let { "${skipped.size} passage(s) could not be indexed. $it" }
+                    mutableIndex.value = SemanticIndexState(remaining > 0, false, (total - pending).coerceAtLeast(0), total,
+                        when {
+                            remaining > 0 -> "Indexing saved passages locally · $remaining remaining"
+                            skipped.isNotEmpty() -> "Other passages are indexed. ${skipped.size} passage(s) still use original text and keyword search."
+                            else -> "All saved passages are indexed for offline search."
+                        }, error = skippedNotice)
                     if (remaining == 0) break
-                    val records = db.pendingEmbeddingKnowledge(OnnxEmbeddingKernel.MODEL_SHA256, 5)
+                    val records = db.pendingEmbeddingKnowledge(OnnxEmbeddingKernel.MODEL_SHA256, 5, skipped.keys)
                     if (records.isEmpty()) break
-                    embedding.index(records) { record, windows ->
+                    embedding.index(records, onSkipped = { record, reason -> skipped[record.id] = reason }) { record, windows ->
                         ensureActive()
                         db.storeKnowledgeVectors(record.id, OnnxEmbeddingKernel.MODEL_SHA256, record.updatedAt, record.content,
                             windows.mapIndexed { index, window -> KnowledgeVectorPart(index, window.startOffset, window.endOffset, window.vector) })
@@ -153,6 +166,19 @@ open class OfflineRagServices(
 
     open suspend fun retrieve(question: String, language: String, limit: Int = 3): RagSearchResult =
         retriever.retrieve(question, language, limit, state.value.searchReady)
+
+    private suspend fun verifyCodeReference(question: String, language: String, sourceLanguage: String, passage: String): Boolean {
+        if (QuestionAnchors.matches(question, passage)) return true
+        if (sourceLanguage != "en") return false
+        val target = when (QuestionAnchors.questionScript(question)) {
+            "Guru" -> "pa-Guru"
+            "Arab" -> if (language.startsWith("pa")) "pa-Arab" else "ur"
+            else -> return false
+        }
+        check(state.value.translationReady) { "Prepare local translation tools to verify this cross-language source. Original references remain readable." }
+        val translated = translateText(passage, target)
+        return QuestionAnchors.matches(question, translated.text)
+    }
 
     open suspend fun translateText(source: String, targetLanguage: String, script: String = "Arab"): OfflineTranslation {
         val tag = targetTag(targetLanguage, script)

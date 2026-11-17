@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.pocketai.models.BundledModelInstallTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-17T16:02:48" hostname="09642bcf3291" time="0.375">
+  <properties/>
+  <testcase name="verifiedInstallPersistsAndReusesCopyWithoutReadingAssetAgain" classname="com.pocketai.models.BundledModelInstallTest" time="0.074"/>
+  <testcase name="interruptedOrDamagedPrivateCopyIsRepairedWithStableId" classname="com.pocketai.models.BundledModelInstallTest" time="0.071"/>
+  <testcase name="simultaneousManagersShareOneVerifiedInstallation" classname="com.pocketai.models.BundledModelInstallTest" time="0.079"/>
+  <testcase name="interruptedRegistryCommitDoesNotAccumulateOrphanModels" classname="com.pocketai.models.BundledModelInstallTest" time="0.051"/>
+  <testcase name="checksumMismatchLeavesNoRegisteredModelOrPartialFile" classname="com.pocketai.models.BundledModelInstallTest" time="0.098"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

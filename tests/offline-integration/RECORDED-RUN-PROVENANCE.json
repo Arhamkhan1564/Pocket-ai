@@ -1,0 +1,7 @@
+{
+  "recorded_executed_test_sha256": "1c56ef7cf5b9df0feb4a91a0ed71605f995f53dbc8c1c47a1daa657510965789",
+  "published_test_sha256": "e0f6a9a80a655fd10a3e4038631cc716f790f29f11e1f446f8c054ab673a3007",
+  "portability_changes": "Only report metadata was adapted: cgroup files are optional, and the limits description reads actual host quotas instead of hardcoding the recorded16GiB/4CPU host. All model operations, synthetic questions and assertions are unchanged.",
+  "production_source_hashes_record": "../../documentation/offline-acceptance-1.2.1/run-record.json",
+  "recorded_scope": "1.2.1-debug/code4 canonical host real-model acceptance; no physical Android acceptance."
+}

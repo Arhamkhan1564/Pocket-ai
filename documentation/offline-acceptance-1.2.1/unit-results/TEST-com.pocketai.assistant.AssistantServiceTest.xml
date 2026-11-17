@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.pocketai.assistant.AssistantServiceTest" tests="32" skipped="0" failures="0" errors="0" timestamp="2026-11-17T16:02:03" hostname="09642bcf3291" time="33.039">
+  <properties/>
+  <testcase name="unsafeClinicalTranslationFallsBackToIntactOriginal" classname="com.pocketai.assistant.AssistantServiceTest" time="5.335"/>
+  <testcase name="offlineSelectedExcerptsMustBeExactSpansOfTheirTrustedRecord" classname="com.pocketai.assistant.AssistantServiceTest" time="0.933"/>
+  <testcase name="legacyClinicalLabelsCannotInventTypedSourceIds" classname="com.pocketai.assistant.AssistantServiceTest" time="1.091"/>
+  <testcase name="validatedMedicalTranslationKeepsOriginalAndProvenanceVisible" classname="com.pocketai.assistant.AssistantServiceTest" time="0.641"/>
+  <testcase name="changedDoseInOfflineMedicalTranslationShowsOnlyIntactOriginal" classname="com.pocketai.assistant.AssistantServiceTest" time="0.643"/>
+  <testcase name="unavailableSemanticSearchDoesNotClaimSavedKnowledgeIsAbsent" classname="com.pocketai.assistant.AssistantServiceTest" time="0.676"/>
+  <testcase name="repeatCarriesStoredTypedReferencesWithoutParsingDisplayText" classname="com.pocketai.assistant.AssistantServiceTest" time="0.689"/>
+  <testcase name="languageCommandsOnlySelectTheThreeConfiguredLanguages" classname="com.pocketai.assistant.AssistantServiceTest" time="0.729"/>
+  <testcase name="repeatFindsMostRecentAssistantInChronologicalHistory" classname="com.pocketai.assistant.AssistantServiceTest" time="0.886"/>
+  <testcase name="ordinaryConversationNeverBecomesVerifiedKnowledge" classname="com.pocketai.assistant.AssistantServiceTest" time="1.233"/>
+  <testcase name="unknownQuestionUsesConfiguredUrduAndDoesNotInventFacts" classname="com.pocketai.assistant.AssistantServiceTest" time="0.81"/>
+  <testcase name="rewritingAnUnknownEnglishDrugCannotSubstituteADifferentKnownDrug" classname="com.pocketai.assistant.AssistantServiceTest" time="0.711"/>
+  <testcase name="modelCorruptedCodeCannotPassJustBecauseItsNumbersMatch" classname="com.pocketai.assistant.AssistantServiceTest" time="0.718"/>
+  <testcase name="semanticReadinessPreventsWeakLlmQueryRewrite" classname="com.pocketai.assistant.AssistantServiceTest" time="1.444"/>
+  <testcase name="unknownPunjabiResponseUsesChosenGurmukhiScript" classname="com.pocketai.assistant.AssistantServiceTest" time="0.613"/>
+  <testcase name="aClassificationMissStillCannotReturnGeneratedPrescribingLanguage" classname="com.pocketai.assistant.AssistantServiceTest" time="0.451"/>
+  <testcase name="speedCommandChangesTheRealSettingAndHonorsTheMinimum" classname="com.pocketai.assistant.AssistantServiceTest" time="0.498"/>
+  <testcase name="noSourcesCannotFallThroughToModelWorldKnowledge" classname="com.pocketai.assistant.AssistantServiceTest" time="0.534"/>
+  <testcase name="nonLatinOptionalSynthesisUsesEnglishSourceSummaryThenDedicatedTranslation" classname="com.pocketai.assistant.AssistantServiceTest" time="0.606"/>
+  <testcase name="englishDocumentWithoutModelDoesNotPretendToBeTranslated" classname="com.pocketai.assistant.AssistantServiceTest" time="2.064"/>
+  <testcase name="symptomsGetContextQuestionsAndReferenceButNeverASelectedDose" classname="com.pocketai.assistant.AssistantServiceTest" time="1.822"/>
+  <testcase name="quotedLeafletDirectionsCanTranslateButPersonalDrugChoiceStillGetsIntake" classname="com.pocketai.assistant.AssistantServiceTest" time="1.628"/>
+  <testcase name="clinicalFollowupUsesTypedSourceIdsAndNeverIdsEmbeddedInFilenames" classname="com.pocketai.assistant.AssistantServiceTest" time="1.188"/>
+  <testcase name="noModelReturnsExactSavedEvidenceWithItsSource" classname="com.pocketai.assistant.AssistantServiceTest" time="1.151"/>
+  <testcase name="missingRequestedFieldSkipsOptionalSynthesisRatherThanGuessingFromOtherNumbers" classname="com.pocketai.assistant.AssistantServiceTest" time="0.844"/>
+  <testcase name="aRewriteDroppingTheNamedMedicineCannotReplaceCuratedCorrectSources" classname="com.pocketai.assistant.AssistantServiceTest" time="0.719"/>
+  <testcase name="medicalInfoQuotesSourceInsteadOfRefusingOrGeneratingAdvice" classname="com.pocketai.assistant.AssistantServiceTest" time="1.0"/>
+  <testcase name="offlineBaselineUsesSemanticEvidenceAndTranslationWithoutAGgufModel" classname="com.pocketai.assistant.AssistantServiceTest" time="0.722"/>
+  <testcase name="redFlagDoesNotRequireSourcesOrInvokeTheModel" classname="com.pocketai.assistant.AssistantServiceTest" time="0.707"/>
+  <testcase name="offlinePipelineWithoutSourcesDoesNotCallEitherGeneratorOrTranslator" classname="com.pocketai.assistant.AssistantServiceTest" time="0.676"/>
+  <testcase name="localEnglishRewriteCanRetrieveEnglishDocumentForUrduQuestion" classname="com.pocketai.assistant.AssistantServiceTest" time="0.662"/>
+  <testcase name="documentInstructionsAreQuotedRatherThanExecuted" classname="com.pocketai.assistant.AssistantServiceTest" time="0.601"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

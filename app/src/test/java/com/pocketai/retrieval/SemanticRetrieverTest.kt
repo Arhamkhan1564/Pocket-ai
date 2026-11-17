@@ -71,6 +71,19 @@ class SemanticRetrieverTest {
         assertNull(result.notice)
     }
 
+    @Test fun aSharedCodeWordCannotAnswerForAnotherPlace() = runBlocking {
+        saveWorkshopReference()
+        assertTrue(retriever.retrieve("What is the airport code?", "en", semanticReady = false).records.isEmpty())
+        assertTrue(retriever.retrieve("What is the garage access code?", "en", semanticReady = false).records.isEmpty())
+    }
+
+    @Test fun approvedQuestionAnswerPairsKeepTheirShortAnswerRetrievable() = runBlocking {
+        val id = db.saveKnowledge(KnowledgeDraft("cedar-47", "What is the workshop code?"))
+        val result = retriever.retrieve("What is the workshop code?", "en", semanticReady = false)
+        assertEquals(listOf(id), result.records.map { it.id })
+        assertEquals("cedar-47", result.records.single().content)
+    }
+
     private fun saveWorkshopReference(): Long = db.saveKnowledge(KnowledgeDraft(
         "The workshop access code is cedar-47.",
         source = "document",

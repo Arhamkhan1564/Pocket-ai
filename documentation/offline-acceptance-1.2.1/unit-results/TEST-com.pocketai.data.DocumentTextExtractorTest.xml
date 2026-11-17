@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.pocketai.data.DocumentTextExtractorTest" tests="12" skipped="0" failures="0" errors="0" timestamp="2026-11-17T16:02:41" hostname="09642bcf3291" time="0.89">
+  <properties/>
+  <testcase name="rejectsUnsafeZipPathsAndZipFilesThatAreNotDocx" classname="com.pocketai.data.DocumentTextExtractorTest" time="0.03"/>
+  <testcase name="utf8TxtPreservesOriginalEnglishAndUnicode" classname="com.pocketai.data.DocumentTextExtractorTest" time="0.04"/>
+  <testcase name="imageOnlyOrEmptyPdfHasClearOcrMessage" classname="com.pocketai.data.DocumentTextExtractorTest" time="0.112"/>
+  <testcase name="oversizedPdfPageCountIsRejectedBeforeTextProcessing" classname="com.pocketai.data.DocumentTextExtractorTest" time="0.039"/>
+  <testcase name="rejectsInvalidUtf8AndBinaryTxtRatherThanReplacingBytes" classname="com.pocketai.data.DocumentTextExtractorTest" time="0.063"/>
+  <testcase name="rejectsZipBombCompressionAndExcessiveEntries" classname="com.pocketai.data.DocumentTextExtractorTest" time="0.04"/>
+  <testcase name="unsupportedAndRenamedBinaryFilesAreRejected" classname="com.pocketai.data.DocumentTextExtractorTest" time="0.035"/>
+  <testcase name="txtInputAndExtractedOutputHaveIndependentBounds" classname="com.pocketai.data.DocumentTextExtractorTest" time="0.234"/>
+  <testcase name="textBasedPdfUsesRealExtractionAndReportsPageCount" classname="com.pocketai.data.DocumentTextExtractorTest" time="0.216"/>
+  <testcase name="rejectsDocxExternalEntitiesBeforeParsingAndCleansTemporaryFiles" classname="com.pocketai.data.DocumentTextExtractorTest" time="0.019"/>
+  <testcase name="extractsDocxParagraphsTabsAndTableTextAndFootnotes" classname="com.pocketai.data.DocumentTextExtractorTest" time="0.044"/>
+  <testcase name="legacyDocHasExplicitConversionInstructions" classname="com.pocketai.data.DocumentTextExtractorTest" time="0.015"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

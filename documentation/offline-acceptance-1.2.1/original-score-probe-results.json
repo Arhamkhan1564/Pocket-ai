@@ -1,0 +1,2776 @@
+{
+  "status": "COMPLETED_NOT_A_RELEASE_ACCEPTANCE",
+  "cases": 48,
+  "corpus_records": 9,
+  "results": [
+    {
+      "id": "en-workshop-code",
+      "language": "en",
+      "question": "What code unlocks the workshop?",
+      "expected": [
+        "workshop-code"
+      ],
+      "top_score": 0.8858259910304891,
+      "margin": 0.14052852379006797,
+      "top_source": "workshop-code",
+      "requested_fields": [
+        "code"
+      ],
+      "fields_present_in_top_source": [
+        "code"
+      ],
+      "lexical_sources": [
+        "workshop-code"
+      ],
+      "current_sources": [
+        "workshop-code"
+      ],
+      "candidate_sources": [
+        "workshop-code"
+      ],
+      "candidate_fallback_applied": false,
+      "current_known_match": true,
+      "candidate_known_match": true,
+      "current_false_match": false,
+      "candidate_false_match": false,
+      "new_false_match": false,
+      "top_scores": [
+        {
+          "source": "workshop-code",
+          "score": 0.8858259910304891,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "insulin-storage",
+          "score": 0.7452974672404211,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "ibuprofen-warning",
+          "score": 0.7440079416701432,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "filter-maintenance",
+          "score": 0.7389069732194506,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "medicine-leaflet",
+          "score": 0.7289253509750383,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        }
+      ]
+    },
+    {
+      "id": "en-workshop-reference",
+      "language": "en",
+      "question": "Which reference number belongs to the workshop?",
+      "expected": [
+        "workshop-code"
+      ],
+      "top_score": 0.8780694789947016,
+      "margin": 0.09877907198224178,
+      "top_source": "workshop-code",
+      "requested_fields": [
+        "reference_number"
+      ],
+      "fields_present_in_top_source": [
+        "reference_number"
+      ],
+      "lexical_sources": [
+        "workshop-code",
+        "paracetamol-reference",
+        "insulin-storage"
+      ],
+      "current_sources": [
+        "workshop-code",
+        "paracetamol-reference",
+        "insulin-storage"
+      ],
+      "candidate_sources": [
+        "workshop-code",
+        "paracetamol-reference",
+        "insulin-storage"
+      ],
+      "candidate_fallback_applied": false,
+      "current_known_match": true,
+      "candidate_known_match": true,
+      "current_false_match": false,
+      "candidate_false_match": false,
+      "new_false_match": false,
+      "top_scores": [
+        {
+          "source": "workshop-code",
+          "score": 0.8780694789947016,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "ibuprofen-warning",
+          "score": 0.7792904070124598,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "insulin-storage",
+          "score": 0.7784151131923621,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "short-archive",
+          "score": 0.7594246806711976,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "paracetamol-reference",
+          "score": 0.7506136511005247,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        }
+      ]
+    },
+    {
+      "id": "en-insulin-storage",
+      "language": "en",
+      "question": "What does the document say about keeping insulin cold?",
+      "expected": [
+        "insulin-storage"
+      ],
+      "top_score": 0.8612204142914383,
+      "margin": 0.031998660953588054,
+      "top_source": "insulin-storage",
+      "requested_fields": [],
+      "fields_present_in_top_source": [],
+      "lexical_sources": [],
+      "current_sources": [],
+      "candidate_sources": [],
+      "candidate_fallback_applied": false,
+      "current_known_match": false,
+      "candidate_known_match": false,
+      "current_false_match": false,
+      "candidate_false_match": false,
+      "new_false_match": false,
+      "top_scores": [
+        {
+          "source": "insulin-storage",
+          "score": 0.8612204142914383,
+          "coverage_allows": false,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "ibuprofen-warning",
+          "score": 0.8292217533378502,
+          "coverage_allows": false,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "paracetamol-reference",
+          "score": 0.8203326080594684,
+          "coverage_allows": false,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "medicine-leaflet",
+          "score": 0.770681702705641,
+          "coverage_allows": false,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "filter-maintenance",
+          "score": 0.7646522978722787,
+          "coverage_allows": false,
+          "coverage_covers_single": true
+        }
+      ]
+    },
+    {
+      "id": "en-paracetamol-reference",
+      "language": "en",
+      "question": "What does the saved reference say about paracetamol and its label warnings?",
+      "expected": [
+        "paracetamol-reference"
+      ],
+      "top_score": 0.8935386864164722,
+      "margin": 0.05160801256541436,
+      "top_source": "paracetamol-reference",
+      "requested_fields": [],
+      "fields_present_in_top_source": [],
+      "lexical_sources": [
+        "paracetamol-reference",
+        "medicine-leaflet"
+      ],
+      "current_sources": [
+        "paracetamol-reference",
+        "medicine-leaflet"
+      ],
+      "candidate_sources": [
+        "paracetamol-reference",
+        "medicine-leaflet"
+      ],
+      "candidate_fallback_applied": false,
+      "current_known_match": true,
+      "candidate_known_match": true,
+      "current_false_match": false,
+      "candidate_false_match": false,
+      "new_false_match": false,
+      "top_scores": [
+        {
+          "source": "paracetamol-reference",
+          "score": 0.8935386864164722,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "ibuprofen-warning",
+          "score": 0.8419306738510578,
+          "coverage_allows": false,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "medicine-leaflet",
+          "score": 0.8380384070724761,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "insulin-storage",
+          "score": 0.802841632672664,
+          "coverage_allows": false,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "workshop-code",
+          "score": 0.7596421927163123,
+          "coverage_allows": false,
+          "coverage_covers_single": true
+        }
+      ]
+    },
+    {
+      "id": "en-airport-code",
+      "language": "en",
+      "question": "What is the airport code?",
+      "expected": [],
+      "top_score": 0.8435562135863923,
+      "margin": 0.054927077133062,
+      "top_source": "workshop-code",
+      "requested_fields": [
+        "code"
+      ],
+      "fields_present_in_top_source": [
+        "code"
+      ],
+      "lexical_sources": [
+        "workshop-code"
+      ],
+      "current_sources": [
+        "workshop-code"
+      ],
+      "candidate_sources": [
+        "workshop-code"
+      ],
+      "candidate_fallback_applied": false,
+      "current_known_match": false,
+      "candidate_known_match": false,
+      "current_false_match": true,
+      "candidate_false_match": true,
+      "new_false_match": false,
+      "top_scores": [
+        {
+          "source": "workshop-code",
+          "score": 0.8435562135863923,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "ibuprofen-warning",
+          "score": 0.7886291364533303,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "insulin-storage",
+          "score": 0.763090762961661,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "medicine-leaflet",
+          "score": 0.7594569842550665,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "paracetamol-reference",
+          "score": 0.7531369976004162,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        }
+      ]
+    },
+    {
+      "id": "en-garage-code",
+      "language": "en",
+      "question": "What is the garage access code?",
+      "expected": [],
+      "top_score": 0.8579238087837888,
+      "margin": 0.09020846475076072,
+      "top_source": "workshop-code",
+      "requested_fields": [
+        "code"
+      ],
+      "fields_present_in_top_source": [
+        "code"
+      ],
+      "lexical_sources": [
+        "workshop-code"
+      ],
+      "current_sources": [
+        "workshop-code"
+      ],
+      "candidate_sources": [
+        "workshop-code"
+      ],
+      "candidate_fallback_applied": false,
+      "current_known_match": false,
+      "candidate_known_match": false,
+      "current_false_match": true,
+      "candidate_false_match": true,
+      "new_false_match": false,
+      "top_scores": [
+        {
+          "source": "workshop-code",
+          "score": 0.8579238087837888,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "insulin-storage",
+          "score": 0.7677153440330281,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "filter-maintenance",
+          "score": 0.7585583195772326,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "paracetamol-reference",
+          "score": 0.7571870831143045,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "ibuprofen-warning",
+          "score": 0.7510406769274027,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        }
+      ]
+    },
+    {
+      "id": "en-door-pin",
+      "language": "en",
+      "question": "What is the door PIN?",
+      "expected": [],
+      "top_score": 0.785470187170905,
+      "margin": 0.020086728858045744,
+      "top_source": "workshop-code",
+      "requested_fields": [
+        "pin"
+      ],
+      "fields_present_in_top_source": [],
+      "lexical_sources": [],
+      "current_sources": [],
+      "candidate_sources": [],
+      "candidate_fallback_applied": false,
+      "current_known_match": false,
+      "candidate_known_match": false,
+      "current_false_match": false,
+      "candidate_false_match": false,
+      "new_false_match": false,
+      "top_scores": [
+        {
+          "source": "workshop-code",
+          "score": 0.785470187170905,
+          "coverage_allows": false,
+          "coverage_covers_single": false
+        },
+        {
+          "source": "insulin-storage",
+          "score": 0.7653834583128593,
+          "coverage_allows": false,
+          "coverage_covers_single": false
+        },
+        {
+          "source": "paracetamol-reference",
+          "score": 0.7632898732141813,
+          "coverage_allows": false,
+          "coverage_covers_single": false
+        },
+        {
+          "source": "ibuprofen-warning",
+          "score": 0.7557686427378213,
+          "coverage_allows": false,
+          "coverage_covers_single": false
+        },
+        {
+          "source": "bread-recipe",
+          "score": 0.751587319835886,
+          "coverage_allows": false,
+          "coverage_covers_single": false
+        }
+      ]
+    },
+    {
+      "id": "en-travel",
+      "language": "en",
+      "question": "How do I book a flight to Islamabad?",
+      "expected": [],
+      "top_score": 0.781045190660538,
+      "margin": 0.005785350411544932,
+      "top_source": "ibuprofen-warning",
+      "requested_fields": [],
+      "fields_present_in_top_source": [],
+      "lexical_sources": [],
+      "current_sources": [],
+      "candidate_sources": [],
+      "candidate_fallback_applied": false,
+      "current_known_match": false,
+      "candidate_known_match": false,
+      "current_false_match": false,
+      "candidate_false_match": false,
+      "new_false_match": false,
+      "top_scores": [
+        {
+          "source": "ibuprofen-warning",
+          "score": 0.781045190660538,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "workshop-code",
+          "score": 0.7752598402489931,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "filter-maintenance",
+          "score": 0.7743025668100835,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "insulin-storage",
+          "score": 0.7697366237371004,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "medicine-leaflet",
+          "score": 0.769657679899094,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        }
+      ]
+    },
+    {
+      "id": "en-weather",
+      "language": "en",
+      "question": "Will it rain tomorrow?",
+      "expected": [],
+      "top_score": 0.7926493893833131,
+      "margin": 0.012413270695508127,
+      "top_source": "filter-maintenance",
+      "requested_fields": [],
+      "fields_present_in_top_source": [],
+      "lexical_sources": [],
+      "current_sources": [],
+      "candidate_sources": [],
+      "candidate_fallback_applied": false,
+      "current_known_match": false,
+      "candidate_known_match": false,
+      "current_false_match": false,
+      "candidate_false_match": false,
+      "new_false_match": false,
+      "top_scores": [
+        {
+          "source": "filter-maintenance",
+          "score": 0.7926493893833131,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "ibuprofen-warning",
+          "score": 0.780236118687805,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "astronomy",
+          "score": 0.775424968697046,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "workshop-code",
+          "score": 0.768526033257438,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "paracetamol-reference",
+          "score": 0.7637886321126955,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        }
+      ]
+    },
+    {
+      "id": "en-wrong-medicine",
+      "language": "en",
+      "question": "What does the saved document say about Novamed?",
+      "expected": [],
+      "top_score": 0.8031838815270881,
+      "margin": 0.002132897849630666,
+      "top_source": "ibuprofen-warning",
+      "requested_fields": [],
+      "fields_present_in_top_source": [],
+      "lexical_sources": [
+        "paracetamol-reference",
+        "ibuprofen-warning"
+      ],
+      "current_sources": [
+        "paracetamol-reference",
+        "ibuprofen-warning"
+      ],
+      "candidate_sources": [
+        "paracetamol-reference",
+        "ibuprofen-warning"
+      ],
+      "candidate_fallback_applied": false,
+      "current_known_match": false,
+      "candidate_known_match": false,
+      "current_false_match": true,
+      "candidate_false_match": true,
+      "new_false_match": false,
+      "top_scores": [
+        {
+          "source": "ibuprofen-warning",
+          "score": 0.8031838815270881,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "paracetamol-reference",
+          "score": 0.8010509836774574,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "insulin-storage",
+          "score": 0.7803152609708057,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "medicine-leaflet",
+          "score": 0.761441553170053,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "workshop-code",
+          "score": 0.753576311238911,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        }
+      ]
+    },
+    {
+      "id": "en-workshop-wifi",
+      "language": "en",
+      "question": "What is the workshop Wi-Fi password?",
+      "expected": [],
+      "top_score": 0.8429393574700061,
+      "margin": 0.08346018049558068,
+      "top_source": "workshop-code",
+      "requested_fields": [
+        "password",
+        "wifi"
+      ],
+      "fields_present_in_top_source": [],
+      "lexical_sources": [],
+      "current_sources": [],
+      "candidate_sources": [],
+      "candidate_fallback_applied": false,
+      "current_known_match": false,
+      "candidate_known_match": false,
+      "current_false_match": false,
+      "candidate_false_match": false,
+      "new_false_match": false,
+      "top_scores": [
+        {
+          "source": "workshop-code",
+          "score": 0.8429393574700061,
+          "coverage_allows": false,
+          "coverage_covers_single": false
+        },
+        {
+          "source": "paracetamol-reference",
+          "score": 0.7594791769744255,
+          "coverage_allows": false,
+          "coverage_covers_single": false
+        },
+        {
+          "source": "filter-maintenance",
+          "score": 0.7573901144875597,
+          "coverage_allows": false,
+          "coverage_covers_single": false
+        },
+        {
+          "source": "medicine-leaflet",
+          "score": 0.7543634708467529,
+          "coverage_allows": false,
+          "coverage_covers_single": false
+        },
+        {
+          "source": "ibuprofen-warning",
+          "score": 0.7459623873866158,
+          "coverage_allows": false,
+          "coverage_covers_single": false
+        }
+      ]
+    },
+    {
+      "id": "en-birthdate",
+      "language": "en",
+      "question": "What is the workshop owner's birth date?",
+      "expected": [],
+      "top_score": 0.8317269633483888,
+      "margin": 0.09170870533715869,
+      "top_source": "workshop-code",
+      "requested_fields": [],
+      "fields_present_in_top_source": [],
+      "lexical_sources": [
+        "workshop-code"
+      ],
+      "current_sources": [
+        "workshop-code"
+      ],
+      "candidate_sources": [
+        "workshop-code"
+      ],
+      "candidate_fallback_applied": false,
+      "current_known_match": false,
+      "candidate_known_match": false,
+      "current_false_match": true,
+      "candidate_false_match": true,
+      "new_false_match": false,
+      "top_scores": [
+        {
+          "source": "workshop-code",
+          "score": 0.8317269633483888,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "ibuprofen-warning",
+          "score": 0.7400182580112301,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "filter-maintenance",
+          "score": 0.7276288524289392,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "paracetamol-reference",
+          "score": 0.7171266067374331,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "insulin-storage",
+          "score": 0.7162518956428616,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        }
+      ]
+    },
+    {
+      "id": "ur-workshop-code",
+      "language": "ur",
+      "question": "ورکشاپ میں داخلے کا کوڈ کیا ہے؟",
+      "expected": [
+        "workshop-code"
+      ],
+      "top_score": 0.8192486563828559,
+      "margin": 0.030744254824488504,
+      "top_source": "workshop-code",
+      "requested_fields": [
+        "code"
+      ],
+      "fields_present_in_top_source": [
+        "code"
+      ],
+      "lexical_sources": [],
+      "current_sources": [],
+      "candidate_sources": [
+        "workshop-code"
+      ],
+      "candidate_fallback_applied": true,
+      "current_known_match": false,
+      "candidate_known_match": true,
+      "current_false_match": false,
+      "candidate_false_match": false,
+      "new_false_match": false,
+      "top_scores": [
+        {
+          "source": "workshop-code",
+          "score": 0.8192486563828559,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "insulin-storage",
+          "score": 0.7885044015583674,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "short-archive",
+          "score": 0.7787318615018959,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "paracetamol-reference",
+          "score": 0.7722208747264936,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "ibuprofen-warning",
+          "score": 0.7699516868819732,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        }
+      ]
+    },
+    {
+      "id": "ur-workshop-reference",
+      "language": "ur",
+      "question": "ورکشاپ کا حوالہ نمبر کیا ہے؟",
+      "expected": [
+        "workshop-code"
+      ],
+      "top_score": 0.8204588918084177,
+      "margin": 0.02465738617728075,
+      "top_source": "workshop-code",
+      "requested_fields": [
+        "reference_number"
+      ],
+      "fields_present_in_top_source": [
+        "reference_number"
+      ],
+      "lexical_sources": [],
+      "current_sources": [
+        "workshop-code"
+      ],
+      "candidate_sources": [
+        "workshop-code"
+      ],
+      "candidate_fallback_applied": false,
+      "current_known_match": true,
+      "candidate_known_match": true,
+      "current_false_match": false,
+      "candidate_false_match": false,
+      "new_false_match": false,
+      "top_scores": [
+        {
+          "source": "workshop-code",
+          "score": 0.8204588918084177,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "short-archive",
+          "score": 0.7958015056311369,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "ibuprofen-warning",
+          "score": 0.7763065395535249,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "insulin-storage",
+          "score": 0.7745420875384604,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "paracetamol-reference",
+          "score": 0.7740565929651888,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        }
+      ]
+    },
+    {
+      "id": "ur-insulin-storage",
+      "language": "ur",
+      "question": "انسولین کو کیسے محفوظ رکھنا چاہئے؟",
+      "expected": [
+        "insulin-storage"
+      ],
+      "top_score": 0.8271050639222942,
+      "margin": 0.045609044583705294,
+      "top_source": "insulin-storage",
+      "requested_fields": [],
+      "fields_present_in_top_source": [],
+      "lexical_sources": [],
+      "current_sources": [
+        "insulin-storage"
+      ],
+      "candidate_sources": [
+        "insulin-storage"
+      ],
+      "candidate_fallback_applied": false,
+      "current_known_match": true,
+      "candidate_known_match": true,
+      "current_false_match": false,
+      "candidate_false_match": false,
+      "new_false_match": false,
+      "top_scores": [
+        {
+          "source": "insulin-storage",
+          "score": 0.8271050639222942,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "ibuprofen-warning",
+          "score": 0.7814960193385889,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "paracetamol-reference",
+          "score": 0.7796124127773992,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "medicine-leaflet",
+          "score": 0.7796112847256493,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "filter-maintenance",
+          "score": 0.7655205593016378,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        }
+      ]
+    },
+    {
+      "id": "ur-paracetamol-reference",
+      "language": "ur",
+      "question": "پیراسیٹامول کے بارے میں محفوظ حوالے میں کیا لکھا ہے؟",
+      "expected": [
+        "paracetamol-reference"
+      ],
+      "top_score": 0.8274431901803059,
+      "margin": 0.02626788245180678,
+      "top_source": "paracetamol-reference",
+      "requested_fields": [],
+      "fields_present_in_top_source": [],
+      "lexical_sources": [
+        "paracetamol-reference",
+        "medicine-leaflet"
+      ],
+      "current_sources": [
+        "paracetamol-reference",
+        "medicine-leaflet"
+      ],
+      "candidate_sources": [
+        "paracetamol-reference",
+        "medicine-leaflet"
+      ],
+      "candidate_fallback_applied": false,
+      "current_known_match": true,
+      "candidate_known_match": true,
+      "current_false_match": false,
+      "candidate_false_match": false,
+      "new_false_match": false,
+      "top_scores": [
+        {
+          "source": "paracetamol-reference",
+          "score": 0.8274431901803059,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "medicine-leaflet",
+          "score": 0.8011753077284991,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "ibuprofen-warning",
+          "score": 0.7907547678845512,
+          "coverage_allows": false,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "insulin-storage",
+          "score": 0.7765694431349394,
+          "coverage_allows": false,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "astronomy",
+          "score": 0.7551082161142081,
+          "coverage_allows": false,
+          "coverage_covers_single": true
+        }
+      ]
+    },
+    {
+      "id": "ur-airport-code",
+      "language": "ur",
+      "question": "ہوائی اڈے کا کوڈ کیا ہے؟",
+      "expected": [],
+      "top_score": 0.8018689790285779,
+      "margin": 0.04418276254476505,
+      "top_source": "workshop-code",
+      "requested_fields": [
+        "code"
+      ],
+      "fields_present_in_top_source": [
+        "code"
+      ],
+      "lexical_sources": [],
+      "current_sources": [],
+      "candidate_sources": [
+        "workshop-code"
+      ],
+      "candidate_fallback_applied": true,
+      "current_known_match": false,
+      "candidate_known_match": false,
+      "current_false_match": false,
+      "candidate_false_match": true,
+      "new_false_match": true,
+      "top_scores": [
+        {
+          "source": "workshop-code",
+          "score": 0.8018689790285779,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "short-archive",
+          "score": 0.7576862164838128,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "ibuprofen-warning",
+          "score": 0.7537083480776632,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "medicine-leaflet",
+          "score": 0.75165894394098,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "insulin-storage",
+          "score": 0.7515299240429171,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        }
+      ]
+    },
+    {
+      "id": "ur-garage-code",
+      "language": "ur",
+      "question": "گیراج میں داخلے کا کوڈ کیا ہے؟",
+      "expected": [],
+      "top_score": 0.8078381759787805,
+      "margin": 0.03254997263862225,
+      "top_source": "workshop-code",
+      "requested_fields": [
+        "code"
+      ],
+      "fields_present_in_top_source": [
+        "code"
+      ],
+      "lexical_sources": [],
+      "current_sources": [],
+      "candidate_sources": [
+        "workshop-code"
+      ],
+      "candidate_fallback_applied": true,
+      "current_known_match": false,
+      "candidate_known_match": false,
+      "current_false_match": false,
+      "candidate_false_match": true,
+      "new_false_match": true,
+      "top_scores": [
+        {
+          "source": "workshop-code",
+          "score": 0.8078381759787805,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "short-archive",
+          "score": 0.7752882033401582,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "insulin-storage",
+          "score": 0.770101015056865,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "paracetamol-reference",
+          "score": 0.7665598219471376,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "medicine-leaflet",
+          "score": 0.7661322518597766,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        }
+      ]
+    },
+    {
+      "id": "ur-door-pin",
+      "language": "ur",
+      "question": "دروازے کا پن کوڈ کیا ہے؟",
+      "expected": [],
+      "top_score": 0.8183793117280411,
+      "margin": 0.04203840725912522,
+      "top_source": "workshop-code",
+      "requested_fields": [
+        "pin",
+        "code"
+      ],
+      "fields_present_in_top_source": [
+        "code"
+      ],
+      "lexical_sources": [],
+      "current_sources": [],
+      "candidate_sources": [],
+      "candidate_fallback_applied": false,
+      "current_known_match": false,
+      "candidate_known_match": false,
+      "current_false_match": false,
+      "candidate_false_match": false,
+      "new_false_match": false,
+      "top_scores": [
+        {
+          "source": "workshop-code",
+          "score": 0.8183793117280411,
+          "coverage_allows": false,
+          "coverage_covers_single": false
+        },
+        {
+          "source": "short-archive",
+          "score": 0.7763409044689159,
+          "coverage_allows": false,
+          "coverage_covers_single": false
+        },
+        {
+          "source": "paracetamol-reference",
+          "score": 0.7750009802417795,
+          "coverage_allows": false,
+          "coverage_covers_single": false
+        },
+        {
+          "source": "insulin-storage",
+          "score": 0.7720480526806095,
+          "coverage_allows": false,
+          "coverage_covers_single": false
+        },
+        {
+          "source": "ibuprofen-warning",
+          "score": 0.7697971418032612,
+          "coverage_allows": false,
+          "coverage_covers_single": false
+        }
+      ]
+    },
+    {
+      "id": "ur-travel",
+      "language": "ur",
+      "question": "اسلام آباد کے لیے پرواز کی بکنگ کیسے کروں؟",
+      "expected": [],
+      "top_score": 0.7813510624444726,
+      "margin": 0.002233580956546688,
+      "top_source": "workshop-code",
+      "requested_fields": [],
+      "fields_present_in_top_source": [],
+      "lexical_sources": [],
+      "current_sources": [],
+      "candidate_sources": [],
+      "candidate_fallback_applied": false,
+      "current_known_match": false,
+      "candidate_known_match": false,
+      "current_false_match": false,
+      "candidate_false_match": false,
+      "new_false_match": false,
+      "top_scores": [
+        {
+          "source": "workshop-code",
+          "score": 0.7813510624444726,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "ibuprofen-warning",
+          "score": 0.7791174814879259,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "insulin-storage",
+          "score": 0.777948418256462,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "filter-maintenance",
+          "score": 0.7650773602152044,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "medicine-leaflet",
+          "score": 0.7649905487210457,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        }
+      ]
+    },
+    {
+      "id": "ur-weather",
+      "language": "ur",
+      "question": "کیا کل بارش ہوگی؟",
+      "expected": [],
+      "top_score": 0.7665513727043204,
+      "margin": 0.006267820678153568,
+      "top_source": "astronomy",
+      "requested_fields": [],
+      "fields_present_in_top_source": [],
+      "lexical_sources": [],
+      "current_sources": [],
+      "candidate_sources": [],
+      "candidate_fallback_applied": false,
+      "current_known_match": false,
+      "candidate_known_match": false,
+      "current_false_match": false,
+      "candidate_false_match": false,
+      "new_false_match": false,
+      "top_scores": [
+        {
+          "source": "astronomy",
+          "score": 0.7665513727043204,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "filter-maintenance",
+          "score": 0.7602835520261668,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "bread-recipe",
+          "score": 0.7541563106025555,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "short-archive",
+          "score": 0.7501655137579348,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "ibuprofen-warning",
+          "score": 0.7491678516679314,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        }
+      ]
+    },
+    {
+      "id": "ur-wrong-medicine",
+      "language": "ur",
+      "question": "Novamed کے بارے میں محفوظ دستاویز کیا کہتی ہے؟",
+      "expected": [],
+      "top_score": 0.8252853701915018,
+      "margin": 0.0015077765239430718,
+      "top_source": "ibuprofen-warning",
+      "requested_fields": [],
+      "fields_present_in_top_source": [],
+      "lexical_sources": [],
+      "current_sources": [],
+      "candidate_sources": [],
+      "candidate_fallback_applied": false,
+      "current_known_match": false,
+      "candidate_known_match": false,
+      "current_false_match": false,
+      "candidate_false_match": false,
+      "new_false_match": false,
+      "top_scores": [
+        {
+          "source": "ibuprofen-warning",
+          "score": 0.8252853701915018,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "paracetamol-reference",
+          "score": 0.8237775936675588,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "insulin-storage",
+          "score": 0.8030804096600263,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "short-archive",
+          "score": 0.7985402192034731,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "medicine-leaflet",
+          "score": 0.7972769697194565,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        }
+      ]
+    },
+    {
+      "id": "ur-workshop-wifi",
+      "language": "ur",
+      "question": "ورکشاپ کے وائی فائی کا پاس ورڈ کیا ہے؟",
+      "expected": [],
+      "top_score": 0.8018702477067928,
+      "margin": 0.026762229131292115,
+      "top_source": "workshop-code",
+      "requested_fields": [
+        "password",
+        "wifi"
+      ],
+      "fields_present_in_top_source": [],
+      "lexical_sources": [],
+      "current_sources": [],
+      "candidate_sources": [],
+      "candidate_fallback_applied": false,
+      "current_known_match": false,
+      "candidate_known_match": false,
+      "current_false_match": false,
+      "candidate_false_match": false,
+      "new_false_match": false,
+      "top_scores": [
+        {
+          "source": "workshop-code",
+          "score": 0.8018702477067928,
+          "coverage_allows": false,
+          "coverage_covers_single": false
+        },
+        {
+          "source": "short-archive",
+          "score": 0.7751080185755007,
+          "coverage_allows": false,
+          "coverage_covers_single": false
+        },
+        {
+          "source": "ibuprofen-warning",
+          "score": 0.771811062238009,
+          "coverage_allows": false,
+          "coverage_covers_single": false
+        },
+        {
+          "source": "paracetamol-reference",
+          "score": 0.7698576729186699,
+          "coverage_allows": false,
+          "coverage_covers_single": false
+        },
+        {
+          "source": "insulin-storage",
+          "score": 0.7680942113784534,
+          "coverage_allows": false,
+          "coverage_covers_single": false
+        }
+      ]
+    },
+    {
+      "id": "ur-birthdate",
+      "language": "ur",
+      "question": "ورکشاپ کے مالک کی تاریخ پیدائش کیا ہے؟",
+      "expected": [],
+      "top_score": 0.7602186292086184,
+      "margin": 0.012336790324794511,
+      "top_source": "short-archive",
+      "requested_fields": [
+        "age_birthdate"
+      ],
+      "fields_present_in_top_source": [],
+      "lexical_sources": [],
+      "current_sources": [],
+      "candidate_sources": [],
+      "candidate_fallback_applied": false,
+      "current_known_match": false,
+      "candidate_known_match": false,
+      "current_false_match": false,
+      "candidate_false_match": false,
+      "new_false_match": false,
+      "top_scores": [
+        {
+          "source": "short-archive",
+          "score": 0.7602186292086184,
+          "coverage_allows": false,
+          "coverage_covers_single": false
+        },
+        {
+          "source": "workshop-code",
+          "score": 0.7478818388838239,
+          "coverage_allows": false,
+          "coverage_covers_single": false
+        },
+        {
+          "source": "ibuprofen-warning",
+          "score": 0.733208542918495,
+          "coverage_allows": false,
+          "coverage_covers_single": false
+        },
+        {
+          "source": "astronomy",
+          "score": 0.7317527812613227,
+          "coverage_allows": false,
+          "coverage_covers_single": false
+        },
+        {
+          "source": "insulin-storage",
+          "score": 0.730001486121528,
+          "coverage_allows": false,
+          "coverage_covers_single": false
+        }
+      ]
+    },
+    {
+      "id": "pa-Guru-workshop-code",
+      "language": "pa-Guru",
+      "question": "ਵਰਕਸ਼ਾਪ ਦਾ ਦਾਖਲਾ ਕੋਡ ਕੀ ਹੈ?",
+      "expected": [
+        "workshop-code"
+      ],
+      "top_score": 0.8417011686417407,
+      "margin": 0.0632705964294834,
+      "top_source": "workshop-code",
+      "requested_fields": [
+        "code"
+      ],
+      "fields_present_in_top_source": [
+        "code"
+      ],
+      "lexical_sources": [],
+      "current_sources": [
+        "workshop-code"
+      ],
+      "candidate_sources": [
+        "workshop-code"
+      ],
+      "candidate_fallback_applied": false,
+      "current_known_match": true,
+      "candidate_known_match": true,
+      "current_false_match": false,
+      "candidate_false_match": false,
+      "new_false_match": false,
+      "top_scores": [
+        {
+          "source": "workshop-code",
+          "score": 0.8417011686417407,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "paracetamol-reference",
+          "score": 0.7784305722122573,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "ibuprofen-warning",
+          "score": 0.7752905332385507,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "insulin-storage",
+          "score": 0.773913386947231,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "short-archive",
+          "score": 0.7732125617316451,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        }
+      ]
+    },
+    {
+      "id": "pa-Guru-workshop-reference",
+      "language": "pa-Guru",
+      "question": "ਵਰਕਸ਼ਾਪ ਦਾ ਹਵਾਲਾ ਨੰਬਰ ਕੀ ਹੈ?",
+      "expected": [
+        "workshop-code"
+      ],
+      "top_score": 0.8194667965323399,
+      "margin": 0.04250126224602968,
+      "top_source": "workshop-code",
+      "requested_fields": [
+        "reference_number"
+      ],
+      "fields_present_in_top_source": [
+        "reference_number"
+      ],
+      "lexical_sources": [],
+      "current_sources": [],
+      "candidate_sources": [
+        "workshop-code"
+      ],
+      "candidate_fallback_applied": true,
+      "current_known_match": false,
+      "candidate_known_match": true,
+      "current_false_match": false,
+      "candidate_false_match": false,
+      "new_false_match": false,
+      "top_scores": [
+        {
+          "source": "workshop-code",
+          "score": 0.8194667965323399,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "ibuprofen-warning",
+          "score": 0.7769655342863102,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "short-archive",
+          "score": 0.7700477007259178,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "insulin-storage",
+          "score": 0.7628806495425924,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "paracetamol-reference",
+          "score": 0.7611034935083744,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        }
+      ]
+    },
+    {
+      "id": "pa-Guru-insulin-storage",
+      "language": "pa-Guru",
+      "question": "ਇਨਸੁਲਿਨ ਨੂੰ ਕਿਵੇਂ ਸੰਭਾਲ ਕੇ ਰੱਖਣਾ ਚਾਹੀਦਾ ਹੈ?",
+      "expected": [
+        "insulin-storage"
+      ],
+      "top_score": 0.8326878898036368,
+      "margin": 0.017595230966745534,
+      "top_source": "insulin-storage",
+      "requested_fields": [],
+      "fields_present_in_top_source": [],
+      "lexical_sources": [],
+      "current_sources": [
+        "insulin-storage"
+      ],
+      "candidate_sources": [
+        "insulin-storage"
+      ],
+      "candidate_fallback_applied": false,
+      "current_known_match": true,
+      "candidate_known_match": true,
+      "current_false_match": false,
+      "candidate_false_match": false,
+      "new_false_match": false,
+      "top_scores": [
+        {
+          "source": "insulin-storage",
+          "score": 0.8326878898036368,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "ibuprofen-warning",
+          "score": 0.8150926588368913,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "paracetamol-reference",
+          "score": 0.8048316041287655,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "filter-maintenance",
+          "score": 0.8010564971406005,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "medicine-leaflet",
+          "score": 0.799750445959261,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        }
+      ]
+    },
+    {
+      "id": "pa-Guru-paracetamol-reference",
+      "language": "pa-Guru",
+      "question": "ਪੈਰਾਸੀਟਾਮੋਲ ਬਾਰੇ ਸੰਭਾਲਿਆ ਹਵਾਲਾ ਕੀ ਕਹਿੰਦਾ ਹੈ?",
+      "expected": [
+        "paracetamol-reference"
+      ],
+      "top_score": 0.8554419085338729,
+      "margin": 0.023713560585618687,
+      "top_source": "paracetamol-reference",
+      "requested_fields": [],
+      "fields_present_in_top_source": [],
+      "lexical_sources": [
+        "paracetamol-reference",
+        "medicine-leaflet"
+      ],
+      "current_sources": [
+        "paracetamol-reference",
+        "medicine-leaflet"
+      ],
+      "candidate_sources": [
+        "paracetamol-reference",
+        "medicine-leaflet"
+      ],
+      "candidate_fallback_applied": false,
+      "current_known_match": true,
+      "candidate_known_match": true,
+      "current_false_match": false,
+      "candidate_false_match": false,
+      "new_false_match": false,
+      "top_scores": [
+        {
+          "source": "paracetamol-reference",
+          "score": 0.8554419085338729,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "ibuprofen-warning",
+          "score": 0.8317283479482542,
+          "coverage_allows": false,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "medicine-leaflet",
+          "score": 0.8300472222246474,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "insulin-storage",
+          "score": 0.8126413242506441,
+          "coverage_allows": false,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "short-archive",
+          "score": 0.8106821949707043,
+          "coverage_allows": false,
+          "coverage_covers_single": true
+        }
+      ]
+    },
+    {
+      "id": "pa-Guru-airport-code",
+      "language": "pa-Guru",
+      "question": "ਹਵਾਈ ਅੱਡੇ ਦਾ ਕੋਡ ਕੀ ਹੈ?",
+      "expected": [],
+      "top_score": 0.8213040186009127,
+      "margin": 0.040818744036747345,
+      "top_source": "workshop-code",
+      "requested_fields": [
+        "code"
+      ],
+      "fields_present_in_top_source": [
+        "code"
+      ],
+      "lexical_sources": [],
+      "current_sources": [
+        "workshop-code"
+      ],
+      "candidate_sources": [
+        "workshop-code"
+      ],
+      "candidate_fallback_applied": false,
+      "current_known_match": false,
+      "candidate_known_match": false,
+      "current_false_match": true,
+      "candidate_false_match": true,
+      "new_false_match": false,
+      "top_scores": [
+        {
+          "source": "workshop-code",
+          "score": 0.8213040186009127,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "ibuprofen-warning",
+          "score": 0.7804852745641654,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "medicine-leaflet",
+          "score": 0.7729445613080734,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "insulin-storage",
+          "score": 0.7707134482469086,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "paracetamol-reference",
+          "score": 0.7681687272835306,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        }
+      ]
+    },
+    {
+      "id": "pa-Guru-garage-code",
+      "language": "pa-Guru",
+      "question": "ਗੈਰਾਜ ਦਾ ਦਾਖਲਾ ਕੋਡ ਕੀ ਹੈ?",
+      "expected": [],
+      "top_score": 0.8222355741857963,
+      "margin": 0.03460072366942757,
+      "top_source": "workshop-code",
+      "requested_fields": [
+        "code"
+      ],
+      "fields_present_in_top_source": [
+        "code"
+      ],
+      "lexical_sources": [],
+      "current_sources": [
+        "workshop-code"
+      ],
+      "candidate_sources": [
+        "workshop-code"
+      ],
+      "candidate_fallback_applied": false,
+      "current_known_match": false,
+      "candidate_known_match": false,
+      "current_false_match": true,
+      "candidate_false_match": true,
+      "new_false_match": false,
+      "top_scores": [
+        {
+          "source": "workshop-code",
+          "score": 0.8222355741857963,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "insulin-storage",
+          "score": 0.7876348505163687,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "medicine-leaflet",
+          "score": 0.7801575808125358,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "short-archive",
+          "score": 0.777456983430778,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "ibuprofen-warning",
+          "score": 0.7766639009750903,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        }
+      ]
+    },
+    {
+      "id": "pa-Guru-door-pin",
+      "language": "pa-Guru",
+      "question": "ਦਰਵਾਜ਼ੇ ਦਾ ਪਿਨ ਕੋਡ ਕੀ ਹੈ?",
+      "expected": [],
+      "top_score": 0.8188098504939292,
+      "margin": 0.03125573537775472,
+      "top_source": "workshop-code",
+      "requested_fields": [
+        "code"
+      ],
+      "fields_present_in_top_source": [
+        "code"
+      ],
+      "lexical_sources": [],
+      "current_sources": [],
+      "candidate_sources": [
+        "workshop-code"
+      ],
+      "candidate_fallback_applied": true,
+      "current_known_match": false,
+      "candidate_known_match": false,
+      "current_false_match": false,
+      "candidate_false_match": true,
+      "new_false_match": true,
+      "top_scores": [
+        {
+          "source": "workshop-code",
+          "score": 0.8188098504939292,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "paracetamol-reference",
+          "score": 0.7875541151161745,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "ibuprofen-warning",
+          "score": 0.7795997467376942,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "short-archive",
+          "score": 0.7788301965320935,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "medicine-leaflet",
+          "score": 0.7756056543288088,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        }
+      ]
+    },
+    {
+      "id": "pa-Guru-travel",
+      "language": "pa-Guru",
+      "question": "ਇਸਲਾਮਾਬਾਦ ਲਈ ਉਡਾਣ ਦੀ ਬੁਕਿੰਗ ਕਿਵੇਂ ਕਰਾਂ?",
+      "expected": [],
+      "top_score": 0.8005600528221907,
+      "margin": 0.002723785435491677,
+      "top_source": "ibuprofen-warning",
+      "requested_fields": [],
+      "fields_present_in_top_source": [],
+      "lexical_sources": [],
+      "current_sources": [],
+      "candidate_sources": [],
+      "candidate_fallback_applied": false,
+      "current_known_match": false,
+      "candidate_known_match": false,
+      "current_false_match": false,
+      "candidate_false_match": false,
+      "new_false_match": false,
+      "top_scores": [
+        {
+          "source": "ibuprofen-warning",
+          "score": 0.8005600528221907,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "workshop-code",
+          "score": 0.797836267386699,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "medicine-leaflet",
+          "score": 0.7874460090548027,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "insulin-storage",
+          "score": 0.7874019138654296,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "paracetamol-reference",
+          "score": 0.7840102291299544,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        }
+      ]
+    },
+    {
+      "id": "pa-Guru-weather",
+      "language": "pa-Guru",
+      "question": "ਕੀ ਕੱਲ੍ਹ ਮੀਂਹ ਪਵੇਗਾ?",
+      "expected": [],
+      "top_score": 0.7725373120409107,
+      "margin": 0.00542250198764016,
+      "top_source": "astronomy",
+      "requested_fields": [],
+      "fields_present_in_top_source": [],
+      "lexical_sources": [],
+      "current_sources": [],
+      "candidate_sources": [],
+      "candidate_fallback_applied": false,
+      "current_known_match": false,
+      "candidate_known_match": false,
+      "current_false_match": false,
+      "candidate_false_match": false,
+      "new_false_match": false,
+      "top_scores": [
+        {
+          "source": "astronomy",
+          "score": 0.7725373120409107,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "filter-maintenance",
+          "score": 0.7671148100532705,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "bread-recipe",
+          "score": 0.765392296266182,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "ibuprofen-warning",
+          "score": 0.7623628743434169,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "short-archive",
+          "score": 0.7593050732121417,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        }
+      ]
+    },
+    {
+      "id": "pa-Guru-wrong-medicine",
+      "language": "pa-Guru",
+      "question": "Novamed ਬਾਰੇ ਸੰਭਾਲੇ ਦਸਤਾਵੇਜ਼ ਵਿੱਚ ਕੀ ਲਿਖਿਆ ਹੈ?",
+      "expected": [],
+      "top_score": 0.8213618023129959,
+      "margin": 0.0007517038877847826,
+      "top_source": "ibuprofen-warning",
+      "requested_fields": [],
+      "fields_present_in_top_source": [],
+      "lexical_sources": [],
+      "current_sources": [],
+      "candidate_sources": [],
+      "candidate_fallback_applied": false,
+      "current_known_match": false,
+      "candidate_known_match": false,
+      "current_false_match": false,
+      "candidate_false_match": false,
+      "new_false_match": false,
+      "top_scores": [
+        {
+          "source": "ibuprofen-warning",
+          "score": 0.8213618023129959,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "paracetamol-reference",
+          "score": 0.8206100984252112,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "insulin-storage",
+          "score": 0.808551466342547,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "short-archive",
+          "score": 0.8069647014754336,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "medicine-leaflet",
+          "score": 0.8030650242895179,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        }
+      ]
+    },
+    {
+      "id": "pa-Guru-workshop-wifi",
+      "language": "pa-Guru",
+      "question": "ਵਰਕਸ਼ਾਪ ਦੇ ਵਾਈ-ਫਾਈ ਦਾ ਪਾਸਵਰਡ ਕੀ ਹੈ?",
+      "expected": [],
+      "top_score": 0.8170532908664272,
+      "margin": 0.015590969180712344,
+      "top_source": "workshop-code",
+      "requested_fields": [
+        "password"
+      ],
+      "fields_present_in_top_source": [],
+      "lexical_sources": [],
+      "current_sources": [],
+      "candidate_sources": [],
+      "candidate_fallback_applied": false,
+      "current_known_match": false,
+      "candidate_known_match": false,
+      "current_false_match": false,
+      "candidate_false_match": false,
+      "new_false_match": false,
+      "top_scores": [
+        {
+          "source": "workshop-code",
+          "score": 0.8170532908664272,
+          "coverage_allows": false,
+          "coverage_covers_single": false
+        },
+        {
+          "source": "paracetamol-reference",
+          "score": 0.8014623216857149,
+          "coverage_allows": false,
+          "coverage_covers_single": false
+        },
+        {
+          "source": "medicine-leaflet",
+          "score": 0.7878718265757486,
+          "coverage_allows": false,
+          "coverage_covers_single": false
+        },
+        {
+          "source": "ibuprofen-warning",
+          "score": 0.7831295218994734,
+          "coverage_allows": false,
+          "coverage_covers_single": false
+        },
+        {
+          "source": "insulin-storage",
+          "score": 0.7799147780737841,
+          "coverage_allows": false,
+          "coverage_covers_single": false
+        }
+      ]
+    },
+    {
+      "id": "pa-Guru-birthdate",
+      "language": "pa-Guru",
+      "question": "ਵਰਕਸ਼ਾਪ ਦੇ ਮਾਲਕ ਦੀ ਜਨਮ ਮਿਤੀ ਕੀ ਹੈ?",
+      "expected": [],
+      "top_score": 0.7366784536715616,
+      "margin": 0.013907627869802375,
+      "top_source": "workshop-code",
+      "requested_fields": [
+        "age_birthdate"
+      ],
+      "fields_present_in_top_source": [],
+      "lexical_sources": [],
+      "current_sources": [],
+      "candidate_sources": [],
+      "candidate_fallback_applied": false,
+      "current_known_match": false,
+      "candidate_known_match": false,
+      "current_false_match": false,
+      "candidate_false_match": false,
+      "new_false_match": false,
+      "top_scores": [
+        {
+          "source": "workshop-code",
+          "score": 0.7366784536715616,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "short-archive",
+          "score": 0.7227708258017592,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "filter-maintenance",
+          "score": 0.7183135383888485,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "astronomy",
+          "score": 0.715634202139481,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "ibuprofen-warning",
+          "score": 0.7100634875196536,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        }
+      ]
+    },
+    {
+      "id": "pa-Arab-workshop-code",
+      "language": "pa-Arab",
+      "question": "ورکشاپ دا کوڈ کی اے؟",
+      "expected": [
+        "workshop-code"
+      ],
+      "top_score": 0.8106873652732889,
+      "margin": 0.03139829625470669,
+      "top_source": "workshop-code",
+      "requested_fields": [
+        "code"
+      ],
+      "fields_present_in_top_source": [
+        "code"
+      ],
+      "lexical_sources": [],
+      "current_sources": [],
+      "candidate_sources": [
+        "workshop-code"
+      ],
+      "candidate_fallback_applied": true,
+      "current_known_match": false,
+      "candidate_known_match": true,
+      "current_false_match": false,
+      "candidate_false_match": false,
+      "new_false_match": false,
+      "top_scores": [
+        {
+          "source": "workshop-code",
+          "score": 0.8106873652732889,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "short-archive",
+          "score": 0.7792890690185822,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "ibuprofen-warning",
+          "score": 0.7628979826794073,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "paracetamol-reference",
+          "score": 0.7615714873427902,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "insulin-storage",
+          "score": 0.7596523241080341,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        }
+      ]
+    },
+    {
+      "id": "pa-Arab-workshop-reference",
+      "language": "pa-Arab",
+      "question": "ورکشاپ دے حوالے دا نمبر کی اے؟",
+      "expected": [
+        "workshop-code"
+      ],
+      "top_score": 0.7773807776180985,
+      "margin": 0.019082523807384844,
+      "top_source": "workshop-code",
+      "requested_fields": [],
+      "fields_present_in_top_source": [],
+      "lexical_sources": [],
+      "current_sources": [],
+      "candidate_sources": [],
+      "candidate_fallback_applied": false,
+      "current_known_match": false,
+      "candidate_known_match": false,
+      "current_false_match": false,
+      "candidate_false_match": false,
+      "new_false_match": false,
+      "top_scores": [
+        {
+          "source": "workshop-code",
+          "score": 0.7773807776180985,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "short-archive",
+          "score": 0.7582982538107137,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "insulin-storage",
+          "score": 0.731921134859947,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "ibuprofen-warning",
+          "score": 0.7311473704001713,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "paracetamol-reference",
+          "score": 0.7269037745327408,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        }
+      ]
+    },
+    {
+      "id": "pa-Arab-insulin-storage",
+      "language": "pa-Arab",
+      "question": "انسولین نوں کیویں سنبھال کے رکھنا چاہیدا اے؟",
+      "expected": [
+        "insulin-storage"
+      ],
+      "top_score": 0.841032019206227,
+      "margin": 0.030522172327784203,
+      "top_source": "insulin-storage",
+      "requested_fields": [],
+      "fields_present_in_top_source": [],
+      "lexical_sources": [],
+      "current_sources": [
+        "insulin-storage"
+      ],
+      "candidate_sources": [
+        "insulin-storage"
+      ],
+      "candidate_fallback_applied": false,
+      "current_known_match": true,
+      "candidate_known_match": true,
+      "current_false_match": false,
+      "candidate_false_match": false,
+      "new_false_match": false,
+      "top_scores": [
+        {
+          "source": "insulin-storage",
+          "score": 0.841032019206227,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "ibuprofen-warning",
+          "score": 0.8105098468784429,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "paracetamol-reference",
+          "score": 0.8056363172144847,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "medicine-leaflet",
+          "score": 0.8039952768315971,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "filter-maintenance",
+          "score": 0.7944498985098999,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        }
+      ]
+    },
+    {
+      "id": "pa-Arab-paracetamol-reference",
+      "language": "pa-Arab",
+      "question": "پیراسیٹامول بارے محفوظ حوالہ کیہ کہندا اے؟",
+      "expected": [
+        "paracetamol-reference"
+      ],
+      "top_score": 0.8230693212908791,
+      "margin": 0.026189509882800333,
+      "top_source": "paracetamol-reference",
+      "requested_fields": [],
+      "fields_present_in_top_source": [],
+      "lexical_sources": [
+        "paracetamol-reference",
+        "medicine-leaflet"
+      ],
+      "current_sources": [
+        "paracetamol-reference",
+        "medicine-leaflet"
+      ],
+      "candidate_sources": [
+        "paracetamol-reference",
+        "medicine-leaflet"
+      ],
+      "candidate_fallback_applied": false,
+      "current_known_match": true,
+      "candidate_known_match": true,
+      "current_false_match": false,
+      "candidate_false_match": false,
+      "new_false_match": false,
+      "top_scores": [
+        {
+          "source": "paracetamol-reference",
+          "score": 0.8230693212908791,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "medicine-leaflet",
+          "score": 0.7968798114080787,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "ibuprofen-warning",
+          "score": 0.7818465346274559,
+          "coverage_allows": false,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "insulin-storage",
+          "score": 0.7663604358350987,
+          "coverage_allows": false,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "workshop-code",
+          "score": 0.7346593618797064,
+          "coverage_allows": false,
+          "coverage_covers_single": true
+        }
+      ]
+    },
+    {
+      "id": "pa-Arab-airport-code",
+      "language": "pa-Arab",
+      "question": "ہوائی اڈے دا کوڈ کی اے؟",
+      "expected": [],
+      "top_score": 0.7904086336263296,
+      "margin": 0.03756316850619823,
+      "top_source": "workshop-code",
+      "requested_fields": [
+        "code"
+      ],
+      "fields_present_in_top_source": [
+        "code"
+      ],
+      "lexical_sources": [],
+      "current_sources": [],
+      "candidate_sources": [],
+      "candidate_fallback_applied": false,
+      "current_known_match": false,
+      "candidate_known_match": false,
+      "current_false_match": false,
+      "candidate_false_match": false,
+      "new_false_match": false,
+      "top_scores": [
+        {
+          "source": "workshop-code",
+          "score": 0.7904086336263296,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "short-archive",
+          "score": 0.7528454651201314,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "ibuprofen-warning",
+          "score": 0.7510381023224367,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "paracetamol-reference",
+          "score": 0.7466474131127441,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "medicine-leaflet",
+          "score": 0.7457110879881336,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        }
+      ]
+    },
+    {
+      "id": "pa-Arab-garage-code",
+      "language": "pa-Arab",
+      "question": "گیراج وچ داخل ہون دا کوڈ کی اے؟",
+      "expected": [],
+      "top_score": 0.764413799258682,
+      "margin": 0.02031574371306899,
+      "top_source": "workshop-code",
+      "requested_fields": [
+        "code"
+      ],
+      "fields_present_in_top_source": [
+        "code"
+      ],
+      "lexical_sources": [],
+      "current_sources": [],
+      "candidate_sources": [],
+      "candidate_fallback_applied": false,
+      "current_known_match": false,
+      "candidate_known_match": false,
+      "current_false_match": false,
+      "candidate_false_match": false,
+      "new_false_match": false,
+      "top_scores": [
+        {
+          "source": "workshop-code",
+          "score": 0.764413799258682,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "short-archive",
+          "score": 0.744098055545613,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "ibuprofen-warning",
+          "score": 0.7275355873046941,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "paracetamol-reference",
+          "score": 0.7239970451473425,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "medicine-leaflet",
+          "score": 0.7194754797988598,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        }
+      ]
+    },
+    {
+      "id": "pa-Arab-door-pin",
+      "language": "pa-Arab",
+      "question": "بوہے دا پن کوڈ کی اے؟",
+      "expected": [],
+      "top_score": 0.7871964230221231,
+      "margin": 0.013810695763232128,
+      "top_source": "workshop-code",
+      "requested_fields": [
+        "pin",
+        "code"
+      ],
+      "fields_present_in_top_source": [
+        "code"
+      ],
+      "lexical_sources": [],
+      "current_sources": [],
+      "candidate_sources": [],
+      "candidate_fallback_applied": false,
+      "current_known_match": false,
+      "candidate_known_match": false,
+      "current_false_match": false,
+      "candidate_false_match": false,
+      "new_false_match": false,
+      "top_scores": [
+        {
+          "source": "workshop-code",
+          "score": 0.7871964230221231,
+          "coverage_allows": false,
+          "coverage_covers_single": false
+        },
+        {
+          "source": "short-archive",
+          "score": 0.773385727258891,
+          "coverage_allows": false,
+          "coverage_covers_single": false
+        },
+        {
+          "source": "astronomy",
+          "score": 0.7691315459885713,
+          "coverage_allows": false,
+          "coverage_covers_single": false
+        },
+        {
+          "source": "paracetamol-reference",
+          "score": 0.762339698567326,
+          "coverage_allows": false,
+          "coverage_covers_single": false
+        },
+        {
+          "source": "insulin-storage",
+          "score": 0.7577397257781178,
+          "coverage_allows": false,
+          "coverage_covers_single": false
+        }
+      ]
+    },
+    {
+      "id": "pa-Arab-travel",
+      "language": "pa-Arab",
+      "question": "اسلام آباد دی پرواز دی بکنگ کیویں کراں؟",
+      "expected": [],
+      "top_score": 0.779962909090345,
+      "margin": 0.0028481570339026208,
+      "top_source": "short-archive",
+      "requested_fields": [],
+      "fields_present_in_top_source": [],
+      "lexical_sources": [],
+      "current_sources": [],
+      "candidate_sources": [],
+      "candidate_fallback_applied": false,
+      "current_known_match": false,
+      "candidate_known_match": false,
+      "current_false_match": false,
+      "candidate_false_match": false,
+      "new_false_match": false,
+      "top_scores": [
+        {
+          "source": "short-archive",
+          "score": 0.779962909090345,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "ibuprofen-warning",
+          "score": 0.7771147520564424,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "workshop-code",
+          "score": 0.7648302208118575,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "astronomy",
+          "score": 0.764546270856868,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "insulin-storage",
+          "score": 0.7616972440037167,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        }
+      ]
+    },
+    {
+      "id": "pa-Arab-weather",
+      "language": "pa-Arab",
+      "question": "کی کل بارش ہووے گی؟",
+      "expected": [],
+      "top_score": 0.7698114300612964,
+      "margin": 0.006559249614311757,
+      "top_source": "astronomy",
+      "requested_fields": [],
+      "fields_present_in_top_source": [],
+      "lexical_sources": [],
+      "current_sources": [],
+      "candidate_sources": [],
+      "candidate_fallback_applied": false,
+      "current_known_match": false,
+      "candidate_known_match": false,
+      "current_false_match": false,
+      "candidate_false_match": false,
+      "new_false_match": false,
+      "top_scores": [
+        {
+          "source": "astronomy",
+          "score": 0.7698114300612964,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "filter-maintenance",
+          "score": 0.7632521804469846,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "bread-recipe",
+          "score": 0.7605280423013974,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "ibuprofen-warning",
+          "score": 0.7592069085508617,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "short-archive",
+          "score": 0.7546633050944807,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        }
+      ]
+    },
+    {
+      "id": "pa-Arab-wrong-medicine",
+      "language": "pa-Arab",
+      "question": "Novamed بارے محفوظ دستاویز کیہ کہندی اے؟",
+      "expected": [],
+      "top_score": 0.8072783947696233,
+      "margin": 0.008338510907086927,
+      "top_source": "ibuprofen-warning",
+      "requested_fields": [],
+      "fields_present_in_top_source": [],
+      "lexical_sources": [],
+      "current_sources": [],
+      "candidate_sources": [],
+      "candidate_fallback_applied": false,
+      "current_known_match": false,
+      "candidate_known_match": false,
+      "current_false_match": false,
+      "candidate_false_match": false,
+      "new_false_match": false,
+      "top_scores": [
+        {
+          "source": "ibuprofen-warning",
+          "score": 0.8072783947696233,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "paracetamol-reference",
+          "score": 0.7989398838625363,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "insulin-storage",
+          "score": 0.7822529245372154,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "short-archive",
+          "score": 0.7807400870210999,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "medicine-leaflet",
+          "score": 0.7753089487122758,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        }
+      ]
+    },
+    {
+      "id": "pa-Arab-workshop-wifi",
+      "language": "pa-Arab",
+      "question": "ورکشاپ دے وائی فائی دا پاس ورڈ کی اے؟",
+      "expected": [],
+      "top_score": 0.7893910785547197,
+      "margin": 0.020475902076688368,
+      "top_source": "workshop-code",
+      "requested_fields": [
+        "password",
+        "wifi"
+      ],
+      "fields_present_in_top_source": [],
+      "lexical_sources": [],
+      "current_sources": [],
+      "candidate_sources": [],
+      "candidate_fallback_applied": false,
+      "current_known_match": false,
+      "candidate_known_match": false,
+      "current_false_match": false,
+      "candidate_false_match": false,
+      "new_false_match": false,
+      "top_scores": [
+        {
+          "source": "workshop-code",
+          "score": 0.7893910785547197,
+          "coverage_allows": false,
+          "coverage_covers_single": false
+        },
+        {
+          "source": "short-archive",
+          "score": 0.7689151764780313,
+          "coverage_allows": false,
+          "coverage_covers_single": false
+        },
+        {
+          "source": "paracetamol-reference",
+          "score": 0.7680998608331231,
+          "coverage_allows": false,
+          "coverage_covers_single": false
+        },
+        {
+          "source": "ibuprofen-warning",
+          "score": 0.7629320829798661,
+          "coverage_allows": false,
+          "coverage_covers_single": false
+        },
+        {
+          "source": "insulin-storage",
+          "score": 0.7595018683812436,
+          "coverage_allows": false,
+          "coverage_covers_single": false
+        }
+      ]
+    },
+    {
+      "id": "pa-Arab-birthdate",
+      "language": "pa-Arab",
+      "question": "ورکشاپ دے مالک دی جنم تاریخ کی اے؟",
+      "expected": [],
+      "top_score": 0.7224847169325922,
+      "margin": 0.020708671665436995,
+      "top_source": "short-archive",
+      "requested_fields": [],
+      "fields_present_in_top_source": [],
+      "lexical_sources": [],
+      "current_sources": [],
+      "candidate_sources": [],
+      "candidate_fallback_applied": false,
+      "current_known_match": false,
+      "candidate_known_match": false,
+      "current_false_match": false,
+      "candidate_false_match": false,
+      "new_false_match": false,
+      "top_scores": [
+        {
+          "source": "short-archive",
+          "score": 0.7224847169325922,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "workshop-code",
+          "score": 0.7017760452671552,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "astronomy",
+          "score": 0.6867380952974323,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "ibuprofen-warning",
+          "score": 0.6819577497729619,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        },
+        {
+          "source": "insulin-storage",
+          "score": 0.6797475193200447,
+          "coverage_allows": true,
+          "coverage_covers_single": true
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "known_questions": 16,
+    "negative_questions": 32,
+    "current_known_matches": 11,
+    "candidate_known_matches": 14,
+    "current_false_matches": 6,
+    "candidate_false_matches": 9,
+    "new_false_matches": 3
+  },
+  "candidate_gate": "Only if canonical current results are empty: top score>=.80 AND gap>=.025 AND at least one explicit multilingual requested field AND every requested field present in source body AND existing EvidenceCoverage allows/covers; no topic aliases.",
+  "limits": "Real canonical E5/SPM/SQLite observations; policy candidates evaluated externally without production changes. Handwritten multilingual synthetic queries are not fluent-speaker acceptance. No NMT, cloud, model copying or physical-device proof.",
+  "canonical_source_sha256": {
+    "retrieval/OnnxEmbeddingKernel.kt": "cb3f6e27b8df8ba62bfa53ad091bd50ce4491a24de961de90116659a5a597811",
+    "retrieval/SemanticRetriever.kt": "a04cc6ef850c167249865500baebcb9d9c182ef247a1310599a3ede1d0415fdb",
+    "data/Knowledge.kt": "1268e67f7ab904ce78c35ce55f881764be0f439d4c467125186ce841eb307c69",
+    "data/PocketDatabase.kt": "ff2b1a98185194b9f990e1af4fd2939f7cbcfdc845943ca02e6a0d0d29d9aa75",
+    "engine/NativeTokenizer.kt": "c2a20fda7fc09e6decc28f7c5d2d074cc1c999fa60c4c88a26c53aa3927b6884"
+  },
+  "pin_variant_posthoc": {
+    "method": "No model rerun. Treat the Gurmukhi spelling ਪਿਨ as explicit PIN in addition to ਪਿੰਨ; source workshop code contains no PIN/passcode/unlock-code field, so that candidate is rejected. Other decisions unchanged.",
+    "known_matches": 14,
+    "false_matches": 8,
+    "new_false_matches": 2,
+    "remaining_new_false_cases": [
+      "ur-airport-code",
+      "ur-garage-code"
+    ]
+  },
+  "recommendation": "Do not ship the tested .80/.025 explicit-field fallback: it introduces false-topic code retrieval even after PIN spelling repair. Generic field presence does not establish the requested subject/entity. Existing lexical/source coverage also requires separate fixes."
+}

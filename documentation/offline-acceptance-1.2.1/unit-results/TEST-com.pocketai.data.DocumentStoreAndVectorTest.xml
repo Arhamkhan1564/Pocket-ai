@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.pocketai.data.DocumentStoreAndVectorTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2026-11-17T16:02:36" hostname="09642bcf3291" time="5.216">
+  <properties/>
+  <testcase name="invalidDocumentMappingsAndSourceIdArraysLeaveExistingDataUntouched" classname="com.pocketai.data.DocumentStoreAndVectorTest" time="0.484"/>
+  <testcase name="documentReaderWorksLockedAndDeletionRemovesOnlyThatDocument" classname="com.pocketai.data.DocumentStoreAndVectorTest" time="0.549"/>
+  <testcase name="unindexablePassageCanBeSkippedWithoutHidingPendingWorkOrChangingItsOriginal" classname="com.pocketai.data.DocumentStoreAndVectorTest" time="0.358"/>
+  <testcase name="documentCatalogAndTrustedSourceIdsRoundTripInVersion2Backup" classname="com.pocketai.data.DocumentStoreAndVectorTest" time="0.378"/>
+  <testcase name="realVersion1SchemaMigrationPreservesKnowledgeAndHistory" classname="com.pocketai.data.DocumentStoreAndVectorTest" time="0.413"/>
+  <testcase name="vectorsAreDerivedNotExportedAndAreClearedOnRestore" classname="com.pocketai.data.DocumentStoreAndVectorTest" time="0.808"/>
+  <testcase name="vectorSearchNormalizesAndKeepsBestWindowPerDistinctSource" classname="com.pocketai.data.DocumentStoreAndVectorTest" time="0.803"/>
+  <testcase name="oldVersion1BackupRebuildsCatalogWithoutInventingSourceIds" classname="com.pocketai.data.DocumentStoreAndVectorTest" time="0.659"/>
+  <testcase name="editsRejectStaleVectorWritesEvenWhenTimestampIsIdentical" classname="com.pocketai.data.DocumentStoreAndVectorTest" time="0.394"/>
+  <testcase name="invalidVectorsAndWindowsDoNotPoisonAnExistingIndex" classname="com.pocketai.data.DocumentStoreAndVectorTest" time="0.361"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

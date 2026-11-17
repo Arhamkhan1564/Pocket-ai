@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.pocketai.translation.IndicTokenizerTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-11-17T16:03:03" hostname="09642bcf3291" time="0.023">
+  <properties/>
+  <testcase name="modelIdsComeFromPieceStringsAndLanguageTagsAreNotEncoded" classname="com.pocketai.translation.IndicTokenizerTest" time="0.007"/>
+  <testcase name="sourceLimitIncludesTwoLanguageTagsAndEosAndNeverTruncates" classname="com.pocketai.translation.IndicTokenizerTest" time="0.004"/>
+  <testcase name="requestEntityMapsAreConsumedAndNeverSharedWithNextRequest" classname="com.pocketai.translation.IndicTokenizerTest" time="0.004"/>
+  <testcase name="arabicOutputRemainsArabicAndAttachesUrduPunctuation" classname="com.pocketai.translation.IndicTokenizerTest" time="0.002"/>
+  <testcase name="mismatchedTargetAndInvalidOutputIdsAreRejected" classname="com.pocketai.translation.IndicTokenizerTest" time="0.002"/>
+  <testcase name="closeReleasesNativeProcessorExactlyOnceAndRejectsReuse" classname="com.pocketai.translation.IndicTokenizerTest" time="0.001"/>
+  <testcase name="inverseTargetDictionaryJoinRendersUnifiedPunjabiAsGurmukhi" classname="com.pocketai.translation.IndicTokenizerTest" time="0.001"/>
+  <testcase name="unsupportedShahmukhiTargetIsNotSilentlyTreatedAsGurmukhi" classname="com.pocketai.translation.IndicTokenizerTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

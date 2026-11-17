@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.pocketai.retrieval.SemanticRetrieverTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-17T16:02:51" hostname="09642bcf3291" time="2.724">
+  <properties/>
+  <testcase name="untranslatedUrduQuestionReportsIncompleteIndexInsteadOfAbsentKnowledge" classname="com.pocketai.retrieval.SemanticRetrieverTest" time="0.59"/>
+  <testcase name="emptyDatabaseHasNormalNoMatchWithoutAnIndexingFailureNotice" classname="com.pocketai.retrieval.SemanticRetrieverTest" time="0.53"/>
+  <testcase name="approvedQuestionAnswerPairsKeepTheirShortAnswerRetrievable" classname="com.pocketai.retrieval.SemanticRetrieverTest" time="0.524"/>
+  <testcase name="aSharedCodeWordCannotAnswerForAnotherPlace" classname="com.pocketai.retrieval.SemanticRetrieverTest" time="0.547"/>
+  <testcase name="availableEnglishKeywordMatchSurvivesAnIncompleteSemanticIndex" classname="com.pocketai.retrieval.SemanticRetrieverTest" time="0.533"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

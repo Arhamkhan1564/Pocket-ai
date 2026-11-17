@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.pocketai.data.PocketDatabaseTest" tests="13" skipped="0" failures="0" errors="0" timestamp="2026-11-17T16:02:43" hostname="09642bcf3291" time="5.154">
+  <properties/>
+  <testcase name="backupRestoresKnowledgeAndConversationWithoutReplacingCredentials" classname="com.pocketai.data.PocketDatabaseTest" time="0.537"/>
+  <testcase name="invalidBulkImportCannotLeavePartialRecordsOrAuditEvents" classname="com.pocketai.data.PocketDatabaseTest" time="0.351"/>
+  <testcase name="duplicatesAndPotentialQaConflictsAreDetected" classname="com.pocketai.data.PocketDatabaseTest" time="0.355"/>
+  <testcase name="retrievalCanFindWordsBeyondTheBeginningOfLongNotes" classname="com.pocketai.data.PocketDatabaseTest" time="0.392"/>
+  <testcase name="englishDocumentsCanBeRetrievedWithUrduPunjabiAndRomanKeywords" classname="com.pocketai.data.PocketDatabaseTest" time="0.367"/>
+  <testcase name="documentDuplicatesKeepDistinctFileProvenanceAndSurvivePortableBackup" classname="com.pocketai.data.PocketDatabaseTest" time="0.364"/>
+  <testcase name="paginationAndDocumentImportRemainBoundedAndSourceLinked" classname="com.pocketai.data.PocketDatabaseTest" time="0.485"/>
+  <testcase name="broadMedicineKeywordsDoNotCrowdOutAnOlderSpecificSymptomReference" classname="com.pocketai.data.PocketDatabaseTest" time="0.605"/>
+  <testcase name="verifiedKnowledgeRequiresAnActiveAdministratorSession" classname="com.pocketai.data.PocketDatabaseTest" time="0.339"/>
+  <testcase name="medicineNameExpansionRetrievesTheOriginalReferencedExcerpt" classname="com.pocketai.data.PocketDatabaseTest" time="0.367"/>
+  <testcase name="knowledgeSurvivesReopenAndCorrectionsUpdateRetrieval" classname="com.pocketai.data.PocketDatabaseTest" time="0.344"/>
+  <testcase name="unicodeSearchPreservesOriginalUrduAndPunjabiScripts" classname="com.pocketai.data.PocketDatabaseTest" time="0.313"/>
+  <testcase name="invalidRestoreDoesNotDestroyExistingKnowledge" classname="com.pocketai.data.PocketDatabaseTest" time="0.334"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

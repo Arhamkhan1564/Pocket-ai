@@ -1,0 +1,50 @@
+JUnit version 4.13.2
+PROBE en-workshop-reference current=[workshop-code, paracetamol-reference, insulin-storage] candidate=[workshop-code, paracetamol-reference, insulin-storage] score=0.8780694789947016 margin=0.09877907198224178 requested=[reference_number] newFalse=false
+PROBE en-insulin-storage current=[] candidate=[] score=0.8612204142914383 margin=0.031998660953588054 requested=[] newFalse=false
+PROBE en-paracetamol-reference current=[paracetamol-reference, medicine-leaflet] candidate=[paracetamol-reference, medicine-leaflet] score=0.8935386864164722 margin=0.05160801256541436 requested=[] newFalse=false
+PROBE en-airport-code current=[workshop-code] candidate=[workshop-code] score=0.8435562135863923 margin=0.054927077133062 requested=[code] newFalse=false
+PROBE en-garage-code current=[workshop-code] candidate=[workshop-code] score=0.8579238087837888 margin=0.09020846475076072 requested=[code] newFalse=false
+PROBE en-door-pin current=[] candidate=[] score=0.785470187170905 margin=0.020086728858045744 requested=[pin] newFalse=false
+PROBE en-travel current=[] candidate=[] score=0.781045190660538 margin=0.005785350411544932 requested=[] newFalse=false
+PROBE en-weather current=[] candidate=[] score=0.7926493893833131 margin=0.012413270695508127 requested=[] newFalse=false
+PROBE en-wrong-medicine current=[paracetamol-reference, ibuprofen-warning] candidate=[paracetamol-reference, ibuprofen-warning] score=0.8031838815270881 margin=0.002132897849630666 requested=[] newFalse=false
+PROBE en-workshop-wifi current=[] candidate=[] score=0.8429393574700061 margin=0.08346018049558068 requested=[password, wifi] newFalse=false
+PROBE en-birthdate current=[workshop-code] candidate=[workshop-code] score=0.8317269633483888 margin=0.09170870533715869 requested=[] newFalse=false
+PROBE ur-workshop-code current=[] candidate=[workshop-code] score=0.8192486563828559 margin=0.030744254824488504 requested=[code] newFalse=false
+PROBE ur-workshop-reference current=[workshop-code] candidate=[workshop-code] score=0.8204588918084177 margin=0.02465738617728075 requested=[reference_number] newFalse=false
+PROBE ur-insulin-storage current=[insulin-storage] candidate=[insulin-storage] score=0.8271050639222942 margin=0.045609044583705294 requested=[] newFalse=false
+PROBE ur-paracetamol-reference current=[paracetamol-reference, medicine-leaflet] candidate=[paracetamol-reference, medicine-leaflet] score=0.8274431901803059 margin=0.02626788245180678 requested=[] newFalse=false
+PROBE ur-airport-code current=[] candidate=[workshop-code] score=0.8018689790285779 margin=0.04418276254476505 requested=[code] newFalse=true
+PROBE ur-garage-code current=[] candidate=[workshop-code] score=0.8078381759787805 margin=0.03254997263862225 requested=[code] newFalse=true
+PROBE ur-door-pin current=[] candidate=[] score=0.8183793117280411 margin=0.04203840725912522 requested=[pin, code] newFalse=false
+PROBE ur-travel current=[] candidate=[] score=0.7813510624444726 margin=0.002233580956546688 requested=[] newFalse=false
+PROBE ur-weather current=[] candidate=[] score=0.7665513727043204 margin=0.006267820678153568 requested=[] newFalse=false
+PROBE ur-wrong-medicine current=[] candidate=[] score=0.8252853701915018 margin=0.0015077765239430718 requested=[] newFalse=false
+PROBE ur-workshop-wifi current=[] candidate=[] score=0.8018702477067928 margin=0.026762229131292115 requested=[password, wifi] newFalse=false
+PROBE ur-birthdate current=[] candidate=[] score=0.7602186292086184 margin=0.012336790324794511 requested=[age_birthdate] newFalse=false
+PROBE pa-Guru-workshop-code current=[workshop-code] candidate=[workshop-code] score=0.8417011686417407 margin=0.0632705964294834 requested=[code] newFalse=false
+PROBE pa-Guru-workshop-reference current=[] candidate=[workshop-code] score=0.8194667965323399 margin=0.04250126224602968 requested=[reference_number] newFalse=false
+PROBE pa-Guru-insulin-storage current=[insulin-storage] candidate=[insulin-storage] score=0.8326878898036368 margin=0.017595230966745534 requested=[] newFalse=false
+PROBE pa-Guru-paracetamol-reference current=[paracetamol-reference, medicine-leaflet] candidate=[paracetamol-reference, medicine-leaflet] score=0.8554419085338729 margin=0.023713560585618687 requested=[] newFalse=false
+PROBE pa-Guru-airport-code current=[workshop-code] candidate=[workshop-code] score=0.8213040186009127 margin=0.040818744036747345 requested=[code] newFalse=false
+PROBE pa-Guru-garage-code current=[workshop-code] candidate=[workshop-code] score=0.8222355741857963 margin=0.03460072366942757 requested=[code] newFalse=false
+PROBE pa-Guru-door-pin current=[] candidate=[workshop-code] score=0.8188098504939292 margin=0.03125573537775472 requested=[code] newFalse=true
+PROBE pa-Guru-travel current=[] candidate=[] score=0.8005600528221907 margin=0.002723785435491677 requested=[] newFalse=false
+PROBE pa-Guru-weather current=[] candidate=[] score=0.7725373120409107 margin=0.00542250198764016 requested=[] newFalse=false
+PROBE pa-Guru-wrong-medicine current=[] candidate=[] score=0.8213618023129959 margin=7.517038877847826E-4 requested=[] newFalse=false
+PROBE pa-Guru-workshop-wifi current=[] candidate=[] score=0.8170532908664272 margin=0.015590969180712344 requested=[password] newFalse=false
+PROBE pa-Guru-birthdate current=[] candidate=[] score=0.7366784536715616 margin=0.013907627869802375 requested=[age_birthdate] newFalse=false
+PROBE pa-Arab-workshop-code current=[] candidate=[workshop-code] score=0.8106873652732889 margin=0.03139829625470669 requested=[code] newFalse=false
+PROBE pa-Arab-workshop-reference current=[] candidate=[] score=0.7773807776180985 margin=0.019082523807384844 requested=[] newFalse=false
+PROBE pa-Arab-insulin-storage current=[insulin-storage] candidate=[insulin-storage] score=0.841032019206227 margin=0.030522172327784203 requested=[] newFalse=false
+PROBE pa-Arab-paracetamol-reference current=[paracetamol-reference, medicine-leaflet] candidate=[paracetamol-reference, medicine-leaflet] score=0.8230693212908791 margin=0.026189509882800333 requested=[] newFalse=false
+PROBE pa-Arab-airport-code current=[] candidate=[] score=0.7904086336263296 margin=0.03756316850619823 requested=[code] newFalse=false
+PROBE pa-Arab-garage-code current=[] candidate=[] score=0.764413799258682 margin=0.02031574371306899 requested=[code] newFalse=false
+PROBE pa-Arab-door-pin current=[] candidate=[] score=0.7871964230221231 margin=0.013810695763232128 requested=[pin, code] newFalse=false
+PROBE pa-Arab-travel current=[] candidate=[] score=0.779962909090345 margin=0.0028481570339026208 requested=[] newFalse=false
+PROBE pa-Arab-weather current=[] candidate=[] score=0.7698114300612964 margin=0.006559249614311757 requested=[] newFalse=false
+PROBE pa-Arab-wrong-medicine current=[] candidate=[] score=0.8072783947696233 margin=0.008338510907086927 requested=[] newFalse=false
+PROBE pa-Arab-workshop-wifi current=[] candidate=[] score=0.7893910785547197 margin=0.020475902076688368 requested=[password, wifi] newFalse=false
+PROBE pa-Arab-birthdate current=[] candidate=[] score=0.7224847169325922 margin=0.020708671665436995 requested=[] newFalse=false
+Time: 21.579
+OK (1 test)

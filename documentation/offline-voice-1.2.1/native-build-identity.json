@@ -1,0 +1,42 @@
+{
+  "built_at_utc": "2026-11-17T15:21:19.854095+00:00",
+  "build_steps": [
+    "Compiled canonical pocketai_jni.cpp",
+    "Relinked libpocketai.so against existing pinned llama/whisper CPU static libraries"
+  ],
+  "source_hashes": {
+    "app/src/main/cpp/pocketai_jni.cpp": "9ad280a212bb9245db15f42ef44dee38b9884150d11857476823cd8e8e7fe079",
+    "app/src/main/cpp/tokenizer_jni.cpp": "3ea26d28ee88e2d330f70e800ddf0073eb0ef62305ac27cb2897447136fa48a5",
+    "app/src/main/cpp/CMakeLists.txt": "e5b434725027eef97a3b1e92b41a18659774a340daf6c867b1db8b8d9b764d18",
+    "app/src/main/java/com/pocketai/engine/NativeBridge.kt": "ec21a8222d72d3f83d3e162e2fbaf4225db6cdeac02cc010539b896b0ae63737",
+    "app/src/main/java/com/pocketai/engine/NativeTokenizer.kt": "c2a20fda7fc09e6decc28f7c5d2d074cc1c999fa60c4c88a26c53aa3927b6884",
+    "vendor/REVISIONS.txt": "066ceab42450474936b003d6276bd50dcd34c0cbb40bda19363f422471456e24"
+  },
+  "host_libraries": {
+    "libpocketai.so": {
+      "sha256": "dc90990d93be1966e70bd882568d8f91cab818252c4203acde5debeb514b34d8",
+      "bytes": 7611608,
+      "jni_exports": [
+        "Java_com_pocketai_engine_NativeBridge_cancelNative",
+        "Java_com_pocketai_engine_NativeBridge_generateNative",
+        "Java_com_pocketai_engine_NativeBridge_supportsInferenceNative",
+        "Java_com_pocketai_engine_NativeBridge_transcribeNative"
+      ]
+    },
+    "libpocketai_tokenizer.so": {
+      "sha256": "0882581ce9807ea355a0f035a076dd3f17abb4fedc20fe148917d11e4651e7e5",
+      "bytes": 1342880,
+      "jni_exports": [
+        "Java_com_pocketai_engine_NativeTokenizerBridge_closeNative",
+        "Java_com_pocketai_engine_NativeTokenizerBridge_decodeIdsNative",
+        "Java_com_pocketai_engine_NativeTokenizerBridge_decodePiecesNative",
+        "Java_com_pocketai_engine_NativeTokenizerBridge_encodeIdsNative",
+        "Java_com_pocketai_engine_NativeTokenizerBridge_encodePiecesNative",
+        "Java_com_pocketai_engine_NativeTokenizerBridge_infoNative",
+        "Java_com_pocketai_engine_NativeTokenizerBridge_normalizeNative",
+        "Java_com_pocketai_engine_NativeTokenizerBridge_openNative"
+      ]
+    }
+  },
+  "scope": "Fresh canonical host JNI rebuild only; ASR execution is recorded separately in voice-results.json. No Android runtime execution claimed."
+}

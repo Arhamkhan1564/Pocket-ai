@@ -69,7 +69,9 @@ object SearchText {
     fun keywordQuery(value: String): KeywordQuery {
         val normalized = normalize(value.take(2000))
         val literal = normalized.split(' ').filter { it.isNotBlank() && it !in stopWords }.distinct().take(24)
-        val found = keywordConcepts.filter { concept -> concept.aliases.any { containsTerm(normalized, it) } }.take(12)
+        val storageContext = storageWords.containsMatchIn(normalized) && !containsTerm(normalized, "common cold")
+        val found = keywordConcepts.filter { concept -> concept.aliases.any { containsTerm(normalized, it) } }
+            .filterNot { storageContext && "cold" in it.terms }.take(12)
         val expanded = (literal + found.flatMap { it.terms }).distinct().take(64)
         val specific = found.filterNot { it.generic }
         val fallbackPain = if (specific.isEmpty()) found.filter { "pain" in it.terms }.flatMap { it.terms } else emptyList()
@@ -146,7 +148,9 @@ object SearchText {
 
     private val genericTerms = keywordConcepts.filter { it.generic }.flatMap { it.terms + it.aliases }.filterNot { it.contains(' ') }.toSet()
 
+    private val storageWords = Regex("\\b(?:keep|keeping|kept|store|stored|storing|storage|refrigerat[a-z]*|freez[a-z]*|temperature)\\b")
     private val stopWords = setOf(
+        "does", "document", "documents", "reference", "references", "saved", "say", "says", "said", "according", "text", "passage", "passages", "information",
         "what", "who", "when", "where", "why", "how", "is", "are", "was", "were", "a", "an", "the", "of", "about", "me", "tell", "do", "you", "know", "did", "i", "teach", "taught", "my", "please", "explain", "in", "on", "to", "and", "it", "for", "which", "can", "should", "take", "taking", "have", "has", "give", "suggest", "recommend", "help", "with",
         "ہے", "ہیں", "ہوں", "کیا", "کے", "کی", "کا", "کو", "میں", "سے", "یہ", "وہ", "مجھے", "بتائیں", "میرے", "میری", "میرا", "اور", "کونسی", "کونسا", "کون", "سی", "سا", "دیں", "لوں", "لینا", "لیے", "لئے", "ہو", "رہا", "رہی", "مینوں", "توں", "وچ", "نوں", "دا", "دی", "دے", "کیڑی", "اے",
         "ਬਾਰੇ", "ਕੀ", "ਹੈ", "ਨੂੰ", "ਦੱਸੋ", "ਮੈਨੂੰ", "ਮੇਰੇ", "ਮੇਰੀ", "ਮੈਂ", "ਹੋ", "ਰਿਹਾ", "ਰਹੀ", "ਵਿੱਚ", "ਨਾਲ", "ਲਈ", "ਕਿਹੜੀ", "ਕਿਹੜਾ", "ਲਵਾਂ", "ਦਿਓ",

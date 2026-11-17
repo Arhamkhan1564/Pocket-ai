@@ -1,0 +1,122 @@
+{
+  "scope": "Small shareable JSON evidence and focused status logs; no model/runtime payloads.",
+  "canonical_json_copies": [
+    {
+      "file": "integration-results.json",
+      "original_file": "integration-results.json",
+      "sha256": "87d5385f40ef94712ac140edeb2afe05dc68b66d38ac3d7ca73f12f8e881af30",
+      "copy": "byte-for-byte"
+    },
+    {
+      "file": "canonical-retrieval-probe-results.json",
+      "original_file": "canonical-retrieval-probe-results.json",
+      "sha256": "91aff4b7b1473a65d000b5614872aae4b388788d804ff562c2e7dba30981eb2d",
+      "copy": "byte-for-byte"
+    },
+    {
+      "file": "network-summary.json",
+      "original_file": "integration-network.summary.json",
+      "sha256": "abda303443df28f0d4eba5cb7680975b55ab0c2897fcfa2084ace15cdcb87dd7",
+      "copy": "byte-for-byte"
+    },
+    {
+      "file": "run-record.json",
+      "original_file": "integration-run-record.json",
+      "sha256": "ba38eac7e4ee496a1a519c2edf8a310835d83b1d06e83bef31f9a2a9d76d6687",
+      "copy": "byte-for-byte"
+    },
+    {
+      "file": "original-score-probe-results.json",
+      "original_file": "retrieval-gate-probe-results.json",
+      "sha256": "59126cee6e3740d5ecbfcbe54931b4bb5f0a4e48271b5b50fc83d0ef559223d6",
+      "copy": "byte-for-byte"
+    },
+    {
+      "file": "helper-probe-results.json",
+      "original_file": "question-anchor-probe-results.json",
+      "sha256": "effe658f88973035f59734016a5e2494dd207f7d55bd026688241c00955e0efd",
+      "copy": "byte-for-byte"
+    }
+  ],
+  "files": [
+    {
+      "file": "OVERVIEW.txt",
+      "bytes": 4008,
+      "sha256": "9997ca200a2d0c0cdc9788b8da70885d8396633a8c4dda578390538c16f46677"
+    },
+    {
+      "file": "attempt-1-early-failure-focused.log",
+      "bytes": 635,
+      "sha256": "b1031faff7fac669eab5f98b58a537faada39615fdfb364c70598e0fa35882c7"
+    },
+    {
+      "file": "attempt-1-early-failure.json",
+      "bytes": 3283,
+      "sha256": "df6bc4be985a34b75906ba327df50a629b4cfcebbc6810ddba9e3cd40f35db2d"
+    },
+    {
+      "file": "attempt-2-early-failure-focused.log",
+      "bytes": 635,
+      "sha256": "b7ecc2752d75bbc90dadc8531860cacff50975bb7d7fa0c996e086a762197318"
+    },
+    {
+      "file": "attempt-2-early-failure.json",
+      "bytes": 3643,
+      "sha256": "2a08dbaea67fd7b2e2c464fd16a5e564e684f47e72274a970d6aab52a35f0719"
+    },
+    {
+      "file": "canonical-retrieval-probe-results.json",
+      "bytes": 17981,
+      "sha256": "91aff4b7b1473a65d000b5614872aae4b388788d804ff562c2e7dba30981eb2d"
+    },
+    {
+      "file": "helper-probe-results.json",
+      "bytes": 19115,
+      "sha256": "effe658f88973035f59734016a5e2494dd207f7d55bd026688241c00955e0efd"
+    },
+    {
+      "file": "integration-focused.log",
+      "bytes": 4873,
+      "sha256": "de585d879f5682740d267e4459fb6ba223da1690a406281dc8d1e9a89a7d733c"
+    },
+    {
+      "file": "integration-results.json",
+      "bytes": 15535,
+      "sha256": "87d5385f40ef94712ac140edeb2afe05dc68b66d38ac3d7ca73f12f8e881af30"
+    },
+    {
+      "file": "network-summary.json",
+      "bytes": 980,
+      "sha256": "abda303443df28f0d4eba5cb7680975b55ab0c2897fcfa2084ace15cdcb87dd7"
+    },
+    {
+      "file": "original-score-probe-focused.log",
+      "bytes": 7159,
+      "sha256": "3f91382aba75bbe0252bd05b0f1e5a3e2cdb2a6f149a901acc1383eb5ce58828"
+    },
+    {
+      "file": "original-score-probe-results.json",
+      "bytes": 82100,
+      "sha256": "59126cee6e3740d5ecbfcbe54931b4bb5f0a4e48271b5b50fc83d0ef559223d6"
+    },
+    {
+      "file": "retrieval-interpretation.json",
+      "bytes": 4664,
+      "sha256": "d33651dbd1ac61c195797a2459ca9f23fd8c76580415280da9f6195fc49700a4"
+    },
+    {
+      "file": "run-record.json",
+      "bytes": 2269,
+      "sha256": "ba38eac7e4ee496a1a519c2edf8a310835d83b1d06e83bef31f9a2a9d76d6687"
+    }
+  ],
+  "derived_retrieval_counts": {
+    "known_queries": 16,
+    "known_queries_with_expected_source_present": 14,
+    "known_queries_with_exact_annotated_source_set": 9,
+    "negative_queries": 32,
+    "negative_queries_returning_any_source": 0,
+    "known_queries_with_additional_sources": 5,
+    "additional_source_occurrences": 6
+  }
+}

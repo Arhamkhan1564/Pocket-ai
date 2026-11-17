@@ -1,0 +1,89 @@
+{
+  "corpus": [
+    [
+      "insulin-storage",
+      "The reference describes insulin storage in a refrigerator. Do not freeze the product. Read the original leaflet for its specific storage instructions."
+    ],
+    [
+      "ibuprofen-warning",
+      "The document describes ibuprofen and its stomach-irritation warning. It asks readers to check the leaflet and a pharmacist for suitability."
+    ],
+    [
+      "filter-maintenance",
+      "The instruction booklet says the filter must be replaced every three months. Disconnect the unit from power before cleaning."
+    ],
+    [
+      "astronomy",
+      "The astronomy article describes Saturn, its rings and its moons."
+    ],
+    [
+      "paracetamol-reference",
+      "The document explains paracetamol as an ingredient and discusses its label warnings. It does not provide a personal prescription."
+    ],
+    [
+      "workshop-code",
+      "The workshop access code is cedar-47. The reference number is 250."
+    ],
+    [
+      "bread-recipe",
+      "Sourdough bread uses a fermented starter with flour and water."
+    ]
+  ],
+  "queries": [
+    [
+      "en",
+      "How should insulin be stored?",
+      "insulin-storage"
+    ],
+    [
+      "ur",
+      "انسولین کو کیسے محفوظ رکھنا چاہئے؟",
+      "insulin-storage"
+    ],
+    [
+      "pa-Guru",
+      "ਇਨਸੁਲਿਨ ਨੂੰ ਕਿਵੇਂ ਸੰਭਾਲ ਕੇ ਰੱਖਣਾ ਚਾਹੀਦਾ ਹੈ?",
+      "insulin-storage"
+    ],
+    [
+      "pa-Arab",
+      "انسولین نوں کیویں سنبھال کے رکھنا چاہیدا اے؟",
+      "insulin-storage"
+    ],
+    [
+      "en",
+      "What does the reference say about paracetamol?",
+      "paracetamol-reference"
+    ],
+    [
+      "ur",
+      "پیراسیٹامول کے بارے میں دستاویز میں کیا لکھا ہے؟",
+      "paracetamol-reference"
+    ],
+    [
+      "pa-Guru",
+      "ਪੈਰਾਸੀਟਾਮੋਲ ਬਾਰੇ ਦਸਤਾਵੇਜ਼ ਕੀ ਕਹਿੰਦਾ ਹੈ?",
+      "paracetamol-reference"
+    ],
+    [
+      "pa-Arab",
+      "پیراسیٹامول بارے دستاویز کیہ کہندی اے؟",
+      "paracetamol-reference"
+    ],
+    [
+      "ur",
+      "ورکشاپ کا کوڈ کیا ہے؟",
+      "workshop-code"
+    ],
+    [
+      "pa-Guru",
+      "ਵਰਕਸ਼ਾਪ ਦਾ ਕੋਡ ਕੀ ਹੈ?",
+      "workshop-code"
+    ],
+    [
+      "en",
+      "How do I book a flight? ",
+      null
+    ]
+  ]
+}

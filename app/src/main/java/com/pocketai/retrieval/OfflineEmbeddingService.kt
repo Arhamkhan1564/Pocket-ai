@@ -13,8 +13,17 @@ import kotlinx.coroutines.ensureActive
 class OfflineEmbeddingService(context: Context) {
     private val appContext = context.applicationContext
     suspend fun query(text: String): FloatArray = withKernel { it.query(text) }
-    suspend fun index(records: List<KnowledgeRecord>, consume: (KnowledgeRecord, List<EmbeddedWindow>) -> Unit) = withKernel { kernel ->
-        records.forEach { consume(it, kernel.document(it.content)) }
+    suspend fun index(records: List<KnowledgeRecord>,
+                      onSkipped: (KnowledgeRecord, String) -> Unit = { _, reason -> throw IllegalArgumentException(reason) },
+                      consume: (KnowledgeRecord, List<EmbeddedWindow>) -> Unit) = withKernel { kernel ->
+        records.forEach { record ->
+            val windows = try { kernel.document(record.content) }
+            catch (unsupported: UnsupportedEmbeddingTextException) {
+                onSkipped(record, unsupported.message ?: "Split this saved passage into shorter notes.")
+                return@forEach
+            }
+            consume(record, windows)
+        }
     }
 
     private suspend fun <T> withKernel(block: (OnnxEmbeddingKernel) -> T): T {

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.pocketai.rag.OfflineRagSourceLifecycleTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-11-17T16:02:49" hostname="09642bcf3291" time="1.764">
+  <properties/>
+  <testcase name="sameLanguageOriginalRemainsReadableWhileAdministrationIsLocked" classname="com.pocketai.rag.OfflineRagSourceLifecycleTest" time="0.6"/>
+  <testcase name="editedSourceCannotPublishTranslationOfItsPreviousContent" classname="com.pocketai.rag.OfflineRagSourceLifecycleTest" time="0.604"/>
+  <testcase name="deletedDocumentCannotPublishItsDelayedSourceTranslation" classname="com.pocketai.rag.OfflineRagSourceLifecycleTest" time="0.56"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -16,6 +16,9 @@ interface EmbeddingTokenizer {
 
 data class EmbeddedWindow(val startOffset: Int, val endOffset: Int, val vector: FloatArray)
 
+/** A passage can remain readable/searchable even when its text exceeds this model's bounded input plan. */
+class UnsupportedEmbeddingTextException(message: String, cause: Throwable) : IllegalArgumentException(message, cause)
+
 /** The same CPU tensor path is usable in Android and the host parity harness. */
 class OnnxEmbeddingKernel(
     modelFile: File,
@@ -39,8 +42,12 @@ class OnnxEmbeddingKernel(
     }
 
     fun document(text: String): List<EmbeddedWindow> {
-        require(text.isNotBlank() && text.length <= 20_000) { "Knowledge text is empty or too long for semantic indexing." }
-        return EmbeddingWindows.split(text) { tokenizer.encode("passage: $it").size }.map { window ->
+        val windows = try {
+            EmbeddingWindows.split(text) { tokenizer.encode("passage: $it").size }
+        } catch (failure: IllegalArgumentException) {
+            throw UnsupportedEmbeddingTextException(failure.message ?: "Split this passage into shorter notes for semantic indexing.", failure)
+        }
+        return windows.map { window ->
             checkCancelled()
             EmbeddedWindow(window.startOffset, window.endOffset, embed("passage: ${window.text}"))
         }
@@ -96,7 +103,9 @@ data class EmbeddingWindow(val startOffset: Int, val endOffset: Int, val text: S
 /** Exact source offsets survive token limits; long records are indexed in overlapping windows. */
 object EmbeddingWindows {
     fun split(text: String, tokenCount: (String) -> Int): List<EmbeddingWindow> {
-        require(text.isNotBlank() && text.length <= 20_000)
+        require(text.isNotBlank() && text.length <= 20_000) {
+            "Semantic indexing needs nonempty passages of at most 20,000 characters. Split this note into shorter passages; its original and keyword search remain available."
+        }
         val windows = ArrayList<EmbeddingWindow>()
         var start = 0
         while (start < text.length) {

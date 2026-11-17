@@ -1,0 +1,12 @@
+JUnit version 4.13.2
+PHASE PASS native_environment_and_authenticated_document_import
+PHASE START actual_pack_preparation_cancel_resume_and_integrity
+PHASE PASS actual_pack_preparation_cancel_resume_and_integrity
+PHASE START actual_index_skips_long_record_without_starving_later_documents
+PHASE PASS actual_index_skips_long_record_without_starving_later_documents
+PHASE START editing_long_record_allows_reindex_and_clears_warning
+PHASE PASS editing_long_record_allows_reindex_and_clears_warning
+PHASE START assistant_actual_english_urdu_gurmukhi_shahmukhi_answers_and_typed_citations
+Time: 70.631
+FAILURES!!!
+Tests run: 1,  Failures: 1

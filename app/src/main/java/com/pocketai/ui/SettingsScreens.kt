@@ -105,7 +105,7 @@ fun ResourceScreens(
                 ResourceLink("Voice & audio", "Offline voices, speech speed and audio tests", onClick = { onNavigate("audio") })
                 ResourceLink("Offline tools", "Prepare included search, translation and speech resources", onClick = { onNavigate("models") })
                 ResourceLink("Device & storage", "Compatibility, memory, battery and audio devices", onClick = { onNavigate("diagnostics") })
-                ResourceLink("Appliance session", "Keep a visible assistant session ready for voice use", onClick = { onNavigate("appliance") })
+                ResourceLink("Appliance session", "Hands-free uses unreviewed transcripts; use tap-to-talk for exact wording", onClick = { onNavigate("appliance") })
                 ResourceLink("Backup & restore", "Move your knowledge using a JSON backup", onClick = { onNavigate("backup") })
                 ResourceLink("Administrator", "PIN, recovery and session protection", onClick = { onNavigate("security") })
                 ResourcePanel("Private by design", "This APK does not request internet access. Imported models, conversations and saved knowledge remain local. Android system backups are disabled.")
@@ -194,7 +194,7 @@ private fun AudioResources(settings: AppSettings, changed: () -> Unit, testSpeak
     }
     Button(onClick = { testSpeaker(settings.responseLanguage) }, modifier = Modifier.fillMaxWidth()) { Text("Test offline speaker") }
     OutlinedButton(onClick = testMicrophone, modifier = Modifier.fillMaxWidth()) { Text("Test microphone in conversation") }
-    ResourcePanel("Tap to talk", "Recording starts only after speech setup is checked, you tap the microphone and grant permission. Tap stop to transcribe with the prepared offline speech resource. Audio is held temporarily in memory and is not saved. Wake-word and unattended background listening are not enabled.")
+    ResourcePanel("Tap to talk", "Urdu and Punjabi recognition is experimental: words or numbers may be misheard, and text may use a different script. Review and correct text before sending or saving. Hands-free uses unreviewed transcripts; use tap-to-talk when exact words or numbers matter. Recording requires microphone permission; audio is temporary and is not saved. Wake-word listening is not enabled.")
     ResourcePanel("If you hear no speech", "An offline voice must be installed for the selected language. Pocket AI refuses voices that require a network connection. Text responses remain available. Your Android media volume also affects playback.")
 }
 
@@ -238,7 +238,7 @@ private fun ModelResources(manager: ModelManager, settings: AppSettings, changed
     }
     ResourcePanel("Your reference workflow", "Import an English TXT, Word or text PDF in Training Mode. Review and index it, ask in your language, then tap a source to read the original. Adding a file indexes knowledge; it does not retrain a model.")
     OfflinePreparationPanel(offlineRag, onMessage = message, onPrepared = changed)
-    ResourcePanel("Offline speech recognition", bundledSpeech.message + "\nRecognition, translated text and spoken-answer voices have separate readiness checks.")
+    ResourcePanel("Offline speech recognition", bundledSpeech.message + "\nUrdu and Punjabi recognition is experimental. Review and correct words, numbers and script before using the transcript. Recognition, translated text and spoken-answer voices have separate readiness checks.")
     if (bundledSpeech.status == BundledSpeechStatus.INSTALLING) {
         LinearProgressIndicator(Modifier.fillMaxWidth())
         Text("Preparing included speech model…", style = MaterialTheme.typography.bodySmall)

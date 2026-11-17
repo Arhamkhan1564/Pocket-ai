@@ -1,0 +1,683 @@
+{
+  "status": "PASS_TARGETED_POLICY",
+  "summary": {
+    "known_questions": 16,
+    "known_matches": 14,
+    "negative_questions": 32,
+    "false_matches": 0,
+    "known_code_questions": 4,
+    "known_code_matches": 4
+  },
+  "results": [
+    {
+      "id": "en-workshop-code",
+      "question": "What code unlocks the workshop?",
+      "language": "en",
+      "expected": [
+        "workshop-code"
+      ],
+      "actual": [
+        "workshop-code"
+      ],
+      "semantic": true,
+      "topic_words": [
+        "workshop"
+      ],
+      "code_question": true,
+      "known_match": true,
+      "false_match": false
+    },
+    {
+      "id": "en-workshop-reference",
+      "question": "Which reference number belongs to the workshop?",
+      "language": "en",
+      "expected": [
+        "workshop-code"
+      ],
+      "actual": [
+        "workshop-code"
+      ],
+      "semantic": true,
+      "topic_words": [],
+      "code_question": false,
+      "known_match": true,
+      "false_match": false
+    },
+    {
+      "id": "en-insulin-storage",
+      "question": "What does the document say about keeping insulin cold?",
+      "language": "en",
+      "expected": [
+        "insulin-storage"
+      ],
+      "actual": [
+        "insulin-storage",
+        "ibuprofen-warning",
+        "paracetamol-reference"
+      ],
+      "semantic": true,
+      "topic_words": [],
+      "code_question": false,
+      "known_match": true,
+      "false_match": false
+    },
+    {
+      "id": "en-paracetamol-reference",
+      "question": "What does the saved reference say about paracetamol and its label warnings?",
+      "language": "en",
+      "expected": [
+        "paracetamol-reference"
+      ],
+      "actual": [
+        "paracetamol-reference",
+        "medicine-leaflet"
+      ],
+      "semantic": true,
+      "topic_words": [],
+      "code_question": false,
+      "known_match": true,
+      "false_match": false
+    },
+    {
+      "id": "en-airport-code",
+      "question": "What is the airport code?",
+      "language": "en",
+      "expected": [],
+      "actual": [],
+      "semantic": false,
+      "topic_words": [
+        "airport"
+      ],
+      "code_question": true,
+      "known_match": false,
+      "false_match": false
+    },
+    {
+      "id": "en-garage-code",
+      "question": "What is the garage access code?",
+      "language": "en",
+      "expected": [],
+      "actual": [],
+      "semantic": false,
+      "topic_words": [
+        "garage"
+      ],
+      "code_question": true,
+      "known_match": false,
+      "false_match": false
+    },
+    {
+      "id": "en-door-pin",
+      "question": "What is the door PIN?",
+      "language": "en",
+      "expected": [],
+      "actual": [],
+      "semantic": false,
+      "topic_words": [],
+      "code_question": false,
+      "known_match": false,
+      "false_match": false
+    },
+    {
+      "id": "en-travel",
+      "question": "How do I book a flight to Islamabad?",
+      "language": "en",
+      "expected": [],
+      "actual": [],
+      "semantic": false,
+      "topic_words": [],
+      "code_question": false,
+      "known_match": false,
+      "false_match": false
+    },
+    {
+      "id": "en-weather",
+      "question": "Will it rain tomorrow?",
+      "language": "en",
+      "expected": [],
+      "actual": [],
+      "semantic": false,
+      "topic_words": [],
+      "code_question": false,
+      "known_match": false,
+      "false_match": false
+    },
+    {
+      "id": "en-wrong-medicine",
+      "question": "What does the saved document say about Novamed?",
+      "language": "en",
+      "expected": [],
+      "actual": [],
+      "semantic": false,
+      "topic_words": [],
+      "code_question": false,
+      "known_match": false,
+      "false_match": false
+    },
+    {
+      "id": "en-workshop-wifi",
+      "question": "What is the workshop Wi-Fi password?",
+      "language": "en",
+      "expected": [],
+      "actual": [],
+      "semantic": false,
+      "topic_words": [],
+      "code_question": false,
+      "known_match": false,
+      "false_match": false
+    },
+    {
+      "id": "en-birthdate",
+      "question": "What is the workshop owner's birth date?",
+      "language": "en",
+      "expected": [],
+      "actual": [],
+      "semantic": false,
+      "topic_words": [],
+      "code_question": false,
+      "known_match": false,
+      "false_match": false
+    },
+    {
+      "id": "ur-workshop-code",
+      "question": "ورکشاپ میں داخلے کا کوڈ کیا ہے؟",
+      "language": "ur",
+      "expected": [
+        "workshop-code"
+      ],
+      "actual": [
+        "workshop-code"
+      ],
+      "semantic": true,
+      "topic_words": [
+        "ورکشاپ"
+      ],
+      "code_question": true,
+      "known_match": true,
+      "false_match": false
+    },
+    {
+      "id": "ur-workshop-reference",
+      "question": "ورکشاپ کا حوالہ نمبر کیا ہے؟",
+      "language": "ur",
+      "expected": [
+        "workshop-code"
+      ],
+      "actual": [
+        "workshop-code"
+      ],
+      "semantic": true,
+      "topic_words": [],
+      "code_question": false,
+      "known_match": true,
+      "false_match": false
+    },
+    {
+      "id": "ur-insulin-storage",
+      "question": "انسولین کو کیسے محفوظ رکھنا چاہئے؟",
+      "language": "ur",
+      "expected": [
+        "insulin-storage"
+      ],
+      "actual": [
+        "insulin-storage"
+      ],
+      "semantic": true,
+      "topic_words": [],
+      "code_question": false,
+      "known_match": true,
+      "false_match": false
+    },
+    {
+      "id": "ur-paracetamol-reference",
+      "question": "پیراسیٹامول کے بارے میں محفوظ حوالے میں کیا لکھا ہے؟",
+      "language": "ur",
+      "expected": [
+        "paracetamol-reference"
+      ],
+      "actual": [
+        "paracetamol-reference",
+        "medicine-leaflet"
+      ],
+      "semantic": true,
+      "topic_words": [],
+      "code_question": false,
+      "known_match": true,
+      "false_match": false
+    },
+    {
+      "id": "ur-airport-code",
+      "question": "ہوائی اڈے کا کوڈ کیا ہے؟",
+      "language": "ur",
+      "expected": [],
+      "actual": [],
+      "semantic": false,
+      "topic_words": [
+        "ہوائی",
+        "اڈے"
+      ],
+      "code_question": true,
+      "known_match": false,
+      "false_match": false
+    },
+    {
+      "id": "ur-garage-code",
+      "question": "گیراج میں داخلے کا کوڈ کیا ہے؟",
+      "language": "ur",
+      "expected": [],
+      "actual": [],
+      "semantic": false,
+      "topic_words": [
+        "گیراج"
+      ],
+      "code_question": true,
+      "known_match": false,
+      "false_match": false
+    },
+    {
+      "id": "ur-door-pin",
+      "question": "دروازے کا پن کوڈ کیا ہے؟",
+      "language": "ur",
+      "expected": [],
+      "actual": [],
+      "semantic": false,
+      "topic_words": [],
+      "code_question": false,
+      "known_match": false,
+      "false_match": false
+    },
+    {
+      "id": "ur-travel",
+      "question": "اسلام آباد کے لیے پرواز کی بکنگ کیسے کروں؟",
+      "language": "ur",
+      "expected": [],
+      "actual": [],
+      "semantic": false,
+      "topic_words": [],
+      "code_question": false,
+      "known_match": false,
+      "false_match": false
+    },
+    {
+      "id": "ur-weather",
+      "question": "کیا کل بارش ہوگی؟",
+      "language": "ur",
+      "expected": [],
+      "actual": [],
+      "semantic": false,
+      "topic_words": [],
+      "code_question": false,
+      "known_match": false,
+      "false_match": false
+    },
+    {
+      "id": "ur-wrong-medicine",
+      "question": "Novamed کے بارے میں محفوظ دستاویز کیا کہتی ہے؟",
+      "language": "ur",
+      "expected": [],
+      "actual": [],
+      "semantic": false,
+      "topic_words": [],
+      "code_question": false,
+      "known_match": false,
+      "false_match": false
+    },
+    {
+      "id": "ur-workshop-wifi",
+      "question": "ورکشاپ کے وائی فائی کا پاس ورڈ کیا ہے؟",
+      "language": "ur",
+      "expected": [],
+      "actual": [],
+      "semantic": false,
+      "topic_words": [],
+      "code_question": false,
+      "known_match": false,
+      "false_match": false
+    },
+    {
+      "id": "ur-birthdate",
+      "question": "ورکشاپ کے مالک کی تاریخ پیدائش کیا ہے؟",
+      "language": "ur",
+      "expected": [],
+      "actual": [],
+      "semantic": false,
+      "topic_words": [],
+      "code_question": false,
+      "known_match": false,
+      "false_match": false
+    },
+    {
+      "id": "pa-Guru-workshop-code",
+      "question": "ਵਰਕਸ਼ਾਪ ਦਾ ਦਾਖਲਾ ਕੋਡ ਕੀ ਹੈ?",
+      "language": "pa-Guru",
+      "expected": [
+        "workshop-code"
+      ],
+      "actual": [
+        "workshop-code"
+      ],
+      "semantic": true,
+      "topic_words": [
+        "ਵਰਕਸ਼ਾਪ"
+      ],
+      "code_question": true,
+      "known_match": true,
+      "false_match": false
+    },
+    {
+      "id": "pa-Guru-workshop-reference",
+      "question": "ਵਰਕਸ਼ਾਪ ਦਾ ਹਵਾਲਾ ਨੰਬਰ ਕੀ ਹੈ?",
+      "language": "pa-Guru",
+      "expected": [
+        "workshop-code"
+      ],
+      "actual": [],
+      "semantic": false,
+      "topic_words": [],
+      "code_question": false,
+      "known_match": false,
+      "false_match": false
+    },
+    {
+      "id": "pa-Guru-insulin-storage",
+      "question": "ਇਨਸੁਲਿਨ ਨੂੰ ਕਿਵੇਂ ਸੰਭਾਲ ਕੇ ਰੱਖਣਾ ਚਾਹੀਦਾ ਹੈ?",
+      "language": "pa-Guru",
+      "expected": [
+        "insulin-storage"
+      ],
+      "actual": [
+        "insulin-storage"
+      ],
+      "semantic": true,
+      "topic_words": [],
+      "code_question": false,
+      "known_match": true,
+      "false_match": false
+    },
+    {
+      "id": "pa-Guru-paracetamol-reference",
+      "question": "ਪੈਰਾਸੀਟਾਮੋਲ ਬਾਰੇ ਸੰਭਾਲਿਆ ਹਵਾਲਾ ਕੀ ਕਹਿੰਦਾ ਹੈ?",
+      "language": "pa-Guru",
+      "expected": [
+        "paracetamol-reference"
+      ],
+      "actual": [
+        "paracetamol-reference",
+        "medicine-leaflet"
+      ],
+      "semantic": true,
+      "topic_words": [],
+      "code_question": false,
+      "known_match": true,
+      "false_match": false
+    },
+    {
+      "id": "pa-Guru-airport-code",
+      "question": "ਹਵਾਈ ਅੱਡੇ ਦਾ ਕੋਡ ਕੀ ਹੈ?",
+      "language": "pa-Guru",
+      "expected": [],
+      "actual": [],
+      "semantic": false,
+      "topic_words": [
+        "ਹਵਾਈ",
+        "ਅੱਡੇ"
+      ],
+      "code_question": true,
+      "known_match": false,
+      "false_match": false
+    },
+    {
+      "id": "pa-Guru-garage-code",
+      "question": "ਗੈਰਾਜ ਦਾ ਦਾਖਲਾ ਕੋਡ ਕੀ ਹੈ?",
+      "language": "pa-Guru",
+      "expected": [],
+      "actual": [],
+      "semantic": false,
+      "topic_words": [
+        "ਗੈਰਾਜ"
+      ],
+      "code_question": true,
+      "known_match": false,
+      "false_match": false
+    },
+    {
+      "id": "pa-Guru-door-pin",
+      "question": "ਦਰਵਾਜ਼ੇ ਦਾ ਪਿਨ ਕੋਡ ਕੀ ਹੈ?",
+      "language": "pa-Guru",
+      "expected": [],
+      "actual": [],
+      "semantic": false,
+      "topic_words": [],
+      "code_question": false,
+      "known_match": false,
+      "false_match": false
+    },
+    {
+      "id": "pa-Guru-travel",
+      "question": "ਇਸਲਾਮਾਬਾਦ ਲਈ ਉਡਾਣ ਦੀ ਬੁਕਿੰਗ ਕਿਵੇਂ ਕਰਾਂ?",
+      "language": "pa-Guru",
+      "expected": [],
+      "actual": [],
+      "semantic": false,
+      "topic_words": [],
+      "code_question": false,
+      "known_match": false,
+      "false_match": false
+    },
+    {
+      "id": "pa-Guru-weather",
+      "question": "ਕੀ ਕੱਲ੍ਹ ਮੀਂਹ ਪਵੇਗਾ?",
+      "language": "pa-Guru",
+      "expected": [],
+      "actual": [],
+      "semantic": false,
+      "topic_words": [],
+      "code_question": false,
+      "known_match": false,
+      "false_match": false
+    },
+    {
+      "id": "pa-Guru-wrong-medicine",
+      "question": "Novamed ਬਾਰੇ ਸੰਭਾਲੇ ਦਸਤਾਵੇਜ਼ ਵਿੱਚ ਕੀ ਲਿਖਿਆ ਹੈ?",
+      "language": "pa-Guru",
+      "expected": [],
+      "actual": [],
+      "semantic": false,
+      "topic_words": [],
+      "code_question": false,
+      "known_match": false,
+      "false_match": false
+    },
+    {
+      "id": "pa-Guru-workshop-wifi",
+      "question": "ਵਰਕਸ਼ਾਪ ਦੇ ਵਾਈ-ਫਾਈ ਦਾ ਪਾਸਵਰਡ ਕੀ ਹੈ?",
+      "language": "pa-Guru",
+      "expected": [],
+      "actual": [],
+      "semantic": false,
+      "topic_words": [],
+      "code_question": false,
+      "known_match": false,
+      "false_match": false
+    },
+    {
+      "id": "pa-Guru-birthdate",
+      "question": "ਵਰਕਸ਼ਾਪ ਦੇ ਮਾਲਕ ਦੀ ਜਨਮ ਮਿਤੀ ਕੀ ਹੈ?",
+      "language": "pa-Guru",
+      "expected": [],
+      "actual": [],
+      "semantic": false,
+      "topic_words": [],
+      "code_question": false,
+      "known_match": false,
+      "false_match": false
+    },
+    {
+      "id": "pa-Arab-workshop-code",
+      "question": "ورکشاپ دا کوڈ کی اے؟",
+      "language": "pa-Arab",
+      "expected": [
+        "workshop-code"
+      ],
+      "actual": [
+        "workshop-code"
+      ],
+      "semantic": true,
+      "topic_words": [
+        "ورکشاپ"
+      ],
+      "code_question": true,
+      "known_match": true,
+      "false_match": false
+    },
+    {
+      "id": "pa-Arab-workshop-reference",
+      "question": "ورکشاپ دے حوالے دا نمبر کی اے؟",
+      "language": "pa-Arab",
+      "expected": [
+        "workshop-code"
+      ],
+      "actual": [],
+      "semantic": false,
+      "topic_words": [],
+      "code_question": false,
+      "known_match": false,
+      "false_match": false
+    },
+    {
+      "id": "pa-Arab-insulin-storage",
+      "question": "انسولین نوں کیویں سنبھال کے رکھنا چاہیدا اے؟",
+      "language": "pa-Arab",
+      "expected": [
+        "insulin-storage"
+      ],
+      "actual": [
+        "insulin-storage"
+      ],
+      "semantic": true,
+      "topic_words": [],
+      "code_question": false,
+      "known_match": true,
+      "false_match": false
+    },
+    {
+      "id": "pa-Arab-paracetamol-reference",
+      "question": "پیراسیٹامول بارے محفوظ حوالہ کیہ کہندا اے؟",
+      "language": "pa-Arab",
+      "expected": [
+        "paracetamol-reference"
+      ],
+      "actual": [
+        "paracetamol-reference",
+        "medicine-leaflet"
+      ],
+      "semantic": true,
+      "topic_words": [],
+      "code_question": false,
+      "known_match": true,
+      "false_match": false
+    },
+    {
+      "id": "pa-Arab-airport-code",
+      "question": "ہوائی اڈے دا کوڈ کی اے؟",
+      "language": "pa-Arab",
+      "expected": [],
+      "actual": [],
+      "semantic": false,
+      "topic_words": [
+        "ہوائی",
+        "اڈے"
+      ],
+      "code_question": true,
+      "known_match": false,
+      "false_match": false
+    },
+    {
+      "id": "pa-Arab-garage-code",
+      "question": "گیراج وچ داخل ہون دا کوڈ کی اے؟",
+      "language": "pa-Arab",
+      "expected": [],
+      "actual": [],
+      "semantic": false,
+      "topic_words": [
+        "گیراج"
+      ],
+      "code_question": true,
+      "known_match": false,
+      "false_match": false
+    },
+    {
+      "id": "pa-Arab-door-pin",
+      "question": "بوہے دا پن کوڈ کی اے؟",
+      "language": "pa-Arab",
+      "expected": [],
+      "actual": [],
+      "semantic": false,
+      "topic_words": [],
+      "code_question": false,
+      "known_match": false,
+      "false_match": false
+    },
+    {
+      "id": "pa-Arab-travel",
+      "question": "اسلام آباد دی پرواز دی بکنگ کیویں کراں؟",
+      "language": "pa-Arab",
+      "expected": [],
+      "actual": [],
+      "semantic": false,
+      "topic_words": [],
+      "code_question": false,
+      "known_match": false,
+      "false_match": false
+    },
+    {
+      "id": "pa-Arab-weather",
+      "question": "کی کل بارش ہووے گی؟",
+      "language": "pa-Arab",
+      "expected": [],
+      "actual": [],
+      "semantic": false,
+      "topic_words": [],
+      "code_question": false,
+      "known_match": false,
+      "false_match": false
+    },
+    {
+      "id": "pa-Arab-wrong-medicine",
+      "question": "Novamed بارے محفوظ دستاویز کیہ کہندی اے؟",
+      "language": "pa-Arab",
+      "expected": [],
+      "actual": [],
+      "semantic": false,
+      "topic_words": [],
+      "code_question": false,
+      "known_match": false,
+      "false_match": false
+    },
+    {
+      "id": "pa-Arab-workshop-wifi",
+      "question": "ورکشاپ دے وائی فائی دا پاس ورڈ کی اے؟",
+      "language": "pa-Arab",
+      "expected": [],
+      "actual": [],
+      "semantic": false,
+      "topic_words": [],
+      "code_question": false,
+      "known_match": false,
+      "false_match": false
+    },
+    {
+      "id": "pa-Arab-birthdate",
+      "question": "ورکشاپ دے مالک دی جنم تاریخ کی اے؟",
+      "language": "pa-Arab",
+      "expected": [],
+      "actual": [],
+      "semantic": false,
+      "topic_words": [],
+      "code_question": false,
+      "known_match": false,
+      "false_match": false
+    }
+  ],
+  "scope": "Actual revised OfflineRagServices.retrieve with real native E5, SQLite and local forward NMT callback, same48queryfixture. Unmatched known cases are reported as conservative abstentions, not hidden. No score simulation or mocked callback."
+}
