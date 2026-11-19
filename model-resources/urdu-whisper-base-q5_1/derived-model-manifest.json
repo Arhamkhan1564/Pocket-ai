@@ -1,0 +1,68 @@
+{
+  "candidate": "Urdu-finetunedWhisper-baseQ5_1",
+  "source_repository": "kingabzpro/whisper-base-urdu-full",
+  "source_revision": "6bfaec492d42f4b76f117b2b34cd9672509cecdc",
+  "source_weights_sha256": "0819a35b96bc52ba5c2448f67f6beed9ca3e7d0d57bcf913eb21feb096bdfa3f",
+  "source_license": "Apache-2.0 explicitly declared in README; no standaloneLICENSE/NOTICE in repository. OpenAIWhisper underlyingweights/runtimeMIT attribution retained.",
+  "filename": "ggml-urdu-base-q5_1.bin",
+  "size_bytes": 59707642,
+  "sha256": "701f3ae011e0964e45894ad884da1afd5c1a0a7a846b054d9765e75d563ee7b9",
+  "fp16_input_sha256": "0774dbfe80eda83c45ddddcaad3e0e92ce29d07225f11852216e9b950969c94a",
+  "quantizer_binary_sha256": "44d83f69c52d4a4f7bc486d8fbacdc78ba72b7d01a77d5645d4702a70a1e2578",
+  "quantizer_command": [
+    "/workspace/validation/urdu-whisper-base/whisper-quantize",
+    "/workspace/validation/urdu-whisper-base/converted/ggml-model.bin",
+    "/workspace/validation/urdu-whisper-base/converted/ggml-urdu-base-q5_1.bin",
+    "q5_1"
+  ],
+  "quantizer_source_record": "quantizer-build-record.json",
+  "conversion_record": "conversion-verification.json",
+  "quantization_intentionally_lossy": true,
+  "ggml_quantization_version": 2,
+  "ggml_file_type": 9,
+  "all_tensor_names_shapes_order_preserved": true,
+  "tensor_count": 245,
+  "tensor_ggml_type_counts": {
+    "1": 2,
+    "0": 146,
+    "7": 97
+  },
+  "normal_vocab_and_mel_coefficients_preserved_exactly": true,
+  "header": [
+    1734831468,
+    51865,
+    1500,
+    512,
+    8,
+    6,
+    448,
+    512,
+    8,
+    6,
+    80,
+    2009
+  ],
+  "inference_performed": false,
+  "recipe_files": [
+    {
+      "filename": "convert_verified.py",
+      "sha256": "340622f3deb6cacd03910b1b719557bed61a6486553c39ff762c2cc137e86928"
+    },
+    {
+      "filename": "converter-precision-fix.diff",
+      "sha256": "9d6b51692138d083a57a67759db8a95e18abd2e253706999c340fa15ea524a49"
+    },
+    {
+      "filename": "conversion-verification.json",
+      "sha256": "9ec7e52f2e7ec425779f1c0ac563c82e73775a1fade8212c82654480730c60c6"
+    },
+    {
+      "filename": "quantizer-build-record.json",
+      "sha256": "f7bf713d3dabb4bf250e762e16e4563290e0f2c360b6a4f803f016d5da884f11"
+    },
+    {
+      "filename": "conversion-requirements-lock.txt",
+      "sha256": "8ec2a1e3b7cf9329a7817e0763968adac6121504451d733221278fb412b41b30"
+    }
+  ]
+}

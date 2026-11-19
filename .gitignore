@@ -70,3 +70,6 @@ dict.TGT.json
 !downloads/offline-v1.2.1/PocketAI.apk
 !downloads/offline-v1.2.1/PocketAI-debug.apk
 !downloads/offline-v1.2.1/PocketAI-source.zip
+!downloads/voice-v1.3/PocketAI-Voice-Preview.apk
+!downloads/voice-v1.3/PocketAI-source.zip
+!model-resources/urdu-whisper-base-q5_1/ggml-urdu-base-q5_1.bin
