@@ -1,0 +1,28 @@
+{
+  "checked_at_utc": "2026-11-19T10:26:21.120938+00:00",
+  "published_commit": "cb83ada9601be6a1ad206e413543516465e6013a",
+  "checks": [
+    {
+      "file": "PocketAI-Voice-Preview.apk",
+      "url": "https://media.githubusercontent.com/media/Arhamkhan1564/Pocket-ai/main/downloads/voice-v1.3/PocketAI-Voice-Preview.apk",
+      "http_status": 200,
+      "full_body_checked": true,
+      "bytes": 988044646,
+      "sha256": "59588d8cca1781387b2f44a86da35b5e369f609c55040be1a8d7ca77428caa1c",
+      "expected_sha256_matches": true,
+      "authenticated_request": false,
+      "zip_crc_checked": false
+    },
+    {
+      "file": "PocketAI-source.zip",
+      "url": "https://raw.githubusercontent.com/Arhamkhan1564/Pocket-ai/main/downloads/voice-v1.3/PocketAI-source.zip",
+      "http_status": 200,
+      "full_body_checked": true,
+      "bytes": 29074530,
+      "sha256": "764e262e73167b2dfc5ed7987c1150b4a876d9a10b916dd7ef672aeff78c27c1",
+      "expected_sha256_matches": true,
+      "authenticated_request": false,
+      "zip_crc_checked": true
+    }
+  ]
+}
