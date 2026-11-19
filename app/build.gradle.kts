@@ -274,7 +274,9 @@ val verifyOriginalReleaseSigning = tasks.register("verifyOriginalReleaseSigning"
     }
 }
 tasks.configureEach {
-    if (name == "validateSigningRelease") dependsOn(verifyOriginalReleaseSigning)
+    if (name in setOf("validateSigningRelease", "packageRelease", "packageReleaseBundle", "signReleaseBundle", "bundleRelease", "assembleRelease")) {
+        dependsOn(verifyOriginalReleaseSigning)
+    }
 }
 
 dependencies {

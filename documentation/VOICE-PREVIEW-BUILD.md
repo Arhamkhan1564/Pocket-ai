@@ -38,7 +38,7 @@ ab1c8fc2c6dc7f58517337050ec35dc4e236312f4547504e1e999c05ad6f8a3e
 For an original-app update, supply the original external key through
 `POCKETAI_RELEASE_SIGNING_PROPERTIES` or
 `-PpocketAiReleaseSigningProperties`. The legacy root `signing.properties` is
-still supported. `validateSigningRelease` first runs
+still supported. Standard APK/AAB packaging and assembly tasks first run
 `verifyOriginalReleaseSigning`, which requires the original certificate:
 
 ```text
