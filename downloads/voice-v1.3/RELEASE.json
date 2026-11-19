@@ -1,0 +1,46 @@
+{
+  "version": "1.3.0",
+  "version_code": 5,
+  "application_id": "com.pocketai.voicepreview",
+  "launcher_label": "Pocket AI Voice Preview",
+  "source_commit": "c3f1c83b37274c399750ef1cf112ab2cfa86f6d4",
+  "certificate_sha256": "ab1c8fc2c6dc7f58517337050ec35dc4e236312f4547504e1e999c05ad6f8a3e",
+  "artifacts": [
+    {
+      "file": "PocketAI-Voice-Preview.apk",
+      "bytes": 988044646,
+      "sha256": "59588d8cca1781387b2f44a86da35b5e369f609c55040be1a8d7ca77428caa1c"
+    },
+    {
+      "file": "PocketAI-source.zip",
+      "bytes": 29074530,
+      "sha256": "764e262e73167b2dfc5ed7987c1150b4a876d9a10b916dd7ef672aeff78c27c1"
+    }
+  ],
+  "model_files": 17,
+  "model_bytes": 899719726,
+  "unit_tests": {
+    "total": 216,
+    "passed": 215,
+    "skipped": 1,
+    "failures": 0,
+    "errors": 0
+  },
+  "lint": {
+    "debug": {
+      "errors": 0,
+      "warnings": 19
+    },
+    "voicePreviewRelease": {
+      "errors": 0,
+      "warnings": 19
+    }
+  },
+  "offline": "All baseline recognizers/search/translation/generation resources are inside the APK. No INTERNET permission or runtime downloads.",
+  "limits": [
+    "No physical Android phone or clinical acceptance performed.",
+    "Host speech tests still contain word/name/quantity errors; review manual Urdu/Punjabi transcripts.",
+    "Android 6/API 23+,ARM64, ARMv7 with NEON, x86_64; device memory and CPU restrictions apply.",
+    "New preview identity installs separately. Preserve the original app and transfer saved knowledge through its exported backup."
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "version": "1.3.0",
+  "version_code": 5,
+  "variant": "voicePreviewRelease",
+  "application_id": "com.pocketai.voicepreview",
+  "source_snapshot": {
+    "commit": "c3f1c83b37274c399750ef1cf112ab2cfa86f6d4",
+    "committed_build_inputs_verified": true,
+    "files": 79,
+    "build_inputs_sha256": "006f2ec79cf384ed270b309d76d4704162ddc59e9d2bf8c2be025a29213e9015",
+    "no_build_input_newer_than_apk": true
+  },
+  "artifact": {
+    "path": "app/build/outputs/apk/voicePreviewRelease/app-voicePreviewRelease.apk",
+    "bytes": 988044646,
+    "sha256": "59588d8cca1781387b2f44a86da35b5e369f609c55040be1a8d7ca77428caa1c"
+  },
+  "signature": {
+    "verified": true,
+    "certificate_sha256": "ab1c8fc2c6dc7f58517337050ec35dc4e236312f4547504e1e999c05ad6f8a3e",
+    "original_release_key_used": false
+  },
+  "tests": {
+    "tests": 216,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 1,
+    "passed": 215
+  },
+  "lint": {
+    "debug": {
+      "errors": 0,
+      "warnings": 19
+    },
+    "voicePreviewRelease": {
+      "errors": 0,
+      "warnings": 19
+    }
+  },
+  "model_bundle": {
+    "version": "1.3.0",
+    "files": 17,
+    "packs": 7,
+    "bytes": 899719726,
+    "all_sha256_verified": true
+  }
+}

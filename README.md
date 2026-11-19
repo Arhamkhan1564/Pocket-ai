@@ -14,6 +14,8 @@ Included automatic recognition uses English Whisper tiny, Urdu-tuned Whisper bas
 
 Every manual Urdu/Punjabi result opens an editable review before it can fill a question or training draft. Check names and quantities: the four Urdu host clips improved word-error rates overall but still lost or changed spoken numbers. Punjabi output uses the intended script but still contains substantial word errors. The detector rejects the tested noise/tone controls; it does not establish that recognized words are correct. Hands-free uses unreviewed transcripts. Read the [complete voice evidence and limits](documentation/VOICE-VALIDATION-1.3.md). Phone and fluent-speaker acceptance remain pending.
 
+The signed preview passed 215 unit tests with one existing UI test skipped. Debug and preview lint passed with zero errors and 19 warnings each. The final APK audit verified all 17 model checksums, the three ABIs, alignment, preview identity and absence of Internet permission. See the [APK audit](documentation/VOICE-1.3-APK-AUDIT.json) and [build report](documentation/VOICE-1.3-BUILD-REPORT.json).
+
 ## Checks and fixes in 1.2.1
 
 Keyboard Send now obeys the active/pending recording guard. An oversized saved note no longer prevents later references from being indexed: its original remains readable and keyword-searchable, its pending status stays visible, and Offline tools explains how to split it. Editing it into a supported passage allows indexing again.

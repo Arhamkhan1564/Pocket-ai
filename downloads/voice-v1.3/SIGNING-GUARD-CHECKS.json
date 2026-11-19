@@ -1,0 +1,17 @@
+{
+  "checks": [
+    {
+      "case": "missing-original",
+      "rejected": true,
+      "original_guard_task_executed": true,
+      "credential_output": false
+    },
+    {
+      "case": "wrong-preview-key-as-original",
+      "rejected": true,
+      "original_guard_task_executed": true,
+      "credential_output": false
+    }
+  ],
+  "apk_packaging_performed": false
+}

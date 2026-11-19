@@ -1,0 +1,13 @@
+{
+  "source_commit": "c3f1c83b37274c399750ef1cf112ab2cfa86f6d4",
+  "source_file_count": 6887,
+  "zip_bytes": 29074530,
+  "sha256": "764e262e73167b2dfc5ed7987c1150b4a876d9a10b916dd7ef672aeff78c27c1",
+  "crc": "PASS",
+  "excludes": [
+    "downloads",
+    "model-resources",
+    "private signing keys",
+    "untracked build/workspace files"
+  ]
+}

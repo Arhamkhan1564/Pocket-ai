@@ -1,0 +1,43 @@
+Pocket AI 1.3.0 Voice Preview
+
+Direct APK (988,044,646 bytes):
+https://media.githubusercontent.com/media/Arhamkhan1564/Pocket-ai/main/downloads/voice-v1.3/PocketAI-Voice-Preview.apk
+
+Source ZIP (29,074,530 bytes):
+https://raw.githubusercontent.com/Arhamkhan1564/Pocket-ai/main/downloads/voice-v1.3/PocketAI-source.zip
+
+This APK includes all 17 pinned model/tokenizer files (899,719,726 bytes).
+It runs document RAG, translation and recognition offline without an account,
+API key or in-app download. Android offline TTS voices are separate system resources.
+
+Installation and your saved knowledge:
+1. Keep your existing Pocket AI app. The original signing key is unavailable;
+   this preview installs separately as com.pocketai.voicepreview.
+2. In the old app, unlock administration and export a knowledge backup.
+   Keep that plaintext backup private.
+3. Install this APK, open 'Pocket AI Voice Preview', set its own PIN/recovery
+   code, then import the saved knowledge backup. Existing old-app data stays intact.
+4. Allow several GB of free storage. Included resources are prepared locally
+   from the APK; Urdu/Punjabi speech resources prepare before the microphone starts.
+5. Use included automatic recognition for English tiny, Urdu base and Punjabi CTC.
+   Manual Urdu/Punjabi results require editable review. Shahmukhi conversion is labeled.
+
+Check every recognized name and quantity. Speech errors remain in host fixtures.
+Hands-free uses unreviewed transcripts. Phone/microphone/TTS and clinical acceptance
+are pending. No universal Android support or safe personal medication selection is claimed.
+Supported targets: Android 6/API 23+,ARM64, ARMv7 with NEON, x86_64, subject to free memory.
+
+Verification: 215 unit tests passed, 1 existing UI test skipped; debug and preview lint
+passed with 0 errors / 19 warnings each. Host speech detector matched 9 reference decisions
+and every probability; Punjabi CTC passed 4 clips, 4 non-speech controls and bounded
+window/cancellation checks, with substantial word errors retained. See repository
+documentation/VOICE-VALIDATION-1.3.md and APK-AUDIT.json for exact scope.
+
+Source commit: c3f1c83b37274c399750ef1cf112ab2cfa86f6d4
+Preview certificate SHA-256: ab1c8fc2c6dc7f58517337050ec35dc4e236312f4547504e1e999c05ad6f8a3e
+The source ZIP excludes weights/build caches/private signing material. Build scripts
+fetch checksum-pinned resources into an external directory. Never publish signing backups.
+
+SHA-256 checksums:
+59588d8cca1781387b2f44a86da35b5e369f609c55040be1a8d7ca77428caa1c  PocketAI-Voice-Preview.apk
+764e262e73167b2dfc5ed7987c1150b4a876d9a10b916dd7ef672aeff78c27c1  PocketAI-source.zip

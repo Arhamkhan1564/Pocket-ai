@@ -1,0 +1,545 @@
+{
+  "version": "1.3.0",
+  "version_code": 5,
+  "variant": "voicePreviewRelease",
+  "application_id": "com.pocketai.voicepreview",
+  "label": "Pocket AI Voice Preview",
+  "label_resource": {
+    "id": "0x7f080056",
+    "name": "voice_preview_app_name",
+    "manifest_reference": "@ref/0x7f080056",
+    "all_badging_locales_verified": true
+  },
+  "separately_installable": true,
+  "updates_original_app": false,
+  "source_snapshot": {
+    "commit": "c3f1c83b37274c399750ef1cf112ab2cfa86f6d4",
+    "committed_build_inputs_verified": true,
+    "files": 79,
+    "build_inputs_sha256": "006f2ec79cf384ed270b309d76d4704162ddc59e9d2bf8c2be025a29213e9015",
+    "no_build_input_newer_than_apk": true
+  },
+  "artifact": {
+    "path": "app/build/outputs/apk/voicePreviewRelease/app-voicePreviewRelease.apk",
+    "bytes": 988044646,
+    "sha256": "59588d8cca1781387b2f44a86da35b5e369f609c55040be1a8d7ca77428caa1c"
+  },
+  "signature": {
+    "verified": true,
+    "certificate_sha256": "ab1c8fc2c6dc7f58517337050ec35dc4e236312f4547504e1e999c05ad6f8a3e",
+    "original_release_key_used": false
+  },
+  "android": {
+    "min_sdk": 23,
+    "target_sdk": 35,
+    "abis": [
+      "arm64-v8a",
+      "armeabi-v7a",
+      "x86_64"
+    ],
+    "armv7_requires_neon": true,
+    "debuggable": false
+  },
+  "preview_build_flag_verified": true,
+  "privacy": {
+    "internet_permission": false,
+    "allow_backup": false,
+    "all_backup_and_transfer_domains_excluded": true
+  },
+  "model_bundle": {
+    "version": "1.3.0",
+    "files": 17,
+    "packs": 7,
+    "bytes": 899719726,
+    "all_sha256_verified": true,
+    "manifest_sha256": "fd8692fbb5fde14357b5089c96f1b9389dfed5f9f724ba76191f2ca2bf3f1c4b",
+    "assets": [
+      {
+        "pack": "search",
+        "path": "offline/search/model.onnx",
+        "bytes": 118308185,
+        "sha256": "f80102d3f2a1229f387d3c81909990d8945513e347b0eab049f7de3c6f98c193",
+        "compression": 0
+      },
+      {
+        "pack": "search",
+        "path": "offline/search/tokenizer.spm",
+        "bytes": 5069051,
+        "sha256": "cfc8146abe2a0488e9e2a0c56de7952f7c11ab059eca145a0a727afce0db2865",
+        "compression": 0
+      },
+      {
+        "pack": "translation",
+        "path": "offline/translation/indictrans-v1/encoder_model.onnx",
+        "bytes": 831399,
+        "sha256": "87c3d6c6fbc48d9d7081927f3bd59915d5443a06cb63460e0d3705bae74de5a9",
+        "compression": 0
+      },
+      {
+        "pack": "translation",
+        "path": "offline/translation/indictrans-v1/encoder_model.onnx.data",
+        "bytes": 73791488,
+        "sha256": "71a4d119514411a3cb3f9d76d2d88d5c4eac7c8e907397d62d5b29e2468a0c16",
+        "compression": 0
+      },
+      {
+        "pack": "translation",
+        "path": "offline/translation/indictrans-v1/decoder_model.onnx",
+        "bytes": 2037502,
+        "sha256": "58c0fafb7ba0f343acba8643a386fab08143d49ef24472cefaecc87080f44e75",
+        "compression": 0
+      },
+      {
+        "pack": "translation",
+        "path": "offline/translation/indictrans-v1/decoder_with_past_model.onnx",
+        "bytes": 1850479,
+        "sha256": "a2e9a87ff7563f5fc87fe8102188be37fb66771cf30970e649ca67be7f895497",
+        "compression": 0
+      },
+      {
+        "pack": "translation",
+        "path": "offline/translation/indictrans-v1/decoder_shared.onnx.data",
+        "bytes": 203048944,
+        "sha256": "902314746ac629ae2ff584709c03eecdb0b3f7be4fb70ce0ff1bfbe66f14e574",
+        "compression": 0
+      },
+      {
+        "pack": "translation",
+        "path": "offline/translation/indictrans-v1/model.SRC",
+        "bytes": 759425,
+        "sha256": "3cedc5cbcc740369b76201942a0f096fec7287fee039b55bdb956f301235b914",
+        "compression": 0
+      },
+      {
+        "pack": "translation",
+        "path": "offline/translation/indictrans-v1/model.TGT",
+        "bytes": 3256903,
+        "sha256": "ac9257c8e76b8b607705b959cc3d075656ea33032f7a974e467b8941df6e98d4",
+        "compression": 0
+      },
+      {
+        "pack": "translation",
+        "path": "offline/translation/indictrans-v1/dict.SRC.json",
+        "bytes": 645314,
+        "sha256": "c6f65113581422c8777991d3770123c63447fe63dc5f3e8f4187eeff7553a689",
+        "compression": 8
+      },
+      {
+        "pack": "translation",
+        "path": "offline/translation/indictrans-v1/dict.TGT.json",
+        "bytes": 3390440,
+        "sha256": "f7817850c9e4b99c59fad57d0611c7720f1921f215e6f247cf25d52eff7f1146",
+        "compression": 8
+      },
+      {
+        "pack": "english",
+        "path": "offline/english/model.gguf",
+        "bytes": 270590880,
+        "sha256": "2fa3f013dcdd7b99f9b237717fa0b12d75bbb89984cc1274be1471a465bac9c2",
+        "compression": 0
+      },
+      {
+        "pack": "speech",
+        "path": "models/ggml-tiny-q5_1.bin",
+        "bytes": 32152673,
+        "sha256": "818710568da3ca15689e31a743197b520007872ff9576237bda97bd1b469c3d7",
+        "compression": 0
+      },
+      {
+        "pack": "voice-ur",
+        "path": "offline/voice-ur/ggml-urdu-base-q5_1.bin",
+        "bytes": 59707642,
+        "sha256": "701f3ae011e0964e45894ad884da1afd5c1a0a7a846b054d9765e75d563ee7b9",
+        "compression": 0
+      },
+      {
+        "pack": "voice-pa",
+        "path": "offline/voice-pa/model.onnx",
+        "bytes": 121951036,
+        "sha256": "06cd96375424bc23e148191a3cdb7ee03691ba4c4438cdc8c25e53472bdffab5",
+        "compression": 0
+      },
+      {
+        "pack": "voice-pa",
+        "path": "offline/voice-pa/vocab.json",
+        "bytes": 841,
+        "sha256": "343e9ae05ea54bb4b74e1da2fdb4c6524cc476bf0c0f0be3619c0c11a6723545",
+        "compression": 8
+      },
+      {
+        "pack": "speech-vad",
+        "path": "offline/speech-vad/silero-vad.onnx",
+        "bytes": 2327524,
+        "sha256": "1a153a22f4509e292a94e67d6f9b85e8deb25b4988682b7e174c65279d8788e3",
+        "compression": 0
+      }
+    ]
+  },
+  "native_libraries": {
+    "all_64bit_and_app_onnx_load_segments_at_least_16KiB": true,
+    "stock_arm32_stl_4KiB_exception": "lib/armeabi-v7a/libc++_shared.so",
+    "files": [
+      {
+        "path": "lib/arm64-v8a/libandroidx.graphics.path.so",
+        "elf_class": 64,
+        "machine": 183,
+        "load_segment_alignments": [
+          16384,
+          16384,
+          16384
+        ],
+        "bytes": 10096,
+        "sha256": "41e9a793c43a0f4fddb19e33f346bace464f30f888ba7b9eaf96294ea115bfb6"
+      },
+      {
+        "path": "lib/arm64-v8a/libc++_shared.so",
+        "elf_class": 64,
+        "machine": 183,
+        "load_segment_alignments": [
+          16384,
+          16384,
+          16384,
+          16384
+        ],
+        "bytes": 1292904,
+        "sha256": "4397241b4bd20a8e579bfb41d21107857e12985f6a01ca0c2a5f83380d1270b4"
+      },
+      {
+        "path": "lib/arm64-v8a/libonnxruntime.so",
+        "elf_class": 64,
+        "machine": 183,
+        "load_segment_alignments": [
+          16384,
+          16384,
+          16384
+        ],
+        "bytes": 17571152,
+        "sha256": "e3233d399e6eec5ec3e15c724fad7ecb826e7a95dc2bb08952ecaffea5e7d952"
+      },
+      {
+        "path": "lib/arm64-v8a/libonnxruntime4j_jni.so",
+        "elf_class": 64,
+        "machine": 183,
+        "load_segment_alignments": [
+          16384,
+          16384,
+          16384
+        ],
+        "bytes": 67936,
+        "sha256": "f0a8bc5b99a05cd386a61c0144049815637209625a991687fcbb0b1e47ad3066"
+      },
+      {
+        "path": "lib/arm64-v8a/libpocketai.so",
+        "elf_class": 64,
+        "machine": 183,
+        "load_segment_alignments": [
+          16384,
+          16384,
+          16384
+        ],
+        "bytes": 5564640,
+        "sha256": "79cd72cd9b968ac7e446ba1d078c6eac24a7ffe544ae0c4880d1acc7e25ef82c"
+      },
+      {
+        "path": "lib/arm64-v8a/libpocketai_tokenizer.so",
+        "elf_class": 64,
+        "machine": 183,
+        "load_segment_alignments": [
+          16384,
+          16384,
+          16384
+        ],
+        "bytes": 443296,
+        "sha256": "bfd65d4487137142b56854d1eb8d05cf0b14054e83e70502793cd19102a87373"
+      },
+      {
+        "path": "lib/armeabi-v7a/libandroidx.graphics.path.so",
+        "elf_class": 32,
+        "machine": 40,
+        "load_segment_alignments": [
+          16384,
+          16384,
+          16384
+        ],
+        "bytes": 7252,
+        "sha256": "41399eba6fc2a60f6f14642375c1824f3cf25eb8fec7397d753730a3ceda3e2b"
+      },
+      {
+        "path": "lib/armeabi-v7a/libc++_shared.so",
+        "elf_class": 32,
+        "machine": 40,
+        "load_segment_alignments": [
+          4096,
+          4096,
+          4096,
+          4096
+        ],
+        "bytes": 872872,
+        "sha256": "91b49f121b3120538faff020fcf535ade1d945e65ccd793fc0b815b5799bbdf0",
+        "exception": "Stock NDK27 ARMv7 C++ runtime retains4KiB alignment;16KiB process support is verified for both64bit ABIs."
+      },
+      {
+        "path": "lib/armeabi-v7a/libonnxruntime.so",
+        "elf_class": 32,
+        "machine": 40,
+        "load_segment_alignments": [
+          16384,
+          16384,
+          16384
+        ],
+        "bytes": 12294868,
+        "sha256": "f1e6e11ec6f84197bb2c28348f07bb89fc1cd4836456f3b2b50f27ba231e4232"
+      },
+      {
+        "path": "lib/armeabi-v7a/libonnxruntime4j_jni.so",
+        "elf_class": 32,
+        "machine": 40,
+        "load_segment_alignments": [
+          16384,
+          16384,
+          16384
+        ],
+        "bytes": 53620,
+        "sha256": "343d80f0eb742d5900874630fa22b6b4bc6f802f61a445979cde23534481d36c"
+      },
+      {
+        "path": "lib/armeabi-v7a/libpocketai.so",
+        "elf_class": 32,
+        "machine": 40,
+        "load_segment_alignments": [
+          16384,
+          16384,
+          16384
+        ],
+        "bytes": 4229476,
+        "sha256": "8e37997ce13e488a70e3768a6124b12992a31a1e8cfd6468501a9324d6330b61"
+      },
+      {
+        "path": "lib/armeabi-v7a/libpocketai_tokenizer.so",
+        "elf_class": 32,
+        "machine": 40,
+        "load_segment_alignments": [
+          16384,
+          16384,
+          16384
+        ],
+        "bytes": 275720,
+        "sha256": "f960c698f90464ef9f85f461ee8e568f83f3af81e46cead0801d24a57f00f9f1"
+      },
+      {
+        "path": "lib/x86_64/libandroidx.graphics.path.so",
+        "elf_class": 64,
+        "machine": 62,
+        "load_segment_alignments": [
+          16384,
+          16384,
+          16384
+        ],
+        "bytes": 10760,
+        "sha256": "4e56c996f13670e70082658de7880c4020eabf4f25e43387f88ed78a713fc9f0"
+      },
+      {
+        "path": "lib/x86_64/libc++_shared.so",
+        "elf_class": 64,
+        "machine": 62,
+        "load_segment_alignments": [
+          16384,
+          16384,
+          16384,
+          16384
+        ],
+        "bytes": 1252080,
+        "sha256": "db9609240e60ca18b816a5e95a6bbc784e799261efbd5b30c8e2e03b540b3fa8"
+      },
+      {
+        "path": "lib/x86_64/libonnxruntime.so",
+        "elf_class": 64,
+        "machine": 62,
+        "load_segment_alignments": [
+          16384,
+          16384,
+          16384
+        ],
+        "bytes": 20290896,
+        "sha256": "1ef4408db117a5af62188dc86182b81d9969de9839e5a358d15a398051de88db"
+      },
+      {
+        "path": "lib/x86_64/libonnxruntime4j_jni.so",
+        "elf_class": 64,
+        "machine": 62,
+        "load_segment_alignments": [
+          16384,
+          16384,
+          16384
+        ],
+        "bytes": 64720,
+        "sha256": "8fca3e8f6df95ac848d1b0c29024ab2de8702a82a15239f657ccfd405ce84661"
+      },
+      {
+        "path": "lib/x86_64/libpocketai.so",
+        "elf_class": 64,
+        "machine": 62,
+        "load_segment_alignments": [
+          16384,
+          16384,
+          16384
+        ],
+        "bytes": 6246480,
+        "sha256": "8b50661036af9a31aa15f239c9926127d11c41c613cdf4d01e13eccbf6055d53"
+      },
+      {
+        "path": "lib/x86_64/libpocketai_tokenizer.so",
+        "elf_class": 64,
+        "machine": 62,
+        "load_segment_alignments": [
+          16384,
+          16384,
+          16384
+        ],
+        "bytes": 453304,
+        "sha256": "31a4e3cf1d330d309fa8e68b9f17d0e2d44b6b7ad74a166a5193f94bf049a63d"
+      }
+    ]
+  },
+  "zip_alignment": "16KiB native page/4-byte file alignment verified",
+  "tests": {
+    "tests": 216,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 1,
+    "passed": 215
+  },
+  "test_suites": [
+    {
+      "name": "com.pocketai.appliance.ApplianceSessionTest",
+      "tests": 4
+    },
+    {
+      "name": "com.pocketai.assistant.AssistantServiceTest",
+      "tests": 32
+    },
+    {
+      "name": "com.pocketai.assistant.LanguageToolsTest",
+      "tests": 3
+    },
+    {
+      "name": "com.pocketai.assistant.MedicalGuidanceTest",
+      "tests": 11
+    },
+    {
+      "name": "com.pocketai.data.DocumentChunkerTest",
+      "tests": 3
+    },
+    {
+      "name": "com.pocketai.data.DocumentStoreAndVectorTest",
+      "tests": 10
+    },
+    {
+      "name": "com.pocketai.data.DocumentTextExtractorTest",
+      "tests": 12
+    },
+    {
+      "name": "com.pocketai.data.OfflineDocumentAcceptanceTest",
+      "tests": 1
+    },
+    {
+      "name": "com.pocketai.data.PocketDatabaseTest",
+      "tests": 13
+    },
+    {
+      "name": "com.pocketai.data.SearchTextTest",
+      "tests": 4
+    },
+    {
+      "name": "com.pocketai.models.BundledModelInstallTest",
+      "tests": 7
+    },
+    {
+      "name": "com.pocketai.models.ModelManagerTest",
+      "tests": 5
+    },
+    {
+      "name": "com.pocketai.models.ModelValidatorTest",
+      "tests": 6
+    },
+    {
+      "name": "com.pocketai.models.OfflineModelAssetsTest",
+      "tests": 2
+    },
+    {
+      "name": "com.pocketai.rag.LiteralProtectionTest",
+      "tests": 3
+    },
+    {
+      "name": "com.pocketai.rag.OfflineRagSourceLifecycleTest",
+      "tests": 3
+    },
+    {
+      "name": "com.pocketai.retrieval.EvidenceCoverageTest",
+      "tests": 8
+    },
+    {
+      "name": "com.pocketai.retrieval.QuestionAnchorsTest",
+      "tests": 12
+    },
+    {
+      "name": "com.pocketai.retrieval.SemanticRetrieverTest",
+      "tests": 5
+    },
+    {
+      "name": "com.pocketai.security.AuthManagerTest",
+      "tests": 6
+    },
+    {
+      "name": "com.pocketai.translation.IndicTextProcessorTest",
+      "tests": 5
+    },
+    {
+      "name": "com.pocketai.translation.IndicTokenizerTest",
+      "tests": 8
+    },
+    {
+      "name": "com.pocketai.translation.PunjabiShahmukhiTest",
+      "tests": 7
+    },
+    {
+      "name": "com.pocketai.ui.PocketComposeFlowTest",
+      "tests": 1
+    },
+    {
+      "name": "com.pocketai.voice.AppSettingsSpeechSelectionTest",
+      "tests": 2
+    },
+    {
+      "name": "com.pocketai.voice.OfflineSpeechModelsTest",
+      "tests": 13
+    },
+    {
+      "name": "com.pocketai.voice.PunjabiCtcKernelTest",
+      "tests": 9
+    },
+    {
+      "name": "com.pocketai.voice.SpeechPresenceKernelTest",
+      "tests": 11
+    },
+    {
+      "name": "com.pocketai.voice.VoiceSignalTest",
+      "tests": 3
+    },
+    {
+      "name": "com.pocketai.voice.VoiceTranscriptReviewTest",
+      "tests": 7
+    }
+  ],
+  "lint": {
+    "debug": {
+      "errors": 0,
+      "warnings": 19
+    },
+    "voicePreviewRelease": {
+      "errors": 0,
+      "warnings": 19
+    }
+  },
+  "acceptance_limits": "Host/JVM validation does not establish physical-phone accuracy, audio routing, memory/latency or clinical validation."
+}

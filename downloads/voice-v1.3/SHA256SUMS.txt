@@ -1,0 +1,2 @@
+59588d8cca1781387b2f44a86da35b5e369f609c55040be1a8d7ca77428caa1c  PocketAI-Voice-Preview.apk
+764e262e73167b2dfc5ed7987c1150b4a876d9a10b916dd7ef672aeff78c27c1  PocketAI-source.zip
