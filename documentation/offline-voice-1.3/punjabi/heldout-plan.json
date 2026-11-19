@@ -1,0 +1,22 @@
+[
+  {
+    "id": "fleurs-pa_in-validation-2",
+    "path": "/workspace/validation/offline-voice-improve-v12/heldout/fixtures/fleurs-pa_in-validation-2-pcm16.wav",
+    "pcm16_sample_sha256": "8879648e474a73148b27b9e4f98d16942d71024787135f7c9729ea72a1e8a5e8",
+    "reference": "ਰੋਗੀ ਨਾਈਜੀਰੀਆ ਗਿਆ ਸੀ ਜਿੱਥੇ ਈਬੋਲਾ ਵਾਇਰਸ ਦੇ ਕੁਝ ਮਾਮਲੇ ਸਾਹਮਣੇ ਆਏ ਹਨ।",
+    "modes": [
+      "full",
+      "bounded-noarena"
+    ]
+  },
+  {
+    "id": "fleurs-pa_in-validation-3",
+    "path": "/workspace/validation/offline-voice-improve-v12/heldout/fixtures/fleurs-pa_in-validation-3-pcm16.wav",
+    "pcm16_sample_sha256": "06ab8b47d115c6885c0c1a1820dfb3276085d59da66d08d272c21afd8786e5ec",
+    "reference": "ਮੇਰੇ ਲਈ ਇਸਦਾ ਕੋਈ ਮਤਲਬ ਨਹੀਂ ਸੀ; ਇਹ ਸਹੀ ਨਹੀਂ ਸੀ।",
+    "modes": [
+      "full",
+      "bounded-noarena"
+    ]
+  }
+]

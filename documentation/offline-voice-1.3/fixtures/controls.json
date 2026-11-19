@@ -1,0 +1,176 @@
+{
+  "purpose": "Deterministic non-speech controls for baseline-versus-experimental offline speech decoder evaluation. No model inference was performed during fixture generation.",
+  "audio_origin": "New project-authored mathematical/synthetic fixtures. No human recording, downloaded voice, cloud synthesis or external audio was used.",
+  "license": "Project-authored synthetic test fixtures; no third-party audio or voice license applies.",
+  "controls": [
+    {
+      "id": "silence-6s",
+      "wav_file": "controls/silence-6s.wav",
+      "format": {
+        "container": "RIFF/WAVE",
+        "encoding": "PCM signed16 little-endian",
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "samples": 96000,
+        "duration_seconds": 6
+      },
+      "generation": {
+        "generator": "digital zero",
+        "seed": null,
+        "amplitude": 0.0
+      },
+      "expected_speech": false,
+      "human_speech_present": false,
+      "expected_transcript": "",
+      "rms_normalized": 0.0,
+      "peak_normalized": 0.0,
+      "rms_dbfs": null,
+      "peak_dbfs": null,
+      "dc_mean_normalized": 0.0,
+      "peak_abs_pcm16": 0,
+      "frame_rms_min": 0.0,
+      "frame_rms_max": 0.0,
+      "energy_gate_frame_count": 60,
+      "energy_gate_active_frame_count": 0,
+      "expected_current_energy_gate": "reject",
+      "pcm16_payload_bytes": 192000,
+      "pcm16_payload_sha256": "ea0787f65f73b0013d03b359490e3125211b28ad5c1502ffb1544c0ded4192f5",
+      "wav_bytes": 192044,
+      "wav_sha256": "47b589098cc9e4b92774cd5b6a57ccca0713c02396bf755b2318f7e81cdc534e"
+    },
+    {
+      "id": "quiet-noise-6s",
+      "wav_file": "controls/quiet-noise-6s.wav",
+      "format": {
+        "container": "RIFF/WAVE",
+        "encoding": "PCM signed16 little-endian",
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "samples": 96000,
+        "duration_seconds": 6
+      },
+      "generation": {
+        "generator": "Python random.Random MT19937 uniform(-amplitude,+amplitude)",
+        "seed": 2026111701,
+        "amplitude": 0.0015
+      },
+      "expected_speech": false,
+      "human_speech_present": false,
+      "expected_transcript": "",
+      "rms_normalized": 0.0008659005626869162,
+      "peak_normalized": 0.001495361328125,
+      "rms_dbfs": -61.250639562791456,
+      "peak_dbfs": -56.505077098624085,
+      "dc_mean_normalized": -5.6807200113932295e-06,
+      "peak_abs_pcm16": 49,
+      "frame_rms_min": 0.0008405782154999065,
+      "frame_rms_max": 0.0008850620517412719,
+      "energy_gate_frame_count": 60,
+      "energy_gate_active_frame_count": 0,
+      "expected_current_energy_gate": "reject",
+      "pcm16_payload_bytes": 192000,
+      "pcm16_payload_sha256": "183b792fb97c13217cbfd73644240f1343e558e1311e635a0b942394cf876b33",
+      "wav_bytes": 192044,
+      "wav_sha256": "aa48123dea086b0a7b56e96e9758c0000da5a73d5ed89bfb6a817907fe100434"
+    },
+    {
+      "id": "higher-noise-6s",
+      "wav_file": "controls/higher-noise-6s.wav",
+      "format": {
+        "container": "RIFF/WAVE",
+        "encoding": "PCM signed16 little-endian",
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "samples": 96000,
+        "duration_seconds": 6
+      },
+      "generation": {
+        "generator": "Python random.Random MT19937 uniform(-amplitude,+amplitude)",
+        "seed": 2026111702,
+        "amplitude": 0.02
+      },
+      "expected_speech": false,
+      "human_speech_present": false,
+      "expected_transcript": "",
+      "rms_normalized": 0.011553741242515151,
+      "peak_normalized": 0.019989013671875,
+      "rms_dbfs": -38.745547262819954,
+      "peak_dbfs": -33.984172699358695,
+      "dc_mean_normalized": 1.415252685546875e-06,
+      "peak_abs_pcm16": 655,
+      "frame_rms_min": 0.011255932477630591,
+      "frame_rms_max": 0.011844592280164911,
+      "energy_gate_frame_count": 60,
+      "energy_gate_active_frame_count": 60,
+      "expected_current_energy_gate": "pass despite non-speech",
+      "pcm16_payload_bytes": 192000,
+      "pcm16_payload_sha256": "7a2bf788b854c8e8327834187b2542dc7edb750b53ff828c3f1fd7e2da4bd046",
+      "wav_bytes": 192044,
+      "wav_sha256": "30a22541b374d07406990e4dc3e6be15ba5740dda258d454019a6c73ae25dc66"
+    },
+    {
+      "id": "tone-440hz-6s",
+      "wav_file": "controls/tone-440hz-6s.wav",
+      "format": {
+        "container": "RIFF/WAVE",
+        "encoding": "PCM signed16 little-endian",
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "samples": 96000,
+        "duration_seconds": 6
+      },
+      "generation": {
+        "generator": "deterministic sine",
+        "frequency_hz": 440,
+        "amplitude": 0.025
+      },
+      "expected_speech": false,
+      "human_speech_present": false,
+      "expected_transcript": "",
+      "rms_normalized": 0.017677976803860584,
+      "peak_normalized": 0.024993896484375,
+      "rms_dbfs": -35.05134880591313,
+      "peak_dbfs": -32.04332066398599,
+      "dc_mean_normalized": 0.0,
+      "peak_abs_pcm16": 819,
+      "frame_rms_min": 0.017677976803860584,
+      "frame_rms_max": 0.017677976803860584,
+      "energy_gate_frame_count": 60,
+      "energy_gate_active_frame_count": 60,
+      "expected_current_energy_gate": "pass despite non-speech",
+      "pcm16_payload_bytes": 192000,
+      "pcm16_payload_sha256": "decdc6e55e7345f33e2e04fd02d459e89acc32fa2408d6093155380cd57ef117",
+      "wav_bytes": 192044,
+      "wav_sha256": "6b33c1938654a908de9bb8fc7cb932a405cc3070ee1adb1412a660099a5282fe"
+    }
+  ],
+  "current_energy_gate_reference": {
+    "source": "app/src/main/java/com/pocketai/voice/SpeechController.kt",
+    "source_sha256": "aa1fe81b089335aaa680535d734e5ec28467ea4d37a9d15f0175fa0baae34def",
+    "sample_rate_hz": 16000,
+    "frame_samples": 1600,
+    "criterion": "mean(normalized_pcm16_sample^2)>0.000004 in at least one frame (frame RMS>0.002)",
+    "meaning": "This is an energy gate, not a human-speech detector. Higher noise and tone deliberately pass it while expected_speech remains false."
+  },
+  "optional_english_synthetic_speech": {
+    "generated": false,
+    "local_executables": {
+      "espeak": null,
+      "espeak-ng": null,
+      "festival": null,
+      "flite": null,
+      "pico2wave": null
+    },
+    "reason": "Optional local speech synthesis was not used; no voice or audio was downloaded."
+  },
+  "evaluation_limits": [
+    "All four fixtures contain no human speech; any words from the decoder are false-positive output or prompt contamination.",
+    "Quiet/silence fixtures should also be decoded directly in the external harness, because the production energy gate rejects them before inference.",
+    "These synthetic host controls do not validate target-phone microphones, acoustic conditions, Punjabi/Urdu accuracy, pronunciation or clinical use.",
+    "Use the same exact audio bytes for every baseline/variant/language comparison."
+  ]
+}

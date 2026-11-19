@@ -1,0 +1,165 @@
+{
+  "preferred_candidate": {
+    "repo": "XDcobra/wav2vec2-large-xlsr-53-punjabi-ONNX",
+    "revision": "de54b60baa1879a4db93596cf1b5b3215a291b7a",
+    "model_file": "onnx/model_int8.onnx",
+    "bytes": 121951036,
+    "sha256": "06cd96375424bc23e148191a3cdb7ee03691ba4c4438cdc8c25e53472bdffab5",
+    "actual_graph": {
+      "url": "https://huggingface.co/XDcobra/wav2vec2-large-xlsr-53-punjabi-ONNX/resolve/de54b60baa1879a4db93596cf1b5b3215a291b7a/onnx/model_int8.onnx",
+      "file_bytes": 121951036,
+      "nodes": 1238,
+      "inputs": [
+        {
+          "name": "input_values",
+          "tensor_proto": [],
+          "dtype": 1,
+          "shape": [
+            "batch_size",
+            "sequence_length"
+          ]
+        }
+      ],
+      "outputs": [
+        {
+          "name": "logits",
+          "tensor_proto": [],
+          "dtype": 1,
+          "shape": [
+            "batch_size",
+            "( ( ( ( ( ( ( sequence_length - 10 ) // 5 + 1 - 3 ) // 2 + 1 - 3 ) // 2 + 1 - 3 ) // 2 + 1 - 3 ) // 2 + 1 - 2 ) // 2 + 1 - 2 ) // 2 + 1",
+            65
+          ]
+        }
+      ],
+      "op_types": {
+        "ai.onnx::Constant": 297,
+        "ai.onnx::Unsqueeze": 97,
+        "ai.onnx::ReduceL2": 1,
+        "ai.onnx::Conv": 8,
+        "ai.onnx::Div": 21,
+        "ai.onnx::Reshape": 50,
+        "ai.onnx::Shape": 25,
+        "ai.onnx::Mul": 214,
+        "ai.onnx::InstanceNormalization": 1,
+        "ai.onnx::Add": 120,
+        "ai.onnx::Erf": 20,
+        "ai.onnx::Transpose": 51,
+        "ai.onnx::LayerNormalization": 26,
+        "ai.onnx::DynamicQuantizeLinear": 50,
+        "ai.onnx::MatMulInteger": 74,
+        "ai.onnx::Cast": 74,
+        "ai.onnx::Slice": 1,
+        "ai.onnx::Gather": 24,
+        "ai.onnx::Concat": 48,
+        "ai.onnx::MatMul": 24,
+        "ai.onnx::Softmax": 12
+      },
+      "opsets": [
+        [
+          [
+            2,
+            0,
+            18
+          ]
+        ]
+      ],
+      "ir_version": 8,
+      "producer_name": "onnx.quantize",
+      "producer_version": "0.1.0",
+      "initializers": 360,
+      "metadata_bytes_fetched": 1135420,
+      "http_range_requests": 278
+    },
+    "frontend": "16k mono float32 PCM, per-utterance mean/variance normalization, epsilon1e-7; no attention mask",
+    "decode": "Greedy CTC 65charGurmukhi vocabulary:blank1,collapse adjacent repeated token IDs, remove blank, |→space. No LM or translation.",
+    "provenance": "Converter→kingabzpro Common Voice8 pa-IN fine-tune→Harveenchadha Vakyansh Punjabi→CLSRIL-23. Upstream config shows wav2vec2-base-sized12layer768dim despite large-xlsr repository name.",
+    "licensing": "Conversion Apache2 LICENSE+card; kingabzpro Apache2 card; Vakyansh model MIT card; upstream Vakyansh repository MIT copyright2021Vakyansh. Preserve both Apache2 and MIT notices.",
+    "license_chain": [
+      {
+        "repo": "XDcobra/wav2vec2-large-xlsr-53-punjabi-ONNX",
+        "revision": "de54b60baa1879a4db93596cf1b5b3215a291b7a",
+        "license": "Apache-2.0"
+      },
+      {
+        "repo": "kingabzpro/wav2vec2-large-xlsr-53-punjabi",
+        "revision": "cd3f671b063c09d247dc1c550002c2049abd622d",
+        "license": "Apache-2.0",
+        "provenance": "Generic Common Voice8 pa-IN fine-tune"
+      },
+      {
+        "repo": "Harveenchadha/vakyansh-wav2vec2-punjabi-pam-10",
+        "revision": "141b585cbb1d668ac3e21e12392c8f277470298a",
+        "license": "MIT",
+        "provenance": "Vakyansh Punjabi / CLSRIL-23 base"
+      },
+      {
+        "repo": "Open-Speech-EkStep/vakyansh-models",
+        "revision": "7f5b1bd79ddbef3452556643e606e8d01ac0e8d6",
+        "license": "MIT",
+        "copyright": "2021 Vakyansh",
+        "license_git_blob": "876d4f100b5559bd98977be4780ba56177a4eaa6"
+      }
+    ],
+    "probe_results": "/workspace/validation/punjabi-ctc-probe/results.json",
+    "interpretation": "Credible native Gurmukhi output on2public read-speech clips, but47–55%basicWER and17–18%CER remain; mandatory transcript review, no representative/clinical/Android performance claim.",
+    "mobile_limitation": "527–651MB process peakRSS under Python/NumPy/ORT for17.6–24.5sec full utterances; Android ABI/targetphone memory and latency unverified. Needs bounded chunks, available-memory guard and exact Android ORT session validation."
+  },
+  "rejected_alternatives": [
+    {
+      "repo": "karansea/indicconformer-stt-pa-ctc-shabad-preview",
+      "revision": "5fd2e89e3a43d31f47b0fb55fdce5ed50a91283f",
+      "license": "MIT per card, upstreamAI4Bharat MIT per card",
+      "model_file": "model.int8.onnx",
+      "bytes": 184311219,
+      "sha256": "5f9e41d867dee2883796e290eef85abc11cbd32fe0f10c1f763a638d824634f9",
+      "io_per_card": "audio float32[B,T],audio_len int64[B]→log_probs float32[B,Tprime,257],out_len int64[B];raw16kPCM;256SentencePiece tokens+blank256",
+      "limitation": "Explicit Gurbani devotional fine-tune, intended for corpus-constrained CTC decoder feeding line tracker; card says not intended in isolation and raw transcripts should not be shown to end users. Generic Punjabi medical ASR mismatch. Original AI4Bharat weights gated; not accessed."
+    },
+    {
+      "repo": "AI-pro11/indicconformer-punjabi-ctc-onnx",
+      "revision": "f6d88bfd25f3455234a9623dd038d1a0db44ddc9",
+      "model_file": "model.onnx",
+      "bytes": 493039588,
+      "sha256": "88782c469f9cbd0c3c2df430887c80146fd7df458f98410499908c209349d56b",
+      "limitation": "No card/license/source/config/inference documentation in public repository metadata; over400MB FP32. Cannot establish redistribution authority or frontend compatibility."
+    }
+  ],
+  "downloaded_model_policy": "Only approved pinned121951036-byte int8model downloaded, hash verified; no gated weights, no unknownpickle, no fullFP32weights, no custom ops.",
+  "small_file_hashes": {
+    "AI-pro11__indicconformer-punjabi-ctc-onnx.json": "c0638d41973996cd084a21f868202f8a65099372c54e1dda0f4984ee83a4b687",
+    "karansea__indicconformer-stt-pa-ctc-shabad-preview.json": "7f616e55136e6217e6dab768abddb2031c4bd51aaa7cb7ea967a57799485b5fa",
+    "xd-int8-onnx-structure.json": "bc2f99061201f9df213ab7e97dfe2c32617e9e804c0e837dac0bfad32ac72d37",
+    "read_sparse_onnx_metadata.py": "b93231b0f59878b64dbdee0ba500d09ab9cd3f700ee2dda0b3476427653f3515",
+    "vakyansh-commit.json": "8ae6d4b2a0d7b10878d1a65680dafeb253a4d1c23e453aae3d0de97f54b5fcae",
+    "vakyansh-MIT-LICENSE": "a58558caea6163766444d6ad1dbefe2a4f8a6353569d5182f95e33202bdf9dc2",
+    "xd-int8-prefix.bin": "d40af13049d09b130308fc77ab6cf6ead86947d8c0751c04bbb52969ee6c9b81",
+    "vakyansh-license.json": "279019b037eb8af561acb0116950e7fc85ab65b9efdff9d16680d9842ef2ce12",
+    "Harveenchadha__vakyansh-wav2vec2-punjabi-pam-10.json": "68d2a469b43363c3ddd25a76996e370051a0b4f050358439f4c70f401863c6ea",
+    "ai4bharat__indicconformer_stt_pa_hybrid_ctc_rnnt_large.json": "9991c700152bd3668d872bb6eb284bb10b5554c790203471ac189d5d0a0baa92",
+    "XDcobra__wav2vec2-large-xlsr-53-punjabi-ONNX.json": "ca7212dfa251532d688c19d3556a65c6b4aa09a31cfee51734f0d2947155ff50",
+    "xd-int8-tail.bin": "9f34f56b3559082c4335f9a8ad220dbf767b93b8e21152cd91b36876c27a7283",
+    "xd-exporter-commit.json": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "vakyansh-README.md": "f7f08430b95d6660d201db940190ab9a4f6c240f84f21d9466520a001ebb169d",
+    "vakyansh-repo.json": "46ea9da9723a1c4a7c159569cce6a03a7f65ee121522a5375755506353e788e6",
+    "search.json": "acca524a787bea77343d66e54462f6a0e65e732e805d1bf4467638d8ed1ef289",
+    "kingabzpro__wav2vec2-large-xlsr-53-punjabi.json": "e50dbf44ed23a0e58f748a2f3db94966ee2e5545aa1aac6c26674cb7f57fef17",
+    "Harveenchadha__vakyansh-wav2vec2-punjabi-pam-10/README.md": "478cc82fc838142b8721bc09120a13a5901256b91d5af80c3cf1afa519127663",
+    "karansea__indicconformer-stt-pa-ctc-shabad-preview/README.md": "69cab4c45a4992c2f49cf63c7acd0940761d5ee4ab30a17137acd493242de679",
+    "karansea__indicconformer-stt-pa-ctc-shabad-preview/edge-vocab.json": "1e50a56595c6b2471b02152419d86f1e6275cfbe8ec4241cc6856730a6d00ea9",
+    "kingabzpro__wav2vec2-large-xlsr-53-punjabi/README.md": "567fe75064696896e413165377e9657ae81f568dcd850acaedfee8f8fb73cb44",
+    "kingabzpro__wav2vec2-large-xlsr-53-punjabi/preprocessor_config.json": "c6d0753c4a9fdc6532a9faffe73a6f795e9b6aae008570745c639e14b40e4b4e",
+    "kingabzpro__wav2vec2-large-xlsr-53-punjabi/config.json": "126b10407ea6d6720d23ac90896f71ab70e456a47b57c819970f8351f1887418",
+    "XDcobra__wav2vec2-large-xlsr-53-punjabi-ONNX/README.md": "d0c1d35dcec54ae4eeede441315e942c046a0935892119cbd7bde527c88d3f32",
+    "XDcobra__wav2vec2-large-xlsr-53-punjabi-ONNX/special_tokens_map.json": "9046da57c270c8e74d0f38832b4adce269c9d914ef21d2a0925e7772152dd793",
+    "XDcobra__wav2vec2-large-xlsr-53-punjabi-ONNX/export_manifest.json": "9f9615a2adbb6a26a101ec1a386967a8535297baaaea7da30fb8d37df836184e",
+    "XDcobra__wav2vec2-large-xlsr-53-punjabi-ONNX/alphabet.json": "04afc78afde71ace472d3252cef3920477bb6e4a0cdfb9345844db7f839306a4",
+    "XDcobra__wav2vec2-large-xlsr-53-punjabi-ONNX/vocab.json": "343e9ae05ea54bb4b74e1da2fdb4c6524cc476bf0c0f0be3619c0c11a6723545",
+    "XDcobra__wav2vec2-large-xlsr-53-punjabi-ONNX/tokenizer_config.json": "335a7f20e36565a4e312667201cd7704be8b0801b80d6f208452a584de052886",
+    "XDcobra__wav2vec2-large-xlsr-53-punjabi-ONNX/export_hf_onnx_pack.py": "42272eac704fb61c8a5cc1652e1bf9ae8b66d62d46e98684e06b9e3e84e1a1ba",
+    "XDcobra__wav2vec2-large-xlsr-53-punjabi-ONNX/preprocessor_config.json": "c6d0753c4a9fdc6532a9faffe73a6f795e9b6aae008570745c639e14b40e4b4e",
+    "XDcobra__wav2vec2-large-xlsr-53-punjabi-ONNX/config.json": "cc0c76aa06d02560af65dc1bf2e84385e35dc0bd5d125a7690ab6cc0efb8e4a6",
+    "XDcobra__wav2vec2-large-xlsr-53-punjabi-ONNX/LICENSE": "609e2cb599f84aaa41d8ef29d8fdb04d164fab22e8d9292ca34a599d0f56a338",
+    "ai4bharat__indicconformer_stt_pa_hybrid_ctc_rnnt_large/README.md": "fe6a1ce92b8b029360f273a4e2a622e61333aa006ec418b7dc5369832bab9212"
+  }
+}

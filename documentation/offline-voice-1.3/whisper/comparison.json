@@ -1,0 +1,345 @@
+{
+  "scope": "Exploratory offline model comparison; no production changes, model promotion, phone/clinical acceptance or publication.",
+  "models": [
+    {
+      "model": "tiny",
+      "size_bytes": 32152673,
+      "sha256": "818710568da3ca15689e31a743197b520007872ff9576237bda97bd1b469c3d7",
+      "license": "MIT",
+      "revision": "5359861c739e955e79d9a303bcbc70fb988958b1",
+      "current_app_file_cap_bytes": 188743680,
+      "fits_current_app_file_cap": true,
+      "current_memory_guard_estimate_bytes": 197121315,
+      "current_memory_guard_minimum_available_bytes": 262828420
+    },
+    {
+      "model": "base",
+      "size_bytes": 59707625,
+      "sha256": "422f1ae452ade6f30a004d7e5c6a43195e4433bc370bf23fac9cc591f01a8898",
+      "license": "MIT",
+      "revision": "5359861c739e955e79d9a303bcbc70fb988958b1",
+      "current_app_file_cap_bytes": 188743680,
+      "fits_current_app_file_cap": true,
+      "current_memory_guard_estimate_bytes": 279786171,
+      "current_memory_guard_minimum_available_bytes": 373048228
+    },
+    {
+      "model": "small",
+      "size_bytes": 190085487,
+      "sha256": "ae85e4a935d7a567bd102fe55afc16bb595bdb618e11b2fc7591bc08120411bb",
+      "license": "MIT",
+      "revision": "5359861c739e955e79d9a303bcbc70fb988958b1",
+      "current_app_file_cap_bytes": 188743680,
+      "fits_current_app_file_cap": false,
+      "current_memory_guard_estimate_bytes": 670919757,
+      "current_memory_guard_minimum_available_bytes": 894559676
+    }
+  ],
+  "same_host_tiny_control": {
+    "case": "fleurs-pa_in-validation-0",
+    "source_and_payload_hashes_match_published": true,
+    "transcript_matches_published_exactly": true,
+    "new_library_sha256": "0855a868533fcefb0bf909346ab228836de87a8bd22f3096e2f6e0dc07e480a1",
+    "published_library_sha256": "dc90990d93be1966e70bd882568d8f91cab818252c4203acde5debeb514b34d8",
+    "source_cpp_sha256": "9ad280a212bb9245db15f42ef44dee38b9884150d11857476823cd8e8e7fe079",
+    "current_seconds": 11.724729193,
+    "published_seconds": 13.205708479,
+    "limits": "One same-host control establishes this transcript/script reproduction only, not general output invariance or performance equivalence."
+  },
+  "input_restore": {
+    "published_dataset_revision": "70bb2e84b976b7e960aa89f1c648e09c59f894dd",
+    "license": "CC-BY-4.0",
+    "source_audio_and_pcm_payloads_match": true,
+    "restore_report": "restored-fixtures.json"
+  },
+  "results": [
+    {
+      "model": "tiny",
+      "host_scope": "published prior host",
+      "fixture": "fleurs-en_us-validation-0",
+      "language": "en",
+      "reference": "When you call someone who is thousands of miles away, you are using a satellite.",
+      "transcript": "When you call someone who is thousands of miles away, you're using a satellite.",
+      "basic_wer": 0.06666666666666667,
+      "basic_cer": 0.015625,
+      "scripts": {
+        "Latin": 63
+      },
+      "native_seconds": 13.780937044,
+      "sampled_peak_rss_bytes": 193982464,
+      "pcm_payload_sha256": "c5bf543a4fb1cfcc1f6f261a3464771eb7be5f32f37c58848848eccbabff12c1",
+      "process_exit_code": 0
+    },
+    {
+      "model": "tiny",
+      "host_scope": "published prior host",
+      "fixture": "fleurs-en_us-validation-1",
+      "language": "en",
+      "reference": "Now widely available throughout the archipelago, Javanese cuisine features an array of simply seasoned dishes, the predominant flavorings the Javanese favor being peanuts, chillies, sugar (especially Javanese coconut sugar) and various aromatic spices.",
+      "transcript": "Now widely available throughout the Archaeopalago, Japanese cuisine, features and array of simply seasoned dishes. The predominant flavorings, the Japanese favorite being Pina Chilli Sugar, especially Japanese coconut sugar and various aromatic spices.",
+      "basic_wer": 0.24242424242424243,
+      "basic_cer": 0.08450704225352113,
+      "scripts": {
+        "Latin": 214
+      },
+      "native_seconds": 10.844484335,
+      "sampled_peak_rss_bytes": 197922816,
+      "pcm_payload_sha256": "57ee9158bf2bea452f3cce92e7031c3228fdf1676c67433c9df1af05888e8ae8",
+      "process_exit_code": 0
+    },
+    {
+      "model": "tiny",
+      "host_scope": "published prior host",
+      "fixture": "fleurs-ur_pk-test-0",
+      "language": "ur",
+      "reference": "ان کے دور میں خفیف تلوُّث ایزا مسئلہ نہیں تھا جیسا کہ وہ آج ہے۔ ان کی سکونت ایسے شہروں یا حوزات میں ہے جہا ں تک بآسانی پہنچا جا سکتا ہے بہ نسبت ان مقامات کے جو ماڈرن زمانے میں تعمیر کئے گئے۔",
+      "transcript": "ان کے دور میں خفیف طلووز ازہ مسلا نہیں تھا جسا کہ وہ آج این کی سکونہ تسجھے رویہ اور ہزات میں جو ہاتاک با سانی پہنچہ جا سکتا ہے بان اس پتین مکامات کے جو مادرنزہ مانے میں تامل کیے گے۔",
+      "basic_wer": 0.5909090909090909,
+      "basic_cer": 0.2896551724137931,
+      "scripts": {
+        "Arabic": 139
+      },
+      "native_seconds": 15.108394804,
+      "sampled_peak_rss_bytes": 196857856,
+      "pcm_payload_sha256": "b1e7be1775acda587b7e52764a37d4492b9ed976a9902e1c053e6fc71d586ef8",
+      "process_exit_code": 0
+    },
+    {
+      "model": "tiny",
+      "host_scope": "published prior host",
+      "fixture": "fleurs-ur_pk-test-1",
+      "language": "ur",
+      "reference": "فلپائنی فوٹوگرافروں کے ساتھ چھےاغوا شدگان کو جلد رہا کر دیا گیا تھا، جِن میں بچّے اور بُوڑھے شامل تھے۔",
+      "transcript": "پر پائنی فرٹو گرافروں کے ساتھ اگوہ شدگان کو جل رہا کر دیا گیا تھا چین میں بچھر بورے شاملتے",
+      "basic_wer": 0.6,
+      "basic_cer": 0.2345679012345679,
+      "scripts": {
+        "Arabic": 71
+      },
+      "native_seconds": 11.435494434,
+      "sampled_peak_rss_bytes": 193560576,
+      "pcm_payload_sha256": "849c508164eb54d425d0ad3ca3ca55ed0c8471188865de3db538c0f5b3dc1560",
+      "process_exit_code": 0
+    },
+    {
+      "model": "tiny",
+      "host_scope": "published prior host",
+      "fixture": "fleurs-pa_in-validation-0",
+      "language": "pa",
+      "reference": "ਉਪ-ਸੱਭਿਆਚਾਰ ਦੇ ਮੈਂਬਰ ਅਕਸਰ ਸ਼ੈਲੀ ਦੀ ਇੱਕ ਖ਼ਾਸ ਅਤੇ ਸੰਕੇਤਕ ਵਰਤੋਂ ਰਾਹੀਂ ਆਪਣੀ ਸਦੱਸਤਾ ਦਾ ਸੰਕੇਤ ਦਿੰਦੇ ਹਨ, ਜਿਸ ਵਿੱਚ ਫੈਸ਼ਨ, ਸ਼ਿਸ਼ਟਤਾ ਅਤੇ ਗੁਪਤ ਭਾਸ਼ਾ ਸ਼ਾਮਲ ਹੁੰਦੀ ਹੈ।",
+      "transcript": "Opposite bhiachar de member akshari shali di ikka khas atis tantit te kubar tur rahi apni sadas tada santit dundi han just what fashion sista ati grup t pasha shamal hundi herh",
+      "basic_wer": 1.103448275862069,
+      "basic_cer": 1.1885245901639345,
+      "scripts": {
+        "Latin": 145
+      },
+      "native_seconds": 13.205708479,
+      "sampled_peak_rss_bytes": 197824512,
+      "pcm_payload_sha256": "110cde1c7b473b9295c35101b50bf0365d8b3d1cb9d19c21509e2e376706ca72",
+      "process_exit_code": 0
+    },
+    {
+      "model": "tiny",
+      "host_scope": "published prior host",
+      "fixture": "fleurs-pa_in-validation-1",
+      "language": "pa",
+      "reference": "ਖੰਭਾਂ ਦੀ ਸੰਰਚਨਾ ਤੋਂ ਪਤਾ ਲਗਦਾ ਹੈ ਕਿ ਉਨ੍ਹਾਂ ਦੀ ਵਰਤੋਂ ਫਲਾਈਟ ਵਿੱਚ ਨਹੀਂ ਕੀਤੀ ਗਈ ਸੀ, ਬਲਕਿ ਤਾਪਮਾਨ ਨਿਯਮ ਜਾਂ ਪ੍ਰਦਰਸ਼ਨ ਲਈ ਕੀਤੀ ਗਈ ਸੀ। ਸ਼ੋਧ ਕਰਤਾ ਨੇ ਸੁਝਾਅ ਦਿੱਤਾ ਹੈ ਕਿ ਭਾਵੇਂ ਇਹ ਇਕ ਯੁਵਾ ਡਾਇਨਾਸੂਰ ਦੀ ਪੂਛ ਹੋਵੇ, ਨਮੂਨਾ ਬਾਲਗ ਪੰਛੀ ਦਾ ਖੰਭ ਦਿਖਾਉਂਦਾ ਹੈ ਅਤੇ ਬੋਟ ਦਾ ਹੇਠਲਾ ਨਹੀਂ।",
+      "transcript": "kambadis searchna to pata lagda khaki ona di garto flight which nahi ki ti gai s balki tap maan nim japar darshan lei ki ti gai s s oo dkar tane sujaaditta ke pami ekki zhuwa dainasur di puj huvi namanna balak panchida kambidi khanda hai a te bota da hitla nahi",
+      "basic_wer": 1.0,
+      "basic_cer": 1.0769230769230769,
+      "scripts": {
+        "Latin": 210
+      },
+      "native_seconds": 17.772761616,
+      "sampled_peak_rss_bytes": 199675904,
+      "pcm_payload_sha256": "14ff8b5ea01bf1a57c7e44a24a3fc68fdd8be63c50b47f7d80088d30fdce0bfd",
+      "process_exit_code": 0
+    },
+    {
+      "model": "base",
+      "host_scope": "current shared host",
+      "fixture": "fleurs-en_us-validation-0",
+      "language": "en",
+      "reference": "When you call someone who is thousands of miles away, you are using a satellite.",
+      "transcript": "When you call someone who is thousands of miles away, you are using a satellite.",
+      "basic_wer": 0.0,
+      "basic_cer": 0.0,
+      "scripts": {
+        "Latin": 64
+      },
+      "native_seconds": 22.452005181,
+      "sampled_peak_rss_bytes": 259002368,
+      "pcm_payload_sha256": "c5bf543a4fb1cfcc1f6f261a3464771eb7be5f32f37c58848848eccbabff12c1",
+      "process_exit_code": 0
+    },
+    {
+      "model": "base",
+      "host_scope": "current shared host",
+      "fixture": "fleurs-en_us-validation-1",
+      "language": "en",
+      "reference": "Now widely available throughout the archipelago, Javanese cuisine features an array of simply seasoned dishes, the predominant flavorings the Javanese favor being peanuts, chillies, sugar (especially Javanese coconut sugar) and various aromatic spices.",
+      "transcript": "Now widely available throughout the Archipelago, Japanese cuisine features an array of simply seasoned dishes, the predominant flavorings, the Japanese favor being peanut, chili, sugar, especially Japanese coconut sugar and various aromatic spices.",
+      "basic_wer": 0.15151515151515152,
+      "basic_cer": 0.03286384976525822,
+      "scripts": {
+        "Latin": 209
+      },
+      "native_seconds": 24.318953602,
+      "sampled_peak_rss_bytes": 262787072,
+      "pcm_payload_sha256": "57ee9158bf2bea452f3cce92e7031c3228fdf1676c67433c9df1af05888e8ae8",
+      "process_exit_code": 0
+    },
+    {
+      "model": "base",
+      "host_scope": "current shared host",
+      "fixture": "fleurs-ur_pk-test-0",
+      "language": "ur",
+      "reference": "ان کے دور میں خفیف تلوُّث ایزا مسئلہ نہیں تھا جیسا کہ وہ آج ہے۔ ان کی سکونت ایسے شہروں یا حوزات میں ہے جہا ں تک بآسانی پہنچا جا سکتا ہے بہ نسبت ان مقامات کے جو ماڈرن زمانے میں تعمیر کئے گئے۔",
+      "transcript": "ان کے دور میں کفیق تلووز ایزا مسلہ نہیں تا جیسا کے وہ آج ہے ان کی سکونت ایسے شیرو یا حوزات میں ہے جو ہاہتاک بہسانی پہنچا جا سکتا ہے با نسپتین مقامات کے جو موڑرن زمانے میں تامیر کے گئے۔",
+      "basic_wer": 0.36363636363636365,
+      "basic_cer": 0.14482758620689656,
+      "scripts": {
+        "Arabic": 142
+      },
+      "native_seconds": 26.113130272,
+      "sampled_peak_rss_bytes": 261615616,
+      "pcm_payload_sha256": "b1e7be1775acda587b7e52764a37d4492b9ed976a9902e1c053e6fc71d586ef8",
+      "process_exit_code": 0
+    },
+    {
+      "model": "base",
+      "host_scope": "current shared host",
+      "fixture": "fleurs-ur_pk-test-1",
+      "language": "ur",
+      "reference": "فلپائنی فوٹوگرافروں کے ساتھ چھےاغوا شدگان کو جلد رہا کر دیا گیا تھا، جِن میں بچّے اور بُوڑھے شامل تھے۔",
+      "transcript": "پیل پائنی فٹو گرافروں کے ساتھ سی اگوہ سدگان کو جل رہا کر دیا گیا تھا چین میں بچور بھڑے شاملتے",
+      "basic_wer": 0.7,
+      "basic_cer": 0.2345679012345679,
+      "scripts": {
+        "Arabic": 73
+      },
+      "native_seconds": 24.530651914,
+      "sampled_peak_rss_bytes": 258748416,
+      "pcm_payload_sha256": "849c508164eb54d425d0ad3ca3ca55ed0c8471188865de3db538c0f5b3dc1560",
+      "process_exit_code": 0
+    },
+    {
+      "model": "base",
+      "host_scope": "current shared host",
+      "fixture": "fleurs-pa_in-validation-0",
+      "language": "pa",
+      "reference": "ਉਪ-ਸੱਭਿਆਚਾਰ ਦੇ ਮੈਂਬਰ ਅਕਸਰ ਸ਼ੈਲੀ ਦੀ ਇੱਕ ਖ਼ਾਸ ਅਤੇ ਸੰਕੇਤਕ ਵਰਤੋਂ ਰਾਹੀਂ ਆਪਣੀ ਸਦੱਸਤਾ ਦਾ ਸੰਕੇਤ ਦਿੰਦੇ ਹਨ, ਜਿਸ ਵਿੱਚ ਫੈਸ਼ਨ, ਸ਼ਿਸ਼ਟਤਾ ਅਤੇ ਗੁਪਤ ਭਾਸ਼ਾ ਸ਼ਾਮਲ ਹੁੰਦੀ ਹੈ।",
+      "transcript": "Upu sabia chiardhe Member Akshar Shalli di ikh khas ati sankeetak barturahin, apne sadastadha sanke dundhehan, jiswaj fashion, shisthta ati goptpasha shamal hundiher.",
+      "basic_wer": 1.0,
+      "basic_cer": 1.1475409836065573,
+      "scripts": {
+        "Latin": 140
+      },
+      "native_seconds": 24.838768262,
+      "sampled_peak_rss_bytes": 262860800,
+      "pcm_payload_sha256": "110cde1c7b473b9295c35101b50bf0365d8b3d1cb9d19c21509e2e376706ca72",
+      "process_exit_code": 0
+    },
+    {
+      "model": "base",
+      "host_scope": "current shared host",
+      "fixture": "fleurs-pa_in-validation-1",
+      "language": "pa",
+      "reference": "ਖੰਭਾਂ ਦੀ ਸੰਰਚਨਾ ਤੋਂ ਪਤਾ ਲਗਦਾ ਹੈ ਕਿ ਉਨ੍ਹਾਂ ਦੀ ਵਰਤੋਂ ਫਲਾਈਟ ਵਿੱਚ ਨਹੀਂ ਕੀਤੀ ਗਈ ਸੀ, ਬਲਕਿ ਤਾਪਮਾਨ ਨਿਯਮ ਜਾਂ ਪ੍ਰਦਰਸ਼ਨ ਲਈ ਕੀਤੀ ਗਈ ਸੀ। ਸ਼ੋਧ ਕਰਤਾ ਨੇ ਸੁਝਾਅ ਦਿੱਤਾ ਹੈ ਕਿ ਭਾਵੇਂ ਇਹ ਇਕ ਯੁਵਾ ਡਾਇਨਾਸੂਰ ਦੀ ਪੂਛ ਹੋਵੇ, ਨਮੂਨਾ ਬਾਲਗ ਪੰਛੀ ਦਾ ਖੰਭ ਦਿਖਾਉਂਦਾ ਹੈ ਅਤੇ ਬੋਟ ਦਾ ਹੇਠਲਾ ਨਹੀਂ।",
+      "transcript": "kambadi sarchna to pata lagda hai ki, onadi varto flight bić nahi kiti gai si, balke, tapman nium, jai padarshan leh kiti gai si, shoodh karta ne sujad tata ke pami, a ek juva dhyna surdi puj hove, namunna baalak panchida kham bdkohda hai, ate bhoodh da hetla nahin.",
+      "basic_wer": 1.0,
+      "basic_cer": 1.0717948717948718,
+      "scripts": {
+        "Latin": 209
+      },
+      "native_seconds": 39.93427671,
+      "sampled_peak_rss_bytes": 267608064,
+      "pcm_payload_sha256": "14ff8b5ea01bf1a57c7e44a24a3fc68fdd8be63c50b47f7d80088d30fdce0bfd",
+      "process_exit_code": 0
+    },
+    {
+      "model": "small",
+      "host_scope": "current shared host",
+      "fixture": "fleurs-ur_pk-test-0",
+      "language": "ur",
+      "reference": "ان کے دور میں خفیف تلوُّث ایزا مسئلہ نہیں تھا جیسا کہ وہ آج ہے۔ ان کی سکونت ایسے شہروں یا حوزات میں ہے جہا ں تک بآسانی پہنچا جا سکتا ہے بہ نسبت ان مقامات کے جو ماڈرن زمانے میں تعمیر کئے گئے۔",
+      "transcript": "ان کے دور میں خفیب تلویس ایزا مسئلہ نہیں تھا جیسا کہ وہ آج ہے ان کی سقونت ایسے شہروں یا حوزات میں ہے جہاں تک باسانی پہنچا جا سکتا ہے بنسپتین مقامات کے جو مادرن زمانے میں تعمیر کی گئے",
+      "basic_wer": 0.25,
+      "basic_cer": 0.08275862068965517,
+      "scripts": {
+        "Arabic": 142
+      },
+      "native_seconds": 104.520100207,
+      "sampled_peak_rss_bytes": 498065408,
+      "pcm_payload_sha256": "b1e7be1775acda587b7e52764a37d4492b9ed976a9902e1c053e6fc71d586ef8",
+      "process_exit_code": 0
+    },
+    {
+      "model": "small",
+      "host_scope": "current shared host",
+      "fixture": "fleurs-ur_pk-test-1",
+      "language": "ur",
+      "reference": "فلپائنی فوٹوگرافروں کے ساتھ چھےاغوا شدگان کو جلد رہا کر دیا گیا تھا، جِن میں بچّے اور بُوڑھے شامل تھے۔",
+      "transcript": "پیل پائنی فورٹو گرافروں کے ساتھ چھے اگوا شدگان کو جل رہا کر دیا گیا تھا چین میں بچوں اور بڑے شاہملتے",
+      "basic_wer": 0.6,
+      "basic_cer": 0.1728395061728395,
+      "scripts": {
+        "Arabic": 79
+      },
+      "native_seconds": 97.16700271,
+      "sampled_peak_rss_bytes": 495267840,
+      "pcm_payload_sha256": "849c508164eb54d425d0ad3ca3ca55ed0c8471188865de3db538c0f5b3dc1560",
+      "process_exit_code": 0
+    },
+    {
+      "model": "small",
+      "host_scope": "current shared host",
+      "fixture": "fleurs-pa_in-validation-0",
+      "language": "pa",
+      "reference": "ਉਪ-ਸੱਭਿਆਚਾਰ ਦੇ ਮੈਂਬਰ ਅਕਸਰ ਸ਼ੈਲੀ ਦੀ ਇੱਕ ਖ਼ਾਸ ਅਤੇ ਸੰਕੇਤਕ ਵਰਤੋਂ ਰਾਹੀਂ ਆਪਣੀ ਸਦੱਸਤਾ ਦਾ ਸੰਕੇਤ ਦਿੰਦੇ ਹਨ, ਜਿਸ ਵਿੱਚ ਫੈਸ਼ਨ, ਸ਼ਿਸ਼ਟਤਾ ਅਤੇ ਗੁਪਤ ਭਾਸ਼ਾ ਸ਼ਾਮਲ ਹੁੰਦੀ ਹੈ।",
+      "transcript": "ope sabhyachar de membar aksar shally di ek khas ate sanke tak vartor Rahin apni sadastada sanke dundehan jiswaj fashion shishta ate gupt pasha shamal hundi har.",
+      "basic_wer": 1.0,
+      "basic_cer": 1.098360655737705,
+      "scripts": {
+        "Latin": 134
+      },
+      "native_seconds": 130.291735514,
+      "sampled_peak_rss_bytes": 499449856,
+      "pcm_payload_sha256": "110cde1c7b473b9295c35101b50bf0365d8b3d1cb9d19c21509e2e376706ca72",
+      "process_exit_code": 0
+    },
+    {
+      "model": "small",
+      "host_scope": "current shared host",
+      "fixture": "fleurs-pa_in-validation-1",
+      "language": "pa",
+      "reference": "ਖੰਭਾਂ ਦੀ ਸੰਰਚਨਾ ਤੋਂ ਪਤਾ ਲਗਦਾ ਹੈ ਕਿ ਉਨ੍ਹਾਂ ਦੀ ਵਰਤੋਂ ਫਲਾਈਟ ਵਿੱਚ ਨਹੀਂ ਕੀਤੀ ਗਈ ਸੀ, ਬਲਕਿ ਤਾਪਮਾਨ ਨਿਯਮ ਜਾਂ ਪ੍ਰਦਰਸ਼ਨ ਲਈ ਕੀਤੀ ਗਈ ਸੀ। ਸ਼ੋਧ ਕਰਤਾ ਨੇ ਸੁਝਾਅ ਦਿੱਤਾ ਹੈ ਕਿ ਭਾਵੇਂ ਇਹ ਇਕ ਯੁਵਾ ਡਾਇਨਾਸੂਰ ਦੀ ਪੂਛ ਹੋਵੇ, ਨਮੂਨਾ ਬਾਲਗ ਪੰਛੀ ਦਾ ਖੰਭ ਦਿਖਾਉਂਦਾ ਹੈ ਅਤੇ ਬੋਟ ਦਾ ਹੇਠਲਾ ਨਹੀਂ।",
+      "transcript": "Chairman Horosha panche� d enterprisee Showd우kathan sunog digna sh implicationinj layer",
+      "basic_wer": 1.0,
+      "basic_cer": 1.0,
+      "scripts": {
+        "Latin": 75,
+        "Other": 1
+      },
+      "native_seconds": 195.241603838,
+      "sampled_peak_rss_bytes": 501100544,
+      "pcm_payload_sha256": "14ff8b5ea01bf1a57c7e44a24a3fc68fdd8be63c50b47f7d80088d30fdce0bfd",
+      "process_exit_code": 0
+    }
+  ],
+  "decoder_review_report": "/workspace/validation/offline-voice-decoder/decoder-comparison-summary.json",
+  "conclusions": [
+    "Base and small both fail the requested Punjabi Gurmukhi script on the original two clips.",
+    "Small lowers Urdu character-edit rates on these two clips and preserves the six word in the second, but still has recognition errors.",
+    "Small Punjabi clip1 deteriorates into unrelated mixed text; it is not an overall Urdu/Punjabi shipping recommendation.",
+    "No official Q4 file exists in the pinned upstream revision; no extra quantization model was downloaded.",
+    "Small exceeds the current180MiB app speech-file cap; direct JNI benchmarking bypassed that file guard."
+  ],
+  "limits": [
+    "Published tiny timings came from the previous machine. One current tiny Punjabi control reproduces its transcript exactly, but this does not establish timing equivalence.",
+    "Current runs used shared4CPU/16GiB host, Release generic SIMD-off JNI, two threads per process, occasionally overlapping another approved two-thread experiment.",
+    "WER/CER use the same simple Unicode/punctuation recipe as the baseline. Cross-script Punjabi scores are not fluency measures.",
+    "The same two language clips are insufficient for broad claims; additional held-out cases are reserved until a candidate is shortlisted.",
+    "Small English controls were not run because the initial Punjabi script/content failures made it an unsuitable overall candidate."
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "model_sha256": "701f3ae011e0964e45894ad884da1afd5c1a0a7a846b054d9765e75d563ee7b9",
+  "model_bytes": 59707642,
+  "library_sha256": "0855a868533fcefb0bf909346ab228836de87a8bd22f3096e2f6e0dc07e480a1",
+  "profile": "baseline",
+  "hints": {},
+  "threads": 2,
+  "shared_host_timings": true,
+  "settings": "Current canonical decoder/callbacks except selected search/initial-prompt profile. Explicit pa/ur/en, translate=false, no_context=true, carry_initial_prompt=false, best_of1. Existing fallback temperatures and thresholds unchanged.",
+  "metrics": "Basic NFKC/casefold/punctuation-space WER/CER only; no clinical/fluent-speaker or phone accuracy validation. Pa reference is Gurmukhi, so cross-script word error is not a fair linguistic accuracy score; scripts/transcripts are also explicit.",
+  "results": [
+    {
+      "id": "fleurs-ur_pk-test-0",
+      "language": "ur",
+      "wave": "/workspace/validation/offline-voice-improve-v12/fixtures/fleurs-ur_pk-test-0-pcm16.wav",
+      "reference": "ان کے دور میں خفیف تلوُّث ایزا مسئلہ نہیں تھا جیسا کہ وہ آج ہے ان کی سکونت ایسے شہروں یا حوزات میں ہے جہا ں تک بآسانی پہنچا جا سکتا ہے بہ نسبت ان مقامات کے جو ماڈرن زمانے میں تعمیر کئے گئے",
+      "expected_speech": true,
+      "payload_sha256": "b1e7be1775acda587b7e52764a37d4492b9ed976a9902e1c053e6fc71d586ef8",
+      "profile": "baseline",
+      "transcript": "ان کے دور میں خفیق طلعوز ایسا مسئلہ نہیں تھا جیسا کہ وہ آج ہے ان کی سکونت ایسے شہر و یا حوثات میں ہے جوہاں تک باستانی پہنچا جا سکتا ہے بانسپت ان مقامات کے جو مارڈرن زمانے میں تعمیر کیے گئے",
+      "native_result": {
+        "transcript": "ان کے دور میں خفیق طلعوز ایسا مسئلہ نہیں تھا جیسا کہ وہ آج ہے ان کی سکونت ایسے شہر و یا حوثات میں ہے جوہاں تک باستانی پہنچا جا سکتا ہے بانسپت ان مقامات کے جو مارڈرن زمانے میں تعمیر کیے گئے",
+        "language_argument": "ur",
+        "audio_samples": 195840,
+        "elapsed_seconds": 26.014217527,
+        "threads": 2
+      },
+      "exit_code": 0,
+      "timeout": false,
+      "wall_seconds": 26.151870099000007,
+      "peak_child_rss_bytes": 261640192,
+      "scripts": {
+        "Arabic": 146
+      },
+      "reference_scripts": {
+        "Arabic": 143
+      },
+      "segment_diagnostics": [],
+      "basic_wer": 0.29545454545454547,
+      "basic_cer": 0.1103448275862069,
+      "reference_decimal_literals": [],
+      "hypothesis_decimal_literals": [],
+      "whole_prompt_output_absent_from_reference": false,
+      "unexpected_hint_word": false,
+      "nonspeech_lexical_output": false,
+      "no_speech_exception": false,
+      "log_tail": null
+    },
+    {
+      "id": "fleurs-ur_pk-test-1",
+      "language": "ur",
+      "wave": "/workspace/validation/offline-voice-improve-v12/fixtures/fleurs-ur_pk-test-1-pcm16.wav",
+      "reference": "فلپائنی فوٹوگرافروں کے ساتھ چھےاغوا شدگان کو جلد رہا کر دیا گیا تھا جِن میں بچّے اور بُوڑھے شامل تھے",
+      "expected_speech": true,
+      "payload_sha256": "849c508164eb54d425d0ad3ca3ca55ed0c8471188865de3db538c0f5b3dc1560",
+      "profile": "baseline",
+      "transcript": "فیل پائنی فٹو گرافرو کے ساتھ سے اگوا شدگان کو جلد رہا کردیا گیا تھا جن میں بچر اور بڑے شاملتے",
+      "native_result": {
+        "transcript": "فیل پائنی فٹو گرافرو کے ساتھ سے اگوا شدگان کو جلد رہا کردیا گیا تھا جن میں بچر اور بڑے شاملتے",
+        "language_argument": "ur",
+        "audio_samples": 99840,
+        "elapsed_seconds": 23.473663202,
+        "threads": 2
+      },
+      "exit_code": 0,
+      "timeout": false,
+      "wall_seconds": 23.56331971199961,
+      "peak_child_rss_bytes": 259178496,
+      "scripts": {
+        "Arabic": 73
+      },
+      "reference_scripts": {
+        "Arabic": 78
+      },
+      "segment_diagnostics": [],
+      "basic_wer": 0.65,
+      "basic_cer": 0.16049382716049382,
+      "reference_decimal_literals": [],
+      "hypothesis_decimal_literals": [],
+      "whole_prompt_output_absent_from_reference": false,
+      "unexpected_hint_word": false,
+      "nonspeech_lexical_output": false,
+      "no_speech_exception": false,
+      "log_tail": null
+    }
+  ]
+}

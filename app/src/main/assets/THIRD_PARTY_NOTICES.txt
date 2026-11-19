@@ -101,3 +101,15 @@ Gurmukhi script conversion and punctuation detokenization adapted from
 Indic NLP Library, Copyright (c) 2013-present Anoop Kunchukuttan. MIT;
 licenses/INDICNLP_MIT.txt. Urdu output remains Arabic; Punjabi rendering
 converts the model's unified Devanagari output to Gurmukhi.
+
+
+Included speech resources added in 1.3
+========================================
+Urdu fine-tuned Whisper Base: kingabzpro/whisper-base-urdu-full, Apache-2.0
+with underlying OpenAI Whisper MIT. Exact source/derivative checksums and
+conversion changes: licenses/URDU_WHISPER_MODEL_NOTICE.txt; complete licenses
+in licenses/APACHE-2.0.txt and licenses/WHISPER_MODEL_LICENSE.txt.
+Punjabi CTC: XDcobra ONNX conversion / kingabzpro fine-tune, Apache-2.0;
+Vakyansh base MIT. Provenance and full MIT notice: licenses/PUNJABI_CTC_NOTICES.txt.
+Silero VAD v6.2.3: snakers4/silero-vad, MIT; full notice: licenses/SILERO_VAD_MIT.txt.
+All model files and immutable revisions are listed in offline-model-manifest.json.

@@ -1,0 +1,55 @@
+Punjabi wav2vec2 CTC speech model attribution and license record
+
+ONNX conversion and dynamic QUInt8 weight quantization:
+  XDcobra/wav2vec2-large-xlsr-53-punjabi-ONNX
+  revision de54b60baa1879a4db93596cf1b5b3215a291b7a
+  https://huggingface.co/XDcobra/wav2vec2-large-xlsr-53-punjabi-ONNX/tree/de54b60baa1879a4db93596cf1b5b3215a291b7a
+  License: Apache License, Version 2.0, as stated in the model card and LICENSE.
+  The complete Apache-2.0 license is included in licenses/Apache-2.0.txt.
+  Model weights are redistributed without further changes by Pocket AI.
+
+Upstream Common Voice Punjabi fine-tune:
+  kingabzpro/wav2vec2-large-xlsr-53-punjabi
+  revision cd3f671b063c09d247dc1c550002c2049abd622d
+  https://huggingface.co/kingabzpro/wav2vec2-large-xlsr-53-punjabi/tree/cd3f671b063c09d247dc1c550002c2049abd622d
+  License: Apache-2.0, as stated in the upstream model card.
+  Fine-tuned on Mozilla Common Voice 8.0 Punjabi from the following MIT model.
+
+Upstream Punjabi acoustic model:
+  Harveenchadha/vakyansh-wav2vec2-punjabi-pam-10
+  revision 141b585cbb1d668ac3e21e12392c8f277470298a
+  https://huggingface.co/Harveenchadha/vakyansh-wav2vec2-punjabi-pam-10/tree/141b585cbb1d668ac3e21e12392c8f277470298a
+  License: MIT, as stated in the upstream model card.
+  Model by Harveen Chadha, fine-tuned from CLSRIL-23.
+
+Vakyansh upstream source and original checkpoint collection:
+  https://github.com/Open-Speech-EkStep/vakyansh-models
+  recorded revision 7f5b1bd79ddbef3452556643e606e8d01ac0e8d6
+  LICENSE Git blob 876d4f100b5559bd98977be4780ba56177a4eaa6
+  MIT license and copyright notice retained in full below.
+
+CLSRIL-23 citation:
+  Gupta et al., CLSRIL-23: Cross Lingual Speech Representations for Indic Languages
+  https://arxiv.org/abs/2107.07402
+
+MIT License
+
+Copyright (c) 2021 Vakyansh
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

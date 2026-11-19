@@ -1,0 +1,10 @@
+{
+  "samples": 101760,
+  "java_vs_python_float32_different": 69492,
+  "max_absolute_difference": 9.5367431640625e-07,
+  "java_vs_numpy_double_different": 0,
+  "float32_mean": 4.1946375858969986e-05,
+  "float64_mean": 4.194637514510245e-05,
+  "float32_var": 0.0039216214790940285,
+  "float64_var": 0.003921621978757599
+}

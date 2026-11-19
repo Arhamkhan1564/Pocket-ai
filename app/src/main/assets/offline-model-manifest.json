@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "bundleVersion": "1.2.0",
-  "totalSizeBytes": 715732683,
+  "bundleVersion": "1.3.0",
+  "totalSizeBytes": 899719726,
   "packs": [
     {
       "id": "search",
@@ -161,15 +161,15 @@
     {
       "id": "speech",
       "role": "speech_recognition",
-      "name": "Included multilingual voice input",
+      "name": "Included English speech / automatic recognizer selection",
       "directions": [],
       "license": "MIT",
       "licenseAsset": "licenses/WHISPER_MODEL_LICENSE.txt",
       "sourceRepository": "ggerganov/whisper.cpp",
       "sourceRevision": "5359861c739e955e79d9a303bcbc70fb988958b1",
       "notes": [
-        "Whisper tiny multilingual Q5_1 recognizer; language availability and accuracy depend on the runtime and device.",
-        "This resource adds no text-to-speech voice, translation pack, or language-model generation."
+        "Whisper tiny multilingual Q5_1 is the included English recognizer and an optional fallback. Selecting this included entry enables language-specific Urdu/Punjabi recognizers.",
+        "No text-to-speech voice is included. Speech recognition requires sufficient free memory and user review."
       ],
       "files": [
         {
@@ -180,6 +180,93 @@
         }
       ],
       "totalSizeBytes": 32152673
+    },
+    {
+      "id": "voice-ur",
+      "role": "speech_recognition",
+      "name": "Urdu speech recognition",
+      "directions": [
+        {
+          "source": "ur",
+          "target": "ur"
+        }
+      ],
+      "license": "Apache-2.0 AND MIT",
+      "licenseAsset": "licenses/URDU_WHISPER_MODEL_NOTICE.txt",
+      "sourceRepository": "kingabzpro/whisper-base-urdu-full",
+      "sourceRevision": "6bfaec492d42f4b76f117b2b34cd9672509cecdc",
+      "notes": [
+        "Whisper base fine-tune converted locally to GGML Q5_1. Exact reconstruction and precision-fix provenance are in scripts/voice-models/. No training was performed by Pocket AI.",
+        "Relative word-error improvements on four host Urdu clips; spoken quantities still fail. Used alone, this model hallucinates on non-speech controls; the app requires the included speech-presence gate and manual Urdu transcript review.",
+        "The derived binary URL is pinned to its public resource commit; source safetensors and derived binary have separate checksums. No physical-phone or medical acceptance is claimed."
+      ],
+      "files": [
+        {
+          "assetPath": "offline/voice-ur/ggml-urdu-base-q5_1.bin",
+          "sizeBytes": 59707642,
+          "sha256": "701f3ae011e0964e45894ad884da1afd5c1a0a7a846b054d9765e75d563ee7b9",
+          "url": "https://media.githubusercontent.com/media/Arhamkhan1564/Pocket-ai/13241e24a62957c7194e442ed37c2985750b86e0/model-resources/urdu-whisper-base-q5_1/ggml-urdu-base-q5_1.bin"
+        }
+      ],
+      "totalSizeBytes": 59707642
+    },
+    {
+      "id": "voice-pa",
+      "role": "speech_recognition",
+      "name": "Punjabi speech recognition in Gurmukhi",
+      "directions": [
+        {
+          "source": "pa",
+          "target": "pa-Guru"
+        }
+      ],
+      "license": "Apache-2.0 AND MIT",
+      "licenseAsset": "licenses/PUNJABI_CTC_NOTICES.txt",
+      "sourceRepository": "XDcobra/wav2vec2-large-xlsr-53-punjabi-ONNX",
+      "sourceRevision": "de54b60baa1879a4db93596cf1b5b3215a291b7a",
+      "notes": [
+        "Wav2vec2 base-size CTC int8 export despite the repository name. The 65-token vocabulary outputs Gurmukhi. Blank ID1, delimiter ID4, 16kHz whole-utterance normalization.",
+        "Inference uses at most 12-second windows with 0.8-second overlap and global frame collapse. Shahmukhi display is separately labelled script conversion.",
+        "Four host clips produced Gurmukhi but still contain word and name errors. Four non-speech controls returned empty. Transcripts require review; phone and medical acceptance remain unverified."
+      ],
+      "files": [
+        {
+          "assetPath": "offline/voice-pa/model.onnx",
+          "sizeBytes": 121951036,
+          "sha256": "06cd96375424bc23e148191a3cdb7ee03691ba4c4438cdc8c25e53472bdffab5",
+          "url": "https://huggingface.co/XDcobra/wav2vec2-large-xlsr-53-punjabi-ONNX/resolve/de54b60baa1879a4db93596cf1b5b3215a291b7a/onnx/model_int8.onnx"
+        },
+        {
+          "assetPath": "offline/voice-pa/vocab.json",
+          "sizeBytes": 841,
+          "sha256": "343e9ae05ea54bb4b74e1da2fdb4c6524cc476bf0c0f0be3619c0c11a6723545",
+          "url": "https://huggingface.co/XDcobra/wav2vec2-large-xlsr-53-punjabi-ONNX/resolve/de54b60baa1879a4db93596cf1b5b3215a291b7a/vocab.json"
+        }
+      ],
+      "totalSizeBytes": 121951877
+    },
+    {
+      "id": "speech-vad",
+      "role": "speech_presence",
+      "name": "Offline speech-presence detector",
+      "directions": [],
+      "license": "MIT",
+      "licenseAsset": "licenses/SILERO_VAD_MIT.txt",
+      "sourceRepository": "snakers4/silero-vad",
+      "sourceRevision": "5cd7945676eb32225748052e2e6a0580e4686a08",
+      "notes": [
+        "Silero VAD v6.2.3, 16kHz recurrent 512-sample frames with reference context. Used before all Whisper models and closed before Whisper loads.",
+        "This detects likely speech, not language, transcript correctness or medical accuracy. Text entry remains available when no clear speech is detected."
+      ],
+      "files": [
+        {
+          "assetPath": "offline/speech-vad/silero-vad.onnx",
+          "sizeBytes": 2327524,
+          "sha256": "1a153a22f4509e292a94e67d6f9b85e8deb25b4988682b7e174c65279d8788e3",
+          "url": "https://raw.githubusercontent.com/snakers4/silero-vad/5cd7945676eb32225748052e2e6a0580e4686a08/src/silero_vad/data/silero_vad.onnx"
+        }
+      ],
+      "totalSizeBytes": 2327524
     }
   ]
 }

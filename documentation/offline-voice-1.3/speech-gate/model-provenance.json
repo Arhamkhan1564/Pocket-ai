@@ -1,0 +1,41 @@
+{
+  "repository": "snakers4/silero-vad",
+  "tag": "v6.2.3",
+  "revision": "5cd7945676eb32225748052e2e6a0580e4686a08",
+  "files": [
+    {
+      "path": "src/silero_vad/data/silero_vad.onnx",
+      "local": "/workspace/validation/silero-vad-probe/source/silero_vad.onnx",
+      "bytes": 2327524,
+      "sha256": "1a153a22f4509e292a94e67d6f9b85e8deb25b4988682b7e174c65279d8788e3",
+      "git_blob_sha1": "80c5592ef1f4c9ede3e357bbd02eb863358a6a9d",
+      "url": "https://raw.githubusercontent.com/snakers4/silero-vad/5cd7945676eb32225748052e2e6a0580e4686a08/src/silero_vad/data/silero_vad.onnx"
+    },
+    {
+      "path": "src/silero_vad/utils_vad.py",
+      "local": "/workspace/validation/silero-vad-probe/source/utils_vad.py",
+      "bytes": 30979,
+      "sha256": "15d0f6b3ef9590e22ca2f146e1436f6901da356cb552d3183df4100862b333cb",
+      "git_blob_sha1": "11c2454888df829c270a25c402fa91f43d413e26",
+      "url": "https://raw.githubusercontent.com/snakers4/silero-vad/5cd7945676eb32225748052e2e6a0580e4686a08/src/silero_vad/utils_vad.py"
+    },
+    {
+      "path": "LICENSE",
+      "local": "/workspace/validation/silero-vad-probe/source/LICENSE",
+      "bytes": 1075,
+      "sha256": "2e63e9a38b6e8fc0c7bc37ce174caca1862870856c6daf5697cfb785e925520b",
+      "git_blob_sha1": "0bf5e90cac691b999d4a35044f97167d7bbbf0b9",
+      "url": "https://raw.githubusercontent.com/snakers4/silero-vad/5cd7945676eb32225748052e2e6a0580e4686a08/LICENSE"
+    },
+    {
+      "path": "README.md",
+      "local": "/workspace/validation/silero-vad-probe/source/README.md",
+      "bytes": 9725,
+      "sha256": "cd0ee56c91b8042e62a714c0c94bc8b74dbea127a483e390f8033bb8ec8cec78",
+      "git_blob_sha1": "88db3cf16beba65e88a5a2486fe1fc9d1f3f0cd2",
+      "url": "https://raw.githubusercontent.com/snakers4/silero-vad/5cd7945676eb32225748052e2e6a0580e4686a08/README.md"
+    }
+  ],
+  "license": "MIT; pinned completeLICENSE retained",
+  "network_use": "Public model/source retrieval only; inference localCPU, no speechproviderAPI."
+}

@@ -20,12 +20,14 @@ import struct
 import subprocess
 import tempfile
 import urllib.request
+import urllib.parse
 import zipfile
 
 ROOT = Path(__file__).resolve().parent.parent
 INPUTS = ROOT / 'scripts/onnxruntime-android-inputs.json'
 NAME = 'onnxruntime-android-1.20.0-pocketai16k.aar'
 NATIVE_NAMES = ('libonnxruntime.so', 'libonnxruntime4j_jni.so')
+MAX_FALLBACK_URLS = 2
 
 
 def sha(path: Path) -> str:
@@ -34,6 +36,29 @@ def sha(path: Path) -> str:
         for chunk in iter(lambda: stream.read(1024 * 1024), b''):
             digest.update(chunk)
     return digest.hexdigest()
+
+
+def declared_urls(entry: dict) -> list[str]:
+    fallbacks = entry.get('fallbackUrls', [])
+    if not isinstance(fallbacks, list) or len(fallbacks) > MAX_FALLBACK_URLS:
+        raise ValueError(f'Too many or invalid declared fallback URLs: {entry["path"]}')
+    urls = [entry['url'], *fallbacks]
+    if len(set(urls)) != len(urls):
+        raise ValueError(f'Duplicate source URL: {entry["path"]}')
+    for url in urls:
+        parsed = urllib.parse.urlparse(url)
+        if parsed.scheme != 'https' or not parsed.hostname or parsed.username or parsed.password:
+            raise ValueError(f'Expected a declared HTTPS source URL without credentials: {entry["path"]}')
+    return urls
+
+
+def provenance_path(cache: Path, entry: dict) -> Path:
+    return cache / 'input-provenance' / (entry['path'] + '.json')
+
+
+def valid_provenance(record: dict, entry: dict) -> bool:
+    return (isinstance(record, dict) and record.get('path') == entry['path'] and record.get('bytes') == entry['bytes']
+            and record.get('sha256') == entry['sha256'] and record.get('url') in declared_urls(entry))
 
 
 def elf_info(data: bytes, abi: str) -> dict:
@@ -70,6 +95,15 @@ def verify(aar: Path, inputs: dict) -> dict:
         raise ValueError('Preparation input manifest changed; prepare the dependency again')
     if metadata['artifact_sha256'] != sha(aar):
         raise ValueError('Prepared AAR checksum differs from its build record')
+    provenance = metadata.get('input_provenance', [])
+    expected = {entry['path']: entry for entry in inputs['files']}
+    if (not isinstance(provenance, list) or len(provenance) != len(expected)
+            or not all(isinstance(row, dict) for row in provenance)
+            or len({row.get('path') for row in provenance}) != len(expected)):
+        raise ValueError('Prepared AAR is missing per-input download provenance')
+    for record in provenance:
+        if record.get('path') not in expected or not valid_provenance(record, expected[record['path']]):
+            raise ValueError('Prepared AAR contains invalid input-source provenance')
     with zipfile.ZipFile(aar) as archive:
         if archive.testzip() is not None:
             raise ValueError('Prepared AAR ZIP CRC check failed')
@@ -92,20 +126,41 @@ def verify(aar: Path, inputs: dict) -> dict:
 
 def fetch(entry: dict, cache: Path) -> Path:
     destination = cache / entry['path']
+    record_path = provenance_path(cache, entry)
+    urls = declared_urls(entry)
     if destination.is_file() and destination.stat().st_size == entry['bytes'] and sha(destination) == entry['sha256']:
-        return destination
+        try:
+            if valid_provenance(json.loads(record_path.read_text()), entry):
+                return destination
+        except (OSError, ValueError, TypeError):
+            pass
+        # A manually populated cache still needs an attributable source URL.
+        # Download again without replacing the valid bytes until all checks pass.
     destination.parent.mkdir(parents=True, exist_ok=True)
     temporary = destination.with_suffix(destination.suffix + '.download')
-    print('Downloading', entry['path'], flush=True)
-    try:
-        with urllib.request.urlopen(entry['url'], timeout=120) as response, temporary.open('wb') as output:
-            shutil.copyfileobj(response, output, 128 * 1024)
-        if temporary.stat().st_size != entry['bytes'] or sha(temporary) != entry['sha256']:
-            raise ValueError(f'Download integrity check failed: {entry["path"]}')
-        temporary.replace(destination)
-    finally:
-        temporary.unlink(missing_ok=True)
-    return destination
+    failures = []
+    for index, url in enumerate(urls):
+        print('Downloading', entry['path'], '(official)' if index == 0 else '(declared mirror)', flush=True)
+        try:
+            with urllib.request.urlopen(url, timeout=120) as response, temporary.open('wb') as output:
+                copied = 0
+                for chunk in iter(lambda: response.read(128 * 1024), b''):
+                    copied += len(chunk)
+                    if copied > entry['bytes']:
+                        raise ValueError('Downloaded file exceeds the pinned byte count')
+                    output.write(chunk)
+            if temporary.stat().st_size != entry['bytes'] or sha(temporary) != entry['sha256']:
+                raise ValueError('Downloaded file does not match the pinned size/SHA-256')
+            temporary.replace(destination)
+            record = dict(path=entry['path'], url=url, bytes=entry['bytes'], sha256=entry['sha256'])
+            record_path.parent.mkdir(parents=True, exist_ok=True)
+            record_path.write_text(json.dumps(record, indent=2) + '\n')
+            return destination
+        except (OSError, ValueError) as failure:
+            failures.append(f'{url}: {failure}')
+        finally:
+            temporary.unlink(missing_ok=True)
+    raise ValueError(f'All declared source URLs failed for {entry["path"]}: ' + '; '.join(failures))
 
 
 def ndk_path(argument: str | None, revision: str) -> Path:
@@ -205,6 +260,7 @@ def build(aar: Path, cache: Path, ndk: Path, inputs: dict) -> None:
     metadata = dict(version=inputs['version'], source_commit=inputs['source_commit'],
                     ndk_revision=inputs['ndk_revision'], android_api=inputs['android_api'],
                     inputs_manifest_sha256=sha(INPUTS), artifact_sha256=sha(aar), libraries=libraries,
+                    input_provenance=[json.loads(provenance_path(cache, entry).read_text()) for entry in inputs['files']],
                     modifications='Unchanged official JNI C sources rebuilt at API 23 with 16-KiB PT_LOAD alignment; unused x86 ABI omitted. Official classes and CPU libraries unchanged.')
     aar.with_suffix('.json').write_text(json.dumps(metadata, indent=2) + '\n')
 

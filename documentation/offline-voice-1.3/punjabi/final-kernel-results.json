@@ -1,0 +1,228 @@
+{
+  "production_source_sha256": "769cff8b2cb7fdebdede220cbc594e7b3f4f16be02deceed71769e1c413d26b2",
+  "unit_test_count": 9,
+  "unit_test_result": "PASS",
+  "jvm_real_clips": {
+    "runtime": "Canonical production Kotlin source compiled independently withKotlin1.9.23/JDK21target17, official hostORT1.20.0,2threads, noarena/memorypattern",
+    "production_source_sha256": "769cff8b2cb7fdebdede220cbc594e7b3f4f16be02deceed71769e1c413d26b2",
+    "host_ort_jar_sha256": "c46608681692b3693914defb42fa3119ad7cb6146870581ece247e0ed5793fe8",
+    "fixtures": [
+      {
+        "fixture": "fleurs-pa_in-validation-0",
+        "text": "ਉਪਸ ਸੱਧਿਆਚਾਰ ਦੀ ਮੈਂਬਰ ਅਕਸਰ ਸ਼਼ੈਲੀ ਦੀ ਇਕ ਖਾਸ ਅਤੇ ਸੰਕੀਤਕ ਵਰਤੋਂ ਰਾਹੀਂ ਆਪਣੀ ਸ ਦੱਸਤਾ ਦਾ ਸੰਕੇਤ ਦਿੰਦੇ ਜ ਸ ਵਿਚ ਫੈਸ਼ਨ ਸਿਸਟਤਟਤਾਂ ਅਤੇ ਗੁੱਪਤ ਭਾਸਸ਼ਾ ਸ਼ਾਮਲ ਹੁੰਦੀ ਹਿਰ",
+        "matches_python_text": false,
+        "matches_python_frame_ids": false,
+        "frame_id_sha256": "edff097eca3043f4167c8b26c7b5a178c7430ae8690b8bd8710035d4a95126be",
+        "wall_seconds": 3.204535719999967,
+        "peak_rss_bytes_sampled": 432574464,
+        "stats": "windows=2\nframes=881\nwall_seconds=3.028540731\n",
+        "basic_wer": 0.5517241379310345,
+        "basic_cer": 0.1557377049180328,
+        "matches_python_with_identical_normalized_input": true
+      },
+      {
+        "fixture": "fleurs-pa_in-validation-1",
+        "text": "ਖ਼ੰਬਾੀ ਦੀ ਸਰਚਨਾ ਤੋਂ ਪਤਾ ਲੱਗਦਾ ਹੈ ਕਿ ਉਹਨ੍ਹਾਂ ਦੀ ਵਰਤੋਂ ਫਲਾਇਟ ਵਿਚ ਨਹੀਂ ਕੀਤੀ ਗਈ ਬਲ ਕਿ ਟਤਾਪਮਾਨ ਨਿਅਮ ਜਾਂ ਪ੍ਰਦਰਸ਼ਨ ਲਈ ਕੀਤੀ ਗਈ ਸ਼਼ੋਧ ਘਰਤਾਂ ਨੇ ਸੁਜਾਦ ੱਤਾ ਕਿ ਭਾਵੇਂ ਇਹ ਇਕ ਯੂਵਾ ਡਾਇਨਾਸੁਰਦੀ ਪੂਛ ਹੋਵੇ ਨਮੁੰਨਾ ਬਾਲਕ ਪੰਚੀ ਦਾ ਖੰਭ ਦਿਖਾਉਂਦਾ ਹੈ ਅਤੇ ਗੋਟਦਾ ਹੇਠਲਾ ਨਹੀਂ",
+        "matches_python_text": false,
+        "matches_python_frame_ids": false,
+        "frame_id_sha256": "f8aa7b5d9e44ff00d1d92d89f9107f6b8363889e5aad654ff9a80850524b1a7b",
+        "wall_seconds": 2.8374211679997643,
+        "peak_rss_bytes_sampled": 495095808,
+        "stats": "windows=3\nframes=1226\nwall_seconds=2.73385855\n",
+        "basic_wer": 0.4528301886792453,
+        "basic_cer": 0.14358974358974358,
+        "matches_python_with_identical_normalized_input": true
+      },
+      {
+        "fixture": "fleurs-pa_in-validation-2",
+        "text": "ੋਗੀ ਰੋ ੀ ਨਹੀ ਗੀਰੀਆ ਗਿਆ ਸੀ ਜਿਥੇ ਈਹ ਵੋਲਾਂ ਵਾਇਰਸ ਦੇ ਕੁਝ ਮਾਹਮਣੇ ਸਾਹਮੇ ਆਏ ਹਨ",
+        "matches_python_text": false,
+        "matches_python_frame_ids": false,
+        "frame_id_sha256": "8bb63bd14d4485be5ca8293acd68607ef912bb4fbc239bfe6e772d44a1ccd569",
+        "wall_seconds": 0.9302148400001897,
+        "peak_rss_bytes_sampled": 338550784,
+        "stats": "windows=1\nframes=317\nwall_seconds=0.81311118\n",
+        "basic_wer": 0.7692307692307693,
+        "basic_cer": 0.2692307692307692,
+        "matches_python_with_identical_normalized_input": true
+      },
+      {
+        "fixture": "fleurs-pa_in-validation-3",
+        "text": "ਮੇਰੇ ਲਈ ਇਸ ਦਾ ਕੋਈ ਮਤਲਬ ਨਹੀਂ ਸੀ ਹ ਸਾਈ ਨਹੀਂ ਸੀ",
+        "matches_python_text": true,
+        "matches_python_frame_ids": false,
+        "frame_id_sha256": "6e0d4267522e8ef28ddebfec4a428c6e1ec5d15b42017670f2b5c9c5f3aff248",
+        "wall_seconds": 0.7703438810003718,
+        "peak_rss_bytes_sampled": 315609088,
+        "stats": "windows=1\nframes=218\nwall_seconds=0.666867518\n",
+        "basic_wer": 0.36363636363636365,
+        "basic_cer": 0.08823529411764706,
+        "matches_python_with_identical_normalized_input": true
+      }
+    ]
+  },
+  "non_speech_and_resource_checks": {
+    "runtime": "Canonical production Kotlin withDouble-statFloat32normalization, hostORT1.20.0,2threads, noarena/memorypattern",
+    "production_source_sha256": "769cff8b2cb7fdebdede220cbc594e7b3f4f16be02deceed71769e1c413d26b2",
+    "records": [
+      {
+        "id": "silence-6s",
+        "purpose": "Synthetic non-speech control",
+        "text": "",
+        "seconds": 6.0,
+        "wall_seconds": 1.1249073600001793,
+        "peak_rss_bytes_sampled": 330444800,
+        "stats": "windows=1\nframes=299\nwall_seconds=1.020037711\n",
+        "frame_id_sha256": "8ee2f32c863a5a53e7318963e5fc2da82dfa7080c3e5a57d31e7acfd4a4cd027",
+        "non_speech_false_positive": false
+      },
+      {
+        "id": "quiet-noise-6s",
+        "purpose": "Synthetic non-speech control",
+        "text": "",
+        "seconds": 6.0,
+        "wall_seconds": 0.874940893999792,
+        "peak_rss_bytes_sampled": 308477952,
+        "stats": "windows=1\nframes=299\nwall_seconds=0.783991349\n",
+        "frame_id_sha256": "8ee2f32c863a5a53e7318963e5fc2da82dfa7080c3e5a57d31e7acfd4a4cd027",
+        "non_speech_false_positive": false
+      },
+      {
+        "id": "higher-noise-6s",
+        "purpose": "Synthetic non-speech control",
+        "text": "",
+        "seconds": 6.0,
+        "wall_seconds": 0.9775584919998437,
+        "peak_rss_bytes_sampled": 333025280,
+        "stats": "windows=1\nframes=299\nwall_seconds=0.861638132\n",
+        "frame_id_sha256": "8ee2f32c863a5a53e7318963e5fc2da82dfa7080c3e5a57d31e7acfd4a4cd027",
+        "non_speech_false_positive": false
+      },
+      {
+        "id": "tone-440hz-6s",
+        "purpose": "Synthetic non-speech control",
+        "text": "",
+        "seconds": 6.0,
+        "wall_seconds": 1.3053030539999781,
+        "peak_rss_bytes_sampled": 324177920,
+        "stats": "windows=1\nframes=299\nwall_seconds=1.195342524\n",
+        "frame_id_sha256": "8ee2f32c863a5a53e7318963e5fc2da82dfa7080c3e5a57d31e7acfd4a4cd027",
+        "non_speech_false_positive": false
+      },
+      {
+        "id": "concatenated-pa1-30s",
+        "purpose": "Same licensed audio repeated and truncated for resource-bound checks only, not new speech evidence.",
+        "text": "ਖ਼ੰਬਾੀ ਦੀ ਸਰਚਨਾ ਤੋਂ ਪਤਾ ਲੱਗਦਾ ਹੈ ਕਿ ਉਹਨ੍ਹਾਂ ਦੀ ਵਰਤੋਂ ਫਲਾਇਟ ਵਿਚ ਨਹੀਂ ਕੀਤੀ ਗਈ ਬਲ ਕਿ ਟਤਾਪਮਾਨ ਨਿਅਮ ਜਾਂ ਪ੍ਰਦਰਸ਼ਨ ਲਈ ਕੀਤੀ ਗਈ ਸ਼਼ੋਧ ਘਰਤਾਂ ਨੇ ਸੁਜਾਦ ੱਤਾ ਕਿ ਭਾਵੇਂ ਇਹ ਇਕ ਯੂਵਾ ਡਾਇਨਾਸੁਰਦੀ ਪੂਛ ਹੋਵੇਂ ਨਮੁੰਨਾ ਬਾਲਕ ਪੰਚੀ ਦਾ ਖੰਭ ਦਿਖਾਉਂਦਾ ਹੈ ਅਤੇ ਗੋਟਦਾ ਹੇਠਲਾ ਦੀ ਸਰਚਨਾ ਤੋਂ ਪਤਾ ਲੱਗਦਾ ਹੈ ਕਿ ਉਹਨ੍ਹਾਂ ਦੀ ਵਰਤੋਂ ਫਲਾਈਇਟ",
+        "seconds": 30.0,
+        "wall_seconds": 3.755035872999997,
+        "peak_rss_bytes_sampled": 449961984,
+        "stats": "windows=3\nframes=1499\nwall_seconds=3.628226239\n",
+        "frame_id_sha256": "8de87eb0781d61656e5f149c1bc39d14d66ae0a5fbeadb400733e44ba16e296c"
+      },
+      {
+        "id": "concatenated-pa1-60s",
+        "purpose": "Same licensed audio repeated and truncated for resource-bound checks only, not new speech evidence.",
+        "text": "ਖ਼ੰਬਾੀ ਦੀ ਸਰਚਨਾ ਤੋਂ ਪਤਾ ਲੱਗਦਾ ਹੈ ਕਿ ਉਹਨ੍ਹਾਂ ਦੀ ਵਰਤੋਂ ਫਲਾਇਟ ਵਿਚ ਨਹੀਂ ਕੀਤੀ ਗਈ ਬਲ ਕਿ ਟਾਪਮਾਨ ਨਿਅਮ ਜਾਂ ਪ੍ਰਦਰਸ਼ਨ ਲਈ ਕੀਤੀ ਗਈ ਸ਼਼ੋਧ ਘਰਤਾਂ ਨੇ ਸੁਜਾਦ ਿੱਤਾ ਕਿ ਭਾਵੇਂ ਇਹ ਇਕ ਯੂਵਾ ਡਾਇਨਾਸੁਰਦੀ ਪੂਛ ਹੋਵੇ ਨਮੁੰਨਾ ਬਾਲਕ ਪੰਚੀ ਦਾ ਖੰਭ ਦਿਖਾਉਂਦਾ ਹੈ ਅਤੇ ਗੋਟਦਾ ਹੇਠਲਾ ਦੀ ਸਰਚਨਾ ਤੋਂ ਪਤਾ ਲੱਗਦਾ ਹੈ ਕਿ ਉਨ੍ਹਾਂ ਦੀ ਵਰਤੋਂ ਫਲਾਇਟ ਵਿਚ ਨਹੀਂ ਕੀਤੀ ਗਈ ਬਲਕਿ ਟਾਪਮਾਨ ਨਿਅਮ ਜਾਂ ਪ੍ਰਦਰਸ਼਼ਨ ਲਈ ਕੀਤੀ ਗਈ ਸ ਸ਼਼ੋਧ ਘਰਤਾਂ ਨੇ ਸੁਜਾਦ ਦਿੱਤਾ ਕਿ ਭਾਵੇਂ ਇਹ ਇਕ ਯੂਵਾ ਡਾਇਨਣਨਾਸੁਰਦੀ ਪੂਝ ਹੋਵੇ ਨਮੁੰਨਾ ਬਾਲਕ ਪੰਚੀ ਦਾ ਖੰਭ ਦਿਖਾਉਂਦਾ ਹੈ ਅਤੇ ਗੋਟਦਾ ਹੇਠਲਾ ਦੀ ਸਰਚਨਾ ਤੋਂ ਪਤਾ ਲੱਗਦਾ ਹੈ ਕਿ ਉਨ੍ਹਾਂ ਦੀ ਵਰਤੋਂ ਫਲਾਇਟ ਵਿਚ ਨਹੀਂ ਕੀਤੀ ਗਈ ਸ ਟਾਪਮਾਨ ਨਿਊਮ ਜਾਂ ਪ੍ਰਦਰਸ਼ਨ ਲਈ",
+        "seconds": 60.0,
+        "wall_seconds": 6.093589221000002,
+        "peak_rss_bytes_sampled": 500776960,
+        "stats": "windows=6\nframes=2999\nwall_seconds=5.946909911\n",
+        "frame_id_sha256": "ae9b4dd03a704e5016e2adbdb8401db66266ab069aa5bacfb15cdb0ffca4a954"
+      }
+    ],
+    "limits": [
+      "Synthetic controls and repeated audio resources only; not phone/microphone/clinical acceptance.",
+      "PeakRSS includes JVM and session initialization; hostCPUwallsecondsinclude model load."
+    ]
+  },
+  "runoptions_cancellation": {
+    "production_source_sha256": "769cff8b2cb7fdebdede220cbc594e7b3f4f16be02deceed71769e1c413d26b2",
+    "runtime": "Canonical pureJVM kernel, hostORT1.20.0",
+    "exit_code": 0,
+    "stdout": "provided_run_options_terminate=true; session_reusable_after_reset=true\ncaller_hook_cancellation=true; stop_seconds=0.281444426\n",
+    "checks": [
+      "Caller-ownedRunOptions.setTerminate(true) interrupts native run.",
+      "Same session works after caller resets terminate=false.",
+      "Caller hook maps native cancellation to CancellationException."
+    ]
+  },
+  "matching_normalized_input_proof": {
+    "method": "PythonORT1.20 uses EXACT Java-normalized Float32 model input bytes, same windows/options/model/CTC merge.",
+    "production_source_sha256": "769cff8b2cb7fdebdede220cbc594e7b3f4f16be02deceed71769e1c413d26b2",
+    "fixtures": [
+      {
+        "fixture": "fleurs-pa_in-validation-0",
+        "input_sha256": "b4dfa083c6fea38a93575b5e7635f522728749679ff385b9087b1b51d4ac01fe",
+        "frames": 881,
+        "frame_id_sha256": "edff097eca3043f4167c8b26c7b5a178c7430ae8690b8bd8710035d4a95126be",
+        "different_frame_ids": 0,
+        "frame_id_mismatch_indexes": [],
+        "python_using_java_input_text": "ਉਪਸ ਸੱਧਿਆਚਾਰ ਦੀ ਮੈਂਬਰ ਅਕਸਰ ਸ਼਼ੈਲੀ ਦੀ ਇਕ ਖਾਸ ਅਤੇ ਸੰਕੀਤਕ ਵਰਤੋਂ ਰਾਹੀਂ ਆਪਣੀ ਸ ਦੱਸਤਾ ਦਾ ਸੰਕੇਤ ਦਿੰਦੇ ਜ ਸ ਵਿਚ ਫੈਸ਼ਨ ਸਿਸਟਤਟਤਾਂ ਅਤੇ ਗੁੱਪਤ ਭਾਸਸ਼ਾ ਸ਼ਾਮਲ ਹੁੰਦੀ ਹਿਰ",
+        "java_text": "ਉਪਸ ਸੱਧਿਆਚਾਰ ਦੀ ਮੈਂਬਰ ਅਕਸਰ ਸ਼਼ੈਲੀ ਦੀ ਇਕ ਖਾਸ ਅਤੇ ਸੰਕੀਤਕ ਵਰਤੋਂ ਰਾਹੀਂ ਆਪਣੀ ਸ ਦੱਸਤਾ ਦਾ ਸੰਕੇਤ ਦਿੰਦੇ ਜ ਸ ਵਿਚ ਫੈਸ਼ਨ ਸਿਸਟਤਟਤਾਂ ਅਤੇ ਗੁੱਪਤ ਭਾਸਸ਼ਾ ਸ਼ਾਮਲ ਹੁੰਦੀ ਹਿਰ",
+        "matches_text": true,
+        "inference_seconds": 1.6084194929999285,
+        "python_ort": "1.20.0"
+      },
+      {
+        "fixture": "fleurs-pa_in-validation-1",
+        "input_sha256": "92ea2de1ef7c7695c6831fcb24e5e24a6acf851dd5ae16ae1e23ca1be5e183d3",
+        "frames": 1226,
+        "frame_id_sha256": "f8aa7b5d9e44ff00d1d92d89f9107f6b8363889e5aad654ff9a80850524b1a7b",
+        "different_frame_ids": 0,
+        "frame_id_mismatch_indexes": [],
+        "python_using_java_input_text": "ਖ਼ੰਬਾੀ ਦੀ ਸਰਚਨਾ ਤੋਂ ਪਤਾ ਲੱਗਦਾ ਹੈ ਕਿ ਉਹਨ੍ਹਾਂ ਦੀ ਵਰਤੋਂ ਫਲਾਇਟ ਵਿਚ ਨਹੀਂ ਕੀਤੀ ਗਈ ਬਲ ਕਿ ਟਤਾਪਮਾਨ ਨਿਅਮ ਜਾਂ ਪ੍ਰਦਰਸ਼ਨ ਲਈ ਕੀਤੀ ਗਈ ਸ਼਼ੋਧ ਘਰਤਾਂ ਨੇ ਸੁਜਾਦ ੱਤਾ ਕਿ ਭਾਵੇਂ ਇਹ ਇਕ ਯੂਵਾ ਡਾਇਨਾਸੁਰਦੀ ਪੂਛ ਹੋਵੇ ਨਮੁੰਨਾ ਬਾਲਕ ਪੰਚੀ ਦਾ ਖੰਭ ਦਿਖਾਉਂਦਾ ਹੈ ਅਤੇ ਗੋਟਦਾ ਹੇਠਲਾ ਨਹੀਂ",
+        "java_text": "ਖ਼ੰਬਾੀ ਦੀ ਸਰਚਨਾ ਤੋਂ ਪਤਾ ਲੱਗਦਾ ਹੈ ਕਿ ਉਹਨ੍ਹਾਂ ਦੀ ਵਰਤੋਂ ਫਲਾਇਟ ਵਿਚ ਨਹੀਂ ਕੀਤੀ ਗਈ ਬਲ ਕਿ ਟਤਾਪਮਾਨ ਨਿਅਮ ਜਾਂ ਪ੍ਰਦਰਸ਼ਨ ਲਈ ਕੀਤੀ ਗਈ ਸ਼਼ੋਧ ਘਰਤਾਂ ਨੇ ਸੁਜਾਦ ੱਤਾ ਕਿ ਭਾਵੇਂ ਇਹ ਇਕ ਯੂਵਾ ਡਾਇਨਾਸੁਰਦੀ ਪੂਛ ਹੋਵੇ ਨਮੁੰਨਾ ਬਾਲਕ ਪੰਚੀ ਦਾ ਖੰਭ ਦਿਖਾਉਂਦਾ ਹੈ ਅਤੇ ਗੋਟਦਾ ਹੇਠਲਾ ਨਹੀਂ",
+        "matches_text": true,
+        "inference_seconds": 2.030821025000023,
+        "python_ort": "1.20.0"
+      },
+      {
+        "fixture": "fleurs-pa_in-validation-2",
+        "input_sha256": "5668f10acdda86310394181cd460b61c8dd7373c58e052af1d396591bdda3d26",
+        "frames": 317,
+        "frame_id_sha256": "8bb63bd14d4485be5ca8293acd68607ef912bb4fbc239bfe6e772d44a1ccd569",
+        "different_frame_ids": 0,
+        "frame_id_mismatch_indexes": [],
+        "python_using_java_input_text": "ੋਗੀ ਰੋ ੀ ਨਹੀ ਗੀਰੀਆ ਗਿਆ ਸੀ ਜਿਥੇ ਈਹ ਵੋਲਾਂ ਵਾਇਰਸ ਦੇ ਕੁਝ ਮਾਹਮਣੇ ਸਾਹਮੇ ਆਏ ਹਨ",
+        "java_text": "ੋਗੀ ਰੋ ੀ ਨਹੀ ਗੀਰੀਆ ਗਿਆ ਸੀ ਜਿਥੇ ਈਹ ਵੋਲਾਂ ਵਾਇਰਸ ਦੇ ਕੁਝ ਮਾਹਮਣੇ ਸਾਹਮੇ ਆਏ ਹਨ",
+        "matches_text": true,
+        "inference_seconds": 0.4231461270001091,
+        "python_ort": "1.20.0"
+      },
+      {
+        "fixture": "fleurs-pa_in-validation-3",
+        "input_sha256": "da0eb1987cc20181216782f65f99aaae9badca076cc7c13d1a3e449f6a4bd699",
+        "frames": 218,
+        "frame_id_sha256": "6e0d4267522e8ef28ddebfec4a428c6e1ec5d15b42017670f2b5c9c5f3aff248",
+        "different_frame_ids": 0,
+        "frame_id_mismatch_indexes": [],
+        "python_using_java_input_text": "ਮੇਰੇ ਲਈ ਇਸ ਦਾ ਕੋਈ ਮਤਲਬ ਨਹੀਂ ਸੀ ਹ ਸਾਈ ਨਹੀਂ ਸੀ",
+        "java_text": "ਮੇਰੇ ਲਈ ਇਸ ਦਾ ਕੋਈ ਮਤਲਬ ਨਹੀਂ ਸੀ ਹ ਸਾਈ ਨਹੀਂ ਸੀ",
+        "matches_text": true,
+        "inference_seconds": 0.26048070699971504,
+        "python_ort": "1.20.0"
+      }
+    ]
+  },
+  "normalization_discrepancy": {
+    "cause": "Original Python prototype computed Float32 statistics; canonical JVM deliberately computes Double statistics then Float32 output. Same full-utterance Wav2Vec2 formula, different floating rounding, amplified by dynamic quantization.",
+    "experiment": {
+      "samples": 101760,
+      "java_vs_python_float32_different": 69492,
+      "max_absolute_difference": 9.5367431640625e-07,
+      "java_vs_numpy_double_different": 0,
+      "float32_mean": 4.1946375858969986e-05,
+      "float64_mean": 4.194637514510245e-05,
+      "float32_var": 0.0039216214790940285,
+      "float64_var": 0.003921621978757599
+    },
+    "disposition": "Use actual JVM outputs/metrics as canonical acceptance evidence. Identical normalized model input yields exact raw frame-ID and transcript parity on allfour clips. No input/window/merge/CTC pipeline defect found."
+  },
+  "limits": [
+    "Exploratory four public read-speech clips only; two were held out from project development, not proven absent from model pretraining.",
+    "Native Gurmukhi output is established on these examples, but substantial errors and medical-name errors remain. Mandatory transcript review is essential.",
+    "Host Linuxx86_64/JDK21/Kotlin1.9.23target17/ORT1.20CPU, not actual Android ABI,2GBphone,microphone or clinical validation.",
+    "No claims about targetphone speed or peakmemory.",
+    "Frame IDs and text are retained; normalized internal scratch PCM is wiped after success/failure/cancellation. Caller owns original recording and RunOptions lifecycle."
+  ]
+}

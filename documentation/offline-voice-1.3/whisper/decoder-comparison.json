@@ -1,0 +1,249 @@
+{
+  "status": "Exploratory decoder comparisons and same-host full Basegreedy comparator complete; no decoder change recommended.",
+  "canonical_commit": "cb8277e62c68ec5a66accba354fa9e057e936afc",
+  "model": "Multilingual Whisper BaseQ5_1",
+  "model_sha256": "422f1ae452ade6f30a004d7e5c6a43195e4433bc370bf23fac9cc591f01a8898",
+  "model_bytes": 59707625,
+  "threads_per_request": 2,
+  "results": [
+    {
+      "id": "fleurs-pa_in-validation-0",
+      "language": "pa",
+      "profile": "beam3_hint",
+      "transcript": "Opusabhya Chyar de Member Akshar Shalli de Ikh Khas Ati Sankeetak Vertu Rahin, Apne Sadastadastankhe Dundeyhan, Jiswaj Fashion, Shishhta Ati Gopth Pasha Samal Hundiher.",
+      "basic_wer": 1.0,
+      "basic_cer": 1.1557377049180328,
+      "scripts": {
+        "Latin": 141
+      },
+      "reference_scripts": {
+        "Gurmukhi": 72
+      },
+      "segment_diagnostics": [
+        {
+          "segment": 0,
+          "no_speech_probability": 0.00032058,
+          "text_tokens": 69,
+          "mean_returned_text_token_logp": -0.13461298
+        }
+      ],
+      "wall_seconds": 35.80834212800005,
+      "peak_child_rss_bytes": 299204608,
+      "exit_code": 0
+    },
+    {
+      "id": "fleurs-pa_in-validation-0",
+      "language": "pa",
+      "profile": "script_hint",
+      "transcript": "Upra Sahabya Chowra aarr They Member, Aksa Delhi , Dhe 一 Qass Atae Sankee Te K vill Thur Rahin ʝup umbrella Nahtag Beefal Pastlying, Ate Sant e Dastana certezacriptions, Dan defending San Undeyan wave,if such fashion, beleza Till teathum ed Certifatience is not a good protest in my way.",
+      "basic_wer": 1.6896551724137931,
+      "basic_cer": 1.901639344262295,
+      "scripts": {
+        "Latin": 231,
+        "Other": 1
+      },
+      "reference_scripts": {
+        "Gurmukhi": 72
+      },
+      "segment_diagnostics": [
+        {
+          "segment": 0,
+          "no_speech_probability": 0.00081649,
+          "text_tokens": 89,
+          "mean_returned_text_token_logp": -4.93920857
+        }
+      ],
+      "wall_seconds": 57.95075845100018,
+      "peak_child_rss_bytes": 294608896,
+      "exit_code": 0
+    },
+    {
+      "id": "fleurs-ur_pk-test-0",
+      "language": "ur",
+      "profile": "beam3",
+      "transcript": "ان کے دور میں کفیک تلووز ایزہ مسلا نہیں تا جیسا کہ وہ آج ہے ان کی سکونت ایسے شیرو یا حوزات میں ہے جہاں تک بہ سانی پہنچا جا سکتا ہے بہن اسپتین مقامات کے جو موڑرن زمانے میں تامیر کیے گئے۔",
+      "basic_wer": 0.36363636363636365,
+      "basic_cer": 0.1310344827586207,
+      "scripts": {
+        "Arabic": 142
+      },
+      "reference_scripts": {
+        "Arabic": 143
+      },
+      "segment_diagnostics": [
+        {
+          "segment": 0,
+          "no_speech_probability": 1.928e-05,
+          "text_tokens": 112,
+          "mean_returned_text_token_logp": -0.43586691
+        }
+      ],
+      "wall_seconds": 33.38954026500005,
+      "peak_child_rss_bytes": 292405248,
+      "exit_code": 0
+    },
+    {
+      "id": "fleurs-ur_pk-test-1",
+      "language": "ur",
+      "profile": "beam3",
+      "transcript": "پیل پینی فٹو گرافروں کیسا چھے اگوہ سدگان کو جل رہا کر دیا گیا تھا چین میں بچی اور بھڑے شاملتے۔",
+      "basic_wer": 0.7,
+      "basic_cer": 0.24691358024691357,
+      "scripts": {
+        "Arabic": 73
+      },
+      "reference_scripts": {
+        "Arabic": 78
+      },
+      "segment_diagnostics": [
+        {
+          "segment": 0,
+          "no_speech_probability": 1.927e-05,
+          "text_tokens": 59,
+          "mean_returned_text_token_logp": -0.44853865
+        }
+      ],
+      "wall_seconds": 27.629943438000055,
+      "peak_child_rss_bytes": 289529856,
+      "exit_code": 0
+    },
+    {
+      "id": "fleurs-pa_in-validation-0",
+      "language": "pa",
+      "profile": "beam3",
+      "transcript": "Uppu Sabhe Charde Member Aksar Shalli di Ikh Khas Ati Sanke Tukbertu Rahim, Apani Sadastadha Sanke Dundeyan, Jiswaj Fashion, Shishtata Ati Gupta Pasha Samal Hundeher.",
+      "basic_wer": 1.0,
+      "basic_cer": 1.1311475409836065,
+      "scripts": {
+        "Latin": 138
+      },
+      "reference_scripts": {
+        "Gurmukhi": 72
+      },
+      "segment_diagnostics": [
+        {
+          "segment": 0,
+          "no_speech_probability": 1.929e-05,
+          "text_tokens": 65,
+          "mean_returned_text_token_logp": -0.92081396
+        }
+      ],
+      "wall_seconds": 30.370189869999876,
+      "peak_child_rss_bytes": 293294080,
+      "exit_code": 0
+    }
+  ],
+  "controls": {
+    "fixtures_generated_and_hash_verified": 4,
+    "inference_performed": false,
+    "reason": "Both generic prompt profiles failed requested script; longer prompt also corrupted speech text. Parent explicitly rejected both profiles and canceled unnecessary control matrix rather than considering them for production. No prompt-safety or non-speech rejection claim is made."
+  },
+  "findings": [
+    "All tested Punjabi profiles remain Latin-script: canonical Basegreedy, beam3, minimalGurmukhi-label+beam3, and longer genericGurmukhi seed.",
+    "Longer generic Gurmukhi prior-transcript seed also produces unrelatedEnglish/mixed-script text; reject the prompt.",
+    "Both Urdu examples have exactly unchanged WER under Basebeam3 vs Basegreedy (36.36% and70%). CER moves13.10%vs14.48% on one clip and24.69%vs23.46% on the other.",
+    "Beam3 retains the source numeral word `چھے` in UR1 but many surrounding words remain incorrect; this isolated repair is not sufficient for a production decoder change.",
+    "No beam/prompt setting is recommended; language-specific trained models require separate evaluation."
+  ],
+  "limits": [
+    "Actual Linux x86_64 JNI/Whisper/model inference; no Android microphone, phone, TTS or physical2GB acceptance.",
+    "Punjabi reference is Gurmukhi while hypotheses are Latin; cross-script WER/CER are mismatch indicators, not fluent-speaker linguistic accuracy.",
+    "All timings are shared-host observations with at most4inference threads across two agents. Generic host SIMD options were OFF. No Android/NEON speed prediction.",
+    "Initial prompts condition prior text; they are not binding script instructions.",
+    "Returned text-token mean logp is instrumentation only and differs from internal sequence average/no-speech rules."
+  ],
+  "source_reports": [
+    {
+      "path": "base-beam3-hint-pa0/results.json",
+      "sha256": "bfec1bf235ac502f9f0cb784862bf0289c43eb79154b437c4a336c2fa4d7c2dd"
+    },
+    {
+      "path": "base-script-hint-pa0/results.json",
+      "sha256": "6c6b7800937dab5896b23e7baae89a3e0770934b43d3ba8b3d5c3c1d9ca8dc08"
+    },
+    {
+      "path": "base-beam3-ur-pa0/results.json",
+      "sha256": "2ce3c4a3c45a130272e1cae02ea7ea00b75d01286202f5f9dabcf71947a04096"
+    }
+  ],
+  "same_host_base_greedy": {
+    "fleurs-en_us-validation-0": {
+      "transcript": "When you call someone who is thousands of miles away, you are using a satellite.",
+      "basic_wer": 0.0,
+      "basic_cer": 0.0,
+      "hypothesis_script_letters": {
+        "Latin": 64
+      },
+      "process_wall_seconds": 22.580830376999984,
+      "peak_child_rss_bytes_sampled": 259002368
+    },
+    "fleurs-en_us-validation-1": {
+      "transcript": "Now widely available throughout the Archipelago, Japanese cuisine features an array of simply seasoned dishes, the predominant flavorings, the Japanese favor being peanut, chili, sugar, especially Japanese coconut sugar and various aromatic spices.",
+      "basic_wer": 0.15151515151515152,
+      "basic_cer": 0.03286384976525822,
+      "hypothesis_script_letters": {
+        "Latin": 209
+      },
+      "process_wall_seconds": 24.38982756900009,
+      "peak_child_rss_bytes_sampled": 262787072
+    },
+    "fleurs-ur_pk-test-0": {
+      "transcript": "ان کے دور میں کفیق تلووز ایزا مسلہ نہیں تا جیسا کے وہ آج ہے ان کی سکونت ایسے شیرو یا حوزات میں ہے جو ہاہتاک بہسانی پہنچا جا سکتا ہے با نسپتین مقامات کے جو موڑرن زمانے میں تامیر کے گئے۔",
+      "basic_wer": 0.36363636363636365,
+      "basic_cer": 0.14482758620689656,
+      "hypothesis_script_letters": {
+        "Arabic": 142
+      },
+      "process_wall_seconds": 26.201222441000027,
+      "peak_child_rss_bytes_sampled": 261615616
+    },
+    "fleurs-ur_pk-test-1": {
+      "transcript": "پیل پائنی فٹو گرافروں کے ساتھ سی اگوہ سدگان کو جل رہا کر دیا گیا تھا چین میں بچور بھڑے شاملتے",
+      "basic_wer": 0.7,
+      "basic_cer": 0.2345679012345679,
+      "hypothesis_script_letters": {
+        "Arabic": 73
+      },
+      "process_wall_seconds": 24.61310913600005,
+      "peak_child_rss_bytes_sampled": 258748416
+    },
+    "fleurs-pa_in-validation-0": {
+      "transcript": "Upu sabia chiardhe Member Akshar Shalli di ikh khas ati sankeetak barturahin, apne sadastadha sanke dundhehan, jiswaj fashion, shisthta ati goptpasha shamal hundiher.",
+      "basic_wer": 1.0,
+      "basic_cer": 1.1475409836065573,
+      "hypothesis_script_letters": {
+        "Latin": 140
+      },
+      "process_wall_seconds": 24.917546562000098,
+      "peak_child_rss_bytes_sampled": 262860800
+    },
+    "fleurs-pa_in-validation-1": {
+      "transcript": "kambadi sarchna to pata lagda hai ki, onadi varto flight bić nahi kiti gai si, balke, tapman nium, jai padarshan leh kiti gai si, shoodh karta ne sujad tata ke pami, a ek juva dhyna surdi puj hove, namunna baalak panchida kham bdkohda hai, ate bhoodh da hetla nahin.",
+      "basic_wer": 1.0,
+      "basic_cer": 1.0717948717948718,
+      "hypothesis_script_letters": {
+        "Latin": 209
+      },
+      "process_wall_seconds": 40.015255604000004,
+      "peak_child_rss_bytes_sampled": 267608064
+    }
+  },
+  "same_host_base_greedy_report_sha256": "9ffd5ce7dd18e6e0cd425c9a93e8bb675199cc71ad40c26c813c833a23021b09",
+  "beam3_urdu_comparison": [
+    {
+      "fixture": "fleurs-ur_pk-test-0",
+      "greedy_wer": 0.36363636363636365,
+      "beam3_wer": 0.36363636363636365,
+      "greedy_cer": 0.14482758620689656,
+      "beam3_cer": 0.1310344827586207
+    },
+    {
+      "fixture": "fleurs-ur_pk-test-1",
+      "greedy_wer": 0.7,
+      "beam3_wer": 0.7,
+      "greedy_cer": 0.2345679012345679,
+      "beam3_cer": 0.24691358024691357
+    }
+  ],
+  "production_asr_sources_changed_by_experiments": false
+}

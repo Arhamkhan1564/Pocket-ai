@@ -1,0 +1,48 @@
+{
+  "scope": "Read-only canonical voice-pipeline/API review and isolated host decoder experiments; production unchanged.",
+  "sources": {
+    "app/src/main/cpp/pocketai_jni.cpp": "9ad280a212bb9245db15f42ef44dee38b9884150d11857476823cd8e8e7fe079",
+    "app/src/main/java/com/pocketai/voice/SpeechController.kt": "aa1fe81b089335aaa680535d734e5ec28467ea4d37a9d15f0175fa0baae34def",
+    "vendor/whisper.cpp/src/whisper.cpp": "f8f70d3af56cb31ba00c85da0e499956e85364d1b630f287497183fd9d6d692b",
+    "vendor/whisper.cpp/include/whisper.h": "a7d19f7feb5be52426628ff07e0602de28a30dc4312d0d0603e1e536753f76dd"
+  },
+  "language_policy": "Explicit pa remains Punjabi; neither hi nor ur is substituted. Latin names/codes are not blanket-suppressed.",
+  "current_decoder": {
+    "strategy": "greedy",
+    "best_of": 1,
+    "translation": false,
+    "no_context": true,
+    "no_timestamps": true,
+    "initial_prompt": null,
+    "temperature": 0.0,
+    "temperature_increment": 0.2,
+    "no_speech_threshold": 0.6,
+    "log_probability_threshold": -1.0
+  },
+  "safe_experiment_constraints": [
+    "Same pinned model/audio bytes, explicit language and two threads for all profiles.",
+    "Search and hint settings isolated before combining.",
+    "Preserve canonical abort/encoder cancellation and per-request native model cleanup.",
+    "Run empty/noise/tone controls for any initial prompt.",
+    "A forced language code is not automatic independent language identification.",
+    "Retain raw transcript and script counts; do not call cross-script Punjabi WER a fair linguistic score."
+  ],
+  "prompt_caveats": [
+    "initial_prompt is previous-transcript conditioning, not an instruction contract.",
+    "no_context clears history before prompt insertion; it does not prevent prompt contamination.",
+    "carried initial prompt remains disabled.",
+    "Temperature fallback can alter effective search and omit prompt at higher temperatures."
+  ],
+  "no_speech_caveats": [
+    "Native skip requires both high no-speech probability and low internal sequence average log-probability. Confident false output can survive.",
+    "A 100ms energy gate rejects digital silence/quiet noise but does not distinguish louder noise or tone from speech.",
+    "Our direct native control harness bypasses the Android energy gate; silence/quiet-noise false output must be separated from reachable higher-noise/tone behavior."
+  ],
+  "script_api_caveat": "Visible and appliance recording currently snapshot a primary language; SpeechController strips any script subtag before native JNI. Full-tag snapshot and raw/display transcript types would be required for any later evidence-backed script-sensitive feature.",
+  "memory_caveat": "180MiB model-size guard excludes Small Q5_1 at190085487bytes (~181.28MiB). Reserve max(modelBytes*4+128MiB,256MiB) must also fit75% available RAM; target2GB device is unattached.",
+  "host_limits": [
+    "Actual Linux x86_64 JNI/Whisper/model inference, not Android recording or phone acceptance.",
+    "Generic host GGML SIMD flags are OFF. Timing/RSS cannot predict ARM/NEON speed or physical2GB stability.",
+    "Some candidate/model runs overlap under a four-inference-thread cap; report timing as shared-host observations."
+  ]
+}

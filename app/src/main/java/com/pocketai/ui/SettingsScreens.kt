@@ -238,7 +238,43 @@ private fun ModelResources(manager: ModelManager, settings: AppSettings, changed
     }
     ResourcePanel("Your reference workflow", "Import an English TXT, Word or text PDF in Training Mode. Review and index it, ask in your language, then tap a source to read the original. Adding a file indexes knowledge; it does not retrain a model.")
     OfflinePreparationPanel(offlineRag, onMessage = message, onPrepared = changed)
-    ResourcePanel("Offline speech recognition", bundledSpeech.message + "\nUrdu and Punjabi recognition is experimental. Review and correct words, numbers and script before using the transcript. Recognition, translated text and spoken-answer voices have separate readiness checks.")
+    val includedAuto = installed.firstOrNull { it.kind == ModelKind.WHISPER && it.metadata["bundled"] == "true" && it.sha256 == BundledSpeechModel.SHA256 }
+    val selectedSpeech = installed.firstOrNull { it.id == settings.selectedWhisperId && it.kind == ModelKind.WHISPER }
+    val automatic = selectedSpeech != null && selectedSpeech.id == includedAuto?.id
+    ResourcePanel(when {
+        settings.selectedWhisperId == null -> "Voice recognition disabled"
+        automatic -> "Included automatic recognition selected"
+        selectedSpeech != null -> "Custom speech recognizer selected"
+        else -> "Selected speech resource unavailable"
+    }, when {
+        settings.selectedWhisperId == null -> "Microphone recognition stays off until you select a recognizer. Typed input remains available."
+        automatic -> "English uses the included English recognizer; Urdu uses the Urdu-tuned recognizer; Punjabi uses a dedicated recognizer with Gurmukhi output. Urdu and Punjabi resources are prepared locally from this APK. Shahmukhi display conversion is labeled during manual review."
+        selectedSpeech != null -> "${selectedSpeech.name}\nYour explicit custom Whisper selection is used instead of automatic language-specific recognition. Language support and memory are checked before recording."
+        else -> "Choose the included automatic recognizers, or select a valid custom Whisper file in Advanced. The microphone will not start until setup succeeds."
+    })
+    OutlinedButton(onClick = {
+        if (includedAuto != null) {
+            settings.selectedWhisperId = includedAuto.id
+            changed()
+        } else scope.launch {
+            busy = true
+            val priorSelection = settings.selectedWhisperId
+            try {
+                val model = BundledSpeechModel.ensureInstalled(context, manager, settings, force = true)
+                    ?: error("Included recognition could not be prepared. Check the local setup message and retry.")
+                if (settings.selectedWhisperId == priorSelection) settings.selectedWhisperId = model.id
+                changed(); refresh++
+            } catch (cancelled: CancellationException) { throw cancelled }
+            catch (failure: Exception) { message(failure.message ?: "Could not select included automatic recognition.") }
+            finally { busy = false }
+        }
+    }, enabled = !busy && !automatic && bundledSpeech.status != BundledSpeechStatus.INSTALLING,
+        modifier = Modifier.fillMaxWidth()) { Text(if (automatic) "Included automatic recognition selected" else "Use included automatic recognizers") }
+    TextButton(onClick = { settings.selectedWhisperId = null; changed(); message("Voice recognition disabled. Typed input is available.") },
+        enabled = !busy && (settings.selectedWhisperId != null || !settings.speechRecognitionSelectionConfigured),
+        modifier = Modifier.fillMaxWidth()) { Text(if (settings.selectedWhisperId == null) "Keep voice recognition disabled" else "Disable voice recognition") }
+    Text("Recognizer changes apply to the next recording.", color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.labelSmall)
+    ResourcePanel("Review recognition before use", "Urdu and Punjabi recordings always open an editable manual review. Check words, names and numbers; recognition is not a correctness check. Hands-free uses unreviewed transcripts. Recognition, translated text and spoken-answer voices have separate readiness checks.")
     if (bundledSpeech.status == BundledSpeechStatus.INSTALLING) {
         LinearProgressIndicator(Modifier.fillMaxWidth())
         Text("Preparing included speech model…", style = MaterialTheme.typography.bodySmall)
@@ -288,10 +324,12 @@ private fun ModelResources(manager: ModelManager, settings: AppSettings, changed
         if (installed.isEmpty()) ResourcePanel("No custom models installed", "Prepared baseline tools do not require a manual model import. Use the controls here only for an optional custom engine.")
         installed.forEach { model ->
             val selected = if (model.kind == ModelKind.LLM) settings.selectedLlmId == model.id else settings.selectedWhisperId == model.id
+            val isIncludedAuto = model.kind == ModelKind.WHISPER && model.metadata["bundled"] == "true" && model.sha256 == BundledSpeechModel.SHA256
             Card(Modifier.fillMaxWidth()) {
                 Column(Modifier.padding(18.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                    Text(model.name, style = MaterialTheme.typography.titleMedium)
+                    Text(if (isIncludedAuto) "Included automatic recognition" else model.name, style = MaterialTheme.typography.titleMedium)
                     Text("${model.kind.name} · ${formatBytes(model.sizeBytes)}", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.primary)
+                    if (isIncludedAuto) Text("This registry entry is the English speech component. Selecting it enables the included per-language recognition policy; Urdu and Punjabi resources are separate local setup packs.", style = MaterialTheme.typography.bodySmall)
                     Text("SHA-256 ${model.sha256.take(16)}…", style = MaterialTheme.typography.bodySmall)
                     Text("Imported ${DateFormat.getDateInstance().format(Date(model.importedAt))}", style = MaterialTheme.typography.bodySmall)
                     var compatibility by remember(model.id) { mutableStateOf("Checking compatibility…") }
@@ -304,7 +342,7 @@ private fun ModelResources(manager: ModelManager, settings: AppSettings, changed
                             if (model.kind == ModelKind.LLM) settings.selectedLlmId = if (selected) null else model.id
                             else settings.selectedWhisperId = if (selected) null else model.id
                             changed()
-                        }, enabled = !busy && bundledSpeech.status != BundledSpeechStatus.INSTALLING) { Text(if (selected) "Selected · disable" else "Use model") }
+                        }, enabled = !busy && bundledSpeech.status != BundledSpeechStatus.INSTALLING) { Text(if (selected) "Selected · disable" else if (isIncludedAuto) "Use automatic" else "Use model") }
                         TextButton(onClick = {
                             scope.launch {
                                 busy = true

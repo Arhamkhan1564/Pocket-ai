@@ -1,0 +1,50 @@
+{
+  "revision": "5359861c739e955e79d9a303bcbc70fb988958b1",
+  "license": "mit",
+  "requested_file": "ggml-small-q4_0.bin",
+  "present": false,
+  "available_small_quantized": [
+    {
+      "rfilename": "ggml-small-q5_1.bin",
+      "blobId": "87631c52c89d37ed2337a46ec4a009976db1f3f4",
+      "size": 190085487,
+      "lfs": {
+        "sha256": "ae85e4a935d7a567bd102fe55afc16bb595bdb618e11b2fc7591bc08120411bb",
+        "size": 190085487,
+        "pointerSize": 134
+      }
+    },
+    {
+      "rfilename": "ggml-small-q8_0.bin",
+      "blobId": "8a9937d2be60bae6b1efbb01b9ca1612ab2a617c",
+      "size": 264464607,
+      "lfs": {
+        "sha256": "49c8fb02b65e6049d5fa6c04f81f53b867b5ec9540406812c643f177317f779f",
+        "size": 264464607,
+        "pointerSize": 134
+      }
+    },
+    {
+      "rfilename": "ggml-small.en-q5_1.bin",
+      "blobId": "bf61baaf463626fe45fc9157b8e9c69de8943c87",
+      "size": 190098681,
+      "lfs": {
+        "sha256": "bfdff4894dcb76bbf647d56263ea2a96645423f1669176f4844a1bf8e478ad30",
+        "size": 190098681,
+        "pointerSize": 134
+      }
+    },
+    {
+      "rfilename": "ggml-small.en-q8_0.bin",
+      "blobId": "9c826215654cf46674a38d02f19e123e17c5b2d3",
+      "size": 264477561,
+      "lfs": {
+        "sha256": "67a179f608ea6114bd3fdb9060e762b588a3fb3bd00c4387971be4d177958067",
+        "size": 264477561,
+        "pointerSize": 134
+      }
+    }
+  ],
+  "all_q4_entries": [],
+  "download_executed": false
+}

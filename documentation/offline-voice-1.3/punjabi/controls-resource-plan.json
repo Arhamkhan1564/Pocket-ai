@@ -1,0 +1,64 @@
+[
+  {
+    "id": "silence-6s",
+    "path": "/workspace/validation/offline-voice-decoder/controls/silence-6s.wav",
+    "pcm16_sample_sha256": "ea0787f65f73b0013d03b359490e3125211b28ad5c1502ffb1544c0ded4192f5",
+    "expected_transcript": "",
+    "modes": [
+      "full",
+      "bounded-noarena"
+    ]
+  },
+  {
+    "id": "quiet-noise-6s",
+    "path": "/workspace/validation/offline-voice-decoder/controls/quiet-noise-6s.wav",
+    "pcm16_sample_sha256": "183b792fb97c13217cbfd73644240f1343e558e1311e635a0b942394cf876b33",
+    "expected_transcript": "",
+    "modes": [
+      "full",
+      "bounded-noarena"
+    ]
+  },
+  {
+    "id": "higher-noise-6s",
+    "path": "/workspace/validation/offline-voice-decoder/controls/higher-noise-6s.wav",
+    "pcm16_sample_sha256": "7a2bf788b854c8e8327834187b2542dc7edb750b53ff828c3f1fd7e2da4bd046",
+    "expected_transcript": "",
+    "modes": [
+      "full",
+      "bounded-noarena"
+    ]
+  },
+  {
+    "id": "tone-440hz-6s",
+    "path": "/workspace/validation/offline-voice-decoder/controls/tone-440hz-6s.wav",
+    "pcm16_sample_sha256": "decdc6e55e7345f33e2e04fd02d459e89acc32fa2408d6093155380cd57ef117",
+    "expected_transcript": "",
+    "modes": [
+      "full",
+      "bounded-noarena"
+    ]
+  },
+  {
+    "id": "concatenated-pa1-30s",
+    "path": "/workspace/validation/offline-voice-improve-v12/fixtures/fleurs-pa_in-validation-1-pcm16.wav",
+    "pcm16_sample_sha256": "14ff8b5ea01bf1a57c7e44a24a3fc68fdd8be63c50b47f7d80088d30fdce0bfd",
+    "repeat": 3,
+    "max_samples": 480000,
+    "modes": [
+      "bounded-noarena"
+    ],
+    "purpose": "Same licensed audio repeated and truncated for resource-bound checks only, not new speech evidence."
+  },
+  {
+    "id": "concatenated-pa1-60s",
+    "path": "/workspace/validation/offline-voice-improve-v12/fixtures/fleurs-pa_in-validation-1-pcm16.wav",
+    "pcm16_sample_sha256": "14ff8b5ea01bf1a57c7e44a24a3fc68fdd8be63c50b47f7d80088d30fdce0bfd",
+    "repeat": 3,
+    "max_samples": 960000,
+    "modes": [
+      "bounded-noarena"
+    ],
+    "purpose": "Same licensed audio repeated and truncated for resource-bound checks only, not new speech evidence."
+  }
+]

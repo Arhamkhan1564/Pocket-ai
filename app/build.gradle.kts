@@ -1,5 +1,6 @@
 import java.util.Properties
 import java.security.MessageDigest
+import java.security.KeyStore
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.util.zip.ZipFile
@@ -11,9 +12,22 @@ plugins {
     id("org.jetbrains.kotlin.plugin.compose")
 }
 
+val releaseSigningFile = rootProject.file(
+    providers.gradleProperty("pocketAiReleaseSigningProperties")
+        .orElse(providers.environmentVariable("POCKETAI_RELEASE_SIGNING_PROPERTIES"))
+        .getOrElse("signing.properties")
+)
 val localSigning = Properties().apply {
-    val file = rootProject.file("signing.properties")
+    val file = releaseSigningFile
     if (file.isFile) file.inputStream().use(::load)
+}
+val previewSigningFile = rootProject.file(
+    providers.gradleProperty("pocketAiPreviewSigningProperties")
+        .orElse(providers.environmentVariable("POCKETAI_PREVIEW_SIGNING_PROPERTIES"))
+        .getOrElse("../private-signing/voice-preview-signing.properties")
+)
+val previewSigning = Properties().apply {
+    if (previewSigningFile.isFile) previewSigningFile.inputStream().use(::load)
 }
 
 // Keep licensed model weights outside the source checkout and Git/source ZIPs.
@@ -27,7 +41,8 @@ val bundledModelAssetsDir = rootProject.file(
 val offlineFetchInstructions = "Run python3 scripts/fetch-offline-models.py before Gradle sync/build. " +
     "Use POCKETAI_MODEL_ASSETS_DIR or -PpocketAiModelAssetsDir to override the external assets directory."
 val offlineManifest = JsonSlurper().parse(rootProject.file("app/src/main/assets/offline-model-manifest.json")) as Map<*, *>
-if (offlineManifest["schemaVersion"] != 1 || offlineManifest["bundleVersion"] != "1.2.0") {
+val expectedOfflinePackIds = setOf("search", "translation", "english", "speech", "voice-ur", "voice-pa", "speech-vad")
+if (offlineManifest["schemaVersion"] != 1 || offlineManifest["bundleVersion"] != "1.3.0") {
     throw GradleException("Unsupported baseline offline model manifest.")
 }
 val offlinePacks = offlineManifest["packs"] as? List<*> ?: throw GradleException("Offline model packs are missing.")
@@ -60,7 +75,7 @@ offlinePacks.forEach { rawPack ->
         throw GradleException("Offline model pack size total differs from its manifest: $id")
     }
 }
-if (offlinePackIds != setOf("search", "translation", "english", "speech") ||
+if (offlinePackIds != expectedOfflinePackIds ||
     offlineModelFiles.values.sumOf { it.first } != (offlineManifest["totalSizeBytes"] as? Number)?.toLong()) {
     throw GradleException("The baseline offline model manifest is incomplete or has an inconsistent total.")
 }
@@ -158,8 +173,9 @@ android {
         applicationId = "com.pocketai"
         minSdk = 23
         targetSdk = 35
-        versionCode = 4
-        versionName = "1.2.1"
+        versionCode = 5
+        versionName = "1.3.0"
+        buildConfigField("boolean", "IS_VOICE_PREVIEW", "false")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         ndk { abiFilters += listOf("arm64-v8a", "armeabi-v7a", "x86_64") }
@@ -179,6 +195,16 @@ android {
                 storePassword = localSigning.getProperty("storePassword")
                 keyAlias = localSigning.getProperty("keyAlias")
                 keyPassword = localSigning.getProperty("keyPassword")
+                localSigning.getProperty("storeType")?.let { storeType = it }
+            }
+        }
+        create("voicePreview") {
+            if (previewSigning.isNotEmpty()) {
+                storeFile = rootProject.file(previewSigning.getProperty("storeFile"))
+                storePassword = previewSigning.getProperty("storePassword")
+                keyAlias = previewSigning.getProperty("keyAlias")
+                keyPassword = previewSigning.getProperty("keyPassword")
+                storeType = previewSigning.getProperty("storeType", "PKCS12")
             }
         }
     }
@@ -189,6 +215,14 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
         debug { applicationIdSuffix = ".debug"; versionNameSuffix = "-debug" }
+        create("voicePreviewRelease") {
+            initWith(getByName("release"))
+            applicationIdSuffix = ".voicepreview"
+            signingConfig = signingConfigs.getByName("voicePreview")
+            buildConfigField("boolean", "IS_VOICE_PREVIEW", "true")
+            resValue("string", "voice_preview_app_name", "Pocket AI Voice Preview")
+            matchingFallbacks += "release"
+        }
     }
 
     compileOptions {
@@ -209,6 +243,38 @@ android {
     testOptions {
         unitTests.isIncludeAndroidResources = true
     }
+}
+
+// A newly generated preview key must never silently replace the original app's
+// signing identity. The separately installable preview uses its own config.
+val verifyOriginalReleaseSigning = tasks.register("verifyOriginalReleaseSigning") {
+    group = "verification"
+    description = "Require the original Pocket AI certificate for the standard release variant."
+    doLast {
+        val required = listOf("storeFile", "storePassword", "keyAlias", "keyPassword")
+        if (required.any { localSigning.getProperty(it).isNullOrBlank() }) {
+            throw GradleException("The standard release requires the original external signing key. Set POCKETAI_RELEASE_SIGNING_PROPERTIES or -PpocketAiReleaseSigningProperties. The separate voicePreviewRelease variant uses its own preview identity.")
+        }
+        val storeFile = rootProject.file(localSigning.getProperty("storeFile"))
+        if (!storeFile.isFile) throw GradleException("The original release keystore is unavailable; use the separately installable voicePreviewRelease variant.")
+        val password = localSigning.getProperty("storePassword").toCharArray()
+        try {
+            val store = KeyStore.getInstance(storeFile, password)
+            val alias = localSigning.getProperty("keyAlias")
+            if (!store.isKeyEntry(alias)) throw GradleException("The original release signing alias must contain its private key.")
+            val certificate = store.getCertificate(alias) ?: throw GradleException("The original release certificate is missing.")
+            val digest = MessageDigest.getInstance("SHA-256").digest(certificate.encoded)
+                .joinToString("") { "%02x".format(it.toInt() and 255) }
+            if (digest != "8ac67ade5eaf37abb50dc8d89e32317584f6baa194f4d97246209b27743f4e42") {
+                throw GradleException("This key does not match the original Pocket AI release identity. Use voicePreviewRelease for a separately installable preview.")
+            }
+        } finally {
+            password.fill('\u0000')
+        }
+    }
+}
+tasks.configureEach {
+    if (name == "validateSigningRelease") dependsOn(verifyOriginalReleaseSigning)
 }
 
 dependencies {

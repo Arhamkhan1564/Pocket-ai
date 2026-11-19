@@ -52,17 +52,16 @@ import com.pocketai.assistant.LanguageTools
 import com.pocketai.appliance.ApplianceSession
 import com.pocketai.data.*
 import com.pocketai.engine.LocalAiEngine
-import com.pocketai.engine.NativeBridge
-import com.pocketai.models.BundledSpeechModel
-import com.pocketai.models.BundledSpeechStatus
-import com.pocketai.models.InstalledModel
-import com.pocketai.models.ModelKind
 import com.pocketai.models.ModelManager
-import com.pocketai.models.ModelValidator
 import com.pocketai.rag.OfflineRagServices
 import com.pocketai.rag.OfflineTranslation
 import com.pocketai.security.AuthManager
 import com.pocketai.voice.SpeechController
+import com.pocketai.voice.OfflineSpeechModels
+import com.pocketai.voice.SpeechRecognitionPlan
+import com.pocketai.voice.VoiceRecordingRequest
+import com.pocketai.voice.VoiceTranscriptDestination
+import com.pocketai.voice.VoiceTranscriptReview
 import kotlinx.coroutines.*
 import java.text.DateFormat
 import java.util.Date
@@ -88,7 +87,8 @@ fun PocketApp() = PocketTheme {
     var authTarget by remember { mutableStateOf<String?>(null) }
     var composer by remember { mutableStateOf("") }
     var teachingVoice by remember { mutableStateOf("") }
-    var recordingLanguage by remember { mutableStateOf(settings.responseLanguage) }
+    var recordingRequest by remember { mutableStateOf<VoiceRecordingRequest?>(null, referentialEqualityPolicy()) }
+    var voiceReview by remember { mutableStateOf<VoiceTranscriptReview?>(null, referentialEqualityPolicy()) }
     var editRecord by remember { mutableStateOf<KnowledgeRecord?>(null) }
     var conversations by remember { mutableStateOf(emptyList<ConversationRecord>()) }
     var knowledgeCount by remember { mutableIntStateOf(0) }
@@ -98,14 +98,13 @@ fun PocketApp() = PocketTheme {
     var lastEngine by remember { mutableStateOf("") }
     var confirmClear by remember { mutableStateOf(false) }
     var speechSetupIssue by remember { mutableStateOf<String?>(null) }
-    var readySpeechModel by remember { mutableStateOf<InstalledModel?>(null) }
+    var recordingPlan by remember { mutableStateOf<SpeechRecognitionPlan?>(null, referentialEqualityPolicy()) }
     var sourceToRead by remember { mutableStateOf<Long?>(null) }
     var documentToRead by remember { mutableStateOf<DocumentSummary?>(null) }
     var librarySection by remember { mutableStateOf("documents") }
     val voice by speech.state.collectAsState()
     val offlineState by offlineRag.state.collectAsState()
     val semanticIndex by offlineRag.indexState.collectAsState()
-    val bundledSpeech by BundledSpeechModel.state.collectAsState()
     val appliance by ApplianceSession.state.collectAsState()
     val message: (String) -> Unit = { text -> scope.launch { snackbar.showSnackbar(text.take(600)) }; Unit }
     val localModelStatus = when {
@@ -130,69 +129,85 @@ fun PocketApp() = PocketTheme {
         if (auth.isUnlocked) { unlocked = true; page = target; if (target == "teach") training = true }
         else authTarget = target
     }
+    fun useVoiceText(text: String, request: VoiceRecordingRequest) {
+        when (request.destination) {
+            VoiceTranscriptDestination.TRAINING -> { teachingVoice = text; guardedNavigate("teach") }
+            VoiceTranscriptDestination.CHAT -> {
+                training = false; auth.lock(); unlocked = false; page = "chat"; composer = text
+            }
+        }
+    }
     fun beginRecording() {
         if (busy) return
         if (appliance.running) { message("Stop the appliance session before using tap-to-talk."); return }
-        if (readySpeechModel == null) {
+        if (recordingRequest == null) { message("The recording request ended. Tap the microphone to start again."); return }
+        val plan = recordingPlan
+        if (plan == null) {
             speechSetupIssue = "Check your speech model before using the microphone. Open model setup, or tap the microphone again after setup is ready. No audio has been recorded."
             return
         }
-        runCatching { speech.startRecording() }.onFailure { message(it.message ?: "Microphone unavailable") }
+        runCatching { speech.checkMemory(plan); speech.startRecording() }.onFailure { recordingRequest = null; recordingPlan = null; message(it.message ?: "Microphone unavailable") }
     }
     val micPermission = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
-        if (granted) beginRecording() else message("Microphone access was not granted. Text input is available.")
+        if (granted) beginRecording() else { recordingRequest = null; recordingPlan = null; message("Microphone access was not granted. Text input is available.") }
     }
     fun toggleMicrophone(language: String = settings.responseLanguage) {
         if (busy) return
         if (speech.hasPendingRecording) {
+            val request = recordingRequest ?: run {
+                speech.cancelRecording(); message("This recording request ended. Record again before reviewing text."); return
+            }
+            val plan = recordingPlan ?: run {
+                speech.cancelRecording(); recordingRequest = null; message("The recognition plan ended. Record again after checking Offline tools."); return
+            }
             busy = true; busyLabel = "Recognizing speech locally…"
             answerJob = scope.launch {
                 try {
-                    val model = readySpeechModel ?: error("The speech model is no longer selected. Check model setup and try again.")
-                    val recognized = speech.finishTranscription(models.fileFor(model), recordingLanguage)
-                    if (training && page == "teach") teachingVoice = recognized else { page = "chat"; composer = recognized }
-                    message("Speech recognized. Review the text before ${if (training) "saving" else "sending"}.")
-                } catch (e: CancellationException) { speech.cancelRecording(); throw e }
-                catch (e: Exception) { speech.cancelRecording(); message(e.message ?: "Transcription failed") }
-                finally { busy = false; answerJob = null }
+                    val recognized = speech.finishTranscription(plan)
+                    if (recordingRequest !== request) return@launch
+                    val review = VoiceTranscriptReview.prepare(recognized, request)
+                    if (review.needsDialog || request.languageTag.substringBefore('-').lowercase() in setOf("ur", "pa")) voiceReview = review else {
+                        useVoiceText(review.displayText, request)
+                        message(review.notice ?: "Speech recognized. Review the text before ${if (request.destination == VoiceTranscriptDestination.TRAINING) "saving" else "sending"}.")
+                    }
+                } catch (e: CancellationException) { if (recordingRequest === request) speech.cancelRecording(); throw e }
+                catch (e: Exception) { if (recordingRequest === request) { speech.cancelRecording(); message(e.message ?: "Transcription failed") } }
+                finally {
+                    if (recordingRequest === request) { recordingRequest = null; recordingPlan = null }
+                    if (answerJob === currentCoroutineContext()[Job]) { busy = false; answerJob = null }
+                }
             }
         } else {
             if (busy || appliance.running) {
                 if (appliance.running) message("Stop the appliance session before using tap-to-talk.")
                 return
             }
+            voiceReview = null
+            recordingPlan = null
+            val request = VoiceRecordingRequest(
+                LanguageTools.speechTag(language, settings.punjabiScript),
+                if (training && page == "teach") VoiceTranscriptDestination.TRAINING else VoiceTranscriptDestination.CHAT,
+            )
+            recordingRequest = request
             busy = true
             busyLabel = "Checking offline speech setup…"
             answerJob = scope.launch {
                 try {
-                    val model = withContext(Dispatchers.IO) {
-                        NativeBridge.availabilityMessage()?.let { error(it) }
-                        val selected = models.list().firstOrNull { it.id == settings.selectedWhisperId && it.kind == ModelKind.WHISPER }
-                            ?: error(if (bundledSpeech.status == BundledSpeechStatus.INSTALLING) {
-                                "The included offline speech model is being prepared. Wait for setup to finish, then try again. You can keep using text."
-                            } else {
-                                "Included offline speech is not ready. Open Offline tools to prepare or restore it from this APK, then try the microphone. Text input works now."
-                            })
-                        val file = models.fileFor(selected)
-                        require(file.isFile && file.canRead() && file.length() in 64..(180L * 1024 * 1024)) {
-                            "The selected speech resource is missing, unreadable or too large. Prepare the included speech again in Offline tools. Optional custom speech files must fit the 180 MiB limit."
-                        }
-                        val header = ModelValidator.validateHeader(file, ModelKind.WHISPER)
-                        require(header.metadata["multilingual"] == "true" || language.substringBefore('-') == "en") {
-                            "The selected speech model is English-only. In model setup, select the included multilingual Whisper model for ${LanguageTools.name(language)}. English-only .en models cannot recognize Urdu or Punjabi."
-                        }
-                        selected
+                    val plan = withContext(Dispatchers.IO) {
+                        OfflineSpeechModels.prepare(context, models, settings, request.languageTag).also { speech.checkMemory(it) }
                     }
-                    readySpeechModel = model
-                    recordingLanguage = language
+                    if (recordingRequest !== request) return@launch
+                    recordingPlan = plan
                     busy = false
                     if (context.checkSelfPermission(Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) beginRecording()
                     else micPermission.launch(Manifest.permission.RECORD_AUDIO)
                 } catch (cancelled: CancellationException) { throw cancelled }
                 catch (failure: Exception) {
-                    readySpeechModel = null
-                    speechSetupIssue = (failure.message ?: "Offline speech is not ready. Open model setup to check the selected model.") + "\n\nNo audio has been recorded."
-                } finally { busy = false; answerJob = null }
+                    if (recordingRequest === request) {
+                        recordingPlan = null; recordingRequest = null
+                        speechSetupIssue = (failure.message ?: "Offline speech is not ready. Open model setup to check the selected model.") + "\n\nNo audio has been recorded."
+                    }
+                } finally { if (answerJob === currentCoroutineContext()[Job]) { busy = false; answerJob = null } }
             }
         }
     }
@@ -246,6 +261,7 @@ fun PocketApp() = PocketTheme {
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
             if (event == Lifecycle.Event.ON_STOP && !ExternalActivityFlow.active) {
+                voiceReview = null; recordingRequest = null; recordingPlan = null
                 auth.lock(); unlocked = false; training = false
                 authTarget = null
                 if (page in setOf("teach", "security", "backup", "history")) page = "chat"
@@ -300,7 +316,7 @@ fun PocketApp() = PocketTheme {
                     "chat" -> ChatScreen(
                         conversations, knowledgeCount, composer, { composer = it }, ::submit, { toggleMicrophone() },
                         voice.recording || speech.hasPendingRecording, voice.secondsRecorded, busy, busyLabel, lastEngine,
-                        onStop = { engine.cancel(); answerJob?.cancel(); speech.cancelRecording(); speech.stopSpeaking(); busy = false },
+                        onStop = { voiceReview = null; recordingRequest = null; recordingPlan = null; engine.cancel(); answerJob?.cancel(); speech.cancelRecording(); speech.stopSpeaking(); busy = false },
                         onRepeat = { conversations.lastOrNull { it.role == "assistant" }?.let { speak(it.content, it.language) } ?: message("Ask a question first.") },
                         onClear = { confirmClear = true }, onTeach = { guardedNavigate("teach") },
                         onModels = { page = "models" }, settings = settings, onLanguage = { settings.responseLanguage = it; revision++ },
@@ -362,6 +378,11 @@ fun PocketApp() = PocketTheme {
             dismissButton = { TextButton(onClick = { speechSetupIssue = null }) { Text("Use text for now") } },
         )
     }
+    voiceReview?.let { review ->
+        VoiceTranscriptReviewDialog(review, onUse = { text ->
+            if (voiceReview === review) { voiceReview = null; useVoiceText(text, review.request) }
+        }, onDiscard = { if (voiceReview === review) voiceReview = null })
+    }
     sourceToRead?.let { sourceId ->
         SourcePassageViewer(db, sourceId, revision, settings, translationReady = offlineState.translationReady,
             translateSource = offlineRag::translateSource, onOpenTools = { sourceToRead = null; page = "models" }, onDismiss = { sourceToRead = null }, onReadDocument = { document ->
@@ -369,6 +390,26 @@ fun PocketApp() = PocketTheme {
         })
     }
     documentToRead?.let { document -> DocumentReader(db, document, revision, onDismiss = { documentToRead = null }) }
+}
+
+@Composable
+private fun VoiceTranscriptReviewDialog(review: VoiceTranscriptReview, onUse: (String) -> Unit, onDiscard: () -> Unit) {
+    var text by remember(review) { mutableStateOf(review.displayText) }
+    var showRaw by remember(review) { mutableStateOf(false) }
+    AlertDialog(onDismissRequest = onDiscard, title = { Text("Review recognized text") }, text = {
+        Column(Modifier.heightIn(max = 440.dp).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            Text(if (review.scriptConverted) "Gurmukhi → Shahmukhi display conversion" else "Original recognition retained", color = PocketAccent, style = MaterialTheme.typography.labelMedium)
+            Text("Review recognized words, names and numbers before using this text.", style = MaterialTheme.typography.bodySmall)
+            review.notice?.let { Text(it, style = MaterialTheme.typography.bodySmall) }
+            Text(if (review.request.destination == VoiceTranscriptDestination.TRAINING) "Use text adds it to your training draft. Saving still needs your confirmation." else "Use text puts it in your chat draft. Review it before sending.", color = PocketMuted, style = MaterialTheme.typography.bodySmall)
+            CompositionLocalProvider(LocalLayoutDirection provides if (LanguageTools.isRtl(text)) LayoutDirection.Rtl else LayoutDirection.Ltr) {
+                OutlinedTextField(text, { text = it }, label = { Text("Text to use") }, modifier = Modifier.fillMaxWidth(), minLines = 3, maxLines = 7)
+            }
+            TextButton(onClick = { showRaw = !showRaw }) { Text(if (showRaw) "Hide original recognition" else "Show original recognition") }
+            if (showRaw) SelectionContainer { Text(review.rawText, lineHeight = 24.sp, textAlign = if (LanguageTools.isRtl(review.rawText)) TextAlign.Right else TextAlign.Start) }
+        }
+    }, confirmButton = { TextButton(onClick = { onUse(text) }, enabled = text.isNotBlank()) { Text("Use text") } },
+        dismissButton = { TextButton(onClick = onDiscard) { Text("Discard") } })
 }
 
 @Composable

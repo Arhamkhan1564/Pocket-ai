@@ -21,12 +21,11 @@ import com.pocketai.assistant.AssistantService
 import com.pocketai.assistant.LanguageTools
 import com.pocketai.data.PocketDatabase
 import com.pocketai.engine.LocalAiEngine
-import com.pocketai.engine.NativeBridge
-import com.pocketai.models.ModelKind
 import com.pocketai.models.ModelManager
 import com.pocketai.rag.OfflineRagServices
 import com.pocketai.security.AuthManager
 import com.pocketai.voice.SpeechController
+import com.pocketai.voice.OfflineSpeechModels
 import java.util.Locale
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
@@ -103,7 +102,6 @@ class ApplianceForegroundService : Service() {
     }
 
     private suspend fun runSession() {
-        NativeBridge.availabilityMessage()?.let { error(it) }
         val settings = AppSettings(this)
         val models = ModelManager(this)
         val auth = AuthManager(this).apply { lock() }
@@ -115,15 +113,9 @@ class ApplianceForegroundService : Service() {
         // deadline includes this phase, and cancellation propagates through it.
         rag.prepare()
         currentCoroutineContext().ensureActive()
-        val whisper = withContext(Dispatchers.IO) {
-            models.list().firstOrNull { it.id == settings.selectedWhisperId && it.kind == ModelKind.WHISPER }
-        } ?: error("Select an imported multilingual Whisper tiny or base model in Resources before starting hands-free mode.")
-        require(whisper.sizeBytes <= SpeechController.MAX_SPEECH_MODEL_BYTES) { "Hands-free mode requires a Whisper tiny or base speech model below 180 MiB." }
-        require(whisper.metadata["multilingual"] != "false" || settings.responseLanguage == "en") {
-            "This English-only Whisper model cannot recognize the selected language. Select a multilingual model."
-        }
-        val modelFile = models.fileFor(whisper)
         val speaker = SpeechController(this).also { speech = it }
+        val initialPlan = OfflineSpeechModels.prepare(this, models, settings, speechTag(settings))
+        speaker.checkMemory(initialPlan)
         val ready = withTimeoutOrNull(12_000L) { speaker.state.first { it.ttsReady } }
         require(ready != null) { "The Android offline speech engine did not initialize. Configure an offline voice in Audio settings first." }
         val initialTag = speechTag(settings)
@@ -133,19 +125,21 @@ class ApplianceForegroundService : Service() {
         say(speaker, startupText(settings), initialTag, settings)
         while (!stopping) {
             currentCoroutineContext().ensureActive()
-            val language = settings.responseLanguage
-            require(whisper.metadata["multilingual"] != "false" || language == "en") { "The newly selected language needs a multilingual speech model. Session stopped." }
-            require(speaker.hasOfflineVoice(speechTag(settings))) { "The selected response language has no installed offline voice. Session stopped." }
-            update("Listening for six seconds…")
+            val plan = OfflineSpeechModels.prepare(this, models, settings, speechTag(settings))
+            val language = plan.primaryLanguage
+            speaker.checkMemory(plan)
+            require(speaker.hasOfflineVoice(plan.languageTag)) { "The selected response language has no installed offline voice. Session stopped." }
+            update(if (plan.primaryLanguage in setOf("ur", "pa")) "Listening for six seconds · unreviewed recognition; check exact words and numbers with tap-to-talk" else "Listening for six seconds…")
             speaker.startRecording()
             delay(RECORDING_MS)
             val question = try {
                 update("Recognizing speech locally…")
-                speaker.finishTranscription(modelFile, language).trim()
+                speaker.finishTranscription(plan).trim()
             } catch (cancelled: CancellationException) { throw cancelled }
             catch (failure: Exception) {
                 val message = failure.message.orEmpty()
                 if (message.contains("No audible speech", true) || message.contains("No speech was recognized", true) ||
+                    message.startsWith("No clear speech was detected", ignoreCase = true) ||
                     message.contains("too short", true)) {
                     update("No speech detected. Listening again shortly…")
                     delay(400L)

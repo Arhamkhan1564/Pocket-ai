@@ -58,7 +58,7 @@ object OfflineModelAssets {
                 require(sha.matches(Regex("[a-f0-9]{64}")) && bytes in 1..2_000_000_000L)
                 OfflinePackFile(asset.substringAfterLast('/'), asset, bytes, sha)
             }).also { require(it.files.map { descriptor -> descriptor.name }.distinct().size == it.files.size) }
-        }.also { require(it.map { pack -> pack.id }.toSet() == setOf("search", "translation", "english", "speech")) }
+        }.also { require(it.map { pack -> pack.id }.toSet() == setOf("search", "translation", "english", "speech", "voice-ur", "voice-pa", "speech-vad")) }
     }
 
     /** Blocking metadata checks; call on IO. Complete markers are written after every file verifies. */

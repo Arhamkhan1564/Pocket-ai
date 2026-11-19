@@ -1,0 +1,88 @@
+{
+  "repository": "kingabzpro/whisper-base-urdu-full",
+  "revision": "6bfaec492d42f4b76f117b2b34cd9672509cecdc",
+  "license": "Apache-2.0 as explicitly declared in model card; no standaloneLICENSE/NOTICE present in repository",
+  "files": [
+    {
+      "filename": "README.md",
+      "bytes": 3758,
+      "sha256": "d42c8de9667000bd464fad6fda9eeeb99b581add9f66fcd2cfaa39c31872ab77",
+      "url": "https://huggingface.co/kingabzpro/whisper-base-urdu-full/resolve/6bfaec492d42f4b76f117b2b34cd9672509cecdc/README.md"
+    },
+    {
+      "filename": "added_tokens.json",
+      "bytes": 34604,
+      "sha256": "9715fd2243b6f06a5858b5e32950d2853f73dd5bc201aafcf76f5082a2d8acd1",
+      "url": "https://huggingface.co/kingabzpro/whisper-base-urdu-full/resolve/6bfaec492d42f4b76f117b2b34cd9672509cecdc/added_tokens.json"
+    },
+    {
+      "filename": "config.json",
+      "bytes": 1328,
+      "sha256": "672dbe495e24891eb28010af182f9d0524e3feccff0eb2158f7f670db28a6e84",
+      "url": "https://huggingface.co/kingabzpro/whisper-base-urdu-full/resolve/6bfaec492d42f4b76f117b2b34cd9672509cecdc/config.json"
+    },
+    {
+      "filename": "generation_config.json",
+      "bytes": 3846,
+      "sha256": "fc8eabf86acbec96ac660a1dcc03b9fb8b48d1a6200cd08a5ab2f1b6bafcf125",
+      "url": "https://huggingface.co/kingabzpro/whisper-base-urdu-full/resolve/6bfaec492d42f4b76f117b2b34cd9672509cecdc/generation_config.json"
+    },
+    {
+      "filename": "merges.txt",
+      "bytes": 493869,
+      "sha256": "2df2990a395e35e8dfbc7511e08c12d56018d8d04691e0133e5d63b21e154dc6",
+      "url": "https://huggingface.co/kingabzpro/whisper-base-urdu-full/resolve/6bfaec492d42f4b76f117b2b34cd9672509cecdc/merges.txt"
+    },
+    {
+      "filename": "normalizer.json",
+      "bytes": 52666,
+      "sha256": "bf1c507dc8724ca9cf9903640dacfb69dae2f00edee4f21ceba106a7392f26dd",
+      "url": "https://huggingface.co/kingabzpro/whisper-base-urdu-full/resolve/6bfaec492d42f4b76f117b2b34cd9672509cecdc/normalizer.json"
+    },
+    {
+      "filename": "preprocessor_config.json",
+      "bytes": 356,
+      "sha256": "994838f1fa6462c8b9b3c90edada831f11f3dd8b4664634e18f4694d005c9dbf",
+      "url": "https://huggingface.co/kingabzpro/whisper-base-urdu-full/resolve/6bfaec492d42f4b76f117b2b34cd9672509cecdc/preprocessor_config.json"
+    },
+    {
+      "filename": "special_tokens_map.json",
+      "bytes": 2194,
+      "sha256": "e67ae3a0aaa99abcd9f187138e12db1f65c16a14761c50ef10eef2c174a7a691",
+      "url": "https://huggingface.co/kingabzpro/whisper-base-urdu-full/resolve/6bfaec492d42f4b76f117b2b34cd9672509cecdc/special_tokens_map.json"
+    },
+    {
+      "filename": "tokenizer_config.json",
+      "bytes": 282713,
+      "sha256": "21a4fc0483c14b87f4e0bbc177a9a357479bfa7c95aaf21ad53d71e9c5afafb9",
+      "url": "https://huggingface.co/kingabzpro/whisper-base-urdu-full/resolve/6bfaec492d42f4b76f117b2b34cd9672509cecdc/tokenizer_config.json"
+    },
+    {
+      "filename": "vocab.json",
+      "bytes": 1036584,
+      "sha256": "50d6a919f0a0601d56a04eb583c780d18553aa388254ba3158eb6a00f13e2c1a",
+      "url": "https://huggingface.co/kingabzpro/whisper-base-urdu-full/resolve/6bfaec492d42f4b76f117b2b34cd9672509cecdc/vocab.json"
+    },
+    {
+      "filename": "model.safetensors",
+      "bytes": 290403936,
+      "sha256": "0819a35b96bc52ba5c2448f67f6beed9ca3e7d0d57bcf913eb21feb096bdfa3f",
+      "url": "https://huggingface.co/kingabzpro/whisper-base-urdu-full/resolve/6bfaec492d42f4b76f117b2b34cd9672509cecdc/model.safetensors",
+      "safetensors_only": true,
+      "verified_against_pinned_lfs": true
+    }
+  ],
+  "standard_base_mel_source": {
+    "filename": "ggml-base-q5_1.bin",
+    "bytes": 59707625,
+    "sha256": "422f1ae452ade6f30a004d7e5c6a43195e4433bc370bf23fac9cc591f01a8898",
+    "url": "https://huggingface.co/ggerganov/whisper.cpp/resolve/5359861c739e955e79d9a303bcbc70fb988958b1/ggml-base-q5_1.bin",
+    "license": "MIT/OpenAI"
+  },
+  "converter_source_sha256": "9cc282dfcd9a24da03ffa1b4123b5508ee935e19e369c33520b1a73f89440094",
+  "derived_q5_1": {
+    "filename": "ggml-urdu-base-q5_1.bin",
+    "bytes": 59707642,
+    "sha256": "701f3ae011e0964e45894ad884da1afd5c1a0a7a846b054d9765e75d563ee7b9"
+  }
+}

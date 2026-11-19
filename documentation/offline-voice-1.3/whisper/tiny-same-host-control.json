@@ -1,0 +1,11 @@
+{
+  "case": "fleurs-pa_in-validation-0",
+  "source_and_payload_hashes_match_published": true,
+  "transcript_matches_published_exactly": true,
+  "new_library_sha256": "0855a868533fcefb0bf909346ab228836de87a8bd22f3096e2f6e0dc07e480a1",
+  "published_library_sha256": "dc90990d93be1966e70bd882568d8f91cab818252c4203acde5debeb514b34d8",
+  "source_cpp_sha256": "9ad280a212bb9245db15f42ef44dee38b9884150d11857476823cd8e8e7fe079",
+  "current_seconds": 11.724729193,
+  "published_seconds": 13.205708479,
+  "limits": "One same-host control establishes this transcript/script reproduction only, not general output invariance or performance equivalence."
+}

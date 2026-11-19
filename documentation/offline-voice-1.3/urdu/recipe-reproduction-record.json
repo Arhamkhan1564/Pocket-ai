@@ -1,0 +1,57 @@
+{
+  "scope": "Actual public portable fetch-check/vocabulary/conversion/quantization recipe reproduced exact verified Q5_1 on Linux x86_64; no providerASR/network inference.",
+  "output_bytes": 59707642,
+  "output_sha256": "701f3ae011e0964e45894ad884da1afd5c1a0a7a846b054d9765e75d563ee7b9",
+  "conversion_verification_sha256": "13f0fba9d06d3d937b8d899080d1d7a037a890fa264922b4b9f5f13a31e114c7",
+  "quantization_verification_sha256": "7cc30bf7c60dbc42a32cafcc406cfb24a46fd6fef567f94d726f9b53ea178365",
+  "scripts_and_docs": {
+    "scripts/voice-models/README.md": {
+      "bytes": 3685,
+      "sha256": "4275bb033de56b185c34ee658e8b76e2c07676d1655cf601d665e2486f90bc7f"
+    },
+    "scripts/voice-models/convert_urdu_base.py": {
+      "bytes": 10355,
+      "sha256": "f4300d1eb001e0571f43d8c213788bf28b36329a8128af14967f46f6c777ecdf"
+    },
+    "scripts/voice-models/converter-precision-fix.diff": {
+      "bytes": 571,
+      "sha256": "9d6b51692138d083a57a67759db8a95e18abd2e253706999c340fa15ea524a49"
+    },
+    "scripts/voice-models/fetch_urdu_base.py": {
+      "bytes": 2194,
+      "sha256": "b25b3a2e581e2bf426e39b3702ad43eb1c8a27cef19aa51af2f9e258ae0d3322"
+    },
+    "scripts/voice-models/quantize_urdu_base.py": {
+      "bytes": 3300,
+      "sha256": "657d387514641e25a0295a50af4573601d8aa9c4680846892376277fb791467f"
+    },
+    "scripts/voice-models/requirements-urdu-base.txt": {
+      "bytes": 485,
+      "sha256": "13a09846f43fdf893b0121ab07bb8ddcd813d2fb7c413afa5d93644914398651"
+    },
+    "scripts/voice-models/urdu-base-inputs.json": {
+      "bytes": 4178,
+      "sha256": "f4113502b6c812378eaf0de6b2d1e7a9b0b7c39b23919a857d90dc7b5d17cf42"
+    },
+    "scripts/voice-models/verify_urdu_vocabulary.py": {
+      "bytes": 2803,
+      "sha256": "e35fa34a21fef4e3c732940fee246954b8bb7e66bb880704c3238f9c52a860e4"
+    },
+    "documentation/URDU-SPEECH-MODEL.md": {
+      "bytes": 6053,
+      "sha256": "9282e9454c1675c0322e6506e384943cf45b8fae89686c61c488326c367d4a0a"
+    },
+    "app/src/main/assets/licenses/APACHE-2.0.txt": {
+      "bytes": 11358,
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    "app/src/main/assets/licenses/URDU_WHISPER_MODEL_NOTICE.txt": {
+      "bytes": 1776,
+      "sha256": "f4770377805e15c1092294b9fe814e0e28e8c561eedf59d8d184c993b8887f1b"
+    }
+  },
+  "candidate_model": "converted/ggml-urdu-base-q5_1.bin",
+  "model_weights_in_application_source": false,
+  "python_optimization_guard": "All recipe checks refuse -O/-OO so validation assertions cannot be disabled.",
+  "limitations": "Referencehashreproductionisspecifictofixedsource/model/precisionpatch/toolchain; codec/modelaccuracyandphoneacceptanceareseparate."
+}

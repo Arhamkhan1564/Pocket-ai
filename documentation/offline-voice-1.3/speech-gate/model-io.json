@@ -1,0 +1,49 @@
+{
+  "inputs": [
+    {
+      "name": "input",
+      "type": "tensor(float)",
+      "shape": [
+        null,
+        null
+      ]
+    },
+    {
+      "name": "state",
+      "type": "tensor(float)",
+      "shape": [
+        2,
+        null,
+        128
+      ]
+    },
+    {
+      "name": "sr",
+      "type": "tensor(int64)",
+      "shape": []
+    }
+  ],
+  "outputs": [
+    {
+      "name": "output",
+      "type": "tensor(float)",
+      "shape": [
+        null,
+        1
+      ]
+    },
+    {
+      "name": "stateN",
+      "type": "tensor(float)",
+      "shape": [
+        null,
+        null,
+        null
+      ]
+    }
+  ],
+  "metadata": {},
+  "providers": [
+    "CPUExecutionProvider"
+  ]
+}

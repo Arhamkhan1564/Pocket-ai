@@ -44,6 +44,15 @@ ONNX Runtime commit `c4fb724e810bb496165b9015c77f402727392933` (version 1.20.0).
 The official input AAR SHA-256 is
 `07a8f71ef890afed8c6087a56220e6d558a492804276ee2dd7cb7f6262242027`.
 
+If an official source URL is unavailable, preparation tries only the bounded
+fallback URLs declared beside that input. The ROCm/onnxruntime mirror retains
+the exact same pinned commit; all 29 source/license files were independently
+checked against the original sizes and SHA-256 values. The official URL remains
+first, and every fallback must pass those unchanged checks. No branch tip or
+unlisted mirror is accepted. The build record includes the URL which supplied
+each input, including downloads reused from a provenance-verified cache. An
+unattributed cache entry is downloaded again before it can supply a build.
+
 Preparation verifies source/download hashes, linker resolution, JNI export
 parity, ELF class/machine, every load segment's 16 KiB alignment and ZIP CRC. Its
 sidecar records the generated AAR and native-library hashes. Gradle independently

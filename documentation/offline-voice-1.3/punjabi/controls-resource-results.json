@@ -1,0 +1,74 @@
+{
+  "runtime": "Canonical production Kotlin withDouble-statFloat32normalization, hostORT1.20.0,2threads, noarena/memorypattern",
+  "production_source_sha256": "769cff8b2cb7fdebdede220cbc594e7b3f4f16be02deceed71769e1c413d26b2",
+  "records": [
+    {
+      "id": "silence-6s",
+      "purpose": "Synthetic non-speech control",
+      "text": "",
+      "seconds": 6.0,
+      "wall_seconds": 1.1249073600001793,
+      "peak_rss_bytes_sampled": 330444800,
+      "stats": "windows=1\nframes=299\nwall_seconds=1.020037711\n",
+      "frame_id_sha256": "8ee2f32c863a5a53e7318963e5fc2da82dfa7080c3e5a57d31e7acfd4a4cd027",
+      "non_speech_false_positive": false
+    },
+    {
+      "id": "quiet-noise-6s",
+      "purpose": "Synthetic non-speech control",
+      "text": "",
+      "seconds": 6.0,
+      "wall_seconds": 0.874940893999792,
+      "peak_rss_bytes_sampled": 308477952,
+      "stats": "windows=1\nframes=299\nwall_seconds=0.783991349\n",
+      "frame_id_sha256": "8ee2f32c863a5a53e7318963e5fc2da82dfa7080c3e5a57d31e7acfd4a4cd027",
+      "non_speech_false_positive": false
+    },
+    {
+      "id": "higher-noise-6s",
+      "purpose": "Synthetic non-speech control",
+      "text": "",
+      "seconds": 6.0,
+      "wall_seconds": 0.9775584919998437,
+      "peak_rss_bytes_sampled": 333025280,
+      "stats": "windows=1\nframes=299\nwall_seconds=0.861638132\n",
+      "frame_id_sha256": "8ee2f32c863a5a53e7318963e5fc2da82dfa7080c3e5a57d31e7acfd4a4cd027",
+      "non_speech_false_positive": false
+    },
+    {
+      "id": "tone-440hz-6s",
+      "purpose": "Synthetic non-speech control",
+      "text": "",
+      "seconds": 6.0,
+      "wall_seconds": 1.3053030539999781,
+      "peak_rss_bytes_sampled": 324177920,
+      "stats": "windows=1\nframes=299\nwall_seconds=1.195342524\n",
+      "frame_id_sha256": "8ee2f32c863a5a53e7318963e5fc2da82dfa7080c3e5a57d31e7acfd4a4cd027",
+      "non_speech_false_positive": false
+    },
+    {
+      "id": "concatenated-pa1-30s",
+      "purpose": "Same licensed audio repeated and truncated for resource-bound checks only, not new speech evidence.",
+      "text": "ਖ਼ੰਬਾੀ ਦੀ ਸਰਚਨਾ ਤੋਂ ਪਤਾ ਲੱਗਦਾ ਹੈ ਕਿ ਉਹਨ੍ਹਾਂ ਦੀ ਵਰਤੋਂ ਫਲਾਇਟ ਵਿਚ ਨਹੀਂ ਕੀਤੀ ਗਈ ਬਲ ਕਿ ਟਤਾਪਮਾਨ ਨਿਅਮ ਜਾਂ ਪ੍ਰਦਰਸ਼ਨ ਲਈ ਕੀਤੀ ਗਈ ਸ਼਼ੋਧ ਘਰਤਾਂ ਨੇ ਸੁਜਾਦ ੱਤਾ ਕਿ ਭਾਵੇਂ ਇਹ ਇਕ ਯੂਵਾ ਡਾਇਨਾਸੁਰਦੀ ਪੂਛ ਹੋਵੇਂ ਨਮੁੰਨਾ ਬਾਲਕ ਪੰਚੀ ਦਾ ਖੰਭ ਦਿਖਾਉਂਦਾ ਹੈ ਅਤੇ ਗੋਟਦਾ ਹੇਠਲਾ ਦੀ ਸਰਚਨਾ ਤੋਂ ਪਤਾ ਲੱਗਦਾ ਹੈ ਕਿ ਉਹਨ੍ਹਾਂ ਦੀ ਵਰਤੋਂ ਫਲਾਈਇਟ",
+      "seconds": 30.0,
+      "wall_seconds": 3.755035872999997,
+      "peak_rss_bytes_sampled": 449961984,
+      "stats": "windows=3\nframes=1499\nwall_seconds=3.628226239\n",
+      "frame_id_sha256": "8de87eb0781d61656e5f149c1bc39d14d66ae0a5fbeadb400733e44ba16e296c"
+    },
+    {
+      "id": "concatenated-pa1-60s",
+      "purpose": "Same licensed audio repeated and truncated for resource-bound checks only, not new speech evidence.",
+      "text": "ਖ਼ੰਬਾੀ ਦੀ ਸਰਚਨਾ ਤੋਂ ਪਤਾ ਲੱਗਦਾ ਹੈ ਕਿ ਉਹਨ੍ਹਾਂ ਦੀ ਵਰਤੋਂ ਫਲਾਇਟ ਵਿਚ ਨਹੀਂ ਕੀਤੀ ਗਈ ਬਲ ਕਿ ਟਾਪਮਾਨ ਨਿਅਮ ਜਾਂ ਪ੍ਰਦਰਸ਼ਨ ਲਈ ਕੀਤੀ ਗਈ ਸ਼਼ੋਧ ਘਰਤਾਂ ਨੇ ਸੁਜਾਦ ਿੱਤਾ ਕਿ ਭਾਵੇਂ ਇਹ ਇਕ ਯੂਵਾ ਡਾਇਨਾਸੁਰਦੀ ਪੂਛ ਹੋਵੇ ਨਮੁੰਨਾ ਬਾਲਕ ਪੰਚੀ ਦਾ ਖੰਭ ਦਿਖਾਉਂਦਾ ਹੈ ਅਤੇ ਗੋਟਦਾ ਹੇਠਲਾ ਦੀ ਸਰਚਨਾ ਤੋਂ ਪਤਾ ਲੱਗਦਾ ਹੈ ਕਿ ਉਨ੍ਹਾਂ ਦੀ ਵਰਤੋਂ ਫਲਾਇਟ ਵਿਚ ਨਹੀਂ ਕੀਤੀ ਗਈ ਬਲਕਿ ਟਾਪਮਾਨ ਨਿਅਮ ਜਾਂ ਪ੍ਰਦਰਸ਼਼ਨ ਲਈ ਕੀਤੀ ਗਈ ਸ ਸ਼਼ੋਧ ਘਰਤਾਂ ਨੇ ਸੁਜਾਦ ਦਿੱਤਾ ਕਿ ਭਾਵੇਂ ਇਹ ਇਕ ਯੂਵਾ ਡਾਇਨਣਨਾਸੁਰਦੀ ਪੂਝ ਹੋਵੇ ਨਮੁੰਨਾ ਬਾਲਕ ਪੰਚੀ ਦਾ ਖੰਭ ਦਿਖਾਉਂਦਾ ਹੈ ਅਤੇ ਗੋਟਦਾ ਹੇਠਲਾ ਦੀ ਸਰਚਨਾ ਤੋਂ ਪਤਾ ਲੱਗਦਾ ਹੈ ਕਿ ਉਨ੍ਹਾਂ ਦੀ ਵਰਤੋਂ ਫਲਾਇਟ ਵਿਚ ਨਹੀਂ ਕੀਤੀ ਗਈ ਸ ਟਾਪਮਾਨ ਨਿਊਮ ਜਾਂ ਪ੍ਰਦਰਸ਼ਨ ਲਈ",
+      "seconds": 60.0,
+      "wall_seconds": 6.093589221000002,
+      "peak_rss_bytes_sampled": 500776960,
+      "stats": "windows=6\nframes=2999\nwall_seconds=5.946909911\n",
+      "frame_id_sha256": "ae9b4dd03a704e5016e2adbdb8401db66266ab069aa5bacfb15cdb0ffca4a954"
+    }
+  ],
+  "limits": [
+    "Synthetic controls and repeated audio resources only; not phone/microphone/clinical acceptance.",
+    "PeakRSS includes JVM and session initialization; hostCPUwallsecondsinclude model load."
+  ]
+}

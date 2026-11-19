@@ -18,6 +18,20 @@ from urllib.parse import unquote, urlparse
 import urllib.request
 
 
+def pinned_model_url(value):
+    """Only immutable paths on the declared model hosts; every body is hash checked."""
+    url = urlparse(value)
+    if url.scheme != "https" or url.query or url.fragment:
+        return False
+    if url.netloc == "huggingface.co":
+        return bool(re.fullmatch(r"/[^/]+/[^/]+/resolve/[a-f0-9]{40}/.+", url.path))
+    if url.netloc == "raw.githubusercontent.com":
+        return bool(re.fullmatch(r"/snakers4/silero-vad/[a-f0-9]{40}/src/silero_vad/data/silero_vad.onnx", url.path))
+    if url.netloc == "media.githubusercontent.com":
+        return bool(re.fullmatch(r"/media/Arhamkhan1564/Pocket-ai/[a-f0-9]{40}/model-resources/urdu-whisper-base-q5_1/ggml-urdu-base-q5_1.bin", url.path))
+    return False
+
+
 def load_manifest(path):
     manifest = json.loads(path.read_text(encoding="utf-8"))
     if manifest.get("schemaVersion") != 1:
@@ -38,9 +52,8 @@ def load_manifest(path):
                 raise ValueError(f"Invalid model size: {asset}")
             if not re.fullmatch(r"[a-f0-9]{64}", item["sha256"]):
                 raise ValueError(f"Invalid model digest: {asset}")
-            url = urlparse(item["url"])
-            if url.scheme != "https" or url.hostname != "huggingface.co" or not re.search(r"/resolve/[a-f0-9]{40}/", url.path):
-                raise ValueError(f"Model URL must use a pinned HTTPS Hugging Face revision: {asset}")
+            if not pinned_model_url(item["url"]):
+                raise ValueError(f"Model URL must use an allowed immutable HTTPS model revision: {asset}")
             pack_total += item["sizeBytes"]
         if pack_total != pack["totalSizeBytes"]:
             raise ValueError(f"Incorrect pack byte total: {pack['id']}")

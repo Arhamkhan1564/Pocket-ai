@@ -1,0 +1,76 @@
+{
+  "models": [
+    {
+      "candidate": "tiny-q5_1",
+      "filename": "ggml-tiny-q5_1.bin",
+      "repository": "ggerganov/whisper.cpp",
+      "revision": "5359861c739e955e79d9a303bcbc70fb988958b1",
+      "url": "https://huggingface.co/ggerganov/whisper.cpp/resolve/5359861c739e955e79d9a303bcbc70fb988958b1/ggml-tiny-q5_1.bin",
+      "size_bytes": 32152673,
+      "sha256": "818710568da3ca15689e31a743197b520007872ff9576237bda97bd1b469c3d7",
+      "license": "MIT",
+      "copyright": "Copyright (c)2022 OpenAI",
+      "license_source": "https://github.com/openai/whisper/blob/main/LICENSE",
+      "license_text_sha256": "b5d65a59060e68c4ff940e1eddfa6f94b2d68fdf58ed7f4dd57721c997e35e9d",
+      "metadata_verified_before_download": true,
+      "download_verified": true,
+      "header": {
+        "vocabulary": 51865,
+        "audio_context": 1500,
+        "audio_state": 384,
+        "audio_layers": 4,
+        "text_layers": 4,
+        "file_type": 1009,
+        "multilingual": true
+      }
+    },
+    {
+      "candidate": "base-q5_1",
+      "filename": "ggml-base-q5_1.bin",
+      "repository": "ggerganov/whisper.cpp",
+      "revision": "5359861c739e955e79d9a303bcbc70fb988958b1",
+      "url": "https://huggingface.co/ggerganov/whisper.cpp/resolve/5359861c739e955e79d9a303bcbc70fb988958b1/ggml-base-q5_1.bin",
+      "size_bytes": 59707625,
+      "sha256": "422f1ae452ade6f30a004d7e5c6a43195e4433bc370bf23fac9cc591f01a8898",
+      "license": "MIT",
+      "copyright": "Copyright (c)2022 OpenAI",
+      "license_source": "https://github.com/openai/whisper/blob/main/LICENSE",
+      "license_text_sha256": "b5d65a59060e68c4ff940e1eddfa6f94b2d68fdf58ed7f4dd57721c997e35e9d",
+      "metadata_verified_before_download": true,
+      "download_verified": true,
+      "header": {
+        "vocabulary": 51865,
+        "audio_context": 1500,
+        "audio_state": 512,
+        "audio_layers": 6,
+        "text_layers": 6,
+        "file_type": 1009,
+        "multilingual": true
+      }
+    },
+    {
+      "candidate": "small-q5_1",
+      "filename": "ggml-small-q5_1.bin",
+      "repository": "ggerganov/whisper.cpp",
+      "revision": "5359861c739e955e79d9a303bcbc70fb988958b1",
+      "url": "https://huggingface.co/ggerganov/whisper.cpp/resolve/5359861c739e955e79d9a303bcbc70fb988958b1/ggml-small-q5_1.bin",
+      "size_bytes": 190085487,
+      "sha256": "ae85e4a935d7a567bd102fe55afc16bb595bdb618e11b2fc7591bc08120411bb",
+      "license": "MIT",
+      "copyright": "Copyright (c)2022 OpenAI",
+      "license_source": "https://github.com/openai/whisper/blob/main/LICENSE",
+      "license_text_sha256": "b5d65a59060e68c4ff940e1eddfa6f94b2d68fdf58ed7f4dd57721c997e35e9d",
+      "metadata_verified_before_download": true,
+      "download_verified": true,
+      "header": {
+        "vocabulary": 51865,
+        "audio_context": 1500,
+        "audio_state": 768,
+        "audio_layers": 12,
+        "text_layers": 12,
+        "file_type": 1009,
+        "multilingual": true
+      }
+    }
+  ]
+}

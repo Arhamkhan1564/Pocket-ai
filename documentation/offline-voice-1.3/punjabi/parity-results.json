@@ -1,0 +1,47 @@
+{
+  "runtime": "Canonical production Kotlin source compiled independently withKotlin1.9.23/JDK21target17, official hostORT1.20.0,2threads, noarena/memorypattern",
+  "production_source_sha256": "769cff8b2cb7fdebdede220cbc594e7b3f4f16be02deceed71769e1c413d26b2",
+  "host_ort_jar_sha256": "c46608681692b3693914defb42fa3119ad7cb6146870581ece247e0ed5793fe8",
+  "fixtures": [
+    {
+      "fixture": "fleurs-pa_in-validation-0",
+      "text": "ਉਪਸ ਸੱਧਿਆਚਾਰ ਦੀ ਮੈਂਬਰ ਅਕਸਰ ਸ਼਼ੈਲੀ ਦੀ ਇਕ ਖਾਸ ਅਤੇ ਸੰਕੀਤਕ ਵਰਤੋਂ ਰਾਹੀਂ ਆਪਣੀ ਸ ਦੱਸਤਾ ਦਾ ਸੰਕੇਤ ਦਿੰਦੇ ਜ ਸ ਵਿਚ ਫੈਸ਼ਨ ਸਿਸਟਤਟਤਾਂ ਅਤੇ ਗੁੱਪਤ ਭਾਸਸ਼ਾ ਸ਼ਾਮਲ ਹੁੰਦੀ ਹਿਰ",
+      "matches_python_text": false,
+      "matches_python_frame_ids": false,
+      "frame_id_sha256": "edff097eca3043f4167c8b26c7b5a178c7430ae8690b8bd8710035d4a95126be",
+      "wall_seconds": 3.204535719999967,
+      "peak_rss_bytes_sampled": 432574464,
+      "stats": "windows=2\nframes=881\nwall_seconds=3.028540731\n"
+    },
+    {
+      "fixture": "fleurs-pa_in-validation-1",
+      "text": "ਖ਼ੰਬਾੀ ਦੀ ਸਰਚਨਾ ਤੋਂ ਪਤਾ ਲੱਗਦਾ ਹੈ ਕਿ ਉਹਨ੍ਹਾਂ ਦੀ ਵਰਤੋਂ ਫਲਾਇਟ ਵਿਚ ਨਹੀਂ ਕੀਤੀ ਗਈ ਬਲ ਕਿ ਟਤਾਪਮਾਨ ਨਿਅਮ ਜਾਂ ਪ੍ਰਦਰਸ਼ਨ ਲਈ ਕੀਤੀ ਗਈ ਸ਼਼ੋਧ ਘਰਤਾਂ ਨੇ ਸੁਜਾਦ ੱਤਾ ਕਿ ਭਾਵੇਂ ਇਹ ਇਕ ਯੂਵਾ ਡਾਇਨਾਸੁਰਦੀ ਪੂਛ ਹੋਵੇ ਨਮੁੰਨਾ ਬਾਲਕ ਪੰਚੀ ਦਾ ਖੰਭ ਦਿਖਾਉਂਦਾ ਹੈ ਅਤੇ ਗੋਟਦਾ ਹੇਠਲਾ ਨਹੀਂ",
+      "matches_python_text": false,
+      "matches_python_frame_ids": false,
+      "frame_id_sha256": "f8aa7b5d9e44ff00d1d92d89f9107f6b8363889e5aad654ff9a80850524b1a7b",
+      "wall_seconds": 2.8374211679997643,
+      "peak_rss_bytes_sampled": 495095808,
+      "stats": "windows=3\nframes=1226\nwall_seconds=2.73385855\n"
+    },
+    {
+      "fixture": "fleurs-pa_in-validation-2",
+      "text": "ੋਗੀ ਰੋ ੀ ਨਹੀ ਗੀਰੀਆ ਗਿਆ ਸੀ ਜਿਥੇ ਈਹ ਵੋਲਾਂ ਵਾਇਰਸ ਦੇ ਕੁਝ ਮਾਹਮਣੇ ਸਾਹਮੇ ਆਏ ਹਨ",
+      "matches_python_text": false,
+      "matches_python_frame_ids": false,
+      "frame_id_sha256": "8bb63bd14d4485be5ca8293acd68607ef912bb4fbc239bfe6e772d44a1ccd569",
+      "wall_seconds": 0.9302148400001897,
+      "peak_rss_bytes_sampled": 338550784,
+      "stats": "windows=1\nframes=317\nwall_seconds=0.81311118\n"
+    },
+    {
+      "fixture": "fleurs-pa_in-validation-3",
+      "text": "ਮੇਰੇ ਲਈ ਇਸ ਦਾ ਕੋਈ ਮਤਲਬ ਨਹੀਂ ਸੀ ਹ ਸਾਈ ਨਹੀਂ ਸੀ",
+      "matches_python_text": true,
+      "matches_python_frame_ids": false,
+      "frame_id_sha256": "6e0d4267522e8ef28ddebfec4a428c6e1ec5d15b42017670f2b5c9c5f3aff248",
+      "wall_seconds": 0.7703438810003718,
+      "peak_rss_bytes_sampled": 315609088,
+      "stats": "windows=1\nframes=218\nwall_seconds=0.666867518\n"
+    }
+  ]
+}

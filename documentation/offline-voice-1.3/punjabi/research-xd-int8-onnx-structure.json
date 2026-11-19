@@ -1,0 +1,66 @@
+{
+  "url": "https://huggingface.co/XDcobra/wav2vec2-large-xlsr-53-punjabi-ONNX/resolve/de54b60baa1879a4db93596cf1b5b3215a291b7a/onnx/model_int8.onnx",
+  "file_bytes": 121951036,
+  "nodes": 1238,
+  "inputs": [
+    {
+      "name": "input_values",
+      "tensor_proto": [],
+      "dtype": 1,
+      "shape": [
+        "batch_size",
+        "sequence_length"
+      ]
+    }
+  ],
+  "outputs": [
+    {
+      "name": "logits",
+      "tensor_proto": [],
+      "dtype": 1,
+      "shape": [
+        "batch_size",
+        "( ( ( ( ( ( ( sequence_length - 10 ) // 5 + 1 - 3 ) // 2 + 1 - 3 ) // 2 + 1 - 3 ) // 2 + 1 - 3 ) // 2 + 1 - 2 ) // 2 + 1 - 2 ) // 2 + 1",
+        65
+      ]
+    }
+  ],
+  "op_types": {
+    "ai.onnx::Constant": 297,
+    "ai.onnx::Unsqueeze": 97,
+    "ai.onnx::ReduceL2": 1,
+    "ai.onnx::Conv": 8,
+    "ai.onnx::Div": 21,
+    "ai.onnx::Reshape": 50,
+    "ai.onnx::Shape": 25,
+    "ai.onnx::Mul": 214,
+    "ai.onnx::InstanceNormalization": 1,
+    "ai.onnx::Add": 120,
+    "ai.onnx::Erf": 20,
+    "ai.onnx::Transpose": 51,
+    "ai.onnx::LayerNormalization": 26,
+    "ai.onnx::DynamicQuantizeLinear": 50,
+    "ai.onnx::MatMulInteger": 74,
+    "ai.onnx::Cast": 74,
+    "ai.onnx::Slice": 1,
+    "ai.onnx::Gather": 24,
+    "ai.onnx::Concat": 48,
+    "ai.onnx::MatMul": 24,
+    "ai.onnx::Softmax": 12
+  },
+  "opsets": [
+    [
+      [
+        2,
+        0,
+        18
+      ]
+    ]
+  ],
+  "ir_version": 8,
+  "producer_name": "onnx.quantize",
+  "producer_version": "0.1.0",
+  "initializers": 360,
+  "metadata_bytes_fetched": 1135420,
+  "http_range_requests": 278
+}

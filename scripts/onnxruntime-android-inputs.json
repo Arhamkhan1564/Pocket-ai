@@ -13,175 +13,262 @@
       "path": "src/OrtJniUtil.c",
       "url": "https://raw.githubusercontent.com/microsoft/onnxruntime/c4fb724e810bb496165b9015c77f402727392933/java/src/main/native/OrtJniUtil.c",
       "bytes": 43310,
-      "sha256": "0b79e64c5662e3537c74ae641436afd36002576b7c01b3c09f7666c159032e84"
+      "sha256": "0b79e64c5662e3537c74ae641436afd36002576b7c01b3c09f7666c159032e84",
+      "fallbackUrls": [
+        "https://raw.githubusercontent.com/ROCm/onnxruntime/c4fb724e810bb496165b9015c77f402727392933/java/src/main/native/OrtJniUtil.c"
+      ]
     },
     {
       "path": "src/ai_onnxruntime_OnnxMap.c",
       "url": "https://raw.githubusercontent.com/microsoft/onnxruntime/c4fb724e810bb496165b9015c77f402727392933/java/src/main/native/ai_onnxruntime_OnnxMap.c",
       "bytes": 6097,
-      "sha256": "a5f51d4b8819030dd9ae2536cdc30feb7d66f5472bd04ae415f0e3325ef37afa"
+      "sha256": "a5f51d4b8819030dd9ae2536cdc30feb7d66f5472bd04ae415f0e3325ef37afa",
+      "fallbackUrls": [
+        "https://raw.githubusercontent.com/ROCm/onnxruntime/c4fb724e810bb496165b9015c77f402727392933/java/src/main/native/ai_onnxruntime_OnnxMap.c"
+      ]
     },
     {
       "path": "src/ai_onnxruntime_OnnxRuntime.c",
       "url": "https://raw.githubusercontent.com/microsoft/onnxruntime/c4fb724e810bb496165b9015c77f402727392933/java/src/main/native/ai_onnxruntime_OnnxRuntime.c",
       "bytes": 3277,
-      "sha256": "cbc8a7c446b7a460707d2d540c4e8b9bdc433002110d0ef37da16e4218d1e3f7"
+      "sha256": "cbc8a7c446b7a460707d2d540c4e8b9bdc433002110d0ef37da16e4218d1e3f7",
+      "fallbackUrls": [
+        "https://raw.githubusercontent.com/ROCm/onnxruntime/c4fb724e810bb496165b9015c77f402727392933/java/src/main/native/ai_onnxruntime_OnnxRuntime.c"
+      ]
     },
     {
       "path": "src/ai_onnxruntime_OnnxSequence.c",
       "url": "https://raw.githubusercontent.com/microsoft/onnxruntime/c4fb724e810bb496165b9015c77f402727392933/java/src/main/native/ai_onnxruntime_OnnxSequence.c",
       "bytes": 4221,
-      "sha256": "e7540ebf34c93f53a887c4bf81cb4186f6babb539bdb0b7ac053934f710f935a"
+      "sha256": "e7540ebf34c93f53a887c4bf81cb4186f6babb539bdb0b7ac053934f710f935a",
+      "fallbackUrls": [
+        "https://raw.githubusercontent.com/ROCm/onnxruntime/c4fb724e810bb496165b9015c77f402727392933/java/src/main/native/ai_onnxruntime_OnnxSequence.c"
+      ]
     },
     {
       "path": "src/ai_onnxruntime_OnnxSparseTensor.c",
       "url": "https://raw.githubusercontent.com/microsoft/onnxruntime/c4fb724e810bb496165b9015c77f402727392933/java/src/main/native/ai_onnxruntime_OnnxSparseTensor.c",
       "bytes": 20209,
-      "sha256": "7243e4999c4644d795ca0519323ce10524c19e72e497f89391ed33b3afef77a9"
+      "sha256": "7243e4999c4644d795ca0519323ce10524c19e72e497f89391ed33b3afef77a9",
+      "fallbackUrls": [
+        "https://raw.githubusercontent.com/ROCm/onnxruntime/c4fb724e810bb496165b9015c77f402727392933/java/src/main/native/ai_onnxruntime_OnnxSparseTensor.c"
+      ]
     },
     {
       "path": "src/ai_onnxruntime_OnnxTensor.c",
       "url": "https://raw.githubusercontent.com/microsoft/onnxruntime/c4fb724e810bb496165b9015c77f402727392933/java/src/main/native/ai_onnxruntime_OnnxTensor.c",
       "bytes": 14458,
-      "sha256": "433f5979e6e84694b8857479b9c88f3cd53bbae61518ef35d2c30b15a09aae80"
+      "sha256": "433f5979e6e84694b8857479b9c88f3cd53bbae61518ef35d2c30b15a09aae80",
+      "fallbackUrls": [
+        "https://raw.githubusercontent.com/ROCm/onnxruntime/c4fb724e810bb496165b9015c77f402727392933/java/src/main/native/ai_onnxruntime_OnnxTensor.c"
+      ]
     },
     {
       "path": "src/ai_onnxruntime_OrtAllocator.c",
       "url": "https://raw.githubusercontent.com/microsoft/onnxruntime/c4fb724e810bb496165b9015c77f402727392933/java/src/main/native/ai_onnxruntime_OrtAllocator.c",
       "bytes": 575,
-      "sha256": "621f99796552ddc09255652dda8276644da2484ae41f5152276a9fd642aff5f2"
+      "sha256": "621f99796552ddc09255652dda8276644da2484ae41f5152276a9fd642aff5f2",
+      "fallbackUrls": [
+        "https://raw.githubusercontent.com/ROCm/onnxruntime/c4fb724e810bb496165b9015c77f402727392933/java/src/main/native/ai_onnxruntime_OrtAllocator.c"
+      ]
     },
     {
       "path": "src/ai_onnxruntime_OrtEnvironment.c",
       "url": "https://raw.githubusercontent.com/microsoft/onnxruntime/c4fb724e810bb496165b9015c77f402727392933/java/src/main/native/ai_onnxruntime_OrtEnvironment.c",
       "bytes": 3862,
-      "sha256": "e3817483fdffd529e183b51bba79b726675ea4bd48192155491442b95a18b927"
+      "sha256": "e3817483fdffd529e183b51bba79b726675ea4bd48192155491442b95a18b927",
+      "fallbackUrls": [
+        "https://raw.githubusercontent.com/ROCm/onnxruntime/c4fb724e810bb496165b9015c77f402727392933/java/src/main/native/ai_onnxruntime_OrtEnvironment.c"
+      ]
     },
     {
       "path": "src/ai_onnxruntime_OrtEnvironment_ThreadingOptions.c",
       "url": "https://raw.githubusercontent.com/microsoft/onnxruntime/c4fb724e810bb496165b9015c77f402727392933/java/src/main/native/ai_onnxruntime_OrtEnvironment_ThreadingOptions.c",
       "bytes": 3726,
-      "sha256": "4009f5b2f9155e7a870b8452d725ba804c2183ce053680f6cecb0574c649eaaa"
+      "sha256": "4009f5b2f9155e7a870b8452d725ba804c2183ce053680f6cecb0574c649eaaa",
+      "fallbackUrls": [
+        "https://raw.githubusercontent.com/ROCm/onnxruntime/c4fb724e810bb496165b9015c77f402727392933/java/src/main/native/ai_onnxruntime_OrtEnvironment_ThreadingOptions.c"
+      ]
     },
     {
       "path": "src/ai_onnxruntime_OrtLoraAdapter.c",
       "url": "https://raw.githubusercontent.com/microsoft/onnxruntime/c4fb724e810bb496165b9015c77f402727392933/java/src/main/native/ai_onnxruntime_OrtLoraAdapter.c",
       "bytes": 4245,
-      "sha256": "ec526645bbcfcbb6926593195eb58c5d12eb17177c33ac8e1564a10e91e6a4b0"
+      "sha256": "ec526645bbcfcbb6926593195eb58c5d12eb17177c33ac8e1564a10e91e6a4b0",
+      "fallbackUrls": [
+        "https://raw.githubusercontent.com/ROCm/onnxruntime/c4fb724e810bb496165b9015c77f402727392933/java/src/main/native/ai_onnxruntime_OrtLoraAdapter.c"
+      ]
     },
     {
       "path": "src/ai_onnxruntime_OrtSession.c",
       "url": "https://raw.githubusercontent.com/microsoft/onnxruntime/c4fb724e810bb496165b9015c77f402727392933/java/src/main/native/ai_onnxruntime_OrtSession.c",
       "bytes": 28160,
-      "sha256": "53591aaeaceed4a08d955a05b9342e8e6c50fc6e7be00fa31dcbb5205520760c"
+      "sha256": "53591aaeaceed4a08d955a05b9342e8e6c50fc6e7be00fa31dcbb5205520760c",
+      "fallbackUrls": [
+        "https://raw.githubusercontent.com/ROCm/onnxruntime/c4fb724e810bb496165b9015c77f402727392933/java/src/main/native/ai_onnxruntime_OrtSession.c"
+      ]
     },
     {
       "path": "src/ai_onnxruntime_OrtSession_RunOptions.c",
       "url": "https://raw.githubusercontent.com/microsoft/onnxruntime/c4fb724e810bb496165b9015c77f402727392933/java/src/main/native/ai_onnxruntime_OrtSession_RunOptions.c",
       "bytes": 7232,
-      "sha256": "f7ca99125c9a59a06bf4ee503413c0aa247e0d1f1351c1ae819a6a4ca0caf260"
+      "sha256": "f7ca99125c9a59a06bf4ee503413c0aa247e0d1f1351c1ae819a6a4ca0caf260",
+      "fallbackUrls": [
+        "https://raw.githubusercontent.com/ROCm/onnxruntime/c4fb724e810bb496165b9015c77f402727392933/java/src/main/native/ai_onnxruntime_OrtSession_RunOptions.c"
+      ]
     },
     {
       "path": "src/ai_onnxruntime_OrtSession_SessionOptions.c",
       "url": "https://raw.githubusercontent.com/microsoft/onnxruntime/c4fb724e810bb496165b9015c77f402727392933/java/src/main/native/ai_onnxruntime_OrtSession_SessionOptions.c",
       "bytes": 33522,
-      "sha256": "a74884c1a560bcdc8ac8b3652d892f73b4a94b2da91c530a445cc120125c24d4"
+      "sha256": "a74884c1a560bcdc8ac8b3652d892f73b4a94b2da91c530a445cc120125c24d4",
+      "fallbackUrls": [
+        "https://raw.githubusercontent.com/ROCm/onnxruntime/c4fb724e810bb496165b9015c77f402727392933/java/src/main/native/ai_onnxruntime_OrtSession_SessionOptions.c"
+      ]
     },
     {
       "path": "src/ai_onnxruntime_OrtTrainingSession.c",
       "url": "https://raw.githubusercontent.com/microsoft/onnxruntime/c4fb724e810bb496165b9015c77f402727392933/java/src/main/native/ai_onnxruntime_OrtTrainingSession.c",
       "bytes": 32061,
-      "sha256": "bfd0a5b8f84c1f2524d449e4ebff156cce116041a55198937fc8f3630a989185"
+      "sha256": "bfd0a5b8f84c1f2524d449e4ebff156cce116041a55198937fc8f3630a989185",
+      "fallbackUrls": [
+        "https://raw.githubusercontent.com/ROCm/onnxruntime/c4fb724e810bb496165b9015c77f402727392933/java/src/main/native/ai_onnxruntime_OrtTrainingSession.c"
+      ]
     },
     {
       "path": "src/ai_onnxruntime_OrtTrainingSession_OrtCheckpointState.c",
       "url": "https://raw.githubusercontent.com/microsoft/onnxruntime/c4fb724e810bb496165b9015c77f402727392933/java/src/main/native/ai_onnxruntime_OrtTrainingSession_OrtCheckpointState.c",
       "bytes": 11671,
-      "sha256": "a33f0999662e25bc73edb47e5a824d49244f3bcae8238f6e532c7fc59a0fee92"
+      "sha256": "a33f0999662e25bc73edb47e5a824d49244f3bcae8238f6e532c7fc59a0fee92",
+      "fallbackUrls": [
+        "https://raw.githubusercontent.com/ROCm/onnxruntime/c4fb724e810bb496165b9015c77f402727392933/java/src/main/native/ai_onnxruntime_OrtTrainingSession_OrtCheckpointState.c"
+      ]
     },
     {
       "path": "src/ai_onnxruntime_providers_OrtCUDAProviderOptions.c",
       "url": "https://raw.githubusercontent.com/microsoft/onnxruntime/c4fb724e810bb496165b9015c77f402727392933/java/src/main/native/ai_onnxruntime_providers_OrtCUDAProviderOptions.c",
       "bytes": 3325,
-      "sha256": "affe725aa328a6044d95ca4d75b82e37edeee573e008564c69723259f8ca2eaa"
+      "sha256": "affe725aa328a6044d95ca4d75b82e37edeee573e008564c69723259f8ca2eaa",
+      "fallbackUrls": [
+        "https://raw.githubusercontent.com/ROCm/onnxruntime/c4fb724e810bb496165b9015c77f402727392933/java/src/main/native/ai_onnxruntime_providers_OrtCUDAProviderOptions.c"
+      ]
     },
     {
       "path": "src/ai_onnxruntime_providers_OrtTensorRTProviderOptions.c",
       "url": "https://raw.githubusercontent.com/microsoft/onnxruntime/c4fb724e810bb496165b9015c77f402727392933/java/src/main/native/ai_onnxruntime_providers_OrtTensorRTProviderOptions.c",
       "bytes": 3361,
-      "sha256": "b235e62abcc8ee4e66d21acd1c4ad32c73ce0682a2cc024c4ce40248c8f57955"
+      "sha256": "b235e62abcc8ee4e66d21acd1c4ad32c73ce0682a2cc024c4ce40248c8f57955",
+      "fallbackUrls": [
+        "https://raw.githubusercontent.com/ROCm/onnxruntime/c4fb724e810bb496165b9015c77f402727392933/java/src/main/native/ai_onnxruntime_providers_OrtTensorRTProviderOptions.c"
+      ]
     },
     {
       "path": "src/OrtJniUtil.h",
       "url": "https://raw.githubusercontent.com/microsoft/onnxruntime/c4fb724e810bb496165b9015c77f402727392933/java/src/main/native/OrtJniUtil.h",
       "bytes": 3774,
-      "sha256": "d19efe3b41a6910eb4d1b0493d9a2809105459bc768a29f0abe79a92e1a1a0e1"
+      "sha256": "d19efe3b41a6910eb4d1b0493d9a2809105459bc768a29f0abe79a92e1a1a0e1",
+      "fallbackUrls": [
+        "https://raw.githubusercontent.com/ROCm/onnxruntime/c4fb724e810bb496165b9015c77f402727392933/java/src/main/native/OrtJniUtil.h"
+      ]
     },
     {
       "path": "src/onnxruntime/core/providers/acl/acl_provider_factory.h",
       "url": "https://raw.githubusercontent.com/microsoft/onnxruntime/c4fb724e810bb496165b9015c77f402727392933/include/onnxruntime/core/providers/acl/acl_provider_factory.h",
       "bytes": 514,
-      "sha256": "68a38a117717ae3e078c251e9ab72ca1b27d3fed9c2a7920bec2003b922b405a"
+      "sha256": "68a38a117717ae3e078c251e9ab72ca1b27d3fed9c2a7920bec2003b922b405a",
+      "fallbackUrls": [
+        "https://raw.githubusercontent.com/ROCm/onnxruntime/c4fb724e810bb496165b9015c77f402727392933/include/onnxruntime/core/providers/acl/acl_provider_factory.h"
+      ]
     },
     {
       "path": "src/onnxruntime/core/providers/armnn/armnn_provider_factory.h",
       "url": "https://raw.githubusercontent.com/microsoft/onnxruntime/c4fb724e810bb496165b9015c77f402727392933/include/onnxruntime/core/providers/armnn/armnn_provider_factory.h",
       "bytes": 388,
-      "sha256": "10546277066057d2ed7ab9dcae30881cbcd10a46551a20bde266c5e049b02b8e"
+      "sha256": "10546277066057d2ed7ab9dcae30881cbcd10a46551a20bde266c5e049b02b8e",
+      "fallbackUrls": [
+        "https://raw.githubusercontent.com/ROCm/onnxruntime/c4fb724e810bb496165b9015c77f402727392933/include/onnxruntime/core/providers/armnn/armnn_provider_factory.h"
+      ]
     },
     {
       "path": "src/onnxruntime/core/providers/coreml/coreml_provider_factory.h",
       "url": "https://raw.githubusercontent.com/microsoft/onnxruntime/c4fb724e810bb496165b9015c77f402727392933/include/onnxruntime/core/providers/coreml/coreml_provider_factory.h",
       "bytes": 2251,
-      "sha256": "933d57c402271e5e2e8c44fff4dfa5746b1b024b2c8575d5de7e65c4daa43fb0"
+      "sha256": "933d57c402271e5e2e8c44fff4dfa5746b1b024b2c8575d5de7e65c4daa43fb0",
+      "fallbackUrls": [
+        "https://raw.githubusercontent.com/ROCm/onnxruntime/c4fb724e810bb496165b9015c77f402727392933/include/onnxruntime/core/providers/coreml/coreml_provider_factory.h"
+      ]
     },
     {
       "path": "src/onnxruntime/core/providers/cpu/cpu_provider_factory.h",
       "url": "https://raw.githubusercontent.com/microsoft/onnxruntime/c4fb724e810bb496165b9015c77f402727392933/include/onnxruntime/core/providers/cpu/cpu_provider_factory.h",
       "bytes": 397,
-      "sha256": "0de52d129c718c07ee71a16b4953d8d483df019746a11caad77a0650a2f4ed47"
+      "sha256": "0de52d129c718c07ee71a16b4953d8d483df019746a11caad77a0650a2f4ed47",
+      "fallbackUrls": [
+        "https://raw.githubusercontent.com/ROCm/onnxruntime/c4fb724e810bb496165b9015c77f402727392933/include/onnxruntime/core/providers/cpu/cpu_provider_factory.h"
+      ]
     },
     {
       "path": "src/onnxruntime/core/providers/nnapi/nnapi_provider_factory.h",
       "url": "https://raw.githubusercontent.com/microsoft/onnxruntime/c4fb724e810bb496165b9015c77f402727392933/include/onnxruntime/core/providers/nnapi/nnapi_provider_factory.h",
       "bytes": 2646,
-      "sha256": "49f7e0952e57b7e2942f69d8df61a9d99836f05b49a89700e1f5a16278c945e2"
+      "sha256": "49f7e0952e57b7e2942f69d8df61a9d99836f05b49a89700e1f5a16278c945e2",
+      "fallbackUrls": [
+        "https://raw.githubusercontent.com/ROCm/onnxruntime/c4fb724e810bb496165b9015c77f402727392933/include/onnxruntime/core/providers/nnapi/nnapi_provider_factory.h"
+      ]
     },
     {
       "path": "src/onnxruntime/core/providers/openvino/openvino_provider_factory.h",
       "url": "https://raw.githubusercontent.com/microsoft/onnxruntime/c4fb724e810bb496165b9015c77f402727392933/include/onnxruntime/core/providers/openvino/openvino_provider_factory.h",
       "bytes": 547,
-      "sha256": "960a666c18a017846c3c7e4b0fa38bd71fe92c7b5f7caa6566796ef455da4edb"
+      "sha256": "960a666c18a017846c3c7e4b0fa38bd71fe92c7b5f7caa6566796ef455da4edb",
+      "fallbackUrls": [
+        "https://raw.githubusercontent.com/ROCm/onnxruntime/c4fb724e810bb496165b9015c77f402727392933/include/onnxruntime/core/providers/openvino/openvino_provider_factory.h"
+      ]
     },
     {
       "path": "src/onnxruntime/core/providers/tvm/tvm_provider_factory.h",
       "url": "https://raw.githubusercontent.com/microsoft/onnxruntime/c4fb724e810bb496165b9015c77f402727392933/include/onnxruntime/core/providers/tvm/tvm_provider_factory.h",
       "bytes": 447,
-      "sha256": "cdd17c4afe59e791e58bd393537c15f50ecf2f72032b6f023bbc2b7bd091b334"
+      "sha256": "cdd17c4afe59e791e58bd393537c15f50ecf2f72032b6f023bbc2b7bd091b334",
+      "fallbackUrls": [
+        "https://raw.githubusercontent.com/ROCm/onnxruntime/c4fb724e810bb496165b9015c77f402727392933/include/onnxruntime/core/providers/tvm/tvm_provider_factory.h"
+      ]
     },
     {
       "path": "src/onnxruntime/core/session/onnxruntime_c_api.h",
       "url": "https://raw.githubusercontent.com/microsoft/onnxruntime/c4fb724e810bb496165b9015c77f402727392933/include/onnxruntime/core/session/onnxruntime_c_api.h",
       "bytes": 218187,
-      "sha256": "573a117ae6b83ead7f53da6cedaa0d7b7d9cdb45c0ba4726bac9081e67696a82"
+      "sha256": "573a117ae6b83ead7f53da6cedaa0d7b7d9cdb45c0ba4726bac9081e67696a82",
+      "fallbackUrls": [
+        "https://raw.githubusercontent.com/ROCm/onnxruntime/c4fb724e810bb496165b9015c77f402727392933/include/onnxruntime/core/session/onnxruntime_c_api.h"
+      ]
     },
     {
       "path": "src/onnxruntime_training_c_api.h",
       "url": "https://raw.githubusercontent.com/microsoft/onnxruntime/c4fb724e810bb496165b9015c77f402727392933/orttraining/orttraining/training_api/include/onnxruntime_training_c_api.h",
       "bytes": 35777,
-      "sha256": "c7d7f04669b9cfc70bc1efa8e29057744ca6943f8be6b2a9ed5cad5ea66bb306"
+      "sha256": "c7d7f04669b9cfc70bc1efa8e29057744ca6943f8be6b2a9ed5cad5ea66bb306",
+      "fallbackUrls": [
+        "https://raw.githubusercontent.com/ROCm/onnxruntime/c4fb724e810bb496165b9015c77f402727392933/orttraining/orttraining/training_api/include/onnxruntime_training_c_api.h"
+      ]
     },
     {
       "path": "licenses/LICENSE",
       "url": "https://raw.githubusercontent.com/microsoft/onnxruntime/c4fb724e810bb496165b9015c77f402727392933/LICENSE",
       "bytes": 1073,
-      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c"
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+      "fallbackUrls": [
+        "https://raw.githubusercontent.com/ROCm/onnxruntime/c4fb724e810bb496165b9015c77f402727392933/LICENSE"
+      ]
     },
     {
       "path": "licenses/ThirdPartyNotices.txt",
       "url": "https://raw.githubusercontent.com/microsoft/onnxruntime/c4fb724e810bb496165b9015c77f402727392933/ThirdPartyNotices.txt",
       "bytes": 338538,
-      "sha256": "cf7342f7ba482ef715ae58f5f497a8d3564fa255164175aea324cd293c5701a0"
+      "sha256": "cf7342f7ba482ef715ae58f5f497a8d3564fa255164175aea324cd293c5701a0",
+      "fallbackUrls": [
+        "https://raw.githubusercontent.com/ROCm/onnxruntime/c4fb724e810bb496165b9015c77f402727392933/ThirdPartyNotices.txt"
+      ]
     },
     {
       "path": "downloads/onnxruntime-android-1.20.0.aar",

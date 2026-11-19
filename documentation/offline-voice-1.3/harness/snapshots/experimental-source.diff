@@ -1,0 +1,47 @@
+--- canonical
++++ isolated-experimental
+@@ -1,4 +1,6 @@
+ #include <jni.h>
++#include <cstdlib>
++#include <cstdio>
+ #include <algorithm>
+ #include <atomic>
+ #include <cstdint>
+@@ -210,7 +212,19 @@
+         if (language != "en" && !whisper_is_multilingual(context.get()))
+             throw std::runtime_error("This English-only Whisper model cannot transcribe the selected language. Import a multilingual model without .en in its name.");
+         if (cancelled.load()) throw std::runtime_error("Transcription cancelled.");
+-        auto settings = whisper_full_default_params(WHISPER_SAMPLING_GREEDY);
++        // Isolated host experiment. No production decoder setting is changed.
++        const char *requested_profile = std::getenv("POCKETAI_ASR_EXPERIMENT");
++        const std::string profile = requested_profile ? requested_profile : "baseline";
++        if (profile != "baseline" && profile != "beam3" && profile != "beam5" &&
++            profile != "hint" && profile != "beam3_hint" && profile != "beam5_hint")
++            throw std::runtime_error("Unknown isolated ASR experiment profile.");
++        const bool beam = profile.find("beam") == 0;
++        const bool hint = profile.find("hint") != std::string::npos;
++        auto settings = whisper_full_default_params(beam ? WHISPER_SAMPLING_BEAM_SEARCH : WHISPER_SAMPLING_GREEDY);
++        if (beam) settings.beam_search.beam_size = profile.find("beam5") == 0 ? 5 : 3;
++        if (hint && language == "pa") settings.initial_prompt = u8"ਪੰਜਾਬੀ";
++        if (hint && language == "ur") settings.initial_prompt = u8"اردو";
++        settings.carry_initial_prompt = false;
+         settings.n_threads = std::clamp(thread_count, 1, 4);
+         settings.language = language.c_str();
+         settings.translate = false;
+@@ -227,6 +241,16 @@
+         const int result = whisper_full(context.get(), settings, samples.data(), count);
+         if (cancelled.load()) throw std::runtime_error("Transcription cancelled.");
+         if (result != 0) throw std::runtime_error("Offline speech recognition failed. Try a shorter recording or a smaller model.");
++        std::fprintf(stderr, "POCKETAI_ASR_PROFILE {\"profile\":\"%s\",\"language\":\"%s\",\"beam_size\":%d,\"hint\":%s,\"segments\":%d}\n", profile.c_str(), language.c_str(), beam ? settings.beam_search.beam_size : 1, hint ? "true" : "false", whisper_full_n_segments(context.get()));
++        for (int segment_index = 0; segment_index < whisper_full_n_segments(context.get()); ++segment_index) {
++            double logp = 0.0;
++            int text_tokens = 0;
++            for (int token_index = 0; token_index < whisper_full_n_tokens(context.get(), segment_index); ++token_index) {
++                const auto token = whisper_full_get_token_data(context.get(), segment_index, token_index);
++                if (token.id < whisper_token_eot(context.get())) { logp += token.plog; ++text_tokens; }
++            }
++            std::fprintf(stderr, "POCKETAI_ASR_SEGMENT {\"segment\":%d,\"no_speech_probability\":%.8f,\"text_tokens\":%d,\"mean_returned_text_token_logp\":%.8f}\n", segment_index, whisper_full_get_segment_no_speech_prob(context.get(), segment_index), text_tokens, text_tokens ? logp / text_tokens : 0.0);
++        }
+         std::string transcript;
+         for (int i = 0; i < whisper_full_n_segments(context.get()); ++i) {
+             const char *segment = whisper_full_get_segment_text(context.get(), i);

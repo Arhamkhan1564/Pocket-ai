@@ -1,0 +1,60 @@
+{
+  "source_weights_sha256": "0819a35b96bc52ba5c2448f67f6beed9ca3e7d0d57bcf913eb21feb096bdfa3f",
+  "raw_f32_tensor_count": 245,
+  "hf_loaded_state_dict_tensor_count": 246,
+  "all_source_tensors_loaded_exactly": true,
+  "hf_loading_info": {
+    "missing_keys": [],
+    "unexpected_keys": [],
+    "mismatched_keys": [],
+    "error_msgs": []
+  },
+  "output_projection_tied_by_config_storage_and_exact_values": true,
+  "pickle_loader_prohibited": true,
+  "remote_code_prohibited": true,
+  "offline_local_files_only": true,
+  "converter_pinned_source_sha256": "9cc282dfcd9a24da03ffa1b4123b5508ee935e19e369c33520b1a73f89440094",
+  "converter_patched_source_sha256": "3bd4ce9ff265be8e6addf6e870c0e4d7532dfa0bbc3d8086f3253854e49f2a93",
+  "converter_patch": "Delay F16 cast until correct stored-dtype branch. F32 norm/bias/position tensors retain original F32 values.",
+  "converter_args": [
+    "/workspace/validation/urdu-whisper-base/recipe-verification/convert-h5-to-ggml.precision-fixed.py",
+    "/workspace/validation/urdu-whisper-base/hf-model",
+    "/workspace/validation/urdu-whisper-base/recipe-verification/openai-mel-assets",
+    "/workspace/validation/urdu-whisper-base/recipe-verification/converted"
+  ],
+  "torch": "2.5.1+cpu",
+  "numpy": "1.26.4",
+  "transformers": "4.51.3",
+  "safetensors": "0.5.3",
+  "standard_filter_source_model_sha256": "422f1ae452ade6f30a004d7e5c6a43195e4433bc370bf23fac9cc591f01a8898",
+  "mel_coefficients_sha256": "85818f156f7e189453901a515e4726d270d307f976e161cf9403e8caab405498",
+  "vocab_normal_token_count": 50258,
+  "all_normal_token_bytes_verified": true,
+  "first_50257_token_bytes_equal_canonical_multilingual_base": true,
+  "required_special_ids": {
+    "<|startoftranscript|>": 50258,
+    "<|ur|>": 50290,
+    "<|transcribe|>": 50359,
+    "<|notimestamps|>": 50363
+  },
+  "output_header": [
+    1734831468,
+    51865,
+    1500,
+    512,
+    8,
+    6,
+    448,
+    512,
+    8,
+    6,
+    80,
+    1
+  ],
+  "output_tensor_count": 245,
+  "all_output_tensors_shapes_dtypes_and_values_verified": true,
+  "output_fp16_matrix_rounding_intentional": true,
+  "output_sha256": "0774dbfe80eda83c45ddddcaad3e0e92ce29d07225f11852216e9b950969c94a",
+  "output_bytes": 147951482,
+  "production_or_vendor_changed": false
+}

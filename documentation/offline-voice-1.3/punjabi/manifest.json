@@ -1,0 +1,35 @@
+{
+  "repo": "XDcobra/wav2vec2-large-xlsr-53-punjabi-ONNX",
+  "revision": "de54b60baa1879a4db93596cf1b5b3215a291b7a",
+  "file": "onnx/model_int8.onnx",
+  "bytes": 121951036,
+  "sha256": "06cd96375424bc23e148191a3cdb7ee03691ba4c4438cdc8c25e53472bdffab5",
+  "verified": true,
+  "download_url": "https://huggingface.co/XDcobra/wav2vec2-large-xlsr-53-punjabi-ONNX/resolve/de54b60baa1879a4db93596cf1b5b3215a291b7a/onnx/model_int8.onnx",
+  "license_chain": [
+    {
+      "repo": "XDcobra/wav2vec2-large-xlsr-53-punjabi-ONNX",
+      "revision": "de54b60baa1879a4db93596cf1b5b3215a291b7a",
+      "license": "Apache-2.0"
+    },
+    {
+      "repo": "kingabzpro/wav2vec2-large-xlsr-53-punjabi",
+      "revision": "cd3f671b063c09d247dc1c550002c2049abd622d",
+      "license": "Apache-2.0",
+      "provenance": "Generic Common Voice8 pa-IN fine-tune"
+    },
+    {
+      "repo": "Harveenchadha/vakyansh-wav2vec2-punjabi-pam-10",
+      "revision": "141b585cbb1d668ac3e21e12392c8f277470298a",
+      "license": "MIT",
+      "provenance": "Vakyansh Punjabi / CLSRIL-23 base"
+    },
+    {
+      "repo": "Open-Speech-EkStep/vakyansh-models",
+      "revision": "7f5b1bd79ddbef3452556643e606e8d01ac0e8d6",
+      "license": "MIT",
+      "copyright": "2021 Vakyansh",
+      "license_git_blob": "876d4f100b5559bd98977be4780ba56177a4eaa6"
+    }
+  ]
+}

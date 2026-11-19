@@ -1,0 +1,31 @@
+Urdu fine-tuned Whisper Base speech weights
+
+Source: kingabzpro/whisper-base-urdu-full
+Pinned revision: 6bfaec492d42f4b76f117b2b34cd9672509cecdc
+https://huggingface.co/kingabzpro/whisper-base-urdu-full/tree/6bfaec492d42f4b76f117b2b34cd9672509cecdc
+Source model.safetensors: 290,403,936 bytes
+SHA-256: 0819a35b96bc52ba5c2448f67f6beed9ca3e7d0d57bcf913eb21feb096bdfa3f
+
+The source model card explicitly declares Apache License 2.0. The pinned
+repository does not provide a separate LICENSE or NOTICE file. Its original
+model card and the exact source URLs/hashes are retained in the reconstruction
+recipe. The full Apache License 2.0 is provided in APACHE-2.0.txt.
+
+The underlying OpenAI Whisper model is Copyright (c) 2022 OpenAI and licensed
+under the MIT License. Its original copyright and complete permission notice
+are retained in WHISPER_MODEL_LICENSE.txt. The Whisper.cpp runtime/converter
+notices are also retained in this application's existing license collection.
+
+PocketAI modification: local Hugging Face safetensors to Whisper.cpp GGML
+conversion, then Q5_1 quantization. The conversion recipe includes a documented
+precision correction to the pinned converter: F32 normalization, bias, and
+position tensors retain F32 values; F16 matrix rounding and Q5_1 quantization
+are intentional. No model weights were trained or fine-tuned by PocketAI.
+
+Derived file: ggml-urdu-base-q5_1.bin (59,707,642 bytes)
+SHA-256: 701f3ae011e0964e45894ad884da1afd5c1a0a7a846b054d9765e75d563ee7b9
+The source weights and derived weights remain separately identified.
+
+This attribution does not certify recognition accuracy. The exploratory
+recordings still contain word and spoken-number errors. Transcripts must be
+reviewed before use; no target-phone or clinical acceptance is implied.

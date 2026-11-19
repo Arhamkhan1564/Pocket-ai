@@ -1,0 +1,131 @@
+{
+  "scope": "Four public human-recorded read-speech Urdu clips, unchanged canonical host JNI greedy2threads, no hints. No phone/fluency/clinical acceptance. Heldouts were fixed before candidate inference and are held out only from these project comparisons.",
+  "library_sha256": "0855a868533fcefb0bf909346ab228836de87a8bd22f3096e2f6e0dc07e480a1",
+  "generic_model_sha256": "422f1ae452ade6f30a004d7e5c6a43195e4433bc370bf23fac9cc591f01a8898",
+  "urdu_finetuned_model_sha256": "701f3ae011e0964e45894ad884da1afd5c1a0a7a846b054d9765e75d563ee7b9",
+  "comparability": "Generic heldout2 runs were isolated from other model inference; earlier generic and fine-tuned runs have shared-host timing labels. Timing fields differ (native duration versus wall duration) and are not speedup claims.",
+  "quantity_observations": [
+    {
+      "fixture": "fleurs-ur_pk-test-1",
+      "reference": "چھے (six), attached to next word in dataset text",
+      "generic_base": "سی, not six",
+      "urdu_finetuned_base": "سے, not six",
+      "result": "Both fail the number word."
+    },
+    {
+      "fixture": "fleurs-ur_pk-test-2",
+      "reference": "70",
+      "generic_base": "ستر (seventy), a word representation of the quantity",
+      "urdu_finetuned_base": "سطح (surface), wrong word",
+      "result": "Generic output retains the quantity semantically while the fine-tuned output does not; simple decimal-literal comparison alone is insufficient."
+    }
+  ],
+  "pairs": [
+    {
+      "fixture": "fleurs-ur_pk-test-0",
+      "group": "original",
+      "reference": "ان کے دور میں خفیف تلوُّث ایزا مسئلہ نہیں تھا جیسا کہ وہ آج ہے ان کی سکونت ایسے شہروں یا حوزات میں ہے جہا ں تک بآسانی پہنچا جا سکتا ہے بہ نسبت ان مقامات کے جو ماڈرن زمانے میں تعمیر کئے گئے",
+      "payload_sha256": "b1e7be1775acda587b7e52764a37d4492b9ed976a9902e1c053e6fc71d586ef8",
+      "generic_base": {
+        "transcript": "ان کے دور میں کفیق تلووز ایزا مسلہ نہیں تا جیسا کے وہ آج ہے ان کی سکونت ایسے شیرو یا حوزات میں ہے جو ہاہتاک بہسانی پہنچا جا سکتا ہے با نسپتین مقامات کے جو موڑرن زمانے میں تامیر کے گئے۔",
+        "basic_wer": 0.36363636363636365,
+        "basic_cer": 0.14482758620689656,
+        "native_seconds": 26.113130272,
+        "sampled_peak_rss_bytes": 261615616
+      },
+      "urdu_finetuned_base": {
+        "transcript": "ان کے دور میں خفیق طلعوز ایسا مسئلہ نہیں تھا جیسا کہ وہ آج ہے ان کی سکونت ایسے شہر و یا حوثات میں ہے جوہاں تک باستانی پہنچا جا سکتا ہے بانسپت ان مقامات کے جو مارڈرن زمانے میں تعمیر کیے گئے",
+        "basic_wer": 0.29545454545454547,
+        "basic_cer": 0.1103448275862069,
+        "wall_seconds": 26.151870099000007,
+        "peak_child_rss_bytes": 261640192
+      },
+      "fine_tuned_wer_change_percentage_points": -6.8181818181818175
+    },
+    {
+      "fixture": "fleurs-ur_pk-test-1",
+      "group": "original",
+      "reference": "فلپائنی فوٹوگرافروں کے ساتھ چھےاغوا شدگان کو جلد رہا کر دیا گیا تھا جِن میں بچّے اور بُوڑھے شامل تھے",
+      "payload_sha256": "849c508164eb54d425d0ad3ca3ca55ed0c8471188865de3db538c0f5b3dc1560",
+      "generic_base": {
+        "transcript": "پیل پائنی فٹو گرافروں کے ساتھ سی اگوہ سدگان کو جل رہا کر دیا گیا تھا چین میں بچور بھڑے شاملتے",
+        "basic_wer": 0.7,
+        "basic_cer": 0.2345679012345679,
+        "native_seconds": 24.530651914,
+        "sampled_peak_rss_bytes": 258748416
+      },
+      "urdu_finetuned_base": {
+        "transcript": "فیل پائنی فٹو گرافرو کے ساتھ سے اگوا شدگان کو جلد رہا کردیا گیا تھا جن میں بچر اور بڑے شاملتے",
+        "basic_wer": 0.65,
+        "basic_cer": 0.16049382716049382,
+        "wall_seconds": 23.56331971199961,
+        "peak_child_rss_bytes": 259178496
+      },
+      "fine_tuned_wer_change_percentage_points": -4.999999999999993
+    },
+    {
+      "fixture": "fleurs-ur_pk-test-2",
+      "group": "development-heldout",
+      "reference": "اس کے لانبے جبڑوں میں 70 سے زیادہ استرے سے تیز دانت جڑے تھے اور اسی کے ساتھ اس کے منہ کے تالو میں دانتوں کی ایک مزید لڑی تھی اس کے معنی یہ ہیں کہ اس کے راستہ میں آنے والی کوئی شے اس سے بھاگ نہیں سکتی",
+      "payload_sha256": "00e9ef9c81a6f6af23beb9e7138f860ec81f386b9630c58957e71caa9c921c02",
+      "generic_base": {
+        "transcript": "اس کے لام بجھے گڑوں میں ستر سے ذادہ اثرے سے تیس تان چھولے تھے اور اس کے موکہ تعالبے میں ذاتوں کی ایک مزید لڑی تھی اس کے مائے نے یہ ہے کہ اس کے راستے میں آنے والا کوئی شئی اس سے بھاگ نہیں سکتی",
+        "basic_wer": 0.4489795918367347,
+        "basic_cer": 0.2980132450331126,
+        "native_seconds": 25.284360843,
+        "sampled_peak_rss_bytes": 261779456
+      },
+      "urdu_finetuned_base": {
+        "transcript": "اس کے علام پہ جھبڑوں میں سطح سے زیادہ اثر سطح ستیستان چھوڑے تھے اور اس کے ساتھ اس کے موقع طالبے میں داتوں کی ایک مزید لڑی تھی اس کے معینے یہ ہے کہ اس کے راستے میں آنے والا کوئی شئی اس سے بھاگ نہیں سکتی",
+        "basic_wer": 0.3877551020408163,
+        "basic_cer": 0.23841059602649006,
+        "wall_seconds": 26.60270607299981,
+        "peak_child_rss_bytes": 261619712
+      },
+      "fine_tuned_wer_change_percentage_points": -6.122448979591838
+    },
+    {
+      "fixture": "fleurs-ur_pk-test-3",
+      "group": "development-heldout",
+      "reference": "اکتوبر میں شروع ہونے والے حکومت مخالف مظاہروں پر مارٹیلی کا ردعمل کمیشن تھا",
+      "payload_sha256": "6f77bba7012844ab833d2b0e4b1c15f7547ab9fe59dcb0e330073453acab475e",
+      "generic_base": {
+        "transcript": "اکتبا مشروح ہونے والے حکومت مخالف مزاہر اور پر مائیدلی کردیامل کمیشن تھا",
+        "basic_wer": 0.5714285714285714,
+        "basic_cer": 0.22580645161290322,
+        "native_seconds": 27.571439849,
+        "sampled_peak_rss_bytes": 259342336
+      },
+      "urdu_finetuned_base": {
+        "transcript": "اکتوبوں میں شروع ہونے والے حکومت مخالف مزاہر اور پرمایٹلی کا ردعمل کمیشن تھا",
+        "basic_wer": 0.2857142857142857,
+        "basic_cer": 0.11290322580645161,
+        "wall_seconds": 24.784598390000156,
+        "peak_child_rss_bytes": 259473408
+      },
+      "fine_tuned_wer_change_percentage_points": -28.57142857142857
+    }
+  ],
+  "source_reports": [
+    {
+      "relative_to_validation": "offline-voice-improve-v12/whisper-comparison.json",
+      "sha256": "4e04ed672423b39479f65e78eb5fe9b6e9df400293251a15e3e337be5467a645"
+    },
+    {
+      "relative_to_validation": "offline-voice-improve-v12/base-heldout-urdu/results.json",
+      "sha256": "23b51743b47860fb943abb3b520300369bd8bbc896779e81ec84714a3f24be6a"
+    },
+    {
+      "relative_to_validation": "urdu-whisper-base/initial-two-urdu/results.json",
+      "sha256": "299e279b552bfe8e5fd50552bd5daf52f8a0c3b1eb48ebc7517b9d3d4966965c"
+    },
+    {
+      "relative_to_validation": "urdu-whisper-base/heldout-two-urdu/results.json",
+      "sha256": "d60e8f403bdcca645993dfedb0baab4a89d390afb9bf98e4b2a42d4eec90ebd3"
+    },
+    {
+      "relative_to_validation": "offline-voice-improve-v12/heldout/fixtures.json",
+      "sha256": "d16d60173e754dfde92b8281c53c95166bd609f47172559966b1f9ef85ec29b8"
+    }
+  ]
+}

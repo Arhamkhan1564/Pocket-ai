@@ -78,7 +78,7 @@ class ModelManager(context: Context) {
     ): InstalledModel = synchronized(registryLock) {
         require(expectedSha256.matches(Regex("[a-f0-9]{64}"))) { "A trusted speech-model checksum is required." }
         val current = list()
-        val existing = current.firstOrNull { it.kind == ModelKind.WHISPER && it.sha256 == expectedSha256 }
+        val existing = current.firstOrNull { it.kind == ModelKind.WHISPER && it.sha256 == expectedSha256 && it.metadata["bundled"] == "true" }
         if (existing != null) {
             val file = fileFor(existing)
             if (file.length() == expectedSize && sha256(file) == expectedSha256) {
@@ -147,7 +147,10 @@ class ModelManager(context: Context) {
             val header = ModelValidator.validateHeader(temporary, kind)
             val checksum = digest.digest().joinToString("") { "%02x".format(it.toInt() and 255) }
             require(expectedSha256 == null || checksum == expectedSha256) { "The included speech-model checksum did not match. Install a verified Pocket AI APK or import your own model." }
-            current.find { it.sha256 == checksum }?.let { throw IllegalArgumentException("This model is already installed as ${it.name}.") }
+            val bundled = extraMetadata["bundled"] == "true"
+            current.find { it.sha256 == checksum && (kind != ModelKind.WHISPER || it.kind != ModelKind.WHISPER ||
+                (it.metadata["bundled"] == "true") == bundled) }
+                ?.let { throw IllegalArgumentException("This model is already installed as ${it.name}.") }
             require(temporary.renameTo(destination)) { "Could not finalize the model import." }
             val model = InstalledModel(id, name, kind, destination.absolutePath, copied,
                 checksum, System.currentTimeMillis(), header.architecture, header.metadata + ("format" to header.format) + extraMetadata)
@@ -169,7 +172,7 @@ class ModelManager(context: Context) {
         val file = fileFor(model)
         require(!file.exists() || file.delete()) { "The model could not be removed." }
         writeRegistry(models.filterNot { it.id == id })
-        BundledSpeechModel.markRemoved(appContext, model.sha256)
+        if (model.kind == ModelKind.WHISPER && model.metadata["bundled"] == "true") BundledSpeechModel.markRemoved(appContext, model.sha256)
     }
 
     fun fileFor(model: InstalledModel): File {

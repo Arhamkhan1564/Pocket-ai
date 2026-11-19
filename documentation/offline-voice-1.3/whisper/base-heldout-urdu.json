@@ -1,0 +1,89 @@
+{
+  "model_sha256": "422f1ae452ade6f30a004d7e5c6a43195e4433bc370bf23fac9cc591f01a8898",
+  "model_bytes": 59707625,
+  "library_sha256": "0855a868533fcefb0bf909346ab228836de87a8bd22f3096e2f6e0dc07e480a1",
+  "profile": "baseline",
+  "hints": {},
+  "threads": 2,
+  "shared_host_timings": false,
+  "settings": "Current canonical decoder/callbacks except selected search/initial-prompt profile. Explicit pa/ur/en, translate=false, no_context=true, carry_initial_prompt=false, best_of1. Existing fallback temperatures and thresholds unchanged.",
+  "metrics": "Basic NFKC/casefold/punctuation-space WER/CER only; no clinical/fluent-speaker or phone accuracy validation. Pa reference is Gurmukhi, so cross-script word error is not a fair linguistic accuracy score; scripts/transcripts are also explicit.",
+  "results": [
+    {
+      "id": "fleurs-ur_pk-test-2",
+      "language": "ur",
+      "wave": "/workspace/validation/offline-voice-improve-v12/heldout/fixtures/fleurs-ur_pk-test-2-pcm16.wav",
+      "reference": "اس کے لانبے جبڑوں میں 70 سے زیادہ استرے سے تیز دانت جڑے تھے اور اسی کے ساتھ اس کے منہ کے تالو میں دانتوں کی ایک مزید لڑی تھی اس کے معنی یہ ہیں کہ اس کے راستہ میں آنے والی کوئی شے اس سے بھاگ نہیں سکتی",
+      "expected_speech": true,
+      "payload_sha256": "00e9ef9c81a6f6af23beb9e7138f860ec81f386b9630c58957e71caa9c921c02",
+      "profile": "baseline",
+      "transcript": "اس کے لام بجھے گڑوں میں ستر سے ذادہ اثرے سے تیس تان چھولے تھے اور اس کے موکہ تعالبے میں ذاتوں کی ایک مزید لڑی تھی اس کے مائے نے یہ ہے کہ اس کے راستے میں آنے والا کوئی شئی اس سے بھاگ نہیں سکتی",
+      "native_result": {
+        "transcript": "اس کے لام بجھے گڑوں میں ستر سے ذادہ اثرے سے تیس تان چھولے تھے اور اس کے موکہ تعالبے میں ذاتوں کی ایک مزید لڑی تھی اس کے مائے نے یہ ہے کہ اس کے راستے میں آنے والا کوئی شئی اس سے بھاگ نہیں سکتی",
+        "language_argument": "ur",
+        "audio_samples": 193920,
+        "elapsed_seconds": 25.284360843,
+        "threads": 2
+      },
+      "exit_code": 0,
+      "timeout": false,
+      "wall_seconds": 25.39715203700007,
+      "peak_child_rss_bytes": 261779456,
+      "scripts": {
+        "Arabic": 145
+      },
+      "reference_scripts": {
+        "Arabic": 149
+      },
+      "segment_diagnostics": [],
+      "basic_wer": 0.4489795918367347,
+      "basic_cer": 0.2980132450331126,
+      "reference_decimal_literals": [
+        "70"
+      ],
+      "hypothesis_decimal_literals": [],
+      "whole_prompt_output_absent_from_reference": false,
+      "unexpected_hint_word": false,
+      "nonspeech_lexical_output": false,
+      "no_speech_exception": false,
+      "log_tail": null
+    },
+    {
+      "id": "fleurs-ur_pk-test-3",
+      "language": "ur",
+      "wave": "/workspace/validation/offline-voice-improve-v12/heldout/fixtures/fleurs-ur_pk-test-3-pcm16.wav",
+      "reference": "اکتوبر میں شروع ہونے والے حکومت مخالف مظاہروں پر مارٹیلی کا ردعمل کمیشن تھا",
+      "expected_speech": true,
+      "payload_sha256": "6f77bba7012844ab833d2b0e4b1c15f7547ab9fe59dcb0e330073453acab475e",
+      "profile": "baseline",
+      "transcript": "اکتبا مشروح ہونے والے حکومت مخالف مزاہر اور پر مائیدلی کردیامل کمیشن تھا",
+      "native_result": {
+        "transcript": "اکتبا مشروح ہونے والے حکومت مخالف مزاہر اور پر مائیدلی کردیامل کمیشن تھا",
+        "language_argument": "ur",
+        "audio_samples": 120960,
+        "elapsed_seconds": 27.571439849,
+        "threads": 2
+      },
+      "exit_code": 0,
+      "timeout": false,
+      "wall_seconds": 27.64215143199999,
+      "peak_child_rss_bytes": 259342336,
+      "scripts": {
+        "Arabic": 60
+      },
+      "reference_scripts": {
+        "Arabic": 62
+      },
+      "segment_diagnostics": [],
+      "basic_wer": 0.5714285714285714,
+      "basic_cer": 0.22580645161290322,
+      "reference_decimal_literals": [],
+      "hypothesis_decimal_literals": [],
+      "whole_prompt_output_absent_from_reference": false,
+      "unexpected_hint_word": false,
+      "nonspeech_lexical_output": false,
+      "no_speech_exception": false,
+      "log_tail": null
+    }
+  ]
+}

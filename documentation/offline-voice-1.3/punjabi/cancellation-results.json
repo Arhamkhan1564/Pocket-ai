@@ -1,0 +1,11 @@
+{
+  "production_source_sha256": "769cff8b2cb7fdebdede220cbc594e7b3f4f16be02deceed71769e1c413d26b2",
+  "runtime": "Canonical pureJVM kernel, hostORT1.20.0",
+  "exit_code": 0,
+  "stdout": "provided_run_options_terminate=true; session_reusable_after_reset=true\ncaller_hook_cancellation=true; stop_seconds=0.281444426\n",
+  "checks": [
+    "Caller-ownedRunOptions.setTerminate(true) interrupts native run.",
+    "Same session works after caller resets terminate=false.",
+    "Caller hook maps native cancellation to CancellationException."
+  ]
+}

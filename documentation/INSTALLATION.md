@@ -1,20 +1,22 @@
-# Install and use Pocket AI 1.2.1
+# Install and use Pocket AI 1.3 Voice Preview
 
 Pocket AI's baseline document workflow runs on the phone without a cloud service, account, browser download or manual model import. The single APK includes search, translation, optional English explanation and speech-recognition resources. It requests no Internet permission.
 
-Use the APK and checksum file from the same release. The repository [README](../README.md) identifies current downloads. Version 1.2.1 retains the 1.2 offline resource bundle and database schema, with fixes for recording/submission conflicts and oversized saved notes. Earlier build reports describe their own releases, not a fresh acceptance run of this patch.
+Use the APK and checksum file from the same release. The repository [README](../README.md) identifies current downloads. Version 1.3 adds included Urdu/Punjabi recognizers, a local speech-presence check before Whisper and editable Urdu/Punjabi transcript review. It retains database schema 2. Earlier build and acceptance reports describe their own releases.
+
+**Keep your existing Pocket AI installation.** The original private signing key became unavailable after a build workspace reset. This preview installs alongside it as **Pocket AI Voice Preview**, package `com.pocketai.voicepreview`, with its own private signing identity and separate data. It cannot update the original app. Export knowledge from the original app, create a new PIN and recovery code in the preview, then import that backup there. The original [1.2.1 APK](https://media.githubusercontent.com/media/Arhamkhan1564/Pocket-ai/main/downloads/offline-v1.2.1/PocketAI.apk) remains available. No uninstall is required.
 
 ## Phone and storage requirements
 
 Android 6.0/API 23 or later is required. Packaged native targets are ARM64, ARMv7 with NEON, and x86_64. CPU features, available RAM, storage and Android's process limits determine which tools can run. This does not establish support or usable speed on every Android phone. The itel A25 Pro/2 GB target phone was not attached for acceptance testing.
 
-The APK contains **13 model/tokenizer assets totaling 715,732,683 bytes, about 682.6 MiB**. Local preparation creates private model copies in addition to the installed APK. Budget space for the APK, those copies, Android's installation overhead, the downloaded installer if retained, and your documents. Keep several gigabytes free rather than relying only on the model-file total. Storage checks can pause setup if space is insufficient.
+The APK contains **17 model/tokenizer assets in seven packs, totaling 899,719,726 bytes, about 858.0 MiB**. Local preparation creates private model copies in addition to the installed APK. Budget space for the APK, those copies, Android's installation overhead, the downloaded installer if retained, and your documents. Keep several gigabytes free rather than relying only on the model-file total. Storage checks can pause setup if space is insufficient.
 
 A 2 GB total-RAM specification is not a guarantee of enough free memory. Check Resources → Device & storage and close other apps before heavy work. A memory check can refuse a request while keeping saved originals available.
 
 ## Install and prepare once
 
-1. Transfer `PocketAI.apk` to the phone and open it with Android's file manager. Allow that file manager to install unknown apps if Android asks.
+1. Transfer `PocketAI-Voice-Preview.apk` to the phone and open it with Android's file manager. Allow that file manager to install unknown apps if Android asks.
 2. Complete the welcome screens. English, Urdu and Punjabi remain available. Select Punjabi Shahmukhi or Gurmukhi and any additional configured text language.
 3. Create an administrator PIN containing 6–12 digits and save the displayed recovery code privately outside the phone.
 4. In **Prepare this phone**, allow the included tools to copy and verify local files. This reads the installed APK; it does not contact a server. Search, Urdu/Punjabi reference translation and English explanation readiness are reported separately.
@@ -23,7 +25,9 @@ A 2 GB total-RAM specification is not a guarantee of enough free memory. Check R
 
 Resources → **Offline tools** provides **Prepare offline tools**, **Retry local setup**, **Pause local setup** and **Check included resources** as appropriate. An interrupted copy can resume from included files without downloading anything. File readiness confirms installation integrity, not translation quality or device performance.
 
-The release APK uses a private signing identity. An in-place update needs the same signing key; creating another key does not make a compatible update. The debug APK uses a separate application ID and data store. Signing keys and signing-backup archives are excluded from public source/downloads. Back up knowledge before uninstalling anything.
+The preview certificate SHA-256 is `ab1c8fc2c6dc7f58517337050ec35dc4e236312f4547504e1e999c05ad6f8a3e`. Future preview updates need that same preview signing identity. Standard `com.pocketai` updates still require the unavailable original key; a new key cannot replace it. The debug APK uses another application ID and data store. Private keys and signing-backup archives are excluded from public downloads. See [preview build identity](VOICE-PREVIEW-BUILD.md).
+
+Knowledge transfer uses an exported backup; the apps do not share their private storage. Keep backups privately because they are plaintext. Imported knowledge does not transfer the old administrator PIN or models: set up the preview's PIN, prepare its included tools and allow its derived reference index to rebuild. See [backup and recovery](BACKUP-RECOVERY.md).
 
 ## Teach facts and answers
 
@@ -72,34 +76,37 @@ Personal symptom/treatment questions request context and point to qualified clin
 
 ## Voice input and spoken output
 
-1. Let included multilingual Whisper tiny q5_1 finish preparing. If its private copy was removed, use advanced **Restore included speech model** in Offline tools.
-2. Tap the microphone. Compatibility and resource checks run before recording; grant microphone permission when Android asks after a successful check.
-3. Speak and tap again to stop and transcribe. Tap-to-talk recording is bounded to 60 seconds.
-4. Review recognized text before sending a question or confirming training content. Voice questions use the same local document flow as typed questions.
+1. Let **Offline tools** prepare the included speech resources. With the included automatic selection, English uses multilingual Whisper tiny, Urdu uses the Urdu-tuned Whisper base, and Punjabi uses the Gurmukhi CTC recognizer. No browser download or manual model import is needed.
+2. Select the language and Punjabi display script, then tap the microphone. Compatibility, memory and resource checks run before recording; grant microphone permission when Android asks after a successful check. This capture keeps its chosen recognizer, language, script and question/training destination even if settings change later.
+3. Speak and tap again to stop and transcribe. Tap-to-talk recording is bounded to 60 seconds. A local speech-presence detector runs before Whisper and closes before recognition starts; rejected audio does not become a transcript.
+4. Every manual Urdu/Punjabi result opens an editable review. Check and correct it, then choose **Use text** to fill the captured question or training draft. Sending the question or confirming saved training content remains a separate action. Shahmukhi display conversion is labeled, and the original recognition remains available for comparison.
 
-Text submission, including the keyboard's Send action, waits while recording is active or recorded audio still awaits transcription. Finish or cancel that capture, then review the text before sending. This avoids a typed request competing with unfinished microphone input.
+An explicit custom Whisper selection is preserved. Disabling recognition stays disabled after reopening; preparation does not silently enable it. Select the included automatic entry when you want the bundled language-specific recognizers.
 
-**Urdu and Punjabi recognition is experimental.** Actual host tests of six public FLEURS read-speech clips found substantial Urdu word substitutions/omissions, including an omitted spoken number word, and Punjabi Latin romanization/mixed English instead of the reference's Gurmukhi script. Even the two English clips had changed words. This small test is not a language benchmark; it did not test decimal-digit preservation or the phone microphone. See [voice observations](OFFLINE-VOICE-VALIDATION.md).
+Text submission, including the keyboard's Send action, waits while recording is active or recorded audio still awaits transcription. Finish or cancel that capture, then review the text before sending.
 
-Review and correct the transcript in every language, especially medicine names, numbers and identifiers. Use typing or reviewed tap-to-talk when exact wording matters. Audio is 16 kHz mono PCM, temporarily buffered and discarded after transcription or cancellation. Silent or very short recordings are rejected. Script selection does not guarantee the recognizer's output script.
+**Urdu and Punjabi recognition is experimental.** The Urdu-tuned model reduced word errors on four host clips but still omitted or changed spoken numbers. Punjabi CTC returned Gurmukhi on four clips but made substantial word and name errors, including medical terms. The reference speech detector accepted six speech clips and rejected three non-speech controls using fixed settings; that does not prove general detector or recognition accuracy. The canonical Kotlin detector matched all nine decisions and every frame probability exactly against that reference. Android microphone/device acceptance remains pending; see [1.3 voice validation](VOICE-VALIDATION-1.3.md). The [older tiny-model observations](OFFLINE-VOICE-VALIDATION.md) remain available as historical evidence.
 
-Whisper does not supply spoken answers. Resources → **Voice & audio** checks installed Android offline TTS voices separately. Test speaker, speed, volume and microphone route. Android controls the media output route. If a compatible voice is absent, text remains available. The APK does not include TTS voice packs; configuring one through Android is optional system setup, not a requirement for text answers.
+Review recognition in every language, especially medicine names, numbers and identifiers. Use typing when exact wording matters. Audio is 16 kHz mono PCM, temporarily buffered and cleared after transcription or cancellation. Silent or very short recordings are rejected. A custom recognizer may return a different script; choosing a display script does not correct recognition errors.
 
-An optional appliance session needs a visible user start and microphone permission. Its foreground notification provides a stop control. It uses **unreviewed transcripts**, so use tap-to-talk instead when exact words or numbers matter. Sessions use about six-second recording turns and a 30-minute limit; Android can still stop them or restrict screen-off access. Wake words, automatic boot startup and indefinite unattended listening are not included.
+Recognition models do not supply spoken answers. Resources → **Voice & audio** checks installed Android offline TTS voices separately. Test speaker, speed, volume and microphone route. Android controls the media output route. If a compatible voice is absent, text remains available. The APK does not include TTS voice packs; configuring one through Android is optional system setup.
+
+An optional appliance session needs a visible user start and microphone permission. Its foreground notification provides a stop control. It uses **unreviewed transcripts**, so use reviewed tap-to-talk or typing when exact words or numbers matter. Sessions use about six-second recording turns and a 30-minute limit; Android can still stop them or restrict screen-off access. Wake words, automatic boot startup and indefinite unattended listening are not included. The preview has not been accepted on the itel A25 Pro/2 GB phone or every Android device.
 
 ## Troubleshooting
 
 | Symptom | Action |
 | --- | --- |
-| Installation or update fails | Check API 23+, supported ABI/CPU, storage and matching signing identity. Back up before uninstalling; uninstalling deletes private data. |
+| Installation or update fails | Use the separately named voice preview, check API 23+, supported ABI/CPU and free storage. It does not replace the original app; keep the original and transfer knowledge through a backup. |
 | Offline setup is incomplete | Open Offline tools, free storage if requested, and retry local setup. No browser/model download is required for the baseline. |
 | Semantic matching is incomplete | Check index progress, resume or retry indexing, and try a word from the original. Read references directly while indexing is unavailable. |
 | Some notes remain keyword-only | Read the skipped-index reason. Shorten/split an unsupported note or import it as a chunked document, then refresh indexing. Its original is retained and later supported passages can still finish. |
 | Translation is unavailable | Check translation readiness, source language and free RAM. The included direction is English to Urdu/Punjabi; rejected output does not replace the original. |
 | A source will not open | It may be deleted or come from old display-only history. Check Library or ask again using current references. |
 | DOC/PDF import fails | Convert binary DOC, remove PDF password protection, or provide selectable text. Scans need external OCR. Check import limits. |
-| Voice input is unavailable | Check CPU/runtime compatibility, speech readiness and microphone permission. ARMv7 needs NEON. |
-| Recognized words, numbers or script are wrong | Correct the transcript before sending/saving, or type the question. Urdu/Punjabi recognition is experimental; changing display script is not a recognition-quality fix. |
+| Voice input is unavailable | Check whether recognition is disabled, the selected resource, CPU/runtime compatibility, speech readiness, free RAM and microphone permission. ARMv7 needs NEON. |
+| Recognized words, numbers or script are wrong | Edit the review before using the text, or type the question. Check whether a custom recognizer is selected. Shahmukhi display conversion cannot repair wrong words. |
+| No clear speech is detected | Try a short, clear recording in a quieter setting, or type. The local detector can reject difficult speech and does not validate accepted words. |
 | Keyboard Send does nothing during capture | Finish or cancel recording/pending transcription first, then review and send. |
 | No spoken answer | Check an installed offline Android voice, media volume and output route. Text works without a TTS voice. |
 | A tool reports insufficient RAM | Close other apps and keep excerpt mode. Storage alone does not fix a RAM or 32-bit address-space limit. |

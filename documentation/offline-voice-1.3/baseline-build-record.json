@@ -1,0 +1,23 @@
+{
+  "built_at_utc": "2026-11-19T09:19:46.217905+00:00",
+  "source_commit": "cb8277e62c68ec5a66accba354fa9e057e936afc",
+  "source_sha256": {
+    "app/src/main/cpp/pocketai_jni.cpp": "9ad280a212bb9245db15f42ef44dee38b9884150d11857476823cd8e8e7fe079",
+    "app/src/main/cpp/CMakeLists.txt": "e5b434725027eef97a3b1e92b41a18659774a340daf6c867b1db8b8d9b764d18",
+    "vendor/REVISIONS.txt": "066ceab42450474936b003d6276bd50dcd34c0cbb40bda19363f422471456e24",
+    "tests/offline-voice/com/pocketai/engine/NativeBridge.java": "7958317caab58765c3c5df135f8f75fca3a901e8572418243ebde653821b5d59"
+  },
+  "library": "/workspace/validation/native-build/libpocketai.so",
+  "library_sha256": "0855a868533fcefb0bf909346ab228836de87a8bd22f3096e2f6e0dc07e480a1",
+  "library_bytes": 7611608,
+  "compiler": "g++ (Debian 14.2.0-19) 14.2.0",
+  "cmake": "4.4.5 with CMAKE_POLICY_VERSION_MINIMUM=3.5",
+  "jdk": "OpenJDK21.0.2; LinuxJNI headers",
+  "mode": "Release CPU, current canonical CMake flags, no production modifications",
+  "jni_exports": [
+    "Java_com_pocketai_engine_NativeBridge_cancelNative",
+    "Java_com_pocketai_engine_NativeBridge_generateNative",
+    "Java_com_pocketai_engine_NativeBridge_supportsInferenceNative",
+    "Java_com_pocketai_engine_NativeBridge_transcribeNative"
+  ]
+}

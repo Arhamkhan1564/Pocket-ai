@@ -37,5 +37,8 @@ class AppSettings(context: Context) {
         set(value) { prefs.edit().putString("llm_id", value).apply() }
     var selectedWhisperId: String?
         get() = prefs.getString("whisper_id", null)
-        set(value) { prefs.edit().putString("whisper_id", value).apply() }
+        set(value) { prefs.edit().putString("whisper_id", value).putBoolean("speech_selection_set", true).apply() }
+    /** Explicit null means disabled; an absent first-run choice may be initialized once. */
+    val speechRecognitionSelectionConfigured: Boolean
+        get() = prefs.getBoolean("speech_selection_set", prefs.contains("whisper_id"))
 }

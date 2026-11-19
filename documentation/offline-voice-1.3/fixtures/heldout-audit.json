@@ -1,0 +1,48 @@
+{
+  "status": "PASS",
+  "audited_at_utc": "2026-11-19T09:46:19.852898+00:00",
+  "fixture_manifest_sha256": "d16d60173e754dfde92b8281c53c95166bd609f47172559966b1f9ef85ec29b8",
+  "checks": [
+    {
+      "fixture": "fleurs-ur_pk-test-2",
+      "id": 1869,
+      "seconds": 12.12,
+      "source_hash": true,
+      "full_wav_hash": true,
+      "sample_hash": true,
+      "format_and_frames": true,
+      "distinct_from_original_ids_and_references": true
+    },
+    {
+      "fixture": "fleurs-ur_pk-test-3",
+      "id": 1966,
+      "seconds": 7.56,
+      "source_hash": true,
+      "full_wav_hash": true,
+      "sample_hash": true,
+      "format_and_frames": true,
+      "distinct_from_original_ids_and_references": true
+    },
+    {
+      "fixture": "fleurs-pa_in-validation-2",
+      "id": 1543,
+      "seconds": 6.36,
+      "source_hash": true,
+      "full_wav_hash": true,
+      "sample_hash": true,
+      "format_and_frames": true,
+      "distinct_from_original_ids_and_references": true
+    },
+    {
+      "fixture": "fleurs-pa_in-validation-3",
+      "id": 1577,
+      "seconds": 4.38,
+      "source_hash": true,
+      "full_wav_hash": true,
+      "sample_hash": true,
+      "format_and_frames": true,
+      "distinct_from_original_ids_and_references": true
+    }
+  ],
+  "note": "No ASR outputs were used to select these first eligible rows. Held out only from these project comparisons; training overlap is unverified."
+}

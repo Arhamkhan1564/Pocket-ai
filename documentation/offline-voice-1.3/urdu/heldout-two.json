@@ -1,0 +1,89 @@
+{
+  "model_sha256": "701f3ae011e0964e45894ad884da1afd5c1a0a7a846b054d9765e75d563ee7b9",
+  "model_bytes": 59707642,
+  "library_sha256": "0855a868533fcefb0bf909346ab228836de87a8bd22f3096e2f6e0dc07e480a1",
+  "profile": "baseline",
+  "hints": {},
+  "threads": 2,
+  "shared_host_timings": true,
+  "settings": "Current canonical decoder/callbacks except selected search/initial-prompt profile. Explicit pa/ur/en, translate=false, no_context=true, carry_initial_prompt=false, best_of1. Existing fallback temperatures and thresholds unchanged.",
+  "metrics": "Basic NFKC/casefold/punctuation-space WER/CER only; no clinical/fluent-speaker or phone accuracy validation. Pa reference is Gurmukhi, so cross-script word error is not a fair linguistic accuracy score; scripts/transcripts are also explicit.",
+  "results": [
+    {
+      "id": "fleurs-ur_pk-test-2",
+      "language": "ur",
+      "wave": "/workspace/validation/offline-voice-improve-v12/heldout/fixtures/fleurs-ur_pk-test-2-pcm16.wav",
+      "reference": "اس کے لانبے جبڑوں میں 70 سے زیادہ استرے سے تیز دانت جڑے تھے اور اسی کے ساتھ اس کے منہ کے تالو میں دانتوں کی ایک مزید لڑی تھی اس کے معنی یہ ہیں کہ اس کے راستہ میں آنے والی کوئی شے اس سے بھاگ نہیں سکتی",
+      "expected_speech": true,
+      "payload_sha256": "00e9ef9c81a6f6af23beb9e7138f860ec81f386b9630c58957e71caa9c921c02",
+      "profile": "baseline",
+      "transcript": "اس کے علام پہ جھبڑوں میں سطح سے زیادہ اثر سطح ستیستان چھوڑے تھے اور اس کے ساتھ اس کے موقع طالبے میں داتوں کی ایک مزید لڑی تھی اس کے معینے یہ ہے کہ اس کے راستے میں آنے والا کوئی شئی اس سے بھاگ نہیں سکتی",
+      "native_result": {
+        "transcript": "اس کے علام پہ جھبڑوں میں سطح سے زیادہ اثر سطح ستیستان چھوڑے تھے اور اس کے ساتھ اس کے موقع طالبے میں داتوں کی ایک مزید لڑی تھی اس کے معینے یہ ہے کہ اس کے راستے میں آنے والا کوئی شئی اس سے بھاگ نہیں سکتی",
+        "language_argument": "ur",
+        "audio_samples": 193920,
+        "elapsed_seconds": 26.429001566,
+        "threads": 2
+      },
+      "exit_code": 0,
+      "timeout": false,
+      "wall_seconds": 26.60270607299981,
+      "peak_child_rss_bytes": 261619712,
+      "scripts": {
+        "Arabic": 154
+      },
+      "reference_scripts": {
+        "Arabic": 149
+      },
+      "segment_diagnostics": [],
+      "basic_wer": 0.3877551020408163,
+      "basic_cer": 0.23841059602649006,
+      "reference_decimal_literals": [
+        "70"
+      ],
+      "hypothesis_decimal_literals": [],
+      "whole_prompt_output_absent_from_reference": false,
+      "unexpected_hint_word": false,
+      "nonspeech_lexical_output": false,
+      "no_speech_exception": false,
+      "log_tail": null
+    },
+    {
+      "id": "fleurs-ur_pk-test-3",
+      "language": "ur",
+      "wave": "/workspace/validation/offline-voice-improve-v12/heldout/fixtures/fleurs-ur_pk-test-3-pcm16.wav",
+      "reference": "اکتوبر میں شروع ہونے والے حکومت مخالف مظاہروں پر مارٹیلی کا ردعمل کمیشن تھا",
+      "expected_speech": true,
+      "payload_sha256": "6f77bba7012844ab833d2b0e4b1c15f7547ab9fe59dcb0e330073453acab475e",
+      "profile": "baseline",
+      "transcript": "اکتوبوں میں شروع ہونے والے حکومت مخالف مزاہر اور پرمایٹلی کا ردعمل کمیشن تھا",
+      "native_result": {
+        "transcript": "اکتوبوں میں شروع ہونے والے حکومت مخالف مزاہر اور پرمایٹلی کا ردعمل کمیشن تھا",
+        "language_argument": "ur",
+        "audio_samples": 120960,
+        "elapsed_seconds": 24.696213626,
+        "threads": 2
+      },
+      "exit_code": 0,
+      "timeout": false,
+      "wall_seconds": 24.784598390000156,
+      "peak_child_rss_bytes": 259473408,
+      "scripts": {
+        "Arabic": 63
+      },
+      "reference_scripts": {
+        "Arabic": 62
+      },
+      "segment_diagnostics": [],
+      "basic_wer": 0.2857142857142857,
+      "basic_cer": 0.11290322580645161,
+      "reference_decimal_literals": [],
+      "hypothesis_decimal_literals": [],
+      "whole_prompt_output_absent_from_reference": false,
+      "unexpected_hint_word": false,
+      "nonspeech_lexical_output": false,
+      "no_speech_exception": false,
+      "log_tail": null
+    }
+  ]
+}

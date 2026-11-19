@@ -1,0 +1,17 @@
+{
+  "vocab_contiguous_count": 50258,
+  "added_tokens_contiguous_count": 1607,
+  "all_99_language_ids_match_current_whisper_cpp_api": true,
+  "all_task_and_1501_timestamp_ids_match_current_loader_synthesis": true,
+  "all_tokenizer_added_decoder_entries_match": true,
+  "all_50000_merge_ranks_match_vocab": true,
+  "ur_language_id": 50290,
+  "required_full_vocabulary": 51865,
+  "canonical_jni_sha256": "0855a868533fcefb0bf909346ab228836de87a8bd22f3096e2f6e0dc07e480a1",
+  "asset_sha256": {
+    "vocab.json": "50d6a919f0a0601d56a04eb583c780d18553aa388254ba3158eb6a00f13e2c1a",
+    "added_tokens.json": "9715fd2243b6f06a5858b5e32950d2853f73dd5bc201aafcf76f5082a2d8acd1",
+    "merges.txt": "2df2990a395e35e8dfbc7511e08c12d56018d8d04691e0133e5d63b21e154dc6",
+    "tokenizer_config.json": "21a4fc0483c14b87f4e0bbc177a9a357479bfa7c95aaf21ad53d71e9c5afafb9"
+  }
+}

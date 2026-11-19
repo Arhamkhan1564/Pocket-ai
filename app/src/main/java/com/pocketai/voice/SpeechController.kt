@@ -13,13 +13,15 @@ import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
 import android.speech.tts.Voice
+import ai.onnxruntime.OrtSession
 import com.pocketai.engine.NativeBridge
 import com.pocketai.engine.NativeExecution
-import java.io.File
 import java.util.Locale
 import java.util.UUID
 import java.util.concurrent.atomic.AtomicBoolean
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -34,13 +36,16 @@ data class VoiceState(
     val message: String = "Speech engine starting",
 )
 
-/** Bounded PCM recording + local Whisper inference and verified offline Android TTS voices. */
+/** Bounded PCM recording, local recognizers and verified offline Android TTS voices. */
 class SpeechController(context: Context) : AutoCloseable {
     private val appContext = context.applicationContext
     val audioDevices = AudioDeviceManager(appContext)
     private val mutableState = MutableStateFlow(VoiceState())
     val state: StateFlow<VoiceState> = mutableState.asStateFlow()
     private val lock = Any()
+    private val recognitionLock = Any()
+    private var ownsNativeRecognition = false
+    private val recognitionCancelled = AtomicBoolean(false)
     private var session: RecordingSession? = null
     private var closed = false
     @Volatile private var ttsReady = false
@@ -88,6 +93,7 @@ class SpeechController(context: Context) : AutoCloseable {
             "Microphone permission is required. Allow it in Android settings and try again."
         }
         stopSpeaking()
+        recognitionCancelled.set(false)
         synchronized(lock) {
             check(session == null) { "Finish or cancel the current recording first." }
             val minimum = AudioRecord.getMinBufferSize(SAMPLE_RATE, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT)
@@ -113,35 +119,77 @@ class SpeechController(context: Context) : AutoCloseable {
         }
     }
 
-    suspend fun finishTranscription(modelFile: File?, languageTag: String): String = withContext(Dispatchers.IO) {
+    /** Run before recording and again after acquiring the inference lock. */
+    fun checkMemory(plan: SpeechRecognitionPlan) {
+        plan.validateFiles()
+        val memory = ActivityManager.MemoryInfo()
+        (appContext.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager).getMemoryInfo(memory)
+        val estimatedBytes = if (plan.backend == SpeechBackend.PUNJABI_CTC) {
+            maxOf(plan.modelBytes * 3L + 160L * 1024 * 1024, 512L * 1024 * 1024)
+        } else maxOf(plan.modelBytes * 4L + 128L * 1024 * 1024, 256L * 1024 * 1024)
+        check(!memory.lowMemory && estimatedBytes <= memory.availMem * 3L / 4L) {
+            "Not enough free memory for the selected speech recognizer. Close other apps and try again, or type your question. Required safety budget: ${estimatedBytes / (1024 * 1024)} MiB; available: ${memory.availMem / (1024 * 1024)} MiB."
+        }
+    }
+
+    suspend fun finishTranscription(plan: SpeechRecognitionPlan): String = withContext(Dispatchers.IO) {
         val recording = synchronized(lock) { session ?: error("Record some speech first.") }
+        val coroutine = currentCoroutineContext()
         var pcm: FloatArray? = null
         try {
             stopSession(recording)
             synchronized(lock) { if (session === recording) session = null }
             recording.failure?.let { error(it) }
             require(recording.count >= SAMPLE_RATE / 3) { "The recording was too short. Speak for at least a second and try again." }
-            require(modelFile != null && modelFile.isFile) {
-                "Import a multilingual Whisper tiny or base model in Models before using voice input. Recording was discarded."
-            }
-            require(modelFile.length() in 1..MAX_SPEECH_MODEL_BYTES) {
-                "Use a Whisper tiny or base model below 180 MiB on this low-memory device."
-            }
-            val language = languageTag.substringBefore('-').lowercase(Locale.ROOT).ifBlank { "auto" }
-            require(!modelFile.name.contains(".en", ignoreCase = true) || language == "en" || language == "auto") {
-                "This English-only speech model cannot recognize $languageTag. Import a multilingual Whisper model."
-            }
+            plan.validateFiles()
             val samples = speechSamples(recording.samples, recording.count)
             pcm = samples
             update { it.copy(recording = false, transcribing = true, message = "Recognizing speech locally · this may take time") }
             val result = NativeExecution.runExclusive {
-                val memory = ActivityManager.MemoryInfo()
-                (appContext.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager).getMemoryInfo(memory)
-                val estimatedBytes = maxOf(modelFile.length() * 4L + 128L * 1024 * 1024, 256L * 1024 * 1024)
-                check(!memory.lowMemory && estimatedBytes <= memory.availMem * 3L / 4L) {
-                    "Not enough free memory for this speech model. Close other apps or import multilingual Whisper tiny. Required safety budget: ${estimatedBytes / (1024 * 1024)} MiB; available: ${memory.availMem / (1024 * 1024)} MiB."
+                fun checkCancelled() {
+                    coroutine.ensureActive()
+                    check(!recognitionCancelled.get()) { "Speech recognition cancelled." }
                 }
-                NativeBridge.transcribe(modelFile.absolutePath, samples, language, minOf(4, maxOf(1, Runtime.getRuntime().availableProcessors() - 1)))
+                checkCancelled()
+                checkMemory(plan)
+                synchronized(recognitionLock) { ownsNativeRecognition = true }
+                try {
+                    checkCancelled()
+                    val text = when (plan.backend) {
+                        SpeechBackend.WHISPER -> {
+                            // Dispose the small detector before opening Whisper: only one model is retained.
+                            val detected = OrtSession.RunOptions().use { options ->
+                                NativeExecution.installCancellationHook { recognitionCancelled.set(true); options.setTerminate(true) }
+                                try {
+                                    SpeechPresenceKernel(requireNotNull(plan.speechPresenceFile) {
+                                        "The offline speech detector is not prepared. Start a new recording after local setup."
+                                    }, options, ::checkCancelled).use { detector -> detector.hasSpeech(samples) }
+                                } finally { NativeExecution.clearCancellationHook() }
+                            }
+                            checkCancelled()
+                            require(detected) { "No clear speech was detected. Try a quieter room, speak for a full sentence, or type your question." }
+                            checkMemory(plan)
+                            NativeBridge.transcribe(plan.modelFile.absolutePath, samples,
+                                plan.primaryLanguage, minOf(4, maxOf(1, Runtime.getRuntime().availableProcessors() - 1)))
+                        }
+                        SpeechBackend.PUNJABI_CTC -> OrtSession.RunOptions().use { options ->
+                            NativeExecution.installCancellationHook { recognitionCancelled.set(true); options.setTerminate(true) }
+                            try {
+                                checkCancelled()
+                                PunjabiCtcKernel(plan.modelFile, OfflineSpeechModels.punjabiVocabulary(requireNotNull(plan.vocabularyFile)),
+                                    blankId = 1, runOptions = options, checkCancelled = ::checkCancelled).use { kernel ->
+                                    kernel.transcribe(samples).text.also { transcript ->
+                                        require('<' !in transcript && '>' !in transcript) {
+                                            "Some Punjabi speech could not be decoded. Speak more clearly or type the unclear words."
+                                        }
+                                    }
+                                }
+                            } finally { NativeExecution.clearCancellationHook() }
+                        }
+                    }
+                    checkCancelled()
+                    text
+                } finally { synchronized(recognitionLock) { ownsNativeRecognition = false } }
             }.trim()
             require(result.isNotBlank()) { "No speech was recognized. Try a quieter room and speak clearly." }
             update { it.copy(transcribing = false, message = "Speech recognized offline") }
@@ -158,7 +206,10 @@ class SpeechController(context: Context) : AutoCloseable {
         }
     }
 
-    fun cancelTranscription() { NativeExecution.cancel() }
+    fun cancelTranscription() = synchronized(recognitionLock) {
+        recognitionCancelled.set(true)
+        if (ownsNativeRecognition) NativeExecution.cancel()
+    }
 
     fun cancelRecording() {
         val recording = synchronized(lock) { session.also { session = null } } ?: return
@@ -213,7 +264,7 @@ class SpeechController(context: Context) : AutoCloseable {
 
     override fun close() {
         closed = true
-        if (mutableState.value.transcribing) NativeExecution.cancel()
+        if (mutableState.value.transcribing) cancelTranscription()
         cancelRecording()
         stopSpeaking()
         tts?.shutdown()

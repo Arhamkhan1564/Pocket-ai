@@ -42,13 +42,14 @@ fun ApplianceScreen(onMessage: (String) -> Unit, onModels: () -> Unit, onAudio: 
             }
         }
         Text("Each turn listens for six seconds, transcribes locally, answers, then speaks. Wait for the reply to finish before speaking again. The microphone does not listen during inference or playback.", color = PocketMuted)
+        Text("Hands-free sends recognized text without review. Urdu and Punjabi can mishear words, names and numbers; use tap-to-talk when exact text matters. Punjabi recognition can return Gurmukhi, and this session keeps the raw transcript. Manual review can show a labeled Shahmukhi script conversion.", color = PocketMuted, style = MaterialTheme.typography.bodySmall)
         if (state.lastHeard.isNotBlank()) Card { Column(Modifier.padding(16.dp)) { Text("LAST HEARD", color = PocketAccent, style = MaterialTheme.typography.labelSmall); SelectionContainer { Text(state.lastHeard) } } }
         if (state.lastAnswer.isNotBlank()) Card { Column(Modifier.padding(16.dp)) { Text("LAST ANSWER", color = PocketAccent, style = MaterialTheme.typography.labelSmall); SelectionContainer { Text(state.lastAnswer) } } }
         if (state.running) Button(onClick = { ApplianceSession.stop(context) }, modifier = Modifier.fillMaxWidth().height(52.dp)) { Text("Stop session") }
         else Button(onClick = { if (needed.isNotEmpty()) permissions.launch(needed.toTypedArray()) else onStart() }, modifier = Modifier.fillMaxWidth().height(52.dp)) { Text(if (needed.isEmpty()) "Start session" else "Allow microphone & notifications") }
-        OutlinedButton(onClick = onModels, modifier = Modifier.fillMaxWidth()) { Text("Set up a speech model") }
+        OutlinedButton(onClick = onModels, modifier = Modifier.fillMaxWidth()) { Text("Choose offline recognition") }
         OutlinedButton(onClick = onAudio, modifier = Modifier.fillMaxWidth()) { Text("Check offline voice & speaker") }
-        Text("Requires a compatible processor, a selected Whisper model with enough free memory, an installed offline voice, and audible volume. The included multilingual tiny model can be used. The ongoing notification includes a Stop control. Say “stop assistant” to end a session.", color = PocketMuted, style = MaterialTheme.typography.bodySmall)
+        Text("Requires compatible offline recognition with enough free memory, an installed offline voice, and audible volume. Included automatic recognition chooses a resource for each language; an explicit custom or disabled choice is respected. The ongoing notification includes a Stop control. Say “stop assistant” to end a session.", color = PocketMuted, style = MaterialTheme.typography.bodySmall)
         Text("Sessions end after 30 minutes and keep the CPU awake while active. Android or the device manufacturer may stop background audio. Start from the visible app each time. Wake words and startup after boot are future features.", color = PocketMuted, style = MaterialTheme.typography.bodySmall)
         Text("Microphone recordings stay temporarily in memory. This session runs User Mode and cannot teach or change permanent knowledge.", color = PocketMuted, style = MaterialTheme.typography.bodySmall)
     }

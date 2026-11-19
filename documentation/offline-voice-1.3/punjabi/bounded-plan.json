@@ -1,0 +1,14 @@
+[
+  {
+    "id": "fleurs-pa_in-validation-0",
+    "path": "/workspace/validation/offline-voice-improve-v12/fixtures/fleurs-pa_in-validation-0-pcm16.wav",
+    "pcm16_sample_sha256": "110cde1c7b473b9295c35101b50bf0365d8b3d1cb9d19c21509e2e376706ca72",
+    "reference": "ਉਪ-ਸੱਭਿਆਚਾਰ ਦੇ ਮੈਂਬਰ ਅਕਸਰ ਸ਼ੈਲੀ ਦੀ ਇੱਕ ਖ਼ਾਸ ਅਤੇ ਸੰਕੇਤਕ ਵਰਤੋਂ ਰਾਹੀਂ ਆਪਣੀ ਸਦੱਸਤਾ ਦਾ ਸੰਕੇਤ ਦਿੰਦੇ ਹਨ ਜਿਸ ਵਿੱਚ ਫੈਸ਼ਨ ਸ਼ਿਸ਼ਟਤਾ ਅਤੇ ਗੁਪਤ ਭਾਸ਼ਾ ਸ਼ਾਮਲ ਹੁੰਦੀ ਹੈ।"
+  },
+  {
+    "id": "fleurs-pa_in-validation-1",
+    "path": "/workspace/validation/offline-voice-improve-v12/fixtures/fleurs-pa_in-validation-1-pcm16.wav",
+    "pcm16_sample_sha256": "14ff8b5ea01bf1a57c7e44a24a3fc68fdd8be63c50b47f7d80088d30fdce0bfd",
+    "reference": "ਖੰਭਾਂ ਦੀ ਸੰਰਚਨਾ ਤੋਂ ਪਤਾ ਲਗਦਾ ਹੈ ਕਿ ਉਨ੍ਹਾਂ ਦੀ ਵਰਤੋਂ ਫਲਾਈਟ ਵਿੱਚ ਨਹੀਂ ਕੀਤੀ ਗਈ ਸੀ ਬਲਕਿ ਤਾਪਮਾਨ ਨਿਯਮ ਜਾਂ ਪ੍ਰਦਰਸ਼ਨ ਲਈ ਕੀਤੀ ਗਈ ਸੀ। ਸ਼ੋਧ ਕਰਤਾ ਨੇ ਸੁਝਾਅ ਦਿੱਤਾ ਹੈ ਕਿ ਭਾਵੇਂ ਇਹ ਇਕ ਯੁਵਾ ਡਾਇਨਾਸੂਰ ਦੀ ਪੂਛ ਹੋਵੇ ਨਮੂਨਾ ਬਾਲਗ ਪੰਛੀ ਦਾ ਖੰਭ ਦਿਖਾਉਂਦਾ ਹੈ ਅਤੇ ਬੋਟ ਦਾ ਹੇਠਲਾ ਨਹੀਂ।"
+  }
+]

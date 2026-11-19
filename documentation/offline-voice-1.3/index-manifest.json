@@ -1,0 +1,540 @@
+{
+  "schema_version": 1,
+  "scope": "host-only",
+  "created_at_utc": "2026-11-19T10:05:26.732154+00:00",
+  "purpose": "Preserve actual public-fixture voice model outputs, including failed controls, rejected candidates and fixed heldout comparisons. Not phone/fluency/clinical acceptance.",
+  "included": "Small UTF-8 JSON/TXT/Markdown reports, fixture/reference/license metadata, source snapshots and portable reproduction wrappers only.",
+  "excluded": [
+    "Raw or normalized audio",
+    "Model weights",
+    "Compiled classes/JARs/native binaries",
+    "Private/user data",
+    "Signed audio URL query strings"
+  ],
+  "manifest_hash_policy": "All files under this directory except index-manifest.json itself are listed. SHA-256 applies to exact archived bytes.",
+  "source_identities": {
+    "app/src/main/cpp/pocketai_jni.cpp": {
+      "sha256": "9ad280a212bb9245db15f42ef44dee38b9884150d11857476823cd8e8e7fe079",
+      "role": "Canonical current JNI used for all fresh-host Whisper model requests"
+    },
+    "app/src/main/java/com/pocketai/voice/PunjabiCtcKernel.kt": {
+      "sha256": "769cff8b2cb7fdebdede220cbc594e7b3f4f16be02deceed71769e1c413d26b2",
+      "role": "Final reviewed canonical Kotlin kernel, exact match to final-kernel-results.json"
+    },
+    "tests/offline-voice/com/pocketai/engine/NativeBridge.java": {
+      "sha256": "7958317caab58765c3c5df135f8f75fca3a901e8572418243ebde653821b5d59",
+      "role": "Byte-identical standalone JNI harness, also archived under harness/NativeBridge.java"
+    },
+    "app/src/main/java/com/pocketai/voice/SpeechPresenceKernel.kt": {
+      "sha256": "42b627979d4d7f64d1a7f4fe2e980ceaa4a024062c64e40c3f6579970c3c0506",
+      "role": "Final canonical Kotlin gate, exact match to jvm-parity-results.json"
+    },
+    "scripts/voice-models/README.md": {
+      "bytes": 3685,
+      "sha256": "4275bb033de56b185c34ee658e8b76e2c07676d1655cf601d665e2486f90bc7f",
+      "role": "Canonical reproducible Urdu model recipe/documentation/license source"
+    },
+    "scripts/voice-models/convert_urdu_base.py": {
+      "bytes": 10355,
+      "sha256": "f4300d1eb001e0571f43d8c213788bf28b36329a8128af14967f46f6c777ecdf",
+      "role": "Canonical reproducible Urdu model recipe/documentation/license source"
+    },
+    "scripts/voice-models/converter-precision-fix.diff": {
+      "bytes": 571,
+      "sha256": "9d6b51692138d083a57a67759db8a95e18abd2e253706999c340fa15ea524a49",
+      "role": "Canonical reproducible Urdu model recipe/documentation/license source"
+    },
+    "scripts/voice-models/fetch_urdu_base.py": {
+      "bytes": 2194,
+      "sha256": "b25b3a2e581e2bf426e39b3702ad43eb1c8a27cef19aa51af2f9e258ae0d3322",
+      "role": "Canonical reproducible Urdu model recipe/documentation/license source"
+    },
+    "scripts/voice-models/quantize_urdu_base.py": {
+      "bytes": 3300,
+      "sha256": "657d387514641e25a0295a50af4573601d8aa9c4680846892376277fb791467f",
+      "role": "Canonical reproducible Urdu model recipe/documentation/license source"
+    },
+    "scripts/voice-models/requirements-urdu-base.txt": {
+      "bytes": 485,
+      "sha256": "13a09846f43fdf893b0121ab07bb8ddcd813d2fb7c413afa5d93644914398651",
+      "role": "Canonical reproducible Urdu model recipe/documentation/license source"
+    },
+    "scripts/voice-models/urdu-base-inputs.json": {
+      "bytes": 4178,
+      "sha256": "f4113502b6c812378eaf0de6b2d1e7a9b0b7c39b23919a857d90dc7b5d17cf42",
+      "role": "Canonical reproducible Urdu model recipe/documentation/license source"
+    },
+    "scripts/voice-models/verify_urdu_vocabulary.py": {
+      "bytes": 2803,
+      "sha256": "e35fa34a21fef4e3c732940fee246954b8bb7e66bb880704c3238f9c52a860e4",
+      "role": "Canonical reproducible Urdu model recipe/documentation/license source"
+    },
+    "documentation/URDU-SPEECH-MODEL.md": {
+      "bytes": 6053,
+      "sha256": "9282e9454c1675c0322e6506e384943cf45b8fae89686c61c488326c367d4a0a",
+      "role": "Canonical reproducible Urdu model recipe/documentation/license source"
+    },
+    "app/src/main/assets/licenses/APACHE-2.0.txt": {
+      "bytes": 11358,
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "role": "Canonical reproducible Urdu model recipe/documentation/license source"
+    },
+    "app/src/main/assets/licenses/URDU_WHISPER_MODEL_NOTICE.txt": {
+      "bytes": 1776,
+      "sha256": "f4770377805e15c1092294b9fe814e0e28e8c561eedf59d8d184c993b8887f1b",
+      "role": "Canonical reproducible Urdu model recipe/documentation/license source"
+    }
+  },
+  "validation": {
+    "all_json_parsed": true,
+    "all_python_sources_ast_parsed": true,
+    "portable_java_harness_compile": "PASS, JDK21.0.2 javac --release17, output outside source",
+    "portable_wrapper_cli_help": "PASS; no inference or downloads repeated for wrapper checks",
+    "portable_wrappers_added_after_observations": true,
+    "canonical_ctc_source_matches_final_report": true,
+    "canonical_jni_source_matches_build_record": true,
+    "audio_fixture_hash_audit": "fixtures/heldout-audit.json; originals6/6 match published1.2.1 payload/source hashes",
+    "canonical_gate_source_matches_parity_report": true,
+    "recipe_eleven_source_identities_match_reproduction_record": true
+  },
+  "interpretation": [
+    "Urdu FT improves basicWER on four speech clips but invents speech on three direct non-speech controls and corrupts a quantity retained by genericBase.",
+    "Speech-gate reference results are separate from ASR accuracy and do not repair words/numbers.",
+    "Canonical CTC metrics use actual JVM outputs; earlier NumPy differences are retained and resolved by identical normalized-input frame parity.",
+    "Source snapshots retain original development paths; portable wrappers and README explain reproduction."
+  ],
+  "file_count": 86,
+  "total_bytes": 510158,
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 4811,
+      "sha256": "e31b91e4ea19d9509a9fda5ccaa1483b7e98133d7a644ff88802647c5d4d0581"
+    },
+    {
+      "path": "baseline-build-record.json",
+      "bytes": 1278,
+      "sha256": "44517e1609351b7ec23f95d230697d75494d36d2ab3552382c47d3621111516b"
+    },
+    {
+      "path": "fixtures/controls.json",
+      "bytes": 6979,
+      "sha256": "6b0183f20bceeed2758288d7f41f93b5094b8b1606d1000109b221e4885a019d"
+    },
+    {
+      "path": "fixtures/heldout-audit.json",
+      "bytes": 1424,
+      "sha256": "62488722d2a17ba7defee02b5eaedf683e435509e692df1fe95b7337d9b30562"
+    },
+    {
+      "path": "fixtures/heldout.json",
+      "bytes": 9890,
+      "sha256": "d16d60173e754dfde92b8281c53c95166bd609f47172559966b1f9ef85ec29b8"
+    },
+    {
+      "path": "fixtures/original-restored.json",
+      "bytes": 19623,
+      "sha256": "b51384e27fca0eef17515f155ab8616d9f4d06d6b4f053e8f6d175d1de8081f8"
+    },
+    {
+      "path": "harness/NativeBridge.java",
+      "bytes": 3699,
+      "sha256": "7958317caab58765c3c5df135f8f75fca3a901e8572418243ebde653821b5d59"
+    },
+    {
+      "path": "harness/fetch-fixtures.py",
+      "bytes": 3938,
+      "sha256": "a195f240ba923dee8ec6a48e3ee9ef6df05f51932469383f2f7e2d61643d2033"
+    },
+    {
+      "path": "harness/run-whisper.py",
+      "bytes": 6188,
+      "sha256": "067d5f2f030ac42dc2dff0492aa43b9d8b195f4e751a92e7c1e7be93784acfa7"
+    },
+    {
+      "path": "harness/snapshots/benchmark.py",
+      "bytes": 5980,
+      "sha256": "9ed7473d1b642b338c184b2b6177e2b276929ea9f09e739a658a9d0628321f7c"
+    },
+    {
+      "path": "harness/snapshots/converter-precision-fix.diff",
+      "bytes": 571,
+      "sha256": "9d6b51692138d083a57a67759db8a95e18abd2e253706999c340fa15ea524a49"
+    },
+    {
+      "path": "harness/snapshots/ctc/PunjabiCtcCancelProbe.kt",
+      "bytes": 2093,
+      "sha256": "62a0487dc5a3c92f71441ef0407182d129c98ab1fb6fb52ddddad0113fcdce5e"
+    },
+    {
+      "path": "harness/snapshots/ctc/PunjabiCtcHostProbe.kt",
+      "bytes": 1529,
+      "sha256": "dfd3eba890f252bacf8208b09c3f798b7b293dc28ef07b600116195c0b60d664"
+    },
+    {
+      "path": "harness/snapshots/ctc/benchmark.py",
+      "bytes": 5966,
+      "sha256": "d94406c6a24d763dc844511feed11ff4ff49c862e25cf79faf680476e47e0a6c"
+    },
+    {
+      "path": "harness/snapshots/ctc/bounded_benchmark.py",
+      "bytes": 6605,
+      "sha256": "b48e71df4451eee00c09c3c66aeb52c9009930717dc2033732e4d7de3bcc0d4e"
+    },
+    {
+      "path": "harness/snapshots/ctc/check-matching-input.py",
+      "bytes": 2533,
+      "sha256": "097ca4160f84e1403ce709fdd5454b2e95822f9d88ed10842983a29a40505131"
+    },
+    {
+      "path": "harness/snapshots/ctc/run-controls-resources.py",
+      "bytes": 2440,
+      "sha256": "ed22975b5e5aee91b88f8cfeaea762ccc503ec164da40954a3a94baeb9d80cd6"
+    },
+    {
+      "path": "harness/snapshots/ctc/run-parity.py",
+      "bytes": 2207,
+      "sha256": "6ff12e18952827c528e1ea87024c31d32c38f6b0a162a92b5391aa97954ee432"
+    },
+    {
+      "path": "harness/snapshots/experimental-source.diff",
+      "bytes": 3448,
+      "sha256": "3be40f95b2d7490810c4b7a5558407f947bb8d3a143608e6ce2167dc978eabef"
+    },
+    {
+      "path": "harness/snapshots/fetch_models.py",
+      "bytes": 2950,
+      "sha256": "b4e4450e845d75badfd81a7a720c31ab5a0f8989db8c728c76fc57168f6321b0"
+    },
+    {
+      "path": "harness/snapshots/generate-controls.py",
+      "bytes": 5957,
+      "sha256": "00e0d9aeccf63841d83525d43c9c25fdd5c5de3df69ac32c78511e1027a706ef"
+    },
+    {
+      "path": "harness/snapshots/prepare_heldouts.py",
+      "bytes": 5131,
+      "sha256": "244b95021b9d1901988483f39886e6c685433fc53023546d3232c5b841c591dd"
+    },
+    {
+      "path": "harness/snapshots/restore_fixtures.py",
+      "bytes": 5850,
+      "sha256": "318ac388821618e46b8b00510c05f73dbfc2ff00a2d7f82f715cf08f6ad327b4"
+    },
+    {
+      "path": "harness/snapshots/run_decoder_cases.py",
+      "bytes": 7815,
+      "sha256": "2d7c8c040bcfd4c696c14737d56eeb2029f5137ec3f850673761b6947754f074"
+    },
+    {
+      "path": "harness/snapshots/script-hint-source.diff",
+      "bytes": 3866,
+      "sha256": "f4908c4c64de034f6768f8a0126e3da27a9a2bfac2249e620b109cf8aef0df26"
+    },
+    {
+      "path": "harness/verify-evidence.py",
+      "bytes": 1292,
+      "sha256": "d092371720cf1520fe94e8f284d83d005615192026942fd6f512b5bc704bf4a2"
+    },
+    {
+      "path": "punjabi/bounded-plan.json",
+      "bytes": 1584,
+      "sha256": "70fa907b168226853fd3ab18887e22f04c19572d46aa7655e0ce1b99ab7887d1"
+    },
+    {
+      "path": "punjabi/bounded-results.json",
+      "bytes": 30288,
+      "sha256": "bfa9785b0a511812cdd2ff0c1b30de433852ec80ccce76fcf88acaf75ad721d7"
+    },
+    {
+      "path": "punjabi/cancellation-results.json",
+      "bytes": 543,
+      "sha256": "98723b09dff0e210fc037fd55eece41ed12bb8d4b2fd0757073881239b61cc06"
+    },
+    {
+      "path": "punjabi/controls-resource-plan.json",
+      "bytes": 2136,
+      "sha256": "eee5d335a110a066c3a47906f14dd4e40b78734a4b275a699e59557bf8acf109"
+    },
+    {
+      "path": "punjabi/controls-resource-results.json",
+      "bytes": 5235,
+      "sha256": "4ff249bd0893e6cd1a4b76a33c55a7fb883c57d0f0a333525d9d48be6984b11f"
+    },
+    {
+      "path": "punjabi/final-kernel-results.json",
+      "bytes": 16683,
+      "sha256": "145a30ae7b21e202fbe340aad38ecbccc40fc45972ffc73c4e09ad9bf0eb58bb"
+    },
+    {
+      "path": "punjabi/heldout-plan-results.json",
+      "bytes": 12278,
+      "sha256": "12813796b972abe883ce25d22ced747913500e1ab309209a2091bed2f857a0b3"
+    },
+    {
+      "path": "punjabi/heldout-plan.json",
+      "bytes": 967,
+      "sha256": "0e10a8a0d790ebee873e5d009c9fcf707976e072358c8da876cce807cea464dd"
+    },
+    {
+      "path": "punjabi/manifest.json",
+      "bytes": 1322,
+      "sha256": "854676b59c40ce0ce8ef430af594367bccafadf77876ff4baddd72613c0c5a73"
+    },
+    {
+      "path": "punjabi/matching-input-results.json",
+      "bytes": 4833,
+      "sha256": "632ad38e80a5ff40a296527ddc9ee4444110a11241411e1b88ae94e1409550c2"
+    },
+    {
+      "path": "punjabi/normalization-comparison.json",
+      "bytes": 319,
+      "sha256": "72f81c360c174dbc671620d7d9bbc81b155a30729bb8c50ea9a77d2cff406da6"
+    },
+    {
+      "path": "punjabi/original-bounded-results.json",
+      "bytes": 32161,
+      "sha256": "91fe6c1bf47e7dff83f267f2ed220d1e1c65304295cfbe31705c556dba09afd3"
+    },
+    {
+      "path": "punjabi/parity-results.json",
+      "bytes": 3257,
+      "sha256": "72ad4ff9db2b69dd684769c78eb52bc8dd6ebdba8e8abb5acea5865bf9134108"
+    },
+    {
+      "path": "punjabi/research-findings.json",
+      "bytes": 9967,
+      "sha256": "492ee673cfd9a9b50e373cb3fab64df2ec5683ac973873be45e6912575a2d8c1"
+    },
+    {
+      "path": "punjabi/research-xd-int8-onnx-structure.json",
+      "bytes": 1563,
+      "sha256": "bc2f99061201f9df213ab7e97dfe2c32617e9e804c0e837dac0bfad32ac72d37"
+    },
+    {
+      "path": "speech-gate/LICENSE-SILERO.txt",
+      "bytes": 1075,
+      "sha256": "2e63e9a38b6e8fc0c7bc37ce174caca1862870856c6daf5697cfb785e925520b"
+    },
+    {
+      "path": "speech-gate/SpeechPresenceCancelProbe.kt",
+      "bytes": 2066,
+      "sha256": "d53fb2b7a7026825c97d88e30078d31ea5afbc2a3a56798305a6f338eb7d270a"
+    },
+    {
+      "path": "speech-gate/SpeechPresenceHostProbe.kt",
+      "bytes": 1475,
+      "sha256": "a89b6dd37a9ddaab517112285f608b51799b856946887e8b4d6b458aeb7fc201"
+    },
+    {
+      "path": "speech-gate/jvm-cancellation-results.json",
+      "bytes": 149,
+      "sha256": "4b2b970922cc3b3f580f2d26fca832af36914bc2d745fa577a0a0a726ad0711c"
+    },
+    {
+      "path": "speech-gate/jvm-frames/fleurs-en_us-validation-0.json",
+      "bytes": 112,
+      "sha256": "9265261f2ac0bb51a3bff67eeddfb17830a28ed2742945cbb759f063e097fe52"
+    },
+    {
+      "path": "speech-gate/jvm-frames/fleurs-en_us-validation-1.json",
+      "bytes": 112,
+      "sha256": "213ae71a1e196c2852a0800de5080730c55d50d276abb682268f1e144a41506d"
+    },
+    {
+      "path": "speech-gate/jvm-frames/fleurs-ur_pk-test-0.json",
+      "bytes": 112,
+      "sha256": "46e5c7114c1a1e9f4a5e798dd7eba394bf8dff78fb5bd2ad24f8d5fe36531307"
+    },
+    {
+      "path": "speech-gate/jvm-frames/fleurs-ur_pk-test-1.json",
+      "bytes": 111,
+      "sha256": "9796ff6a018e517c45e59ab82c51fd10e27a63561783c71f3aceecfd180193d5"
+    },
+    {
+      "path": "speech-gate/jvm-frames/fleurs-ur_pk-test-2.json",
+      "bytes": 112,
+      "sha256": "26104e54155dc5d5321e125a898a0f0937826890b7ac854878081941a63e07a0"
+    },
+    {
+      "path": "speech-gate/jvm-frames/fleurs-ur_pk-test-3.json",
+      "bytes": 112,
+      "sha256": "451d0c06e270f3f37ae6f91ee4d4920c6f0a49c88fc000c99131860e145c067f"
+    },
+    {
+      "path": "speech-gate/jvm-frames/higher-noise-6s.json",
+      "bytes": 112,
+      "sha256": "f56e8c341a6c2fa5bade9c69e3ab78dcc5c51e5826ac16411ba0bf79c7402983"
+    },
+    {
+      "path": "speech-gate/jvm-frames/silence-6s.json",
+      "bytes": 112,
+      "sha256": "0af166d363bab534bcb68b861d81ea8b384cb61c747b7c64287203d1c85c06e9"
+    },
+    {
+      "path": "speech-gate/jvm-frames/tone-440hz-6s.json",
+      "bytes": 112,
+      "sha256": "585a35307240fc1a54357315068be30bec3ab4b3fa5b5b6a44f18d06a4f9e0bd"
+    },
+    {
+      "path": "speech-gate/jvm-parity-results.json",
+      "bytes": 4810,
+      "sha256": "2aff6f94964dcb89f9a92b33a48f06ef523ebfe2aff2c2c8028493e16fb60919"
+    },
+    {
+      "path": "speech-gate/jvm-unit-results.txt",
+      "bytes": 61,
+      "sha256": "d069ce22019d710372868b795c48b004da7985e33deab6dbda485bfcb99b45c6"
+    },
+    {
+      "path": "speech-gate/model-io.json",
+      "bytes": 688,
+      "sha256": "baf19c62ac16f5d8e06140d0ae3c72491dd77671de636baef29cd09487c6a291"
+    },
+    {
+      "path": "speech-gate/model-provenance.json",
+      "bytes": 2006,
+      "sha256": "e2edd02ff6c1e58204c85d47f110541edd171153b2f186c42f3fcc5b65c0e3cf"
+    },
+    {
+      "path": "speech-gate/official-utils-vad.py",
+      "bytes": 30979,
+      "sha256": "15d0f6b3ef9590e22ca2f146e1436f6901da356cb552d3183df4100862b333cb"
+    },
+    {
+      "path": "speech-gate/probe.py",
+      "bytes": 4820,
+      "sha256": "76d4419d3ad72995edf7f8d12880c7df6a6f68cbedfb601c6389d73adf86ab8c"
+    },
+    {
+      "path": "speech-gate/results.json",
+      "bytes": 81060,
+      "sha256": "1d88a822038e8e7aac8afec0cde79ae55b2e0b25df43e87067733c607884706d"
+    },
+    {
+      "path": "speech-gate/run-jvm-parity.py",
+      "bytes": 2797,
+      "sha256": "78a0cc45857fd0fd83004e3d12a2a2d969168b7db75e6d81b475666030ba9a84"
+    },
+    {
+      "path": "urdu/conversion-requirements-lock.txt",
+      "bytes": 430,
+      "sha256": "8ec2a1e3b7cf9329a7817e0763968adac6121504451d733221278fb412b41b30"
+    },
+    {
+      "path": "urdu/conversion-verification.json",
+      "bytes": 2188,
+      "sha256": "9ec7e52f2e7ec425779f1c0ac563c82e73775a1fade8212c82654480730c60c6"
+    },
+    {
+      "path": "urdu/derived-model-manifest.json",
+      "bytes": 2373,
+      "sha256": "1cd3a19ddac1b24ad694398b67b9a929c15b8388372ec9b359873c8353562487"
+    },
+    {
+      "path": "urdu/heldout-two.json",
+      "bytes": 4706,
+      "sha256": "d60e8f403bdcca645993dfedb0baab4a89d390afb9bf98e4b2a42d4eec90ebd3"
+    },
+    {
+      "path": "urdu/nonspeech-controls.json",
+      "bytes": 4628,
+      "sha256": "1c85a7c03b17e0c59fa541095a414288842d54d87f0ee143a09e653217d023fc"
+    },
+    {
+      "path": "urdu/original-two.json",
+      "bytes": 4696,
+      "sha256": "299e279b552bfe8e5fd50552bd5daf52f8a0c3b1eb48ebc7517b9d3d4966965c"
+    },
+    {
+      "path": "urdu/quantizer-build-record.json",
+      "bytes": 1560,
+      "sha256": "f7bf713d3dabb4bf250e762e16e4563290e0f2c360b6a4f803f016d5da884f11"
+    },
+    {
+      "path": "urdu/recipe-reproduction-record.json",
+      "bytes": 2699,
+      "sha256": "0cdf1f1e8846a0c3fbed2dfa51815e1257011e435c4683b25448cc6f14cfb7a5"
+    },
+    {
+      "path": "urdu/recipe-verification/conversion-verification.json",
+      "bytes": 2248,
+      "sha256": "13f0fba9d06d3d937b8d899080d1d7a037a890fa264922b4b9f5f13a31e114c7"
+    },
+    {
+      "path": "urdu/recipe-verification/quantization-verification.json",
+      "bytes": 1843,
+      "sha256": "7cc30bf7c60dbc42a32cafcc406cfb24a46fd6fef567f94d726f9b53ea178365"
+    },
+    {
+      "path": "urdu/recipe-verification/vocabulary-verification.json",
+      "bytes": 856,
+      "sha256": "954400df21c7a587ace24e6597098f45f141f1e5bac5d473931a6630739284aa"
+    },
+    {
+      "path": "urdu/vocabulary-verification.json",
+      "bytes": 856,
+      "sha256": "954400df21c7a587ace24e6597098f45f141f1e5bac5d473931a6630739284aa"
+    },
+    {
+      "path": "whisper/base-heldout-urdu.json",
+      "bytes": 4653,
+      "sha256": "23b51743b47860fb943abb3b520300369bd8bbc896779e81ec84714a3f24be6a"
+    },
+    {
+      "path": "whisper/base-original-six.json",
+      "bytes": 24076,
+      "sha256": "9ffd5ce7dd18e6e0cd425c9a93e8bb675199cc71ad40c26c813c833a23021b09"
+    },
+    {
+      "path": "whisper/comparison.json",
+      "bytes": 20737,
+      "sha256": "4e04ed672423b39479f65e78eb5fe9b6e9df400293251a15e3e337be5467a645"
+    },
+    {
+      "path": "whisper/decoder-comparison.json",
+      "bytes": 10579,
+      "sha256": "cfd69c52e673af6c348af2dd08e677a2da3d039c2bf6df8068d88a52a54f109d"
+    },
+    {
+      "path": "whisper/experimental-build-record.json",
+      "bytes": 2305,
+      "sha256": "658d10bc5c000a88974d4d1d0009a6e3df5d1c660a4b6f2c99b8005ce6bf7301"
+    },
+    {
+      "path": "whisper/model-manifests.json",
+      "bytes": 2988,
+      "sha256": "9a719fc5107c183964c733fd3e04562bee35272ccd68566ac88ac30863dfa337"
+    },
+    {
+      "path": "whisper/pipeline-api-review.json",
+      "bytes": 3239,
+      "sha256": "1f37b2f2de2f59af53bb5875d0fdf81125e8a3202a0694b593aefd4a4636eb87"
+    },
+    {
+      "path": "whisper/script-hint-build-record.json",
+      "bytes": 2401,
+      "sha256": "93ed7bc3a9efe95753548ed4bcf0f2e3710b67a9ab68c926ad54e97d4318beb2"
+    },
+    {
+      "path": "whisper/small-original-four.json",
+      "bytes": 19558,
+      "sha256": "b2db927f91474a6c535d41fac4366c46c8f49ec5bf258acc726f2926c024b55c"
+    },
+    {
+      "path": "whisper/small-q4-metadata-check.json",
+      "bytes": 1453,
+      "sha256": "03a1c98c87c7b2bf66faa356eb5f558c959c85d4a7c56198619f3926a1b5b93d"
+    },
+    {
+      "path": "whisper/tiny-same-host-control.json",
+      "bytes": 645,
+      "sha256": "8252a966fb4f5794ac4ef594c9dc0807b3d57c1557e6d0864538c296933e1248"
+    },
+    {
+      "path": "whisper/urdu-paired-comparison.json",
+      "bytes": 8249,
+      "sha256": "7124ad2f1e80062e09ca96507179fb59a333e6e729978ba1fbc624b9a3fee12a"
+    }
+  ]
+}

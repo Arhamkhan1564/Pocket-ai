@@ -1,4 +1,4 @@
-Pocket AI offline baseline model resources
+Pocket AI 1.3 voice preview offline model resources
 
 The exact file names, byte sizes, SHA-256 digests, pinned public download URLs,
 model roles and directions are in offline-model-manifest.json. Resources are
@@ -6,6 +6,8 @@ bundled into this APK from an external build-assets directory. No application
 runtime download, account, cloud inference or provider translation API is used.
 Source distributions omit standalone weights; scripts/fetch-offline-models.py
 reconstructs and verifies the pinned assets before an Android build.
+The bundle contains 17 files in seven packs, totaling 899,719,726 bytes.
+This is a model-asset total, not APK size or installed-storage use.
 
 1. Multilingual saved-document search
 
@@ -64,7 +66,7 @@ copy and a two-fact summary but failed missing-fact abstention by repeating an
 irrelevant saved fact. It requires conditional use and an original-source or
 unknown-answer fallback. No Urdu/Punjabi generation capability is claimed here.
 
-4. Multilingual voice recognition
+4. Included English recognition / automatic speech selection
 
 Model: multilingual Whisper tiny, whisper.cpp GGML Q5_1
 Conversion repository: ggerganov/whisper.cpp
@@ -76,3 +78,71 @@ Detailed model notice: BUNDLED_SPEECH_MODEL_NOTICE.txt
 This recognizer does not supply Android text-to-speech voices. Installed offline
 voice availability, pronunciation, microphone quality, device RAM, inference
 latency and all target-phone behavior require their own checks.
+
+
+Selecting the included automatic entry uses this model for English and the
+language-specific Urdu/Punjabi resources below. An explicit custom Whisper
+choice is preserved; a disabled recognition setting stays disabled. Recognition
+models do not add TTS voices or translate saved document evidence.
+
+5. Urdu recognition
+
+Upstream: kingabzpro/whisper-base-urdu-full
+Pinned source revision: 6bfaec492d42f4b76f117b2b34cd9672509cecdc
+Source: https://huggingface.co/kingabzpro/whisper-base-urdu-full
+Local derivative: ggml-urdu-base-q5_1.bin, 59,707,642 bytes
+SHA-256: 701f3ae011e0964e45894ad884da1afd5c1a0a7a846b054d9765e75d563ee7b9
+License: Apache-2.0 declared by fine-tune card; underlying OpenAI Whisper MIT
+Full attribution and notices: licenses/URDU_WHISPER_MODEL_NOTICE.txt
+Reconstruction: scripts/voice-models/ and documentation/URDU-SPEECH-MODEL.md
+
+Pocket AI converted and quantized the existing fine-tune; no additional training
+was performed. Four exploratory Urdu clips had lower basic word errors than
+generic Base but still lost or changed quantities. This model also hallucinated
+words on three non-speech controls when used without a speech-presence gate.
+The app requires the included detector before Whisper and editable review for
+manual Urdu results. No clinical or target-phone acceptance is established.
+
+6. Punjabi Gurmukhi recognition
+
+Conversion: XDcobra/wav2vec2-large-xlsr-53-punjabi-ONNX
+Pinned revision: de54b60baa1879a4db93596cf1b5b3215a291b7a
+Source: https://huggingface.co/XDcobra/wav2vec2-large-xlsr-53-punjabi-ONNX
+Generic fine-tune: kingabzpro/wav2vec2-large-xlsr-53-punjabi
+Upstream base: Harveenchadha/vakyansh-wav2vec2-punjabi-pam-10 / CLSRIL-23
+License: Apache-2.0 conversion/fine-tune; MIT Vakyansh base
+Full attribution and retained MIT notice: licenses/PUNJABI_CTC_NOTICES.txt
+Apache license: licenses/Apache-2.0.txt
+
+The int8 model and 65-token vocabulary produce Gurmukhi. The runtime uses
+bounded 12-second windows and merges raw frames before global CTC decoding.
+Shahmukhi is a separately labeled display conversion; it is not a direct
+Shahmukhi acoustic model or Urdu relabeled as Punjabi. Four host speech clips
+contained substantial word/name errors. Four non-speech controls returned empty
+text. All manual Punjabi results require editable review. These checks do not
+establish broad language, clinical or 2 GB phone acceptance.
+
+7. Speech-presence detector
+
+Upstream: snakers4/silero-vad, version 6.2.3
+Pinned revision: 5cd7945676eb32225748052e2e6a0580e4686a08
+Source: https://github.com/snakers4/silero-vad
+Model: silero-vad.onnx, 2,327,524 bytes
+SHA-256: 1a153a22f4509e292a94e67d6f9b85e8deb25b4988682b7e174c65279d8788e3
+License: MIT; Copyright (c) 2020-present Silero Team
+Full license: licenses/SILERO_VAD_MIT.txt
+
+This offline detector runs before every Whisper model and is closed before
+Whisper loads. Its official reference pipeline, with threshold 0.5 and 250 ms
+minimum speech, accepted four Urdu/two English recordings and rejected three
+non-speech controls. The canonical Kotlin gate matched all nine decisions and
+every frame probability exactly on the host. Device behavior remains unverified;
+see documentation/VOICE-VALIDATION-1.3.md. Likely speech is not proof that recognized
+words, names, numbers or medical meaning are correct.
+
+Each recording fixes its backend, language, script and draft destination before
+capture. Manual Urdu/Punjabi results require editing/review before entering the
+captured draft; sending or saving still needs the user's action. Original
+recognition remains available beside labeled Shahmukhi conversion. Hands-free
+turns use unreviewed transcripts and have additional limitations. No microphone,
+all-Android, 2 GB phone, fluent-speaker or clinical acceptance is implied.

@@ -1,0 +1,39 @@
+{
+  "compile": [
+    "/usr/bin/g++",
+    "-O2",
+    "-DNDEBUG",
+    "-std=c++17",
+    "-I/workspace/PocketAI/vendor/whisper.cpp/examples",
+    "-I/workspace/PocketAI/vendor/llama.cpp/ggml/include",
+    "/workspace/PocketAI/vendor/whisper.cpp/examples/quantize/quantize.cpp",
+    "/workspace/PocketAI/vendor/whisper.cpp/examples/common-ggml.cpp",
+    "/workspace/validation/native-build/llama-build/ggml/src/libggml.a",
+    "/workspace/validation/native-build/llama-build/ggml/src/libggml-cpu.a",
+    "/workspace/validation/native-build/llama-build/ggml/src/libggml-base.a",
+    "-ldl",
+    "-lm",
+    "-pthread",
+    "-o",
+    "/workspace/validation/urdu-whisper-base/recipe-verification/whisper-quantize"
+  ],
+  "quantize": [
+    "/workspace/validation/urdu-whisper-base/recipe-verification/whisper-quantize",
+    "/workspace/validation/urdu-whisper-base/recipe-verification/converted/ggml-model.bin",
+    "/workspace/validation/urdu-whisper-base/recipe-verification/converted/ggml-urdu-base-q5_1.bin",
+    "q5_1"
+  ],
+  "source_sha256": {
+    "vendor/whisper.cpp/examples/quantize/quantize.cpp": "ab95fe726971332446f6100e18924b181b07b4f0823a2cade685cc8ed9a4b78b",
+    "vendor/whisper.cpp/examples/common-ggml.cpp": "ee67639c371f5a52049ffdff91c44e45049029a8dcdfc10bd3193c3bbf82f51f"
+  },
+  "ggml_libraries_sha256": {
+    "libggml.a": "d9ca4aee5c752df9eea8761de8f7be4c79a6f943bad64765bd31f5ebed5e0147",
+    "libggml-cpu.a": "781c05a77314d0b4577b060332304093b3864ec4924cdd751cdc6eb715dda0a6",
+    "libggml-base.a": "55ffb67929ef900539bb423dd8ea60e911217612777bff17f119060bc3ce70db"
+  },
+  "quantizer_binary_sha256": "44d83f69c52d4a4f7bc486d8fbacdc78ba72b7d01a77d5645d4702a70a1e2578",
+  "output_bytes": 59707642,
+  "output_sha256": "701f3ae011e0964e45894ad884da1afd5c1a0a7a846b054d9765e75d563ee7b9",
+  "quantization_intentionally_lossy": true
+}

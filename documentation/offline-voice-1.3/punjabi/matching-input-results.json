@@ -1,0 +1,58 @@
+{
+  "method": "PythonORT1.20 uses EXACT Java-normalized Float32 model input bytes, same windows/options/model/CTC merge.",
+  "production_source_sha256": "769cff8b2cb7fdebdede220cbc594e7b3f4f16be02deceed71769e1c413d26b2",
+  "fixtures": [
+    {
+      "fixture": "fleurs-pa_in-validation-0",
+      "input_sha256": "b4dfa083c6fea38a93575b5e7635f522728749679ff385b9087b1b51d4ac01fe",
+      "frames": 881,
+      "frame_id_sha256": "edff097eca3043f4167c8b26c7b5a178c7430ae8690b8bd8710035d4a95126be",
+      "different_frame_ids": 0,
+      "frame_id_mismatch_indexes": [],
+      "python_using_java_input_text": "ਉਪਸ ਸੱਧਿਆਚਾਰ ਦੀ ਮੈਂਬਰ ਅਕਸਰ ਸ਼਼ੈਲੀ ਦੀ ਇਕ ਖਾਸ ਅਤੇ ਸੰਕੀਤਕ ਵਰਤੋਂ ਰਾਹੀਂ ਆਪਣੀ ਸ ਦੱਸਤਾ ਦਾ ਸੰਕੇਤ ਦਿੰਦੇ ਜ ਸ ਵਿਚ ਫੈਸ਼ਨ ਸਿਸਟਤਟਤਾਂ ਅਤੇ ਗੁੱਪਤ ਭਾਸਸ਼ਾ ਸ਼ਾਮਲ ਹੁੰਦੀ ਹਿਰ",
+      "java_text": "ਉਪਸ ਸੱਧਿਆਚਾਰ ਦੀ ਮੈਂਬਰ ਅਕਸਰ ਸ਼਼ੈਲੀ ਦੀ ਇਕ ਖਾਸ ਅਤੇ ਸੰਕੀਤਕ ਵਰਤੋਂ ਰਾਹੀਂ ਆਪਣੀ ਸ ਦੱਸਤਾ ਦਾ ਸੰਕੇਤ ਦਿੰਦੇ ਜ ਸ ਵਿਚ ਫੈਸ਼ਨ ਸਿਸਟਤਟਤਾਂ ਅਤੇ ਗੁੱਪਤ ਭਾਸਸ਼ਾ ਸ਼ਾਮਲ ਹੁੰਦੀ ਹਿਰ",
+      "matches_text": true,
+      "inference_seconds": 1.6084194929999285,
+      "python_ort": "1.20.0"
+    },
+    {
+      "fixture": "fleurs-pa_in-validation-1",
+      "input_sha256": "92ea2de1ef7c7695c6831fcb24e5e24a6acf851dd5ae16ae1e23ca1be5e183d3",
+      "frames": 1226,
+      "frame_id_sha256": "f8aa7b5d9e44ff00d1d92d89f9107f6b8363889e5aad654ff9a80850524b1a7b",
+      "different_frame_ids": 0,
+      "frame_id_mismatch_indexes": [],
+      "python_using_java_input_text": "ਖ਼ੰਬਾੀ ਦੀ ਸਰਚਨਾ ਤੋਂ ਪਤਾ ਲੱਗਦਾ ਹੈ ਕਿ ਉਹਨ੍ਹਾਂ ਦੀ ਵਰਤੋਂ ਫਲਾਇਟ ਵਿਚ ਨਹੀਂ ਕੀਤੀ ਗਈ ਬਲ ਕਿ ਟਤਾਪਮਾਨ ਨਿਅਮ ਜਾਂ ਪ੍ਰਦਰਸ਼ਨ ਲਈ ਕੀਤੀ ਗਈ ਸ਼਼ੋਧ ਘਰਤਾਂ ਨੇ ਸੁਜਾਦ ੱਤਾ ਕਿ ਭਾਵੇਂ ਇਹ ਇਕ ਯੂਵਾ ਡਾਇਨਾਸੁਰਦੀ ਪੂਛ ਹੋਵੇ ਨਮੁੰਨਾ ਬਾਲਕ ਪੰਚੀ ਦਾ ਖੰਭ ਦਿਖਾਉਂਦਾ ਹੈ ਅਤੇ ਗੋਟਦਾ ਹੇਠਲਾ ਨਹੀਂ",
+      "java_text": "ਖ਼ੰਬਾੀ ਦੀ ਸਰਚਨਾ ਤੋਂ ਪਤਾ ਲੱਗਦਾ ਹੈ ਕਿ ਉਹਨ੍ਹਾਂ ਦੀ ਵਰਤੋਂ ਫਲਾਇਟ ਵਿਚ ਨਹੀਂ ਕੀਤੀ ਗਈ ਬਲ ਕਿ ਟਤਾਪਮਾਨ ਨਿਅਮ ਜਾਂ ਪ੍ਰਦਰਸ਼ਨ ਲਈ ਕੀਤੀ ਗਈ ਸ਼਼ੋਧ ਘਰਤਾਂ ਨੇ ਸੁਜਾਦ ੱਤਾ ਕਿ ਭਾਵੇਂ ਇਹ ਇਕ ਯੂਵਾ ਡਾਇਨਾਸੁਰਦੀ ਪੂਛ ਹੋਵੇ ਨਮੁੰਨਾ ਬਾਲਕ ਪੰਚੀ ਦਾ ਖੰਭ ਦਿਖਾਉਂਦਾ ਹੈ ਅਤੇ ਗੋਟਦਾ ਹੇਠਲਾ ਨਹੀਂ",
+      "matches_text": true,
+      "inference_seconds": 2.030821025000023,
+      "python_ort": "1.20.0"
+    },
+    {
+      "fixture": "fleurs-pa_in-validation-2",
+      "input_sha256": "5668f10acdda86310394181cd460b61c8dd7373c58e052af1d396591bdda3d26",
+      "frames": 317,
+      "frame_id_sha256": "8bb63bd14d4485be5ca8293acd68607ef912bb4fbc239bfe6e772d44a1ccd569",
+      "different_frame_ids": 0,
+      "frame_id_mismatch_indexes": [],
+      "python_using_java_input_text": "ੋਗੀ ਰੋ ੀ ਨਹੀ ਗੀਰੀਆ ਗਿਆ ਸੀ ਜਿਥੇ ਈਹ ਵੋਲਾਂ ਵਾਇਰਸ ਦੇ ਕੁਝ ਮਾਹਮਣੇ ਸਾਹਮੇ ਆਏ ਹਨ",
+      "java_text": "ੋਗੀ ਰੋ ੀ ਨਹੀ ਗੀਰੀਆ ਗਿਆ ਸੀ ਜਿਥੇ ਈਹ ਵੋਲਾਂ ਵਾਇਰਸ ਦੇ ਕੁਝ ਮਾਹਮਣੇ ਸਾਹਮੇ ਆਏ ਹਨ",
+      "matches_text": true,
+      "inference_seconds": 0.4231461270001091,
+      "python_ort": "1.20.0"
+    },
+    {
+      "fixture": "fleurs-pa_in-validation-3",
+      "input_sha256": "da0eb1987cc20181216782f65f99aaae9badca076cc7c13d1a3e449f6a4bd699",
+      "frames": 218,
+      "frame_id_sha256": "6e0d4267522e8ef28ddebfec4a428c6e1ec5d15b42017670f2b5c9c5f3aff248",
+      "different_frame_ids": 0,
+      "frame_id_mismatch_indexes": [],
+      "python_using_java_input_text": "ਮੇਰੇ ਲਈ ਇਸ ਦਾ ਕੋਈ ਮਤਲਬ ਨਹੀਂ ਸੀ ਹ ਸਾਈ ਨਹੀਂ ਸੀ",
+      "java_text": "ਮੇਰੇ ਲਈ ਇਸ ਦਾ ਕੋਈ ਮਤਲਬ ਨਹੀਂ ਸੀ ਹ ਸਾਈ ਨਹੀਂ ਸੀ",
+      "matches_text": true,
+      "inference_seconds": 0.26048070699971504,
+      "python_ort": "1.20.0"
+    }
+  ]
+}

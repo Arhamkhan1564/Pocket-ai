@@ -71,13 +71,13 @@ object BundledSpeechModel {
                     ModelValidator.validateHeader(models.fileFor(selected), ModelKind.WHISPER)
                 }.isSuccess
                 withContext(Dispatchers.Main.immediate) {
-                    if (!validSelection && settings.selectedWhisperId == selectedId) {
+                    if (!validSelection && !settings.speechRecognitionSelectionConfigured && settings.selectedWhisperId == selectedId) {
                         settings.selectedWhisperId = installed.id
                     }
                 }
                 if (force) preferences.edit().remove(REMOVED_KEY).apply()
                 mutableState.value = BundledSpeechState(BundledSpeechStatus.READY,
-                    "Included multilingual speech ready · 30.7 MiB. Urdu and Punjabi recognition quality depends on the recording and phone.",
+                    "Included recognizers available: English Whisper tiny, Urdu Whisper base, Punjabi CTC. Language resources prepare locally from the APK. Your recognition selection is preserved; review words before sending.",
                     installed.id, SIZE_BYTES)
                 installed
             } catch (cancelled: CancellationException) {
